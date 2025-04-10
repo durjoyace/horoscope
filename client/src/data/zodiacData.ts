@@ -1,569 +1,622 @@
-import { ZodiacSign } from '@shared/types';
+import { ZodiacSign } from "@shared/types";
 
-export interface ZodiacSignData {
-  value: ZodiacSign;
-  label: string;
-  symbol: string;
-  dates: string;
-  element: 'Fire' | 'Earth' | 'Air' | 'Water';
-  modality: 'Cardinal' | 'Fixed' | 'Mutable';
-  rulingPlanet: string;
-  traits: string;
-  healthFocus: string;
-  image?: string;
-}
-
-export const zodiacSignNames: ZodiacSignData[] = [
-  {
-    value: 'aries',
-    label: 'Aries',
-    symbol: '♈',
-    dates: 'March 21 - April 19',
-    element: 'Fire',
-    modality: 'Cardinal',
-    rulingPlanet: 'Mars',
-    traits: 'Energetic, courageous, independent, impulsive',
-    healthFocus: 'Head, brain, eyes, face, adrenal glands'
-  },
-  {
-    value: 'taurus',
-    label: 'Taurus',
-    symbol: '♉',
-    dates: 'April 20 - May 20',
-    element: 'Earth',
-    modality: 'Fixed',
-    rulingPlanet: 'Venus',
-    traits: 'Patient, reliable, stubborn, possessive',
-    healthFocus: 'Neck, throat, thyroid gland, vocal tract'
-  },
-  {
-    value: 'gemini',
-    label: 'Gemini',
-    symbol: '♊',
-    dates: 'May 21 - June 20',
-    element: 'Air',
-    modality: 'Mutable',
-    rulingPlanet: 'Mercury',
-    traits: 'Adaptable, versatile, curious, inconsistent',
-    healthFocus: 'Arms, shoulders, hands, lungs, nervous system'
-  },
-  {
-    value: 'cancer',
-    label: 'Cancer',
-    symbol: '♋',
-    dates: 'June 21 - July 22',
-    element: 'Water',
-    modality: 'Cardinal',
-    rulingPlanet: 'Moon',
-    traits: 'Intuitive, emotional, protective, moody',
-    healthFocus: 'Chest, breasts, stomach, digestive system'
-  },
-  {
-    value: 'leo',
-    label: 'Leo',
-    symbol: '♌',
-    dates: 'July 23 - August 22',
-    element: 'Fire',
-    modality: 'Fixed',
-    rulingPlanet: 'Sun',
-    traits: 'Generous, loyal, theatrical, proud',
-    healthFocus: 'Heart, upper back, spine, circulation'
-  },
-  {
-    value: 'virgo',
-    label: 'Virgo',
-    symbol: '♍',
-    dates: 'August 23 - September 22',
-    element: 'Earth',
-    modality: 'Mutable',
-    rulingPlanet: 'Mercury',
-    traits: 'Analytical, practical, diligent, critical',
-    healthFocus: 'Digestive system, intestines, spleen, nervous system'
-  },
-  {
-    value: 'libra',
-    label: 'Libra',
-    symbol: '♎',
-    dates: 'September 23 - October 22',
-    element: 'Air',
-    modality: 'Cardinal',
-    rulingPlanet: 'Venus',
-    traits: 'Diplomatic, fair, social, indecisive',
-    healthFocus: 'Kidneys, lumbar region, skin, lower back'
-  },
-  {
-    value: 'scorpio',
-    label: 'Scorpio',
-    symbol: '♏',
-    dates: 'October 23 - November 21',
-    element: 'Water',
-    modality: 'Fixed',
-    rulingPlanet: 'Pluto/Mars',
-    traits: 'Passionate, resourceful, determined, secretive',
-    healthFocus: 'Reproductive system, sexual organs, colon, bladder'
-  },
-  {
-    value: 'sagittarius',
-    label: 'Sagittarius',
-    symbol: '♐',
-    dates: 'November 22 - December 21',
-    element: 'Fire',
-    modality: 'Mutable',
-    rulingPlanet: 'Jupiter',
-    traits: 'Optimistic, freedom-loving, philosophical, tactless',
-    healthFocus: 'Hips, thighs, liver, sciatic nerve'
-  },
-  {
-    value: 'capricorn',
-    label: 'Capricorn',
-    symbol: '♑',
-    dates: 'December 22 - January 19',
-    element: 'Earth',
-    modality: 'Cardinal',
-    rulingPlanet: 'Saturn',
-    traits: 'Disciplined, responsible, practical, pessimistic',
-    healthFocus: 'Bones, joints, knees, skeletal system'
-  },
-  {
-    value: 'aquarius',
-    label: 'Aquarius',
-    symbol: '♒',
-    dates: 'January 20 - February 18',
-    element: 'Air',
-    modality: 'Fixed',
-    rulingPlanet: 'Uranus/Saturn',
-    traits: 'Progressive, original, independent, aloof',
-    healthFocus: 'Circulatory system, ankles, calves, electrical forces in body'
-  },
-  {
-    value: 'pisces',
-    label: 'Pisces',
-    symbol: '♓',
-    dates: 'February 19 - March 20',
-    element: 'Water',
-    modality: 'Mutable',
-    rulingPlanet: 'Neptune/Jupiter',
-    traits: 'Compassionate, intuitive, artistic, oversensitive',
-    healthFocus: 'Feet, lymphatic system, immune system, hormones'
-  }
-];
-
-export const zodiacElementColors: Record<string, string> = {
-  'Fire': 'text-red-500',
-  'Earth': 'text-green-600',
-  'Air': 'text-blue-500',
-  'Water': 'text-indigo-500'
-};
-
-export const getZodiacSignByDate = (month: number, day: number): ZodiacSign => {
-  // Note: month is 0-indexed (0 = January, 11 = December)
-  const dates = [
-    { month: 0, day: 20, sign: 'aquarius' }, // Jan 20
-    { month: 1, day: 19, sign: 'pisces' },   // Feb 19
-    { month: 2, day: 21, sign: 'aries' },    // Mar 21
-    { month: 3, day: 20, sign: 'taurus' },   // Apr 20
-    { month: 4, day: 21, sign: 'gemini' },   // May 21
-    { month: 5, day: 21, sign: 'cancer' },   // Jun 21
-    { month: 6, day: 23, sign: 'leo' },      // Jul 23
-    { month: 7, day: 23, sign: 'virgo' },    // Aug 23
-    { month: 8, day: 23, sign: 'libra' },    // Sep 23
-    { month: 9, day: 23, sign: 'scorpio' },  // Oct 23
-    { month: 10, day: 22, sign: 'sagittarius' }, // Nov 22
-    { month: 11, day: 22, sign: 'capricorn' }    // Dec 22
-  ];
-
-  let sign: ZodiacSign = 'capricorn';  // Default to Capricorn (Dec 22 - Jan 19)
-  
-  for (const entry of dates) {
-    if (month === entry.month && day >= entry.day || month > entry.month) {
-      sign = entry.sign as ZodiacSign;
-    }
-  }
-  
-  return sign;
-};
-
-// Zodiac sign natural compatibilities
-export const getCompatibilityScore = (sign1: ZodiacSign, sign2: ZodiacSign): number => {
-  // Same sign
-  if (sign1 === sign2) return 70;
-
-  const sign1Data = zodiacSignNames.find(s => s.value === sign1);
-  const sign2Data = zodiacSignNames.find(s => s.value === sign2);
-
-  if (!sign1Data || !sign2Data) return 50;
-
-  // Element compatibility
-  let elementScore = 50;
-  
-  // Same element = high compatibility
-  if (sign1Data.element === sign2Data.element) {
-    elementScore = 80;
-  } else {
-    // Complementary elements
-    const complementary: Record<string, string[]> = {
-      'Fire': ['Air'],
-      'Air': ['Fire'],
-      'Earth': ['Water'],
-      'Water': ['Earth']
-    };
-    
-    if (complementary[sign1Data.element]?.includes(sign2Data.element)) {
-      elementScore = 75;
-    } else {
-      // Challenging elements
-      const challenging: Record<string, string[]> = {
-        'Fire': ['Water'],
-        'Water': ['Fire'],
-        'Earth': ['Air'],
-        'Air': ['Earth']
-      };
-      
-      if (challenging[sign1Data.element]?.includes(sign2Data.element)) {
-        elementScore = 40;
-      }
-    }
-  }
-
-  // Modality compatibility
-  let modalityScore = 60;
-  
-  // Same modality can be competitive
-  if (sign1Data.modality === sign2Data.modality) {
-    modalityScore = 60;
-  } else {
-    // Complementary modalities
-    const complementary: Record<string, string[]> = {
-      'Cardinal': ['Fixed'],
-      'Fixed': ['Mutable'],
-      'Mutable': ['Cardinal']
-    };
-    
-    if (complementary[sign1Data.modality]?.includes(sign2Data.modality)) {
-      modalityScore = 70;
-    }
-  }
-
-  // Final score, weighted more toward element compatibility
-  return Math.round((elementScore * 0.6) + (modalityScore * 0.4));
-};
-
-export const zodiacWellnessRecommendations: Record<ZodiacSign, {
+export type WellnessRecommendation = {
   nutritionTips: string[];
   exerciseTypes: string[];
   relaxationMethods: string[];
   dailyWellnessHabits: string[];
-}> = {
-  'aries': {
+};
+
+export const zodiacSignNames = [
+  { 
+    value: 'aries' as ZodiacSign, 
+    label: 'Aries', 
+    dates: 'March 21 - April 19', 
+    symbol: '♈', 
+    element: 'Fire', 
+    planet: 'Mars'
+  },
+  { 
+    value: 'taurus' as ZodiacSign, 
+    label: 'Taurus', 
+    dates: 'April 20 - May 20', 
+    symbol: '♉', 
+    element: 'Earth', 
+    planet: 'Venus'
+  },
+  { 
+    value: 'gemini' as ZodiacSign, 
+    label: 'Gemini', 
+    dates: 'May 21 - June 20', 
+    symbol: '♊', 
+    element: 'Air', 
+    planet: 'Mercury'
+  },
+  { 
+    value: 'cancer' as ZodiacSign, 
+    label: 'Cancer', 
+    dates: 'June 21 - July 22', 
+    symbol: '♋', 
+    element: 'Water', 
+    planet: 'Moon'
+  },
+  { 
+    value: 'leo' as ZodiacSign, 
+    label: 'Leo', 
+    dates: 'July 23 - August 22', 
+    symbol: '♌', 
+    element: 'Fire', 
+    planet: 'Sun'
+  },
+  { 
+    value: 'virgo' as ZodiacSign, 
+    label: 'Virgo', 
+    dates: 'August 23 - September 22', 
+    symbol: '♍', 
+    element: 'Earth', 
+    planet: 'Mercury'
+  },
+  { 
+    value: 'libra' as ZodiacSign, 
+    label: 'Libra', 
+    dates: 'September 23 - October 22', 
+    symbol: '♎', 
+    element: 'Air', 
+    planet: 'Venus'
+  },
+  { 
+    value: 'scorpio' as ZodiacSign, 
+    label: 'Scorpio', 
+    dates: 'October 23 - November 21', 
+    symbol: '♏', 
+    element: 'Water', 
+    planet: 'Pluto'
+  },
+  { 
+    value: 'sagittarius' as ZodiacSign, 
+    label: 'Sagittarius', 
+    dates: 'November 22 - December 21', 
+    symbol: '♐', 
+    element: 'Fire', 
+    planet: 'Jupiter'
+  },
+  { 
+    value: 'capricorn' as ZodiacSign, 
+    label: 'Capricorn', 
+    dates: 'December 22 - January 19', 
+    symbol: '♑', 
+    element: 'Earth', 
+    planet: 'Saturn'
+  },
+  { 
+    value: 'aquarius' as ZodiacSign, 
+    label: 'Aquarius', 
+    dates: 'January 20 - February 18', 
+    symbol: '♒', 
+    element: 'Air', 
+    planet: 'Uranus'
+  },
+  { 
+    value: 'pisces' as ZodiacSign, 
+    label: 'Pisces', 
+    dates: 'February 19 - March 20', 
+    symbol: '♓', 
+    element: 'Water', 
+    planet: 'Neptune'
+  }
+];
+
+// Personality traits for each zodiac sign
+export const zodiacTraits = {
+  aries: ['Energetic', 'Courageous', 'Passionate', 'Impulsive', 'Adventurous'],
+  taurus: ['Reliable', 'Patient', 'Practical', 'Persistent', 'Sensual'],
+  gemini: ['Adaptable', 'Curious', 'Versatile', 'Communicative', 'Witty'],
+  cancer: ['Intuitive', 'Emotional', 'Nurturing', 'Protective', 'Sympathetic'],
+  leo: ['Confident', 'Generous', 'Loyal', 'Dramatic', 'Creative'],
+  virgo: ['Analytical', 'Practical', 'Diligent', 'Careful', 'Organized'],
+  libra: ['Diplomatic', 'Fair', 'Social', 'Cooperative', 'Gracious'],
+  scorpio: ['Determined', 'Passionate', 'Perceptive', 'Emotional', 'Intense'],
+  sagittarius: ['Optimistic', 'Adventurous', 'Independent', 'Straightforward', 'Philosophical'],
+  capricorn: ['Ambitious', 'Disciplined', 'Patient', 'Practical', 'Responsible'],
+  aquarius: ['Progressive', 'Independent', 'Humanitarian', 'Innovative', 'Intellectual'],
+  pisces: ['Compassionate', 'Intuitive', 'Imaginative', 'Sensitive', 'Artistic']
+};
+
+// Health tendencies for each zodiac sign
+export const zodiacHealth = {
+  aries: {
+    strengths: ['High energy levels', 'Quick recovery', 'Athletic ability'],
+    weaknesses: ['Headaches and migraines', 'Stress-related issues', 'Prone to accidents'],
+    focus: 'Physical activity and stress management'
+  },
+  taurus: {
+    strengths: ['Strong constitution', 'Endurance', 'Good metabolism'],
+    weaknesses: ['Throat and neck issues', 'Weight management', 'Circulatory problems'],
+    focus: 'Regular exercise and balanced diet'
+  },
+  gemini: {
+    strengths: ['Nervous system adaptability', 'Respiratory capacity', 'Dexterity'],
+    weaknesses: ['Respiratory issues', 'Nervous tension', 'Scattered energy'],
+    focus: 'Deep breathing and mental focus'
+  },
+  cancer: {
+    strengths: ['Strong digestive system', 'Emotional resilience', 'Nurturing self-care'],
+    weaknesses: ['Digestive sensitivity', 'Emotional eating', 'Water retention'],
+    focus: 'Emotional balance and gut health'
+  },
+  leo: {
+    strengths: ['Strong heart and circulation', 'Vitality', 'Immune resilience'],
+    weaknesses: ['Heart and back issues', 'Blood pressure concerns', 'Ego-related stress'],
+    focus: 'Heart-healthy lifestyle and stress reduction'
+  },
+  virgo: {
+    strengths: ['Digestive efficiency', 'Attention to health details', 'Intestinal health'],
+    weaknesses: ['Digestive sensitivity', 'Nervous tension', 'Over-analysis'],
+    focus: 'Gut health and mindfulness practices'
+  },
+  libra: {
+    strengths: ['Kidney function', 'Balance and coordination', 'Aesthetic wellness'],
+    weaknesses: ['Kidney and lower back issues', 'Indecision-related stress', 'Skin concerns'],
+    focus: 'Balance in all activities and kidney health'
+  },
+  scorpio: {
+    strengths: ['Reproductive health', 'Regenerative ability', 'Detoxification'],
+    weaknesses: ['Reproductive issues', 'Elimination system', 'Emotional intensity'],
+    focus: 'Detoxification and emotional processing'
+  },
+  sagittarius: {
+    strengths: ['Liver function', 'Thigh and hip mobility', 'Metabolism'],
+    weaknesses: ['Hip and thigh issues', 'Liver concerns', 'Risk-taking injuries'],
+    focus: 'Liver health and flexibility'
+  },
+  capricorn: {
+    strengths: ['Joint durability', 'Skeletal strength', 'Skin resilience'],
+    weaknesses: ['Joint and bone issues', 'Skin dryness', 'Work-related stress'],
+    focus: 'Bone health and work-life balance'
+  },
+  aquarius: {
+    strengths: ['Circulatory system', 'Ankle flexibility', 'Electrical nervous system'],
+    weaknesses: ['Circulatory issues', 'Ankle and calf problems', 'Nervous system sensitivity'],
+    focus: 'Circulation and electrical balance'
+  },
+  pisces: {
+    strengths: ['Lymphatic system', 'Foot flexibility', 'Immune intuition'],
+    weaknesses: ['Foot problems', 'Immune deficiencies', 'Fluid retention'],
+    focus: 'Lymphatic health and boundaries'
+  }
+};
+
+// Compatibility between zodiac signs
+export const zodiacCompatibility: Record<ZodiacSign, { high: ZodiacSign[], medium: ZodiacSign[], low: ZodiacSign[] }> = {
+  aries: {
+    high: ['leo', 'sagittarius', 'gemini', 'aquarius'],
+    medium: ['libra', 'virgo', 'scorpio', 'pisces'],
+    low: ['taurus', 'cancer', 'capricorn']
+  },
+  taurus: {
+    high: ['virgo', 'capricorn', 'cancer', 'pisces'],
+    medium: ['scorpio', 'libra', 'leo', 'aquarius'],
+    low: ['aries', 'gemini', 'sagittarius']
+  },
+  gemini: {
+    high: ['libra', 'aquarius', 'aries', 'leo'],
+    medium: ['sagittarius', 'virgo', 'pisces', 'cancer'],
+    low: ['taurus', 'scorpio', 'capricorn']
+  },
+  cancer: {
+    high: ['scorpio', 'pisces', 'taurus', 'virgo'],
+    medium: ['capricorn', 'libra', 'gemini', 'leo'],
+    low: ['aries', 'sagittarius', 'aquarius']
+  },
+  leo: {
+    high: ['aries', 'sagittarius', 'gemini', 'libra'],
+    medium: ['aquarius', 'virgo', 'scorpio', 'pisces'],
+    low: ['taurus', 'cancer', 'capricorn']
+  },
+  virgo: {
+    high: ['taurus', 'capricorn', 'cancer', 'scorpio'],
+    medium: ['pisces', 'leo', 'gemini', 'aries'],
+    low: ['libra', 'sagittarius', 'aquarius']
+  },
+  libra: {
+    high: ['gemini', 'aquarius', 'leo', 'sagittarius'],
+    medium: ['aries', 'scorpio', 'virgo', 'taurus'],
+    low: ['cancer', 'capricorn', 'pisces']
+  },
+  scorpio: {
+    high: ['cancer', 'pisces', 'virgo', 'capricorn'],
+    medium: ['taurus', 'libra', 'leo', 'aquarius'],
+    low: ['aries', 'gemini', 'sagittarius']
+  },
+  sagittarius: {
+    high: ['aries', 'leo', 'libra', 'aquarius'],
+    medium: ['gemini', 'virgo', 'scorpio', 'pisces'],
+    low: ['taurus', 'cancer', 'capricorn']
+  },
+  capricorn: {
+    high: ['taurus', 'virgo', 'scorpio', 'pisces'],
+    medium: ['cancer', 'libra', 'leo', 'aries'],
+    low: ['gemini', 'sagittarius', 'aquarius']
+  },
+  aquarius: {
+    high: ['gemini', 'libra', 'aries', 'sagittarius'],
+    medium: ['leo', 'virgo', 'scorpio', 'pisces'],
+    low: ['taurus', 'cancer', 'capricorn']
+  },
+  pisces: {
+    high: ['cancer', 'scorpio', 'taurus', 'capricorn'],
+    medium: ['virgo', 'libra', 'leo', 'aquarius'],
+    low: ['aries', 'gemini', 'sagittarius']
+  }
+};
+
+// Wellness recommendations for each zodiac sign
+export const zodiacElementColors = {
+  'Fire': 'bg-red-600 text-white',
+  'Earth': 'bg-green-600 text-white',
+  'Air': 'bg-blue-600 text-white',
+  'Water': 'bg-indigo-600 text-white',
+};
+
+export const zodiacWellnessRecommendations: Record<ZodiacSign, WellnessRecommendation> = {
+  aries: {
     nutritionTips: [
-      'High-protein foods to support energy levels',
-      'Iron-rich foods for blood circulation',
-      'Spicy foods in moderation to balance fire energy',
-      'Stay hydrated to prevent headaches'
+      'Incorporate cooling foods like cucumber and leafy greens to balance your fire element',
+      'Iron-rich foods to support energy levels: spinach, lentils, and lean red meat',
+      'Spicy foods in moderation as they can increase internal heat and aggression',
+      'Stay hydrated with plenty of water to cool your naturally high metabolism',
+      'Foods that support head health: walnuts, blueberries, and omega-3 fatty acids'
     ],
     exerciseTypes: [
-      'High-intensity interval training',
-      'Competitive sports',
-      'Martial arts',
-      'Sprint training'
+      'High-intensity interval training (HIIT) to satisfy your need for intensity',
+      'Competitive sports like tennis, basketball, or martial arts',
+      'Sprint training and track workouts that challenge your speed',
+      'Adventure activities like rock climbing or obstacle courses',
+      'Boxing or kickboxing to channel aggressive energy'
     ],
     relaxationMethods: [
-      'Active meditation',
-      'Nature walks',
-      'Progressive muscle relaxation',
-      'Short, frequent breaks throughout the day'
+      'Meditation focused on breath awareness to cool internal heat',
+      'Cold plunges or cool showers to regulate your fire element',
+      'Yin yoga to balance your yang energy',
+      'Forest bathing and nature walks to ground excess energy',
+      'Progressive muscle relaxation to release physical tension'
     ],
     dailyWellnessHabits: [
-      'Morning exercise to channel energy',
-      'Cool compresses for headaches',
-      'Eye exercises to reduce strain',
-      'Regular blood pressure monitoring'
+      'Start your day with movement rather than immediate screen time',
+      'Schedule short breaks throughout the day to prevent burnout',
+      'Practice patience through deliberate slow-paced activities',
+      'Use red light in the evening to support quality sleep',
+      'Keep a physical activity journal to track progress and goals'
     ]
   },
-  'taurus': {
+  taurus: {
     nutritionTips: [
-      'Root vegetables for grounding',
-      'Calcium-rich foods for bone health',
-      'Whole grains for sustained energy',
-      'Limited sugar to protect throat health'
+      'Root vegetables to support your earth element and grounding energy',
+      'High-quality proteins like grass-fed beef and organic dairy',
+      'Fiber-rich foods to support healthy digestion and metabolism',
+      'Throat-soothing foods like honey, ginger tea, and warm broths',
+      'Limited refined sugars to prevent sluggishness and weight gain'
     ],
     exerciseTypes: [
-      'Resistance training with slow, controlled movements',
-      'Yoga with longer-held poses',
-      'Walking in nature',
-      'Gardening as physical activity'
+      'Strength training with an emphasis on slow, controlled movements',
+      'Hiking and outdoor walking in natural settings',
+      'Yoga focused on stability and alignment',
+      'Pilates for core strength and body awareness',
+      'Gardening as both exercise and earth connection'
     ],
     relaxationMethods: [
-      'Aromatherapy with earthy scents',
-      'Massage therapy',
-      'Sound healing',
-      'Pottery or tactile crafts'
+      'Massage therapy to address neck and shoulder tension',
+      'Aromatherapy with earthy scents like patchouli and sandalwood',
+      'Warm baths with Epsom salts for muscle relaxation',
+      'Sound therapy with low-frequency tones',
+      'Slow, mindful breathing practices'
     ],
     dailyWellnessHabits: [
-      'Neck stretches throughout the day',
-      'Warm beverages for throat comfort',
-      'Singing or humming for vocal health',
-      'Regular thyroid check-ups'
+      'Morning throat exercises and vocal toning',
+      'Regular neck and shoulder stretches throughout the day',
+      'Creating a consistent, predictable daily routine',
+      'Taking time to appreciate beauty in your surroundings',
+      'Setting healthy boundaries around work and rest'
     ]
   },
-  'gemini': {
+  gemini: {
     nutritionTips: [
-      'Oxygen-rich foods like leafy greens',
-      'Brain-supporting foods with omega-3s',
-      'Small, frequent meals for nervous energy',
-      'Herbal teas for nervous system support'
+      'Foods rich in omega-3 fatty acids for brain health and mental clarity',
+      "Light, varied meals that don't weigh you down or create sluggishness",
+      'Respiratory-supporting foods like garlic, onions, and ginger',
+      'Antioxidant-rich berries to protect against oxidative stress',
+      'Hydrating foods to support your air element: cucumbers, watermelon, celery'
     ],
     exerciseTypes: [
-      'Varied workout routines',
-      'Social sports and activities',
-      'Dance classes with diverse movements',
-      'Coordination exercises for dexterity'
+      'Dance classes that incorporate variety and social interaction',
+      'Circuit training that keeps you moving between different exercises',
+      'Group fitness classes with changing routines and music',
+      'Racquet sports like tennis or badminton',
+      'Cycling or spin classes for lung capacity and endurance'
     ],
     relaxationMethods: [
-      'Breathing exercises',
-      'Journaling to quiet the mind',
-      'Audiobooks or guided meditations',
-      'Social downtime with meaningful conversation'
+      'Guided visualization that engages your imagination',
+      'Breathing exercises focused on lung expansion',
+      'Mind puzzles and creative activities that engage without overstimulating',
+      'Alternating nostril breathing for nervous system balance',
+      'Writing therapy to organize thoughts and reduce mental chatter'
     ],
     dailyWellnessHabits: [
-      'Regular hand and finger stretches',
-      'Respiratory exercises for lung health',
-      'Digital detoxes to rest the mind',
-      'Learning new skills for mental stimulation'
+      'Digital detoxes to prevent information overload',
+      'Lung-strengthening breathing exercises each morning',
+      'Time blocking for focused work without multitasking',
+      'Vocal rest periods if you speak or talk frequently',
+      'Hand and finger stretches to prevent repetitive strain'
     ]
   },
-  'cancer': {
+  cancer: {
     nutritionTips: [
-      'Easily digestible foods',
-      'Calcium-rich foods for emotional balance',
-      'Hydrating foods with high water content',
-      'Soothing herbs for digestive comfort'
+      'Foods rich in calcium for emotional stability: dairy, almonds, fortified plant milks',
+      'Easily digestible foods that nurture your sensitive digestive system',
+      'Cooling foods like cucumber and melon to balance emotional intensity',
+      'Foods that support the stomach: ginger, peppermint, bone broth',
+      'Mood-supporting foods rich in vitamin D and B vitamins'
     ],
     exerciseTypes: [
-      'Water-based activities like swimming',
-      'Gentle flowing movements like tai chi',
-      'Home-based workout routines',
-      'Group classes with a community feel'
+      'Water-based activities: swimming, aqua aerobics, or paddleboarding',
+      'Moon-cycle aligned workouts that vary with lunar phases',
+      'Gentle, flowing movement like Tai Chi or Qigong',
+      'Beach walks or exercises near water sources',
+      'Restorative yoga with an emphasis on the heart and chest'
     ],
     relaxationMethods: [
-      'Moon bathing and lunar rituals',
-      'Hot baths with calming salts',
-      'Emotional release practices',
-      'Nurturing creativity through art'
+      'Warm compresses on the chest and abdomen',
+      'Journaling for emotional processing and release',
+      'Moonlight meditation or bathing',
+      'Nurturing self-massage with calming oils',
+      'Creating cozy, secure environments for deep rest'
     ],
     dailyWellnessHabits: [
-      'Chest-opening stretches',
-      'Digestive support through probiotics',
-      'Emotional check-ins and journaling',
-      'Creating nurturing home environments'
+      'Emotional check-ins throughout the day',
+      'Creating and maintaining nurturing home environments',
+      'Conscious breathing into the chest and diaphragm',
+      'Setting healthy emotional boundaries in relationships',
+      'Hydration with warm, soothing liquids rather than cold beverages'
     ]
   },
-  'leo': {
+  leo: {
     nutritionTips: [
-      'Heart-healthy foods rich in antioxidants',
-      'Magnesium-rich foods for circulation',
-      'Sunny, vibrant fruits and vegetables',
-      'Proper hydration for cellular health'
+      'Heart-healthy foods rich in CoQ10: fatty fish, whole grains, and organ meats',
+      'Foods high in potassium for cardiac health: bananas, avocados, and potatoes',
+      'Sunshine-inspired yellow and orange foods: turmeric, saffron, citrus',
+      'Magnesium-rich foods for heart and muscle function: dark chocolate, nuts, seeds',
+      'Anti-inflammatory herbs and spices: turmeric, ginger, and cayenne in moderation'
     ],
     exerciseTypes: [
-      'Performance-based fitness classes',
-      'Strength training for core and back',
-      'Outdoor activities in sunshine',
-      'Leadership roles in group sports'
+      'Activities that put you center stage: dance, group fitness instruction',
+      'Strength training with an emphasis on the upper body and back',
+      'Performance-based activities like martial arts demonstrations or gymnastics',
+      'Outdoor training in sunshine (with proper sun protection)',
+      'Activities that build confidence and presence: powerlifting, strongman training'
     ],
     relaxationMethods: [
-      'Creative expression through art or drama',
-      'Sunlight therapy',
-      'Heart-centered meditation',
-      'Social relaxation with meaningful recognition'
+      'Heart-opening yoga poses and stretches',
+      'Sun salutations and solar meditation',
+      'Warm compresses on the chest and upper back',
+      'Creative visualization focused on personal growth',
+      'Expressive arts therapy: drawing, singing, acting'
     ],
     dailyWellnessHabits: [
-      'Spine and back stretches',
-      'Heart rate monitoring',
-      'Posture awareness exercises',
-      'Self-expression through fashion or style'
+      'Morning sun exposure (15 minutes with appropriate protection)',
+      'Heart-rate variability training for stress resilience',
+      'Back and spine stretches throughout the day',
+      'Practicing genuine compliments and appreciation to others',
+      'Evening gratitude practice to cultivate generosity'
     ]
   },
-  'virgo': {
+  virgo: {
     nutritionTips: [
-      'Clean, whole foods with minimal processing',
-      'Fiber-rich foods for digestive health',
-      'Fermented foods for gut microbiome',
-      'Methodical meal planning for balanced nutrition'
+      'Digestive-supporting fermented foods: kefir, kimchi, and sauerkraut',
+      'High-fiber foods for intestinal health: whole grains, legumes, vegetables',
+      'Clean, minimally processed foods with limited artificial ingredients',
+      'Digestive herbs like peppermint, fennel, and chamomile',
+      'Small, regular meals to prevent digestive stress'
     ],
     exerciseTypes: [
-      'Precise, technique-focused workouts',
-      'Pilates for core strength',
-      'Tracking-based fitness routines',
-      'Functional training for practical strength'
+      'Precise, form-focused training like Pilates or barre',
+      'Detailed practices like yoga with alignment emphasis',
+      'Functional fitness focusing on practical movement patterns',
+      'Walking meditation combining mental clarity with physical activity',
+      'Structured exercise routines with clear progressions and goals'
     ],
     relaxationMethods: [
-      'Organizational activities as meditation',
-      'Nature therapy in clean environments',
-      'Detailed crafts requiring focus',
-      'Analysis-free relaxation periods'
+      'Guided meditation focusing on body scanning and release',
+      'Organizational activities that create order and calm',
+      'Hands-on crafts requiring focus and precision',
+      'Systematic progressive muscle relaxation',
+      'Aromatherapy with clarifying scents like peppermint and rosemary'
     ],
     dailyWellnessHabits: [
-      'Digestive massage techniques',
-      'Food combining for optimal digestion',
-      'Regular health monitoring and tracking',
-      'Scheduled relaxation periods'
+      'Regular digestive massage following the large intestine pathway',
+      'Mindful eating practices without digital distractions',
+      'Creating spaces of order and cleanliness',
+      'Scheduled worry time to contain anxious thoughts',
+      'Self-compassion practices to balance perfectionism'
     ]
   },
-  'libra': {
+  libra: {
     nutritionTips: [
-      'Balanced meals with equal proportions',
-      'Kidney-supporting foods',
-      'Alkaline-forming foods for pH balance',
-      'Visually appealing meals for enjoyment'
+      'Kidney-supporting foods: watermelon, cranberries, and celery',
+      'Foods rich in vitamin E for skin health: avocados, nuts, and seeds',
+      'Anti-inflammatory foods to support the lower back and kidneys',
+      'Balanced meals with equal proportions of protein, healthy fats, and complex carbs',
+      'Aesthetically appealing, colorful meals that please the visual sense'
     ],
     exerciseTypes: [
-      'Partner-based workouts',
-      'Dance for grace and coordination',
-      'Balanced routines working all muscle groups',
-      'Aesthetically pleasing environments for exercise'
+      'Partner activities like tennis, dance, or acro-yoga',
+      'Balanced workout routines that address all muscle groups equally',
+      'Activities focusing on coordination and balance: slacklining, ballet',
+      'Social fitness classes that combine exercise with community',
+      'Activities with aesthetic components: dance, synchronized swimming'
     ],
     relaxationMethods: [
-      'Beauty rituals and spa treatments',
-      'Balanced social and alone time',
-      'Harmonious music therapy',
-      'Aesthetic surroundings for relaxation'
+      'Symmetrical yoga poses that create physical balance',
+      'Artistic activities that induce flow state: painting, music',
+      'Beautiful environments that support aesthetic appreciation',
+      'Kidney-supporting warm compresses on the lower back',
+      'Partner massage or touch therapy'
     ],
     dailyWellnessHabits: [
-      'Lower back stretches',
-      'Kidney-supporting hydration',
-      'Skin care routines',
-      'Creating balance between work and leisure'
+      'Lower back stretches throughout the day',
+      'Decision-making exercises to strengthen choice confidence',
+      'Creating beauty in everyday environments',
+      'Balancing solitude and social time consciously',
+      'Maintaining equilibrium between work and pleasure'
     ]
   },
-  'scorpio': {
+  scorpio: {
     nutritionTips: [
-      'Detoxifying foods for elimination systems',
-      'Foods rich in zinc and magnesium',
-      'Deeply nourishing bone broths and stews',
-      'Fermented foods for gut health'
+      'Detoxifying foods that support the elimination system: leafy greens, beets, cilantro',
+      'Healthy fats that support reproductive health: avocados, olive oil, nuts',
+      'Antioxidant-rich foods for cellular regeneration: berries, dark chocolate, green tea',
+      'Foods supporting transformation: fermented products, sprouts, and germinated seeds',
+      'Hydrating foods that support elimination: cucumber, watermelon, coconut water'
     ],
     exerciseTypes: [
-      'Intense, transformative workouts',
-      'Regenerative exercise like rebounding',
-      'Water sports and swimming',
-      'Deep core and pelvic floor training'
+      'Transformative practices like power yoga or intensive training',
+      'Deep tissue work like foam rolling and myofascial release',
+      'Physically demanding activities that create catharsis: boxing, HIIT',
+      'Rebounding and mini-trampoline work for lymphatic health',
+      'Water-based exercise for emotional processing: swimming, water aerobics'
     ],
     relaxationMethods: [
-      'Deep tissue massage',
-      'Transformational breathwork',
-      'Shadow work and emotional release',
-      'Immersive sensory experiences'
+      'Deep emotional release practices like primal screaming or breathwork',
+      'Sensory deprivation through floating tanks or darkness meditation',
+      'Transformational breathwork for emotional processing',
+      'Hot and cold contrast therapy for circulation',
+      'Shadow work journaling and emotional investigation'
     ],
     dailyWellnessHabits: [
-      'Pelvic floor exercises',
-      'Detoxification practices',
-      'Emotional energy clearing',
-      'Regular colon and bladder health monitoring'
+      'Conscious elimination practices: proper hydration, fiber intake',
+      'Pelvic floor exercises for reproductive and elimination health',
+      'Creating sacred, private spaces for processing intense emotions',
+      'Energy clearing rituals for home and personal space',
+      'Releasing grudges and practicing forgiveness work'
     ]
   },
-  'sagittarius': {
+  sagittarius: {
     nutritionTips: [
-      'Foods that support liver health',
-      'International cuisine variety',
-      'High-quality proteins for muscle support',
-      'Anti-inflammatory foods for joint health'
+      'Liver-supporting herbs and foods: dandelion, milk thistle, leafy greens',
+      'Anti-inflammatory turmeric and ginger to support joints and mobility',
+      'Healthy fats for joint lubrication: avocados, olive oil, nuts',
+      'Adventure-inspiring global cuisine with varied spices and ingredients',
+      'Metabolism-supporting foods: chili peppers, green tea, lean proteins'
     ],
     exerciseTypes: [
-      'Long-distance activities like hiking or cycling',
-      'Outdoor adventure sports',
-      'Travel-based physical activities',
-      'Expansive movements like archery'
+      'Long-distance activities: trail running, hiking, cycling',
+      'Adventure sports that incorporate exploration: orienteering, rock climbing',
+      'Global movement practices: capoeira, bhangra dance, tai chi',
+      'Hip-opening yoga sequences for mobility',
+      'Activities with philosophical components: martial arts with meditative elements'
     ],
     relaxationMethods: [
-      'Travel and exploration as relaxation',
-      'Philosophical reading and discussion',
-      'Vision quests and spiritual retreats',
-      'Laughter therapy and comedic entertainment'
+      'Travel and exploration, even if just to new local environments',
+      'Philosophical reading and discussion groups',
+      'Distance gazing and horizon meditation',
+      'Nature immersion in wide, open spaces',
+      'Visualization journeys to different times and places'
     ],
     dailyWellnessHabits: [
-      'Hip and thigh stretches',
-      'Liver support through hydration',
-      'Learning something new daily',
-      'Regular movement throughout the day'
+      'Hip and thigh stretches throughout the day',
+      'Liver-supporting morning routines: lemon water, gentle stretching',
+      'Creating physical and mental space for freedom and movement',
+      'Learning something new each day to satisfy intellectual curiosity',
+      'Planning adventure time, even if small daily micro-adventures'
     ]
   },
-  'capricorn': {
+  capricorn: {
     nutritionTips: [
-      'Bone-building minerals like calcium and magnesium',
-      'Foods rich in Vitamin D',
-      'Grounding root vegetables',
-      'High-quality proteins for structural support'
+      'Bone-supporting foods rich in calcium, vitamin D, and vitamin K',
+      'Collagen-building foods for skin, joints, and connective tissue',
+      'Structured meal timing that supports consistent energy levels',
+      'Grounding root vegetables that connect to your earth element',
+      'Limited alcohol and caffeine which can deplete mineral reserves'
     ],
     exerciseTypes: [
-      'Progressive weight-bearing exercises',
-      'Mountain climbing or stair training',
-      'Structured fitness programs with measurable goals',
-      'Traditional strength training'
+      'Progressive resistance training with measurable goals',
+      'Weight-bearing exercise for bone density: walking, stair climbing',
+      'Structured programs with clear advancement paths',
+      'Low-impact activities that protect joints: elliptical, swimming',
+      'Mountain activities: hiking, climbing, skiing (mindful of joints)'
     ],
     relaxationMethods: [
-      'Achievement-based relaxation',
-      'Time in mountains or with stones',
-      'Structured meditation with goals',
-      'Historical or traditional relaxation methods'
+      'Structured relaxation with clear beginning and end times',
+      'Deep tissue massage focusing on chronically tight areas',
+      'Achievement-free time where productivity is not measured',
+      'Stone and crystal therapies connecting to earth element',
+      'Time in nature, especially mountains and rocky landscapes'
     ],
     dailyWellnessHabits: [
-      'Knee and joint care routines',
-      'Posture improvement exercises',
-      'Bone density-supporting activities',
-      'Regular skin maintenance for aging prevention'
+      'Joint-supporting movement breaks during long work periods',
+      'Skin care routines with emphasis on moisture and protection',
+      'Teeth and bone health practices: proper brushing, flossing',
+      'Creating clear boundaries between work and rest',
+      'Practicing the art of appropriate delegation and rest'
     ]
   },
-  'aquarius': {
+  aquarius: {
     nutritionTips: [
-      'Circulation-boosting foods',
-      'Electrolyte-balanced hydration',
-      'Innovative superfoods and nutritional technology',
-      'Community-supported agriculture participation'
+      'Circulation-supporting foods rich in nitric oxide: beets, dark chocolate, leafy greens',
+      'Foods that support electrical system: bananas, coconut water (electrolytes)',
+      'Anti-inflammatory foods for ankle and circulatory health',
+      'Novel, unusual food combinations that satisfy intellectual curiosity',
+      'Hydrating foods that support overall circulation: cucumber, watermelon, citrus'
     ],
     exerciseTypes: [
-      'Innovative fitness technology and trends',
-      'Group fitness classes with social aspects',
-      'Electrical muscle stimulation training',
-      'Unconventional movement patterns'
+      'Innovative, unique fitness modalities and classes',
+      'Technology-enhanced workouts: VR fitness, app-guided training',
+      'Group activities that maintain individual expression',
+      'Ankle-strengthening exercises: balance training, calf raises',
+      'Circulation-boosting activities: rebounding, inversion, cycling'
     ],
     relaxationMethods: [
-      'Floatation therapy',
-      'Technological relaxation aids',
-      'Community-based relaxation events',
-      'Intellectual stimulation as relaxation'
+      'Flotation tanks and sensory deprivation for mental spaciousness',
+      'Science-based relaxation: biofeedback, neurofeedback',
+      "Visualization of energy flow through the body's electrical system",
+      'Intellectual stimulation through documentaries or educational content',
+      'Community-based relaxation: group meditation, sound baths'
     ],
     dailyWellnessHabits: [
-      'Ankle and calf stretches',
-      'Circulation-boosting practices',
-      'Electrical balance through grounding',
-      'Innovation in daily health routines'
+      'Ankle and lower leg stretches and strengthening',
+      'Circulation-supporting practices: elevation, movement breaks',
+      'Creating environments of innovation and mental stimulation',
+      'Balancing digital connectivity with unplugged time',
+      'Contributing to community wellbeing alongside personal health'
     ]
   },
-  'pisces': {
+  pisces: {
     nutritionTips: [
-      'Omega-3 rich foods for brain health',
-      'Hydrating foods with high water content',
-      'Immune-supporting nutrients',
-      'Gentle, easily digestible proteins'
+      'Omega-3 rich foods for brain health: fatty fish, walnuts, flax seeds',
+      'Foods that support lymphatic flow: leafy greens, berries, citrus',
+      'Grounding foods to balance dreaminess: root vegetables, proteins',
+      'Hydrating foods that reflect your water element: cucumber, melon',
+      'Limited alcohol and recreational substances which can enhance escape tendencies'
     ],
     exerciseTypes: [
-      'Water-based exercises like swimming or water aerobics',
-      'Flowing movements like dance or tai chi',
-      'Yoga with emphasis on surrender and release',
-      'Barefoot training for foot strength'
+      'Water-based activities: swimming, aqua aerobics, surfing',
+      'Flowing movement practices: dance, tai chi, fluid yoga',
+      'Activities that incorporate music and rhythm',
+      'Foot-strengthening exercises: barefoot training, toe articulation',
+      'Lymphatic-supporting movements: rebounding, inversion, gentle bouncing'
     ],
     relaxationMethods: [
-      'Sensory deprivation experiences',
-      'Spiritual practices and meditation',
-      'Music therapy with ambient sounds',
-      'Dream work and visualization'
+      'Water immersion: baths, floating, hydrotherapy',
+      'Dreamwork and sleep hygiene practices',
+      'Artistic expression without judgment or goals',
+      'Sound healing and music therapy',
+      'Gentle boundaries to create safe emotional space'
     ],
     dailyWellnessHabits: [
-      'Foot care and reflexology',
-      'Lymphatic system support',
-      'Immune system boosting practices',
-      'Regular sleep hygiene for dream health'
+      'Foot massage and reflexology for grounding',
+      'Lymphatic dry brushing to support detoxification',
+      'Creating clear energetic boundaries in relationships',
+      'Scheduled reality checks during working hours',
+      'Balancing imagination time with practical action'
     ]
   }
 };

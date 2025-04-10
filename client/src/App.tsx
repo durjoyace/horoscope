@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { ZodiacSign, SubscriptionStatus, SubscriptionTier } from "@shared/types";
 import { NavigationBar } from "@/components/NavigationBar";
 import { Footer } from "@/components/Footer";
+import { AuthProvider, useAuth } from "@/hooks/use-auth";
+import { ProtectedRoute } from "@/lib/protected-route";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Import all pages
 import Home from "@/pages/Home";
@@ -14,6 +17,17 @@ import AffiliateMarketplace from "@/pages/AffiliateMarketplace";
 import AboutPage from "@/pages/AboutPage";
 import SciencePage from "@/pages/SciencePage";
 import ContactPage from "@/pages/ContactPage";
+import AuthPage from "@/pages/auth-page";
+
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 interface UserData {
   email: string;
@@ -60,31 +74,14 @@ function RouteWithProps({ component: Component, ...rest }: any) {
   );
 }
 
-function App() {
-  const [user, setUser] = useState<UserData | null>(null);
-  const [isPremium, setIsPremium] = useState(false);
+function AppContent() {
+  const { user, logoutMutation } = useAuth();
   
-  // Load user data from localStorage
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      try {
-        const userData = JSON.parse(storedUser);
-        setUser(userData);
-        setIsPremium(userData.subscriptionTier === 'premium' && userData.subscriptionStatus === 'active');
-      } catch (error) {
-        console.error("Failed to parse user data:", error);
-      }
-    }
-  }, []);
-
-  const isLoggedIn = !!user?.email && !!user?.zodiacSign;
+  const isLoggedIn = !!user;
+  const isPremium = !!user?.isPremium;
   
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-    setIsPremium(false);
-    window.location.href = "/";
+    logoutMutation.mutate();
   };
   
   return (
@@ -99,36 +96,31 @@ function App() {
       
       <main className="flex-grow">
         <Switch>
-          <Route path="/">
-            {(params) => <RouteWithProps component={Home} params={params} />}
-          </Route>
-          <Route path="/dashboard">
-            {(params) => <RouteWithProps component={Dashboard} params={params} />}
-          </Route>
-          <Route path="/zodiac-library">
-            {(params) => <RouteWithProps component={ZodiacLibrary} params={params} />}
-          </Route>
-          <Route path="/marketplace">
-            {(params) => <RouteWithProps component={AffiliateMarketplace} params={params} />}
-          </Route>
-          <Route path="/about">
-            {(params) => <RouteWithProps component={AboutPage} params={params} />}
-          </Route>
-          <Route path="/science">
-            {(params) => <RouteWithProps component={SciencePage} params={params} />}
-          </Route>
-          <Route path="/contact">
-            {(params) => <RouteWithProps component={ContactPage} params={params} />}
-          </Route>
-          <Route>
-            {(params) => <RouteWithProps component={NotFound} params={params} />}
-          </Route>
+          <Route path="/" component={Home} />
+          <Route path="/auth" component={AuthPage} />
+          <ProtectedRoute path="/dashboard" component={Dashboard} />
+          <Route path="/zodiac-library" component={ZodiacLibrary} />
+          <Route path="/marketplace" component={AffiliateMarketplace} />
+          <Route path="/about" component={AboutPage} />
+          <Route path="/science" component={SciencePage} />
+          <Route path="/contact" component={ContactPage} />
+          <Route component={NotFound} />
         </Switch>
       </main>
       
       <Footer />
       <Toaster />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
 
