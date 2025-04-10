@@ -1,6 +1,13 @@
 import { pgTable, text, serial, integer, boolean, timestamp, json } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+import { ZodiacSign } from "./types";
+
+// Zodiac sign schema for validation
+export const zodiacSignSchema = z.enum([
+  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 
+  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'
+]);
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),

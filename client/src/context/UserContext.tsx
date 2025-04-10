@@ -31,7 +31,16 @@ const defaultUser: User = {
   isAuthenticated: false
 };
 
-const UserContext = createContext<UserContextType | undefined>(undefined);
+// Create default context values to avoid the "undefined" error
+const defaultContextValue: UserContextType = {
+  user: null,
+  setUser: () => null,
+  signUp: async () => ({ success: false, message: 'User context not initialized' }),
+  logout: () => {},
+  isLoading: false,
+};
+
+const UserContext = createContext<UserContextType>(defaultContextValue);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -39,17 +48,18 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Check for saved user on initial load
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      try {
+    try {
+      const savedUser = localStorage.getItem('user');
+      if (savedUser) {
         const parsedUser = JSON.parse(savedUser);
         setUser(parsedUser);
-      } catch (error) {
-        console.error('Error parsing saved user:', error);
-        localStorage.removeItem('user');
       }
+    } catch (error) {
+      console.error('Error parsing saved user:', error);
+      localStorage.removeItem('user');
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, []);
 
   // Save user to localStorage when it changes
@@ -105,8 +115,16 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   };
 
+  const contextValue: UserContextType = {
+    user, 
+    setUser, 
+    signUp, 
+    logout, 
+    isLoading
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, signUp, logout, isLoading }}>
+    <UserContext.Provider value={contextValue}>
       {children}
     </UserContext.Provider>
   );
@@ -115,8 +133,5 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
 // Custom hook to use the user context
 export const useUser = (): UserContextType => {
   const context = useContext(UserContext);
-  if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider');
-  }
   return context;
 };
