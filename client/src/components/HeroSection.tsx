@@ -104,9 +104,9 @@ export const HeroSection: React.FC = () => {
           <div className="md:w-1/2 flex justify-center">
             <div className="relative w-full max-w-md animate-[float_6s_ease-in-out_infinite]">
               <img
-                src="https://images.unsplash.com/photo-1611001440648-0719d362e69c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                src="https://images.unsplash.com/photo-1566590349803-bbc2582df780?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
                 alt="Cosmic wellness illustration"
-                className="rounded-lg shadow-lg"
+                className="rounded-lg shadow-lg w-full h-auto"
                 width="600"
                 height="400"
               />

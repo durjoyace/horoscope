@@ -78,20 +78,26 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setIsLoading(true);
       
-      console.log('UserContext - Signup data:', data);
+      console.log('Attempting signup with data:', {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        zodiacSign: data.zodiacSign,
+        birthdate: data.birthdate,
+        smsOptIn: data.smsOptIn,
+      });
       
       const requestBody = {
         email: data.email,
         zodiacSign: data.zodiacSign,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        phone: data.phone,
+        firstName: data.firstName || "",
+        lastName: data.lastName || "",
+        phone: data.phone || "",
         smsOptIn: data.smsOptIn || false,
-        birthdate: data.birthdate,
-        password: data.password
+        birthdate: data.birthdate || "",
+        password: data.password || null,
+        newsletterOptIn: data.newsletterOptIn || true
       };
-      
-      console.log('UserContext - Request payload:', requestBody);
       
       const response = await fetch('/api/signup', {
         method: 'POST',
@@ -101,10 +107,12 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         body: JSON.stringify(requestBody),
       });
       
-      console.log('UserContext - Response status:', response.status);
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
       
       const result = await response.json();
-      console.log('UserContext - Server response:', result);
+      console.log('Signup result:', result);
 
       if (result.success) {
         const newUser = {
@@ -113,16 +121,20 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
           isAuthenticated: true,
         };
         
-        console.log('UserContext - Setting user state:', newUser);
         setUser(newUser);
         return { success: true, message: result.message };
       } else {
-        console.error('UserContext - Signup failed:', result.message);
-        return { success: false, message: result.message };
+        console.error('Signup failed:', result.message);
+        return { success: false, message: result.message || 'Signup failed. Please try again.' };
       }
     } catch (error) {
-      console.error('UserContext - Error during signup:', error);
-      return { success: false, message: 'An error occurred during signup. Please try again.' };
+      console.error('Error during signup:', error);
+      return { 
+        success: false, 
+        message: error instanceof Error 
+          ? `Signup error: ${error.message}` 
+          : 'An unexpected error occurred. Please try again.'
+      };
     } finally {
       setIsLoading(false);
     }
