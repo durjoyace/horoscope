@@ -228,8 +228,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="magazine-subheading text-primary/70 mb-1">
-              THE INSIDE SCOOP
+            <h2 className="magazine-subheading mb-2">
+              SCIENCE MEETS ASTROLOGY
             </h2>
             <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
               How Cosmic Health Works
@@ -286,8 +286,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       <section className="py-16 md:py-24 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="magazine-subheading text-primary/70 mb-1">
-              EXCLUSIVE FEATURE
+            <h2 className="magazine-subheading mb-2">
+              ELEMENTAL ANALYSIS
             </h2>
             <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
               Elemental Health Insights
@@ -577,8 +577,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="flex-1">
-              <h2 className="magazine-subheading text-primary/70 mb-1">
-                PREMIUM BENEFITS
+              <h2 className="magazine-subheading mb-2">
+                ENHANCED COSMIC INSIGHTS
               </h2>
               <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
                 Beyond Daily Horoscopes
@@ -715,8 +715,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       <section className="py-16 md:py-24 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="magazine-subheading text-primary/70 mb-1">
-              SUCCESS STORIES
+            <h2 className="magazine-subheading mb-2">
+              USER EXPERIENCES
             </h2>
             <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
               What Our Members Say
