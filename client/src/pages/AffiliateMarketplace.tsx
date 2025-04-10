@@ -748,7 +748,7 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
           Get Personalized Product Recommendations
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-          Join our newsletter to receive personalized wellness product recommendations based on your zodiac sign and current cosmic cycles.
+          Join our newsletter to receive personalized wellness product recommendations based on your zodiac sign and current astrological cycles.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
           <Input placeholder="Your email address" type="email" />

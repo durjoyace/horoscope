@@ -26,7 +26,7 @@ export default function AboutPage() {
             HoroscopeHealth was founded with a simple but powerful vision: to bridge the ancient wisdom of astrology with modern health science, creating personalized wellness insights that honor both tradition and innovation.
           </p>
           <p className="text-lg text-muted-foreground mb-4">
-            We believe that true wellness encompasses not just physical health, but also the mind-body connection that has been recognized by ancient traditions for millennia. By studying how cosmic patterns relate to human health tendencies, we've developed a unique approach to wellness that respects individuality.
+            We believe that true wellness encompasses not just physical health, but also the mind-body connection that has been recognized by ancient traditions for millennia. By studying how astrological patterns relate to human health tendencies, we've developed a unique approach to wellness that respects individuality.
           </p>
           <p className="text-lg text-muted-foreground">
             Our team of astrologers, health scientists, and wellness experts work together to deliver daily insights and recommendations tailored to your zodiac sign's unique constitution and tendencies.
@@ -58,7 +58,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-lg font-medium mb-2">Modern Science</h3>
               <p className="text-sm text-muted-foreground">
-                Evidence-based approaches integrated with cosmic insights
+                Evidence-based approaches integrated with astrological insights
               </p>
             </div>
             <div className="flex flex-col items-center text-center">
@@ -79,7 +79,7 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-bold tracking-tight mb-6">Our Mission</h2>
           <p className="text-xl mb-8">
-            "To empower individuals with personalized cosmic wellness insights, helping them make health choices aligned with their astrological nature and highest potential."
+            "To empower individuals with personalized astrological wellness insights, helping them make health choices aligned with their zodiac nature and highest potential."
           </p>
           <div className="flex justify-center">
             <Link href="/science">
@@ -150,7 +150,7 @@ export default function AboutPage() {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight mb-4">What Our Members Say</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Hear from people who have transformed their wellness journey with cosmic guidance
+            Hear from people who have transformed their wellness journey with astrological guidance
           </p>
         </div>
 

@@ -66,7 +66,7 @@ export default function ContactPage() {
           Contact Us
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Have questions about your cosmic wellness journey? We're here to help.
+          Have questions about your horoscope wellness journey? We're here to help.
         </p>
       </div>
 
@@ -75,7 +75,7 @@ export default function ContactPage() {
         <div>
           <h2 className="text-2xl font-bold tracking-tight mb-6">Get in Touch</h2>
           <p className="text-muted-foreground mb-8">
-            Our team of astrologers and wellness experts are ready to assist you with any questions about your horoscope, subscription, or cosmic health insights.
+            Our team of astrologers and wellness experts are ready to assist you with any questions about your horoscope, subscription, or personalized health insights.
           </p>
           
           <div className="space-y-6">

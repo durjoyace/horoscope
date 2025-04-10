@@ -71,7 +71,7 @@ export default function ZodiacLibrary() {
           Zodiac Wellness Library
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Explore zodiac signs and discover personalized wellness insights aligned with your cosmic profile
+          Explore zodiac signs and discover personalized wellness insights aligned with your astrological profile
         </p>
       </div>
       
