@@ -120,7 +120,7 @@ export function setupAuth(app: Express) {
             firstName: user.firstName,
             lastName: user.lastName,
             zodiacSign: user.zodiacSign,
-            isPremium: user.isPremium
+            isPremium: user.isPremium || false
           }
         });
       });
@@ -134,7 +134,7 @@ export function setupAuth(app: Express) {
   });
 
   app.post("/api/login", (req, res, next) => {
-    passport.authenticate("local", (err, user, info) => {
+    passport.authenticate("local", (err: Error | null, user: UserType | false, info: any) => {
       if (err) return next(err);
       
       if (!user) {
@@ -156,7 +156,7 @@ export function setupAuth(app: Express) {
             firstName: user.firstName,
             lastName: user.lastName,
             zodiacSign: user.zodiacSign,
-            isPremium: user.isPremium
+            isPremium: user.isPremium || false
           }
         });
       });
@@ -195,7 +195,7 @@ export function setupAuth(app: Express) {
         firstName: req.user.firstName,
         lastName: req.user.lastName,
         zodiacSign: req.user.zodiacSign,
-        isPremium: req.user.isPremium
+        isPremium: req.user.isPremium || false
       }
     });
   });

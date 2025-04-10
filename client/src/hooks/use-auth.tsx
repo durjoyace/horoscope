@@ -47,31 +47,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
 
   const {
-    data: user,
+    data: userData,
     error,
     isLoading,
-  } = useQuery<{ success: boolean; user: User } | undefined, Error>({
+  } = useQuery<{ success: boolean; user: User } | null>({
     queryKey: ["/api/user"],
     queryFn: async () => {
       try {
-        const res = await apiRequest("GET", "/api/user");
+        const res = await fetch("/api/user", {
+          credentials: "include"
+        });
+        
+        if (res.status === 401) {
+          return null;
+        }
+        
         if (!res.ok) {
-          if (res.status === 401) {
-            return undefined;
-          }
           throw new Error("Failed to fetch user data");
         }
+        
         return await res.json();
       } catch (error) {
         console.error("Error fetching user data:", error);
-        return undefined;
+        throw error;
       }
     },
+    retry: false,
+    staleTime: 300000, // 5 minutes
   });
 
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginData) => {
-      const res = await apiRequest("POST", "/api/login", credentials);
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+        credentials: "include"
+      });
       
       if (!res.ok) {
         const errorData = await res.json();
@@ -154,7 +166,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
-        user: user?.user ?? null,
+        user: userData?.user ?? null,
         isLoading,
         error,
         loginMutation,
