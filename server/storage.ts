@@ -28,6 +28,7 @@ export interface IStorage {
   // User operations
   getUser(id: number): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
+  getUsersByStripeCustomerId(stripeCustomerId: string): Promise<User[]>;
   createUser(user: InsertUser): Promise<User>;
   updateUser(id: number, user: Partial<InsertUser>): Promise<User | undefined>;
   
@@ -43,6 +44,7 @@ export interface IStorage {
   // Additional query methods
   getUsersByZodiacSign(sign: ZodiacSign): Promise<User[]>;
   getUsersForDailyDelivery(): Promise<User[]>;
+  getPremiumUsers(): Promise<User[]>;
   
   // Session store for express-session
   sessionStore: SessionStore;

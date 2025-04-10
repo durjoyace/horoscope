@@ -1,7 +1,7 @@
 import { pgTable, text, serial, integer, boolean, timestamp, json } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
-import { ZodiacSign, SubscriptionStatus } from "./types";
+import { ZodiacSign } from "./types";
 
 // Zodiac sign schema for validation
 export const zodiacSignSchema = z.enum([
@@ -76,6 +76,11 @@ export const insertDeliveryLogSchema = createInsertSchema(deliveryLogs).omit({
   createdAt: true,
 });
 
+export const insertPremiumReportSchema = createInsertSchema(premiumReports).omit({
+  id: true,
+  createdAt: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
@@ -84,3 +89,6 @@ export type Horoscope = typeof horoscopes.$inferSelect;
 
 export type InsertDeliveryLog = z.infer<typeof insertDeliveryLogSchema>;
 export type DeliveryLog = typeof deliveryLogs.$inferSelect;
+
+export type InsertPremiumReport = z.infer<typeof insertPremiumReportSchema>;
+export type PremiumReport = typeof premiumReports.$inferSelect;

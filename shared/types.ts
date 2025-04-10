@@ -55,3 +55,55 @@ export type DeliveryStatus = 'success' | 'failed';
 
 // Delivery Type
 export type DeliveryType = 'email' | 'sms';
+
+// Subscription Status
+export type SubscriptionStatus = 
+  | 'active'
+  | 'trialing'
+  | 'past_due'
+  | 'canceled'
+  | 'incomplete'
+  | 'incomplete_expired'
+  | 'unpaid'
+  | 'none';
+
+// Subscription Tier
+export type SubscriptionTier = 'free' | 'premium' | 'pro';
+
+// Premium Report Content
+export interface PremiumReportContent {
+  weeklyOverview: string;
+  wellnessInsights: string;
+  monthlyForecast: string;
+  personalizedRecommendations: string[];
+  compatibilityInsights: string;
+  challengeAreas: string;
+  growthOpportunities: string;
+}
+
+// Premium Report Response
+export interface PremiumReportResponse {
+  sign: ZodiacSign;
+  weekStartDate: string;
+  weekEndDate: string;
+  content: PremiumReportContent;
+}
+
+// Pricing Plan
+export interface PricingPlan {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  interval: 'month' | 'year';
+  features: string[];
+  stripePriceId: string;
+  tier: SubscriptionTier;
+}
+
+// Subscription Input
+export interface SubscriptionInput {
+  userId: number;
+  priceId: string;
+  paymentMethodId?: string;
+}
