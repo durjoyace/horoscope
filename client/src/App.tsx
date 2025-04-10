@@ -10,6 +10,10 @@ import Home from "@/pages/Home";
 import Dashboard from "@/pages/Dashboard";
 import NotFound from "@/pages/not-found";
 import ZodiacLibrary from "@/pages/ZodiacLibrary";
+import AffiliateMarketplace from "@/pages/AffiliateMarketplace";
+import AboutPage from "@/pages/AboutPage";
+import SciencePage from "@/pages/SciencePage";
+import ContactPage from "@/pages/ContactPage";
 
 interface UserData {
   email: string;
@@ -103,6 +107,18 @@ function App() {
           </Route>
           <Route path="/zodiac-library">
             {(params) => <RouteWithProps component={ZodiacLibrary} params={params} />}
+          </Route>
+          <Route path="/marketplace">
+            {(params) => <RouteWithProps component={AffiliateMarketplace} params={params} />}
+          </Route>
+          <Route path="/about">
+            {(params) => <RouteWithProps component={AboutPage} params={params} />}
+          </Route>
+          <Route path="/science">
+            {(params) => <RouteWithProps component={SciencePage} params={params} />}
+          </Route>
+          <Route path="/contact">
+            {(params) => <RouteWithProps component={ContactPage} params={params} />}
           </Route>
           <Route>
             {(params) => <RouteWithProps component={NotFound} params={params} />}
