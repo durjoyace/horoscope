@@ -195,7 +195,7 @@ function App() {
             <div className="relative">
               <img
                 src="https://images.pexels.com/photos/1351238/pexels-photo-1351238.jpeg"
-                alt="Cosmic wellness illustration"
+                alt="Zodiac wellness illustration"
                 className="w-full h-auto rounded-lg shadow-lg"
               />
               <div className="absolute -bottom-4 -left-4 bg-white p-4 rounded-lg shadow-md">

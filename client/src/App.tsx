@@ -97,16 +97,34 @@ function AppContent() {
       
       <main className="flex-grow">
         <Switch>
-          <Route path="/" component={Home} />
-          <Route path="/auth" component={AuthPage} />
+          <Route path="/">
+            <Home />
+          </Route>
+          <Route path="/auth">
+            <AuthPage />
+          </Route>
           <ProtectedRoute path="/dashboard" component={Dashboard} />
-          <Route path="/zodiac-library" component={ZodiacLibrary} />
-          <Route path="/elements" component={ElementsGuide} />
-          <Route path="/marketplace" component={AffiliateMarketplace} />
-          <Route path="/about" component={AboutPage} />
-          <Route path="/science" component={SciencePage} />
-          <Route path="/contact" component={ContactPage} />
-          <Route component={NotFound} />
+          <Route path="/zodiac-library">
+            <ZodiacLibrary />
+          </Route>
+          <Route path="/elements">
+            <ElementsGuide />
+          </Route>
+          <Route path="/marketplace">
+            <AffiliateMarketplace user={user} />
+          </Route>
+          <Route path="/about">
+            <AboutPage />
+          </Route>
+          <Route path="/science">
+            <SciencePage />
+          </Route>
+          <Route path="/contact">
+            <ContactPage />
+          </Route>
+          <Route>
+            <NotFound />
+          </Route>
         </Switch>
       </main>
       
