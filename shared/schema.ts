@@ -1,12 +1,17 @@
 import { pgTable, text, serial, integer, boolean, timestamp, json } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
-import { ZodiacSign } from "./types";
+import { ZodiacSign, SubscriptionStatus } from "./types";
 
 // Zodiac sign schema for validation
 export const zodiacSignSchema = z.enum([
   'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'
+]);
+
+// Subscription status schema for validation
+export const subscriptionStatusSchema = z.enum([
+  'active', 'trialing', 'past_due', 'canceled', 'incomplete', 'incomplete_expired', 'unpaid', 'none'
 ]);
 
 export const users = pgTable("users", {
@@ -20,6 +25,12 @@ export const users = pgTable("users", {
   phone: text("phone"),
   smsOptIn: boolean("sms_opt_in").default(false),
   newsletterOptIn: boolean("newsletter_opt_in").default(true),
+  // Premium subscription fields
+  stripeCustomerId: text("stripe_customer_id"),
+  stripeSubscriptionId: text("stripe_subscription_id"),
+  subscriptionStatus: text("subscription_status").default('none'),
+  subscriptionTier: text("subscription_tier").default('free'),
+  subscriptionEndDate: timestamp("subscription_end_date"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -28,6 +39,7 @@ export const horoscopes = pgTable("horoscopes", {
   zodiacSign: text("zodiac_sign").notNull(),
   date: text("date").notNull(),
   content: json("content").notNull(),
+  isPremium: boolean("is_premium").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -37,6 +49,15 @@ export const deliveryLogs = pgTable("delivery_logs", {
   horoscopeId: integer("horoscope_id").notNull(),
   deliveryType: text("delivery_type").notNull(), // 'email' | 'sms'
   status: text("status").notNull(), // 'success' | 'failed'
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const premiumReports = pgTable("premium_reports", {
+  id: serial("id").primaryKey(),
+  zodiacSign: text("zodiac_sign").notNull(),
+  weekStartDate: text("week_start_date").notNull(),
+  weekEndDate: text("week_end_date").notNull(),
+  content: json("content").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
