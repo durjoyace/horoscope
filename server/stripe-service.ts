@@ -8,9 +8,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing STRIPE_SECRET_KEY environment variable');
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2023-10-16',
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Pricing plans configuration
 export const pricingPlans: PricingPlan[] = [
@@ -258,7 +256,9 @@ export async function handleWebhookEvent(event: Stripe.Event): Promise<void> {
           
           const user = users[0];
           const status = mapStripeStatus(subscription.status);
-          const endDate = subscription.current_period_end ? new Date(subscription.current_period_end * 1000) : undefined;
+          // Get the current period end as a timestamp (if available)
+          const currentPeriodEnd = (subscription as any).current_period_end;
+          const endDate = currentPeriodEnd ? new Date(currentPeriodEnd * 1000) : undefined;
           
           // Determine subscription tier based on the product or price
           // This is a simplified example, you may need to map products to tiers
@@ -293,7 +293,7 @@ export async function handleWebhookEvent(event: Stripe.Event): Promise<void> {
             user.id,
             'canceled',
             'free',
-            null
+            undefined
           );
         }
         break;

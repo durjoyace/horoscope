@@ -84,6 +84,12 @@ export class MemStorage implements IStorage {
       (user) => user.email === email,
     );
   }
+  
+  async getUsersByStripeCustomerId(stripeCustomerId: string): Promise<User[]> {
+    return Array.from(this.users.values()).filter(
+      (user) => user.stripeCustomerId === stripeCustomerId,
+    );
+  }
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.userCurrentId++;
@@ -101,6 +107,11 @@ export class MemStorage implements IStorage {
       phone: insertUser.phone || null,
       smsOptIn: insertUser.smsOptIn ?? null,
       newsletterOptIn: insertUser.newsletterOptIn ?? null,
+      stripeCustomerId: null,
+      stripeSubscriptionId: null,
+      subscriptionStatus: 'none',
+      subscriptionTier: 'free',
+      subscriptionEndDate: null,
       createdAt: createdAt
     };
     
@@ -131,7 +142,12 @@ export class MemStorage implements IStorage {
   async createHoroscope(insertHoroscope: InsertHoroscope): Promise<Horoscope> {
     const id = this.horoscopeCurrentId++;
     const createdAt = new Date();
-    const horoscope: Horoscope = { ...insertHoroscope, id, createdAt };
+    const horoscope: Horoscope = { 
+      ...insertHoroscope, 
+      id, 
+      createdAt,
+      isPremium: insertHoroscope.isPremium || false 
+    };
     this.horoscopes.set(id, horoscope);
     return horoscope;
   }
@@ -160,6 +176,12 @@ export class MemStorage implements IStorage {
   
   async getUsersForDailyDelivery(): Promise<User[]> {
     return Array.from(this.users.values());
+  }
+  
+  async getPremiumUsers(): Promise<User[]> {
+    return Array.from(this.users.values()).filter(
+      (user) => user.subscriptionTier === 'premium' || user.subscriptionTier === 'pro'
+    );
   }
 }
 
@@ -199,6 +221,20 @@ export class DatabaseStorage implements IStorage {
     } catch (error) {
       console.error('Error getting user by email:', error);
       return undefined;
+    }
+  }
+  
+  async getUsersByStripeCustomerId(stripeCustomerId: string): Promise<User[]> {
+    try {
+      const result = await db
+        .select()
+        .from(users)
+        .where(eq(users.stripeCustomerId, stripeCustomerId));
+      
+      return result;
+    } catch (error) {
+      console.error('Error getting users by Stripe customer ID:', error);
+      return [];
     }
   }
 
@@ -312,6 +348,22 @@ export class DatabaseStorage implements IStorage {
       return result;
     } catch (error) {
       console.error('Error getting users for daily delivery:', error);
+      return [];
+    }
+  }
+  
+  async getPremiumUsers(): Promise<User[]> {
+    try {
+      const result = await db
+        .select()
+        .from(users)
+        .where(eq(users.subscriptionStatus, 'active'));
+      
+      return result.filter(user => 
+        user.subscriptionTier === 'premium' || user.subscriptionTier === 'pro'
+      );
+    } catch (error) {
+      console.error('Error getting premium users:', error);
       return [];
     }
   }
