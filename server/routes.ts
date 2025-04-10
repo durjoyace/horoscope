@@ -16,6 +16,11 @@ import {
   cancelSubscription,
   createPaymentIntent
 } from "./stripe-service";
+import {
+  findPremiumReport,
+  generateMockPremiumReport,
+  generatePremiumReport
+} from "./premium-reports";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Initialize the scheduler for daily horoscope generation and delivery
@@ -452,11 +457,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // For now, we'll create a mock report
         const reportContent = generateMockPremiumReport(zodiacSign, startOfWeek, endOfWeek);
         
+        // Create a response object that matches the expected format
         premiumReport = {
-          sign: zodiacSign,
+          id: 0,
+          zodiacSign,
           weekStartDate,
           weekEndDate,
-          content: reportContent
+          content: reportContent,
+          createdAt: new Date()
         };
       }
 

@@ -1,291 +1,227 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { useUser } from '@/context/UserContext';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ZodiacSign } from '@shared/types';
-import { getZodiacBySign } from '@/utils/zodiac';
-import { apiRequest } from '@/lib/queryClient';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useToast } from '@/hooks/use-toast';
+import { HoroscopeContent, ZodiacSign, SubscriptionStatus, SubscriptionTier } from '@shared/types';
+import { format } from 'date-fns';
+import { PremiumReport } from '@/components/PremiumReport';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import { Calendar, Sparkles, Clock, Flame, Droplets, Flower, Wind } from 'lucide-react';
 
-// Dashboard component for logged-in users
-const Dashboard: React.FC = () => {
-  const { user, isLoading } = useUser();
+interface UserData {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  zodiacSign: ZodiacSign;
+  subscriptionStatus?: SubscriptionStatus;
+  subscriptionTier?: SubscriptionTier;
+  subscriptionEndDate?: string;
+}
+
+export default function Dashboard() {
+  const [user, setUser] = useState<UserData | null>(null);
+  const [horoscope, setHoroscope] = useState<HoroscopeContent | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [, setLocation] = useLocation();
-  const [horoscope, setHoroscope] = useState<any>(null);
-  const [isLoadingHoroscope, setIsLoadingHoroscope] = useState(false);
+  const { toast } = useToast();
 
-  // Fetch today's horoscope for the user
+  // Extract user data from localStorage for demo purposes
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser);
+        setUser(userData);
+      } catch (error) {
+        console.error('Failed to parse user data:', error);
+      }
+    } else {
+      // Redirect to home if no user data is found
+      setLocation('/');
+    }
+  }, [setLocation]);
+
+  // Fetch today's horoscope
   useEffect(() => {
     const fetchHoroscope = async () => {
       if (!user?.zodiacSign) return;
-      
-      setIsLoadingHoroscope(true);
+
       try {
-        const res = await fetch(`/api/horoscope/${user.zodiacSign}`);
-        const data = await res.json();
-        
+        setIsLoading(true);
+        const date = format(new Date(), 'yyyy-MM-dd');
+        const response = await fetch(`/api/horoscope/${user.zodiacSign}?date=${date}`);
+        const data = await response.json();
+
         if (data.success) {
-          setHoroscope(data);
+          setHoroscope(data.content);
+        } else {
+          toast({
+            title: 'Error',
+            description: data.message || 'Failed to load horoscope',
+            variant: 'destructive',
+          });
         }
       } catch (error) {
         console.error('Error fetching horoscope:', error);
+        toast({
+          title: 'Error',
+          description: 'Failed to load horoscope',
+          variant: 'destructive',
+        });
       } finally {
-        setIsLoadingHoroscope(false);
+        setIsLoading(false);
       }
     };
-    
-    if (user?.isAuthenticated) {
-      fetchHoroscope();
-    }
-  }, [user]);
 
-  // Redirect to home if not authenticated
-  useEffect(() => {
-    if (!isLoading && !user?.isAuthenticated) {
-      setLocation('/');
-    }
-  }, [user, isLoading, setLocation]);
+    fetchHoroscope();
+  }, [user, toast]);
 
-  if (isLoading) {
+  const elementIconMap: Record<string, any> = {
+    fire: <Flame className="h-5 w-5 text-red-500" />,
+    water: <Droplets className="h-5 w-5 text-blue-500" />,
+    earth: <Flower className="h-5 w-5 text-green-500" />,
+    air: <Wind className="h-5 w-5 text-purple-500" />
+  };
+
+  if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-3xl text-indigo-900 animate-spin mb-4">
-            <i className="fas fa-spinner"></i>
-          </div>
-          <p>Loading your cosmic dashboard...</p>
-        </div>
+      <div className="flex justify-center items-center min-h-[70vh]">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
       </div>
     );
   }
 
-  if (!user?.isAuthenticated) {
-    return null; // Will redirect via the effect
-  }
+  const userInitials = user.firstName && user.lastName 
+    ? `${user.firstName[0]}${user.lastName[0]}`
+    : user.email.substring(0, 2).toUpperCase();
 
-  const zodiacInfo = user.zodiacSign 
-    ? getZodiacBySign(user.zodiacSign as ZodiacSign)
-    : null;
+  const getZodiacEmoji = (sign: ZodiacSign): string => {
+    const emojis: Record<ZodiacSign, string> = {
+      aries: '♈',
+      taurus: '♉',
+      gemini: '♊',
+      cancer: '♋',
+      leo: '♌',
+      virgo: '♍',
+      libra: '♎',
+      scorpio: '♏',
+      sagittarius: '♐',
+      capricorn: '♑',
+      aquarius: '♒',
+      pisces: '♓'
+    };
+    return emojis[sign] || '✨';
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Navbar />
-      
-      <main className="flex-1 py-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-8">
-            <h1 className="text-3xl font-playfair font-bold">
-              Welcome{user.firstName ? `, ${user.firstName}` : ''}
+    <div className="container mx-auto py-8">
+      <div className="mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <Avatar className="h-16 w-16">
+            <AvatarFallback className="text-lg">
+              {userInitials}
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <h1 className="text-2xl font-bold">
+              {user.firstName ? `${user.firstName}'s Dashboard` : 'Your Dashboard'}
             </h1>
-            <p className="text-gray-600 mt-2">
-              Here's your personalized health guidance for today.
+            <p className="text-muted-foreground">
+              {getZodiacEmoji(user.zodiacSign)} {user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1)} • {format(new Date(), 'MMMM d, yyyy')}
             </p>
           </div>
-          
-          <Tabs defaultValue="horoscope" className="mb-8">
-            <TabsList>
-              <TabsTrigger value="horoscope">Today's Horoscope</TabsTrigger>
-              <TabsTrigger value="profile">My Profile</TabsTrigger>
-              <TabsTrigger value="history">History</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="horoscope" className="mt-6">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <Card className="lg:col-span-2">
-                  <CardHeader>
-                    <div className="flex items-center">
-                      {zodiacInfo && (
-                        <div className="w-10 h-10 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center mr-3">
-                          <i className={`fas fa-${zodiacInfo.icon}`}></i>
-                        </div>
-                      )}
-                      <div>
-                        <CardTitle>
-                          Your {zodiacInfo?.name || ''} Health Horoscope
-                        </CardTitle>
-                        <CardDescription>
-                          {new Date().toLocaleDateString('en-US', { 
-                            weekday: 'long', 
-                            year: 'numeric', 
-                            month: 'long', 
-                            day: 'numeric' 
-                          })}
-                        </CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    {isLoadingHoroscope ? (
-                      <div className="py-10 text-center">
-                        <div className="text-2xl text-indigo-900 animate-spin mb-4">
-                          <i className="fas fa-spinner"></i>
-                        </div>
-                        <p>Reading the stars for you...</p>
-                      </div>
-                    ) : horoscope ? (
-                      <div className="space-y-4">
-                        <p className="text-lg">{horoscope.content.overview}</p>
-                        
-                        <div className="flex flex-wrap gap-2 my-4">
-                          {horoscope.content.wellnessCategories.map((category: string, index: number) => (
-                            <span 
-                              key={index} 
-                              className="rounded-full px-3 py-1 text-xs font-semibold bg-teal-100 text-teal-600"
-                            >
-                              {category.charAt(0).toUpperCase() + category.slice(1)}
-                            </span>
-                          ))}
-                        </div>
-                        
-                        <div className="border-t pt-4">
-                          <h3 className="font-medium text-indigo-900 mb-2">Today's Health Tip</h3>
-                          <p>{horoscope.content.healthTip}</p>
-                        </div>
-                        
-                        <div className="border-t pt-4">
-                          <h3 className="font-medium text-indigo-900 mb-2">Nutrition Focus</h3>
-                          <p>{horoscope.content.nutritionFocus}</p>
-                        </div>
-                        
-                        <div className="border-t pt-4">
-                          <h3 className="font-medium text-indigo-900 mb-2">Element Alignment</h3>
-                          <div className="flex items-center">
-                            <div className="text-teal-600 mr-2">
-                              <i className="fas fa-water"></i>
-                            </div>
-                            <p>{horoscope.content.elementAlignment}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="py-10 text-center">
-                        <p>No horoscope available. Please check back later.</p>
-                        <Button 
-                          className="mt-4 bg-gradient-to-r from-teal-600 to-teal-400"
-                          onClick={() => window.location.reload()}
-                        >
-                          Refresh
-                        </Button>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Upcoming Wellness Insights</CardTitle>
-                    <CardDescription>
-                      Get ready for these cosmic alignments
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="border-b pb-3">
-                        <p className="font-medium">Tomorrow</p>
-                        <p className="text-sm text-gray-600">
-                          The moon enters your wellness sector, bringing focus to self-care
-                        </p>
-                      </div>
-                      <div className="border-b pb-3">
-                        <p className="font-medium">This Week</p>
-                        <p className="text-sm text-gray-600">
-                          Mercury retrograde ends, helping you communicate health needs clearly
-                        </p>
-                      </div>
-                      <div>
-                        <p className="font-medium">This Month</p>
-                        <p className="text-sm text-gray-600">
-                          Venus in your sign brings harmony to your health routines
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="profile" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>My Profile</CardTitle>
-                  <CardDescription>
-                    Your personalized settings
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <h3 className="text-sm font-medium text-gray-500">Email</h3>
-                        <p>{user.email}</p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-sm font-medium text-gray-500">Zodiac Sign</h3>
-                        <p>{zodiacInfo?.name || 'Not set'}</p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-sm font-medium text-gray-500">SMS Notifications</h3>
-                        <p>{user.smsOptIn ? 'Enabled' : 'Disabled'}</p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-sm font-medium text-gray-500">Phone</h3>
-                        <p>{user.phone || 'Not provided'}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="pt-4 border-t">
-                      <h3 className="font-medium mb-3">Delivery Preferences</h3>
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span>Daily Email</span>
-                          <Button variant="outline" size="sm">
-                            {user.newsletterOptIn ? 'Disable' : 'Enable'}
-                          </Button>
-                        </div>
-                        
-                        <div className="flex items-center justify-between">
-                          <span>SMS Alerts</span>
-                          <Button variant="outline" size="sm">
-                            {user.smsOptIn ? 'Disable' : 'Enable'}
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="history" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Horoscope History</CardTitle>
-                  <CardDescription>
-                    Your previous daily horoscopes
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center py-10">
-                    <p className="text-gray-500">
-                      Your past horoscopes will appear here as you use the service.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
         </div>
-      </main>
-      
-      <Footer />
+
+        {user.subscriptionTier === 'premium' && user.subscriptionStatus === 'active' && (
+          <div className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full">
+            <Sparkles className="h-4 w-4 text-primary" />
+            <span className="text-sm font-medium">Premium Member</span>
+          </div>
+        )}
+      </div>
+
+      <Tabs defaultValue="daily" className="space-y-6">
+        <TabsList>
+          <TabsTrigger value="daily">Daily Horoscope</TabsTrigger>
+          <TabsTrigger value="premium">Weekly Premium Report</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="daily" className="space-y-6">
+          {isLoading ? (
+            <Card>
+              <CardContent className="p-6 flex justify-center">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+              </CardContent>
+            </Card>
+          ) : horoscope ? (
+            <>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Your Daily Health Horoscope</CardTitle>
+                  <CardDescription>
+                    Astrological health insights for {format(new Date(), 'MMMM d, yyyy')}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div>
+                    <h3 className="font-semibold flex items-center gap-2">
+                      <Calendar className="h-5 w-5 text-primary" /> Daily Overview
+                    </h3>
+                    <p className="mt-2">{horoscope.overview}</p>
+                  </div>
+
+                  <Separator />
+
+                  <div>
+                    <h3 className="font-semibold flex items-center gap-2">
+                      {elementIconMap[horoscope.elementAlignment.toLowerCase()] || <Sparkles className="h-5 w-5 text-primary" />}
+                      Element Alignment
+                    </h3>
+                    <p className="mt-2">{horoscope.elementAlignment}</p>
+                  </div>
+
+                  <Separator />
+
+                  <div>
+                    <h3 className="font-semibold flex items-center gap-2">
+                      <Clock className="h-5 w-5 text-primary" /> Health Tip of the Day
+                    </h3>
+                    <p className="mt-2">{horoscope.healthTip}</p>
+                  </div>
+
+                  <Separator />
+
+                  <div>
+                    <h3 className="font-semibold">Nutritional Focus</h3>
+                    <p className="mt-2">{horoscope.nutritionFocus}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </>
+          ) : (
+            <Card>
+              <CardContent className="p-6 text-center">
+                <p>Could not load horoscope. Please try again later.</p>
+                <Button variant="outline" className="mt-4" onClick={() => window.location.reload()}>
+                  Refresh
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+
+        <TabsContent value="premium">
+          <PremiumReport 
+            email={user.email}
+            zodiacSign={user.zodiacSign}
+            subscriptionStatus={user.subscriptionStatus}
+            subscriptionTier={user.subscriptionTier}
+          />
+        </TabsContent>
+      </Tabs>
     </div>
   );
-};
-
-export default Dashboard;
+}

@@ -1,7 +1,6 @@
 import { storage } from './storage';
 import { PremiumReportContent, ZodiacSign } from '@shared/types';
 import { PremiumReport, InsertPremiumReport } from '@shared/schema';
-import { openai } from './openai';
 
 /**
  * Find a premium report by zodiac sign and date range
@@ -253,7 +252,7 @@ function getMonthlyForecast(sign: ZodiacSign): string {
     'steady improvement with particular focus needed on stress management',
     'fluctuating energy levels that respond well to consistent self-care',
     'excellent potential for healing long-standing health issues',
-    'heightened sensitivity requiring mindful attention to your body's signals'
+    'heightened sensitivity requiring mindful attention to your bodys signals'
   ];
   
   return forecasts[Math.floor(Math.random() * forecasts.length)];
