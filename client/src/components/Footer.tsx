@@ -8,13 +8,13 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
   
   // Group signs by element
-  const signsByElement = zodiacSignNames.reduce((acc: Record<string, typeof zodiacSignNames>, sign: any) => {
+  const signsByElement = zodiacSignNames.reduce((acc: Record<string, any[]>, sign) => {
     if (!acc[sign.element]) {
       acc[sign.element] = [];
     }
     acc[sign.element].push(sign);
     return acc;
-  }, {} as Record<string, typeof zodiacSignNames>);
+  }, {} as Record<string, any[]>);
   
   return (
     <footer className="bg-card border-t">
@@ -79,10 +79,8 @@ export function Footer() {
                     {element}
                   </h4>
                   {signs.map((sign: any) => (
-                    <Link key={sign.value} href={`/zodiac-library?sign=${sign.value}`}>
-                      <a className="block text-xs text-muted-foreground hover:text-foreground transition-colors">
-                        {sign.symbol} {sign.label}
-                      </a>
+                    <Link key={sign.value} href={`/zodiac-library?sign=${sign.value}`} className="block text-xs text-muted-foreground hover:text-foreground transition-colors">
+                      {sign.symbol} {sign.label}
                     </Link>
                   ))}
                 </div>
@@ -97,9 +95,7 @@ export function Footer() {
               Subscribe for deeper insights, weekly reports, and personalized recommendations.
             </p>
             <Link href="/pricing">
-              <a>
-                <Button className="w-full">Subscribe Now</Button>
-              </a>
+              <Button className="w-full">Subscribe Now</Button>
             </Link>
           </div>
         </div>
@@ -111,11 +107,11 @@ export function Footer() {
             © {currentYear} HoroscopeHealth. All rights reserved.
           </div>
           <div className="flex gap-4">
-            <Link href="/privacy">
-              <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+            <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Privacy Policy
             </Link>
-            <Link href="/terms">
-              <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
+            <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Terms of Service
             </Link>
           </div>
         </div>
