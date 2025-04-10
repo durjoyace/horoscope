@@ -255,7 +255,7 @@ export default function ContactPage() {
       {/* Newsletter Signup */}
       <div className="bg-primary/5 rounded-xl p-8 md:p-12 text-center">
         <h2 className="text-2xl font-bold tracking-tight mb-4">
-          Stay Connected with Cosmic Updates
+          Stay Connected with Horoscope Health Updates
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
           Join our newsletter to receive the latest astrological insights and wellness tips tailored to your zodiac sign.

@@ -192,7 +192,7 @@ export default function AboutPage() {
       {/* CTA */}
       <div className="text-center">
         <h2 className="text-3xl font-bold tracking-tight mb-6">
-          Ready to Discover Your Cosmic Health Profile?
+          Ready to Discover Your Horoscope Health Profile?
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
           Join thousands of members who receive daily personalized health horoscopes tailored to their zodiac sign's unique constitution.

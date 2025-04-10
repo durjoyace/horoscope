@@ -149,7 +149,7 @@ export const CallToAction: React.FC = () => {
                 disabled={isSubmitting}
                 className="w-full bg-amber-500 hover:bg-amber-400 text-white font-semibold shadow hover:shadow-lg"
               >
-                {isSubmitting ? 'Submitting...' : 'Start My Cosmic Health Journey'}
+                {isSubmitting ? 'Submitting...' : 'Start My Horoscope Health Journey'}
               </Button>
             </form>
           </Form>

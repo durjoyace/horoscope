@@ -310,7 +310,7 @@ export default function AuthPage() {
       
       <div className="hidden md:block md:w-1/2 pl-8">
         <div className="cosmic-card">
-          <h2 className="text-2xl font-bold mb-4 text-primary">Your Cosmic Health Journey</h2>
+          <h2 className="text-2xl font-bold mb-4 text-primary">Your Horoscope Health Journey</h2>
           <p className="mb-4">Join us to discover how the stars influence your wellness and receive personalized health guidance aligned with your zodiac sign.</p>
           
           <div className="space-y-4 mb-6">

@@ -322,7 +322,7 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
           <ShoppingBag className="h-12 w-12 text-primary" />
         </div>
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-          Cosmic Wellness Marketplace
+          Horoscope Health Marketplace
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           Curated products aligned with your astrological profile for optimal wellbeing
