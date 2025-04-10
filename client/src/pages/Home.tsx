@@ -102,13 +102,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative py-16 md:py-20 lg:py-28 overflow-hidden bg-gradient-to-b from-primary/20 via-primary/10 to-background star-bg">
+      <section className="relative py-10 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-gradient-to-b from-primary/20 via-primary/10 to-background star-bg">
         {/* Cosmic Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-12 h-12 md:w-24 md:h-24 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float"></div>
-          <div className="absolute top-40 right-10 w-20 h-20 md:w-32 md:h-32 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-float-slow"></div>
-          <div className="absolute bottom-20 left-1/4 w-24 h-24 md:w-40 md:h-40 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float-slower"></div>
-          <div className="absolute top-1/3 right-1/3 w-10 h-10 md:w-16 md:h-16 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-pulse"></div>
+          <div className="absolute top-20 left-10 w-8 h-8 sm:w-12 sm:h-12 md:w-24 md:h-24 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float"></div>
+          <div className="absolute top-40 right-10 w-12 h-12 sm:w-20 sm:h-20 md:w-32 md:h-32 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-float-slow"></div>
+          <div className="absolute bottom-20 left-1/4 w-16 h-16 sm:w-24 sm:h-24 md:w-40 md:h-40 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float-slower"></div>
+          <div className="absolute top-1/3 right-1/3 w-8 h-8 sm:w-10 sm:h-10 md:w-16 md:h-16 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-pulse"></div>
           
           {/* Constellation-like elements */}
           <div className="absolute inset-0 opacity-30 select-none pointer-events-none">
@@ -121,28 +121,28 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           
           {/* Zodiac Symbols Background - more subtle and modern */}
           <div className="absolute inset-0 opacity-5 select-none pointer-events-none">
-            <div className="absolute top-1/4 left-1/5 text-4xl md:text-6xl transform rotate-12">♈</div>
-            <div className="absolute top-1/3 right-1/4 text-5xl md:text-7xl transform -rotate-6">♉</div>
-            <div className="absolute bottom-1/4 left-1/3 text-4xl md:text-5xl transform rotate-45">♌</div>
-            <div className="absolute top-2/3 right-1/5 text-5xl md:text-8xl transform -rotate-12">♓</div>
-            <div className="absolute top-1/2 left-1/2 text-4xl md:text-6xl transform rotate-90">♎</div>
+            <div className="absolute top-1/4 left-1/5 text-3xl sm:text-4xl md:text-6xl transform rotate-12">♈</div>
+            <div className="absolute top-1/3 right-1/4 text-3xl sm:text-5xl md:text-7xl transform -rotate-6">♉</div>
+            <div className="absolute bottom-1/4 left-1/3 text-3xl sm:text-4xl md:text-5xl transform rotate-45">♌</div>
+            <div className="absolute top-2/3 right-1/5 text-3xl sm:text-5xl md:text-8xl transform -rotate-12">♓</div>
+            <div className="absolute top-1/2 left-1/2 text-3xl sm:text-4xl md:text-6xl transform rotate-90">♎</div>
           </div>
         </div>
         
         <div className="container relative mx-auto px-4 z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-5 sm:gap-8 lg:gap-12">
             <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 bg-background/40 text-primary px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium mb-6 md:mb-8 backdrop-blur-md border border-primary/20 shadow-sm animate-fade-in">
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-background/40 text-primary px-2.5 sm:px-3 py-1.5 sm:py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium mb-4 sm:mb-6 md:mb-8 backdrop-blur-md border border-primary/20 shadow-sm animate-fade-in">
                 <Sparkles className="h-3 w-3 md:h-4 md:w-4" />
                 <span>Where Ancient Wisdom Meets Modern Science</span>
               </div>
               
-              <h1 className="magazine-heading text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6 animate-slide-up">
+              <h1 className="magazine-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 md:mb-6 animate-slide-up">
                 <span className="block">Your Personalized</span>
-                <span className="gradient-heading">Cosmic Wellness Guide</span>
+                <span className="gradient-heading">Horoscope Health Guide</span>
               </h1>
               
-              <p className="magazine-lead text-sm md:text-base text-muted-foreground mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">
+              <p className="magazine-lead text-sm md:text-base text-muted-foreground mb-4 sm:mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">
                 Discover how your zodiac sign influences your health tendencies and receive daily personalized wellness recommendations based on your astrological profile.
               </p>
               
