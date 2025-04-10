@@ -20,7 +20,9 @@ export const ZodiacSelector: React.FC = () => {
       try {
         const result = await signUp({
           email: user.email,
-          zodiacSign: sign
+          zodiacSign: sign,
+          smsOptIn: user.smsOptIn,
+          newsletterOptIn: user.newsletterOptIn
         });
         
         if (result.success) {

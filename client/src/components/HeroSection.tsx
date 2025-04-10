@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
+import { useUser } from '@/context/UserContext';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { useUser } from '@/context/UserContext';
+import * as z from 'zod';
+import { 
+  Form, 
+  FormControl, 
+  FormField, 
+  FormItem, 
+  FormLabel, 
+  FormMessage 
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Star } from 'lucide-react';
 import { SuccessModal } from './SuccessModal';
+import { ZodiacSign } from '@shared/types';
 
+// Form validation schema
 const formSchema = z.object({
-  email: z.string().email({ message: 'Please enter a valid email address.' }),
+  email: z.string().email('Please enter a valid email address'),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -17,16 +27,16 @@ type FormValues = z.infer<typeof formSchema>;
 export const HeroSection: React.FC = () => {
   const { signUp } = useUser();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-
+  const [successMessage, setSuccessMessage] = useState('');
+  
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
     },
   });
-
+  
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     
@@ -34,7 +44,9 @@ export const HeroSection: React.FC = () => {
       const result = await signUp({
         email: data.email,
         // Default zodiac sign until they select one
-        zodiacSign: 'aries', 
+        zodiacSign: 'aries' as ZodiacSign, 
+        smsOptIn: false,
+        newsletterOptIn: true
       });
       
       if (result.success) {
@@ -49,8 +61,8 @@ export const HeroSection: React.FC = () => {
         });
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      form.setError('root', { 
+      console.error('Error during signup:', error);
+      form.setError('email', { 
         type: 'manual', 
         message: 'An unexpected error occurred. Please try again.' 
       });
@@ -58,20 +70,24 @@ export const HeroSection: React.FC = () => {
       setIsSubmitting(false);
     }
   };
-
+  
   return (
-    <section className="relative overflow-hidden">
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
-        <div className="flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 mb-10 md:mb-0">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold leading-tight mb-6">
-              Your Future Self <span className="text-indigo-900">Will Thank You.</span>
+    <section className="w-full pt-8 pb-12 bg-gradient-to-r from-indigo-50 to-purple-50">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="md:w-1/2">
+            <h1 className="text-4xl md:text-5xl font-playfair font-bold text-gray-900 mb-4">
+              Your Daily Health Horoscope
             </h1>
-            <p className="text-xl md:text-2xl mb-8">
-              Get your daily health horoscope — free. Small actions. Big energy.
+            <p className="text-xl text-gray-700 mb-6 max-w-lg">
+              Personalized wellness guidance aligned with your zodiac sign, delivered daily to your inbox.
             </p>
-            <div className="max-w-md">
+            
+            <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+              <h2 className="text-xl font-semibold mb-4">
+                Sign up for your free daily health horoscope
+              </h2>
+              
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <FormField
@@ -79,23 +95,21 @@ export const HeroSection: React.FC = () => {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
+                        <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="Enter your email"
-                            className="bg-white/10 border border-teal-600/30 shadow-sm p-3 focus:border-teal-600 focus:ring-2 focus:ring-teal-600/20"
-                            {...field}
-                          />
+                          <Input placeholder="Enter your email" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <Button
-                    type="submit"
+                  
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-indigo-600 hover:bg-indigo-700"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-teal-600 to-teal-400 text-white font-semibold shadow hover:shadow-lg transition-all py-6"
                   >
-                    {isSubmitting ? 'Submitting...' : 'Get My Daily Health Horoscope'}
+                    {isSubmitting ? 'Signing up...' : 'Get My Horoscope'}
                   </Button>
                 </form>
               </Form>
@@ -113,11 +127,11 @@ export const HeroSection: React.FC = () => {
               <div className="absolute -bottom-5 -left-5 bg-white p-4 rounded-lg shadow-lg">
                 <div className="flex items-center">
                   <div className="w-10 h-10 flex items-center justify-center rounded-full bg-amber-500/10 text-amber-500 mr-3">
-                    <i className="fas fa-sun"></i>
+                    <Star className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-xs text-indigo-800 font-medium">Today's Insight for Leo</p>
-                    <p className="text-sm">Focus on hydration and stretching today</p>
+                    <p className="text-sm font-medium">Personalized Insights</p>
+                    <p className="text-xs text-gray-600">Updated daily for your sign</p>
                   </div>
                 </div>
               </div>

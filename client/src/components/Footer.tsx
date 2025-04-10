@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/context/UserContext';
 import { SuccessModal } from './SuccessModal';
+import { ZodiacSign } from '@shared/types';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address.' }),
@@ -33,7 +34,8 @@ export const Footer: React.FC = () => {
     try {
       const result = await signUp({
         email: data.email,
-        zodiacSign: 'aries',
+        zodiacSign: 'aries' as ZodiacSign,
+        smsOptIn: false,
         newsletterOptIn: true,
       });
       
