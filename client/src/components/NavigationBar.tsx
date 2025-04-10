@@ -72,8 +72,8 @@ export function NavigationBar({
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-1 sm:gap-2">
             <div className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent truncate">
-              <span className="hidden xs:inline">HoroscopeHealth</span>
-              <span className="xs:hidden">HHealth</span>
+              <span className="hidden xs:inline">Horoscope Health</span>
+              <span className="xs:hidden">HH</span>
             </div>
           </Link>
         </div>
