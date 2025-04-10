@@ -79,14 +79,39 @@ export default function ZodiacLibrary() {
     }
   };
   
-  // Element icon mapping
+  // Element icon mapping with improved styling
   const getElementIcon = (element: string) => {
     switch (element) {
-      case 'Fire': return <Flame className="h-5 w-5 text-red-500" />;
-      case 'Earth': return <Leaf className="h-5 w-5 text-green-600" />;
-      case 'Air': return <Wind className="h-5 w-5 text-purple-500" />;
-      case 'Water': return <Droplets className="h-5 w-5 text-blue-500" />;
-      default: return <Star className="h-5 w-5 text-primary" />;
+      case 'Fire': 
+        return (
+          <div className="inline-flex items-center justify-center rounded-full bg-red-100 p-1.5">
+            <Flame className="h-4 w-4 text-red-600" />
+          </div>
+        );
+      case 'Earth': 
+        return (
+          <div className="inline-flex items-center justify-center rounded-full bg-green-100 p-1.5">
+            <Leaf className="h-4 w-4 text-green-700" />
+          </div>
+        );
+      case 'Air': 
+        return (
+          <div className="inline-flex items-center justify-center rounded-full bg-purple-100 p-1.5">
+            <Wind className="h-4 w-4 text-purple-700" />
+          </div>
+        );
+      case 'Water': 
+        return (
+          <div className="inline-flex items-center justify-center rounded-full bg-blue-100 p-1.5">
+            <Droplets className="h-4 w-4 text-blue-700" />
+          </div>
+        );
+      default: 
+        return (
+          <div className="inline-flex items-center justify-center rounded-full bg-primary/20 p-1.5">
+            <Star className="h-4 w-4 text-primary" />
+          </div>
+        );
     }
   };
 
@@ -116,45 +141,55 @@ export default function ZodiacLibrary() {
             variant={elementFilter === null ? 'default' : 'outline'} 
             size="sm" 
             onClick={() => setElementFilter(null)}
-            className="gap-1"
+            className="gap-2 rounded-full"
           >
-            <Star className="h-4 w-4" />
+            <div className="inline-flex items-center justify-center rounded-full bg-primary/20 p-1">
+              <Star className="h-3.5 w-3.5 text-primary" />
+            </div>
             <span>All</span>
           </Button>
           <Button 
             variant={elementFilter === 'Fire' ? 'default' : 'outline'} 
             size="sm" 
             onClick={() => setElementFilter('Fire')}
-            className="gap-1"
+            className="gap-2 rounded-full"
           >
-            <Flame className="h-4 w-4 text-red-500" />
+            <div className="inline-flex items-center justify-center rounded-full bg-red-100 p-1">
+              <Flame className="h-3.5 w-3.5 text-red-600" />
+            </div>
             <span>Fire</span>
           </Button>
           <Button 
             variant={elementFilter === 'Earth' ? 'default' : 'outline'} 
             size="sm" 
             onClick={() => setElementFilter('Earth')}
-            className="gap-1"
+            className="gap-2 rounded-full"
           >
-            <Leaf className="h-4 w-4 text-green-600" />
+            <div className="inline-flex items-center justify-center rounded-full bg-green-100 p-1">
+              <Leaf className="h-3.5 w-3.5 text-green-700" />
+            </div>
             <span>Earth</span>
           </Button>
           <Button 
             variant={elementFilter === 'Air' ? 'default' : 'outline'} 
             size="sm" 
             onClick={() => setElementFilter('Air')}
-            className="gap-1"
+            className="gap-2 rounded-full"
           >
-            <Wind className="h-4 w-4 text-purple-500" />
+            <div className="inline-flex items-center justify-center rounded-full bg-purple-100 p-1">
+              <Wind className="h-3.5 w-3.5 text-purple-700" />
+            </div>
             <span>Air</span>
           </Button>
           <Button 
             variant={elementFilter === 'Water' ? 'default' : 'outline'} 
             size="sm" 
             onClick={() => setElementFilter('Water')}
-            className="gap-1"
+            className="gap-2 rounded-full"
           >
-            <Droplets className="h-4 w-4 text-blue-500" />
+            <div className="inline-flex items-center justify-center rounded-full bg-blue-100 p-1">
+              <Droplets className="h-3.5 w-3.5 text-blue-700" />
+            </div>
             <span>Water</span>
           </Button>
         </div>

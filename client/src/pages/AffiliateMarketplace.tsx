@@ -166,29 +166,53 @@ const products: Product[] = [
 const getCategoryIcon = (category: ProductCategory) => {
   switch (category) {
     case 'supplements':
-      return <div className="bg-blue-100 p-3 rounded-md flex items-center justify-center">
-        <CheckCircle2 className="h-10 w-10 text-blue-600" />
-      </div>;
+      return (
+        <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-4 rounded-full flex items-center justify-center shadow-md">
+          <div className="bg-white rounded-full p-2">
+            <CheckCircle2 className="h-8 w-8 text-blue-600" strokeWidth={2} />
+          </div>
+        </div>
+      );
     case 'teas':
-      return <div className="bg-green-100 p-3 rounded-md flex items-center justify-center">
-        <Heart className="h-10 w-10 text-green-600" />
-      </div>;
+      return (
+        <div className="bg-gradient-to-br from-green-100 to-green-200 p-4 rounded-full flex items-center justify-center shadow-md">
+          <div className="bg-white rounded-full p-2">
+            <Heart className="h-8 w-8 text-green-600" strokeWidth={2} fill="rgba(34, 197, 94, 0.2)" />
+          </div>
+        </div>
+      );
     case 'books':
-      return <div className="bg-amber-100 p-3 rounded-md flex items-center justify-center">
-        <Info className="h-10 w-10 text-amber-600" />
-      </div>;
+      return (
+        <div className="bg-gradient-to-br from-amber-100 to-amber-200 p-4 rounded-full flex items-center justify-center shadow-md">
+          <div className="bg-white rounded-full p-2">
+            <Info className="h-8 w-8 text-amber-600" strokeWidth={2} />
+          </div>
+        </div>
+      );
     case 'tools':
-      return <div className="bg-purple-100 p-3 rounded-md flex items-center justify-center">
-        <Star className="h-10 w-10 text-purple-600" />
-      </div>;
+      return (
+        <div className="bg-gradient-to-br from-purple-100 to-purple-200 p-4 rounded-full flex items-center justify-center shadow-md">
+          <div className="bg-white rounded-full p-2">
+            <Star className="h-8 w-8 text-purple-600" strokeWidth={2} fill="rgba(147, 51, 234, 0.2)" />
+          </div>
+        </div>
+      );
     case 'crystals':
-      return <div className="bg-pink-100 p-3 rounded-md flex items-center justify-center">
-        <Star className="h-10 w-10 text-pink-600" />
-      </div>;
+      return (
+        <div className="bg-gradient-to-br from-pink-100 to-pink-200 p-4 rounded-full flex items-center justify-center shadow-md">
+          <div className="bg-white rounded-full p-2">
+            <Star className="h-8 w-8 text-pink-600" strokeWidth={2} fill="rgba(219, 39, 119, 0.2)" />
+          </div>
+        </div>
+      );
     default:
-      return <div className="bg-gray-100 p-3 rounded-md flex items-center justify-center">
-        <ShoppingBag className="h-10 w-10 text-gray-600" />
-      </div>;
+      return (
+        <div className="bg-gradient-to-br from-gray-100 to-gray-200 p-4 rounded-full flex items-center justify-center shadow-md">
+          <div className="bg-white rounded-full p-2">
+            <ShoppingBag className="h-8 w-8 text-gray-600" strokeWidth={2} />
+          </div>
+        </div>
+      );
   }
 };
 
