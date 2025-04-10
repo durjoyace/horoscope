@@ -298,16 +298,16 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             <FeatureCard 
               icon={<HeartPulse className="h-full w-full" />}
               title="Personalized Guidance"
-              description="You receive daily horoscopes with specific health and wellness recommendations tailored to your sign's unique constitution and current cosmic influences."
+              description="You receive daily horoscopes with specific health and wellness recommendations tailored to your sign's unique constitution and current celestial influences."
               dialogContent={{
                 sections: [
                   {
                     title: "Daily Health Horoscopes",
-                    content: "Every day, you'll receive personalized health insights based on your zodiac sign and current planetary alignments. These include specific wellness categories relevant to your cosmic energy that day."
+                    content: "Every day, you'll receive personalized health insights based on your zodiac sign and current planetary alignments. These include specific wellness categories relevant to your zodiac energy that day."
                   },
                   {
                     title: "Actionable Recommendations",
-                    content: "Your daily horoscope includes practical tips for nutrition, exercise, stress management, and self-care that are specifically aligned with your astrological profile and current cosmic influences."
+                    content: "Your daily horoscope includes practical tips for nutrition, exercise, stress management, and self-care that are specifically aligned with your astrological profile and current celestial influences."
                   },
                   {
                     title: "Elemental Balance",
@@ -642,7 +642,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                 Beyond Daily Horoscopes
               </h2>
               <p className="magazine-lead mb-8 text-muted-foreground">
-                Our premium membership unlocks deeper wellness insights and personalized guidance for your cosmic health journey.
+                Our premium membership unlocks deeper wellness insights and personalized guidance for your astrological health journey.
               </p>
               
               <div className="space-y-6">
@@ -653,7 +653,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                   <div>
                     <h3 className="text-xl font-medium mb-1">Weekly Premium Reports</h3>
                     <p className="text-muted-foreground">
-                      Receive comprehensive wellness forecasts with detailed recommendations for nutrition, fitness, and self-care based on your sign's current cosmic influences.
+                      Receive comprehensive wellness forecasts with detailed recommendations for nutrition, fitness, and self-care based on your sign's current celestial influences.
                     </p>
                   </div>
                 </div>
@@ -780,7 +780,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
               What Our Members Say
             </h2>
             <p className="magazine-lead text-muted-foreground max-w-2xl mx-auto">
-              Real stories from people who transformed their wellness through cosmic insights
+              Real stories from people who transformed their wellness through astrological insights
             </p>
           </div>
           
@@ -843,8 +843,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       </section>
 
       {/* CTA */}
-      <section className="py-20 md:py-28 cosmic-gradient star-bg relative overflow-hidden">
-        {/* Cosmic elements for the CTA */}
+      <section className="py-20 md:py-28 zodiac-gradient star-bg relative overflow-hidden">
+        {/* Celestial elements for the CTA */}
         <div className="absolute inset-0 opacity-30 select-none pointer-events-none">
           <div className="absolute top-1/4 right-1/3 h-1 w-1 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
           <div className="absolute bottom-1/2 left-1/4 h-1.5 w-1.5 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
