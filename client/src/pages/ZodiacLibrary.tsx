@@ -1,310 +1,375 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { zodiacSignNames, zodiacDescriptions, zodiacElementColors } from '@/data/zodiacData';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { zodiacSignNames, elementCharacteristics } from '@/data/zodiacData';
 import { 
-  Sun, 
-  Heart, 
-  Apple, 
-  Activity, 
-  Dumbbell,
-  Flame,
-  Leaf,
-  Wind,
-  Droplets,
-  ShieldAlert,
-  Lightbulb,
-  Users
-} from 'lucide-react';
+  Tabs, 
+  TabsContent, 
+  TabsList, 
+  TabsTrigger 
+} from '@/components/ui/tabs';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, Flame, Droplets, Wind, Leaf, Star, Search, Filter } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { ZodiacSign } from '@shared/types';
 
 export default function ZodiacLibrary() {
-  const [, params] = useLocation();
-  const urlParams = new URLSearchParams(window.location.search);
-  const signFromUrl = urlParams.get('sign');
+  const [location, setLocation] = useLocation();
+  const [selectedSign, setSelectedSign] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [elementFilter, setElementFilter] = useState<string | null>(null);
   
-  const [selectedSign, setSelectedSign] = useState<string>(
-    signFromUrl && zodiacSignNames.some(s => s.value === signFromUrl) 
-      ? signFromUrl 
-      : 'aries'
-  );
+  // Parse query params on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const signParam = params.get('sign');
+    if (signParam && zodiacSignNames.some(sign => sign.value === signParam)) {
+      setSelectedSign(signParam);
+    }
+  }, []);
 
-  const selectedSignData = zodiacSignNames.find(s => s.value === selectedSign);
-  const selectedSignDetails = zodiacDescriptions[selectedSign as keyof typeof zodiacDescriptions];
+  // Update URL when sign changes
+  useEffect(() => {
+    if (selectedSign) {
+      const params = new URLSearchParams(window.location.search);
+      params.set('sign', selectedSign);
+      setLocation(`/zodiac-library?${params.toString()}`, { replace: true });
+    }
+  }, [selectedSign, setLocation]);
   
+  // Filter signs based on search query and element filter
+  const filteredSigns = zodiacSignNames.filter(sign => {
+    const matchesSearch = searchQuery === '' ||
+      sign.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      sign.element.toLowerCase().includes(searchQuery.toLowerCase());
+      
+    const matchesElement = elementFilter === null || sign.element === elementFilter;
+    
+    return matchesSearch && matchesElement;
+  });
+  
+  // Get the selected sign data
+  const selectedSignData = selectedSign 
+    ? zodiacSignNames.find(sign => sign.value === selectedSign) 
+    : null;
+    
+  // Element color mapping
+  const getElementColor = (element: string) => {
+    switch (element) {
+      case 'Fire': return 'text-red-600';
+      case 'Earth': return 'text-green-600';
+      case 'Air': return 'text-purple-600';
+      case 'Water': return 'text-blue-600';
+      default: return 'text-muted-foreground';
+    }
+  };
+  
+  // Element icon mapping
   const getElementIcon = (element: string) => {
     switch (element) {
-      case 'Fire':
-        return <Flame className={`h-5 w-5 ${zodiacElementColors.Fire}`} />;
-      case 'Earth':
-        return <Leaf className={`h-5 w-5 ${zodiacElementColors.Earth}`} />;
-      case 'Air':
-        return <Wind className={`h-5 w-5 ${zodiacElementColors.Air}`} />;
-      case 'Water':
-        return <Droplets className={`h-5 w-5 ${zodiacElementColors.Water}`} />;
-      default:
-        return <Sun className="h-5 w-5 text-amber-500" />;
+      case 'Fire': return <Flame className="h-5 w-5 text-red-500" />;
+      case 'Earth': return <Leaf className="h-5 w-5 text-green-600" />;
+      case 'Air': return <Wind className="h-5 w-5 text-purple-500" />;
+      case 'Water': return <Droplets className="h-5 w-5 text-blue-500" />;
+      default: return <Star className="h-5 w-5 text-primary" />;
     }
   };
 
   return (
-    <div className="container mx-auto px-4 py-12 md:py-16">
-      {/* Hero Section */}
-      <div className="text-center mb-16">
-        <div className="flex justify-center mb-4">
-          <Sun className="h-12 w-12 text-primary" />
-        </div>
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-          Zodiac Health Library
-        </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Discover the unique health characteristics, strengths, and wellness recommendations for each zodiac sign
+    <div className="container mx-auto px-4 py-12">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">Zodiac Health Library</h1>
+        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          Explore the health tendencies and wellness recommendations for each zodiac sign, based on astrological elements and cosmic influences.
         </p>
       </div>
-
-      {/* Zodiac Sign Selector */}
-      <div className="flex flex-wrap justify-center gap-3 mb-16">
-        {zodiacSignNames.map((sign) => (
-          <Button
-            key={sign.value}
-            variant={selectedSign === sign.value ? "default" : "outline"}
-            className="flex items-center gap-2"
-            onClick={() => setSelectedSign(sign.value)}
+      
+      {/* Filters and Search */}
+      <div className="flex flex-col md:flex-row gap-4 mb-10">
+        <div className="relative flex-grow">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input 
+            placeholder="Search by sign or element..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9"
+          />
+        </div>
+        
+        <div className="flex gap-2 flex-wrap">
+          <Button 
+            variant={elementFilter === null ? 'default' : 'outline'} 
+            size="sm" 
+            onClick={() => setElementFilter(null)}
+            className="gap-1"
           >
-            <span className="text-lg">{sign.symbol}</span>
-            <span>{sign.label}</span>
+            <Star className="h-4 w-4" />
+            <span>All</span>
           </Button>
-        ))}
+          <Button 
+            variant={elementFilter === 'Fire' ? 'default' : 'outline'} 
+            size="sm" 
+            onClick={() => setElementFilter('Fire')}
+            className="gap-1"
+          >
+            <Flame className="h-4 w-4 text-red-500" />
+            <span>Fire</span>
+          </Button>
+          <Button 
+            variant={elementFilter === 'Earth' ? 'default' : 'outline'} 
+            size="sm" 
+            onClick={() => setElementFilter('Earth')}
+            className="gap-1"
+          >
+            <Leaf className="h-4 w-4 text-green-600" />
+            <span>Earth</span>
+          </Button>
+          <Button 
+            variant={elementFilter === 'Air' ? 'default' : 'outline'} 
+            size="sm" 
+            onClick={() => setElementFilter('Air')}
+            className="gap-1"
+          >
+            <Wind className="h-4 w-4 text-purple-500" />
+            <span>Air</span>
+          </Button>
+          <Button 
+            variant={elementFilter === 'Water' ? 'default' : 'outline'} 
+            size="sm" 
+            onClick={() => setElementFilter('Water')}
+            className="gap-1"
+          >
+            <Droplets className="h-4 w-4 text-blue-500" />
+            <span>Water</span>
+          </Button>
+        </div>
       </div>
-
-      {/* Selected Sign Info */}
-      {selectedSignData && selectedSignDetails && (
-        <div className="mb-20">
-          <div className="flex flex-col md:flex-row gap-8 items-start mb-12">
-            {/* Sign Overview */}
-            <div className="flex-1">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="text-6xl">{selectedSignData.symbol}</div>
-                <div>
-                  <h2 className="text-3xl font-bold tracking-tight">
-                    {selectedSignData.label}
-                  </h2>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <span>{selectedSignData.dates}</span>
-                    <span>•</span>
-                    <div className="flex items-center gap-1">
-                      {getElementIcon(selectedSignData.element)}
-                      <span className={zodiacElementColors[selectedSignData.element as keyof typeof zodiacElementColors]}>
-                        {selectedSignData.element} Element
-                      </span>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Sign List */}
+        <div className="lg:col-span-1">
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle>Zodiac Signs</CardTitle>
+              <CardDescription>
+                {filteredSigns.length} signs found
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
+              {filteredSigns.map((sign) => (
+                <Button
+                  key={sign.value}
+                  variant={selectedSign === sign.value ? "default" : "outline"}
+                  onClick={() => setSelectedSign(sign.value)}
+                  className="justify-start gap-2 h-auto py-3"
+                >
+                  <span className="text-xl">{sign.symbol}</span>
+                  <div className="text-left">
+                    <div>{sign.label}</div>
+                    <div className="text-xs text-muted-foreground flex items-center gap-1">
+                      {getElementIcon(sign.element)}
+                      <span>{sign.element} • {sign.dates}</span>
                     </div>
                   </div>
-                </div>
-              </div>
-              
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-2xl font-bold mb-3">{selectedSignDetails.title}</h3>
-                  <p className="text-muted-foreground">{selectedSignDetails.description}</p>
-                </div>
+                </Button>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
+        
+        {/* Sign Details */}
+        <div className="lg:col-span-2">
+          {selectedSignData ? (
+            <div className="space-y-8">
+              {/* Sign Overview */}
+              <Card>
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="text-5xl">{selectedSignData.symbol}</div>
+                      <div>
+                        <CardTitle className="text-3xl">{selectedSignData.label}</CardTitle>
+                        <CardDescription>{selectedSignData.dates}</CardDescription>
+                      </div>
+                    </div>
+                    <Badge className={`${getElementColor(selectedSignData.element)} bg-opacity-10 text-sm px-3 py-1 flex items-center gap-1`}>
+                      {getElementIcon(selectedSignData.element)}
+                      <span>{selectedSignData.element} Element</span>
+                    </Badge>
+                  </div>
+                </CardHeader>
                 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2">
-                        <Heart className="h-5 w-5 text-primary" />
-                        Health Strengths
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-1">
-                        {selectedSignDetails.healthStrengths.map((strength, i) => (
+                <CardContent className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-medium mb-3">Health Overview</h3>
+                    <p className="text-muted-foreground">
+                      {selectedSignData.label} is a {selectedSignData.element.toLowerCase()} sign, characterized by {
+                        elementCharacteristics[selectedSignData.element as keyof typeof elementCharacteristics].personality.toLowerCase()
+                      }. Their primary wellness focus involves {selectedSignData.wellnessFocus.toLowerCase()}.
+                    </p>
+                  </div>
+                  
+                  <Separator />
+                  
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-medium mb-3">Health Strengths</h4>
+                      <ul className="space-y-2.5">
+                        {selectedSignData.healthTraits.map((strength: string, i: number) => (
                           <li key={i} className="flex items-start gap-2">
-                            <div className="rounded-full bg-primary/10 p-1 mt-0.5">
-                              <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
-                            </div>
+                            <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                             <span>{strength}</span>
                           </li>
                         ))}
                       </ul>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2">
-                        <ShieldAlert className="h-5 w-5 text-primary" />
-                        Health Challenges
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-1">
-                        {selectedSignDetails.healthChallenges.map((challenge, i) => (
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-medium mb-3">Wellness Recommendations</h4>
+                      <ul className="space-y-2.5">
+                        {selectedSignData.wellnessRecommendations.map((recommendation: string, i: number) => (
                           <li key={i} className="flex items-start gap-2">
-                            <div className="rounded-full bg-primary/10 p-1 mt-0.5">
-                              <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
-                            </div>
-                            <span>{challenge}</span>
+                            <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                            <span>{recommendation}</span>
                           </li>
                         ))}
                       </ul>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-            </div>
-            
-            {/* Body Associations */}
-            <div className="w-full md:w-80 bg-card rounded-lg border p-6">
-              <h3 className="font-bold mb-4 flex items-center gap-2">
-                <Activity className="h-5 w-5 text-primary" />
-                Body Associations
-              </h3>
-              <ul className="space-y-3">
-                {selectedSignDetails.bodyAssociations.map((part, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <div className="rounded-full bg-primary/10 p-1">
-                      <div className="h-2 w-2 rounded-full bg-primary"></div>
                     </div>
-                    <span>{part}</span>
-                  </li>
-                ))}
-              </ul>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Element Details */}
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2">
+                    {getElementIcon(selectedSignData.element)}
+                    <span>{selectedSignData.element} Element Profile</span>
+                  </CardTitle>
+                  <CardDescription>
+                    Astrological element influences on health and wellness
+                  </CardDescription>
+                </CardHeader>
+                
+                <CardContent>
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="personality">
+                      <AccordionTrigger>Personality Traits</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-muted-foreground">
+                          {elementCharacteristics[selectedSignData.element as keyof typeof elementCharacteristics].personality}
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="strengths">
+                      <AccordionTrigger>Element Strengths</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-muted-foreground">
+                          {elementCharacteristics[selectedSignData.element as keyof typeof elementCharacteristics].strengths}
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="challenges">
+                      <AccordionTrigger>Element Challenges</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-muted-foreground">
+                          {elementCharacteristics[selectedSignData.element as keyof typeof elementCharacteristics].challenges}
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="nutrition">
+                      <AccordionTrigger>Nutrition Guidelines</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-muted-foreground">
+                          {elementCharacteristics[selectedSignData.element as keyof typeof elementCharacteristics].nutrition}
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="movement">
+                      <AccordionTrigger>Movement Recommendations</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-muted-foreground">
+                          {elementCharacteristics[selectedSignData.element as keyof typeof elementCharacteristics].movement}
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+                    
+                    <AccordionItem value="mindfulness">
+                      <AccordionTrigger>Mindfulness Practices</AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-muted-foreground">
+                          {elementCharacteristics[selectedSignData.element as keyof typeof elementCharacteristics].mindfulness}
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </CardContent>
+              </Card>
+              
+              {/* Compatibility */}
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle>Health Compatibility</CardTitle>
+                  <CardDescription>
+                    Signs that complement {selectedSignData.label}'s wellness journey
+                  </CardDescription>
+                </CardHeader>
+                
+                <CardContent>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {(selectedSignData.compatibility as string[]).map((compatSign: string) => {
+                      const signData = zodiacSignNames.find(s => s.value === compatSign);
+                      if (!signData) return null;
+                      
+                      return (
+                        <Button
+                          key={compatSign}
+                          variant="outline"
+                          className="flex flex-col items-center gap-2 h-auto py-3"
+                          onClick={() => setSelectedSign(compatSign)}
+                        >
+                          <span className="text-xl">{signData.symbol}</span>
+                          <span>{signData.label}</span>
+                        </Button>
+                      );
+                    })}
+                  </div>
+                  
+                  <p className="mt-4 text-sm text-muted-foreground">
+                    These signs share complementary elements or qualities that enhance {selectedSignData.label}'s wellness journey, creating balanced energy for optimal health support.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
-          </div>
-          
-          {/* Wellness Tabs */}
-          <Tabs defaultValue="recommendations" className="w-full">
-            <TabsList className="grid w-full md:w-auto md:inline-flex grid-cols-3">
-              <TabsTrigger value="recommendations">Wellness Recommendations</TabsTrigger>
-              <TabsTrigger value="food">Ideal Foods</TabsTrigger>
-              <TabsTrigger value="activities">Ideal Activities</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="recommendations" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Lightbulb className="h-5 w-5 text-primary" />
-                    Personalized Wellness Recommendations
-                  </CardTitle>
-                  <CardDescription>
-                    Specific wellness strategies aligned with {selectedSignData.label}'s natural tendencies
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {selectedSignDetails.wellnessRecommendations.map((rec, i) => (
-                      <div key={i} className="bg-muted p-4 rounded-lg">
-                        <p>{rec}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="food" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Apple className="h-5 w-5 text-primary" />
-                    Ideal Foods for {selectedSignData.label}
-                  </CardTitle>
-                  <CardDescription>
-                    Nourishing foods that support {selectedSignData.label}'s natural constitution
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                    {selectedSignDetails.idealFoods.map((food, i) => (
-                      <div key={i} className="bg-muted p-4 rounded-lg text-center">
-                        <p>{food}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="activities" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Dumbbell className="h-5 w-5 text-primary" />
-                    Ideal Activities for {selectedSignData.label}
-                  </CardTitle>
-                  <CardDescription>
-                    Movement practices that align with {selectedSignData.label}'s energy
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {selectedSignDetails.idealActivities.map((activity, i) => (
-                      <div key={i} className="bg-muted p-4 rounded-lg text-center">
-                        <p>{activity}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+          ) : (
+            <Card className="flex flex-col items-center justify-center py-12">
+              <Star className="h-16 w-16 text-muted stroke-[1.5px] mb-4" />
+              <h3 className="text-xl font-medium mb-2">Select a Zodiac Sign</h3>
+              <p className="text-muted-foreground text-center max-w-md">
+                Choose a sign from the list to view detailed health insights, element characteristics, and wellness recommendations.
+              </p>
+            </Card>
+          )}
         </div>
-      )}
-      
-      {/* Compatible Signs */}
-      {selectedSignData && selectedSignDetails && (
-        <div className="mb-20">
-          <h2 className="text-2xl font-bold tracking-tight mb-6 flex items-center gap-2">
-            <Users className="h-6 w-6 text-primary" />
-            Compatible Signs for Wellness Support
-          </h2>
-          <p className="text-muted-foreground max-w-3xl mb-8">
-            These zodiac signs have complementary energies that can support {selectedSignData.label}'s wellness journey. 
-            Connecting with people of these signs for health activities can enhance balance and motivation.
-          </p>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {zodiacSignNames
-              .filter(sign => 
-                sign.value !== selectedSign && 
-                zodiacDescriptions[selectedSign as keyof typeof zodiacDescriptions]
-                  .healthStrengths.some(strength => 
-                    !zodiacDescriptions[sign.value as keyof typeof zodiacDescriptions]
-                      .healthChallenges.includes(strength as any)
-                  )
-              )
-              .slice(0, 4)
-              .map(sign => (
-                <Button 
-                  key={sign.value} 
-                  variant="outline"
-                  className="h-auto py-6 flex flex-col gap-2"
-                  onClick={() => setSelectedSign(sign.value)}
-                >
-                  <span className="text-2xl">{sign.symbol}</span>
-                  <span className="font-bold">{sign.label}</span>
-                  <span className="text-xs text-muted-foreground">{sign.dates}</span>
-                </Button>
-              ))
-            }
-          </div>
-        </div>
-      )}
-
-      {/* CTA */}
-      <div className="bg-primary/5 rounded-xl p-8 md:p-12 text-center">
-        <h2 className="text-2xl font-bold tracking-tight mb-4">
-          Get Personalized Daily Health Horoscopes
-        </h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-          Sign up now to receive daily wellness insights tailored to your zodiac sign's unique constitution
-        </p>
-        <Button size="lg" asChild>
-          <a href="/">Get Started</a>
-        </Button>
       </div>
     </div>
   );
