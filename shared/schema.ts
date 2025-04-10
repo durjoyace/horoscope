@@ -26,6 +26,7 @@ export const users = pgTable("users", {
   smsOptIn: boolean("sms_opt_in").default(false),
   newsletterOptIn: boolean("newsletter_opt_in").default(true),
   // Premium subscription fields
+  isPremium: boolean("is_premium").default(false),
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
   subscriptionStatus: text("subscription_status").default('none'),

@@ -5,7 +5,7 @@ import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
-import { User as UserType, InsertUser } from "@shared/schema";
+import { User as UserType } from "@shared/schema";
 
 declare global {
   namespace Express {
@@ -30,13 +30,13 @@ async function comparePasswords(supplied: string, stored: string) {
 
 export function setupAuth(app: Express) {
   const sessionSettings: session.SessionOptions = {
-    secret: process.env.SESSION_SECRET || 'horoscope-health-session-secret',
+    secret: process.env.SESSION_SECRET || "horohealthsecret2025",
     resave: false,
     saveUninitialized: false,
     store: storage.sessionStore,
     cookie: {
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     }
   };
 
@@ -46,70 +46,35 @@ export function setupAuth(app: Express) {
   app.use(passport.session());
 
   passport.use(
-    new LocalStrategy({
-      usernameField: 'email',
-      passwordField: 'password'
-    }, async (email, password, done) => {
-      try {
-        const user = await storage.getUserByEmail(email);
-        
-        if (!user || !user.password) {
-          return done(null, false, { message: "Invalid email or password" });
+    new LocalStrategy(
+      {
+        usernameField: "email",
+        passwordField: "password"
+      },
+      async (email, password, done) => {
+        try {
+          const user = await storage.getUserByEmail(email);
+          if (!user || !user.password || !(await comparePasswords(password, user.password))) {
+            return done(null, false);
+          } else {
+            return done(null, user);
+          }
+        } catch (err) {
+          return done(err);
         }
-        
-        const isValid = await comparePasswords(password, user.password);
-        
-        if (!isValid) {
-          return done(null, false, { message: "Invalid email or password" });
-        }
-        
-        return done(null, user);
-      } catch (error) {
-        return done(error);
       }
-    }),
+    )
   );
 
-  passport.serializeUser((user: Express.User, done) => {
-    done(null, (user as any).id);
-  });
+  passport.serializeUser((user, done) => done(null, user.id));
   
   passport.deserializeUser(async (id: number, done) => {
     try {
       const user = await storage.getUser(id);
-      done(null, user || undefined);
-    } catch (error) {
-      done(error);
+      done(null, user);
+    } catch (err) {
+      done(err, null);
     }
-  });
-
-  // Register routes
-  app.post("/api/login", (req, res, next) => {
-    passport.authenticate("local", (err: any, user: UserType | false, info: { message: string } | undefined) => {
-      if (err) return next(err);
-      if (!user) {
-        return res.status(401).json({
-          success: false, 
-          message: info?.message || "Login failed"
-        });
-      }
-      
-      req.login(user, (loginErr) => {
-        if (loginErr) return next(loginErr);
-        
-        return res.status(200).json({
-          success: true,
-          user: {
-            id: user.id,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            zodiacSign: user.zodiacSign,
-            isPremium: user.subscriptionTier !== 'free' && user.subscriptionStatus === 'active'
-          }
-        });
-      });
-    })(req, res, next);
   });
 
   app.post("/api/register", async (req, res, next) => {
@@ -119,39 +84,34 @@ export function setupAuth(app: Express) {
       if (!email || !password || !zodiacSign) {
         return res.status(400).json({
           success: false,
-          message: "Email, password, and zodiac sign are required"
+          message: "Email, password and zodiac sign are required"
         });
       }
       
-      // Check if user already exists
       const existingUser = await storage.getUserByEmail(email);
-      
       if (existingUser) {
         return res.status(400).json({
           success: false,
           message: "Email already registered"
         });
       }
-      
-      // Hash password
+
       const hashedPassword = await hashPassword(password);
       
-      // Create user
       const user = await storage.createUser({
         email,
         password: hashedPassword,
         firstName: firstName || null,
         lastName: lastName || null,
         zodiacSign,
+        isPremium: false,
         newsletterOptIn: true,
-        smsOptIn: false
+        smsOptIn: false,
       });
-      
-      // Log the user in
+
       req.login(user, (err) => {
         if (err) return next(err);
-        
-        return res.status(201).json({
+        res.status(201).json({
           success: true,
           message: "Registration successful",
           user: {
@@ -160,17 +120,47 @@ export function setupAuth(app: Express) {
             firstName: user.firstName,
             lastName: user.lastName,
             zodiacSign: user.zodiacSign,
-            isPremium: false
+            isPremium: user.isPremium
           }
         });
       });
     } catch (error) {
       console.error("Registration error:", error);
-      return res.status(500).json({
+      res.status(500).json({
         success: false,
         message: "Registration failed. Please try again later."
       });
     }
+  });
+
+  app.post("/api/login", (req, res, next) => {
+    passport.authenticate("local", (err, user, info) => {
+      if (err) return next(err);
+      
+      if (!user) {
+        return res.status(401).json({
+          success: false,
+          message: "Invalid email or password"
+        });
+      }
+      
+      req.login(user, (err) => {
+        if (err) return next(err);
+        
+        res.status(200).json({
+          success: true,
+          message: "Login successful",
+          user: {
+            id: user.id,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            zodiacSign: user.zodiacSign,
+            isPremium: user.isPremium
+          }
+        });
+      });
+    })(req, res, next);
   });
 
   app.post("/api/logout", (req, res) => {
@@ -197,17 +187,15 @@ export function setupAuth(app: Express) {
       });
     }
     
-    const user = req.user as UserType;
-    
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       user: {
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        zodiacSign: user.zodiacSign,
-        isPremium: user.subscriptionTier !== 'free' && user.subscriptionStatus === 'active'
+        id: req.user.id,
+        email: req.user.email,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        zodiacSign: req.user.zodiacSign,
+        isPremium: req.user.isPremium
       }
     });
   });

@@ -21,8 +21,12 @@ import {
   generateMockPremiumReport,
   generatePremiumReport
 } from "./premium-reports";
+import { setupAuth } from "./auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Setup authentication
+  setupAuth(app);
+  
   // Initialize the scheduler for daily horoscope generation and delivery
   initializeScheduler();
 

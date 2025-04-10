@@ -107,6 +107,7 @@ export class MemStorage implements IStorage {
       phone: insertUser.phone || null,
       smsOptIn: insertUser.smsOptIn ?? null,
       newsletterOptIn: insertUser.newsletterOptIn ?? null,
+      isPremium: insertUser.isPremium ?? false,
       stripeCustomerId: null,
       stripeSubscriptionId: null,
       subscriptionStatus: 'none',
