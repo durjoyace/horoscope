@@ -142,7 +142,7 @@ function getZodiacTraits(sign: ZodiacSign): { element: string; characteristics: 
 function generateMockHoroscope(sign: ZodiacSign): HoroscopeContent {
   const { element, characteristics } = getZodiacTraits(sign);
   
-  const mockHoroscopes = {
+  const mockHoroscopes: Record<ZodiacSign, HoroscopeContent> = {
     aries: {
       overview: "Today, your natural Aries energy is heightened, which is great for physical activities but may lead to restlessness. Focus on channeling this energy productively through structured exercise. Your metabolism is particularly efficient today, so it's an ideal time to adjust your diet if you've been planning to. Remember to balance your fire element with cooling activities throughout the day.",
       wellnessCategories: ["fitness", "nutrition", "stress"] as WellnessCategory[],
@@ -180,49 +180,49 @@ function generateMockHoroscope(sign: ZodiacSign): HoroscopeContent {
     },
     virgo: {
       overview: "Your Virgo attention to detail serves your health well today, particularly regarding digestive wellness. This is an excellent time for fine-tuning your diet and health routines. Your analytical nature helps you identify subtle body signals that others might miss. Focus on gut health and the mind-body connection for optimal wellness today. Small, consistent habits will yield the best results for your Earth constitution.",
-      wellnessCategories: ["nutrition", "stress", "fitness"],
+      wellnessCategories: ["nutrition", "stress", "fitness"] as WellnessCategory[],
       healthTip: "Practice mindful eating by thoroughly chewing each bite and eliminating distractions during meals to support your sensitive Virgo digestive system.",
       nutritionFocus: "Incorporate fiber-rich foods like whole grains, legumes, and leafy greens to support intestinal health, which is particularly important for your Earth constitution.",
       elementAlignment: "Ground your Earth energy through organization and creating order in your physical space, which will translate to internal physiological harmony."
     },
     libra: {
       overview: "Your Libra constitution seeks balance in all aspects of health today. Your kidneys and lower back may require special attention through proper hydration and gentle movement. Aesthetic elements significantly impact your well-being, so beautiful surroundings and pleasant sensory experiences contribute to your physical health. Social wellness is also key today, as harmonious interactions boost your immune function.",
-      wellnessCategories: ["mindfulness", "sleep"],
+      wellnessCategories: ["mindfulness", "sleep"] as WellnessCategory[],
       healthTip: "Practice gentle, symmetrical yoga poses that balance both sides of your body to support your Libra need for physical equilibrium.",
       nutritionFocus: "Create visually balanced meals with equal proportions of various food groups to satisfy your Air element's need for harmony and proportion.",
       elementAlignment: "Support your Air element by bringing beautiful scents into your environment through essential oils or fresh flowers, engaging your refined sensory awareness."
     },
     scorpio: {
       overview: "Your Scorpio intensity brings powerful healing potential today, particularly for regenerative processes. Your reproductive and elimination systems are highlighted, making it important to support detoxification pathways. Emotional release has direct physical benefits for your Water constitution. Deep rather than surface-level health approaches will serve you best today.",
-      wellnessCategories: ["sleep", "stress"],
+      wellnessCategories: ["sleep", "stress"] as WellnessCategory[],
       healthTip: "Practice pelvic floor exercises and lower abdominal breathing to support the reproductive and elimination systems that are key to Scorpio wellness.",
       nutritionFocus: "Include detoxifying foods like beets, dark leafy greens, and lemon water to support your Water element's natural elimination processes.",
       elementAlignment: "Honor your Water element through emotional release practices like journaling or therapeutic conversation that allow emotional fluidity."
     },
     sagittarius: {
       overview: "Your Sagittarius energy craves movement and expansion today, making it essential to incorporate physical activity that allows for freedom. Your hips, thighs, and liver are areas to nurture with stretching and proper nutrition. Your philosophical outlook supports holistic health approaches that connect mind, body, and spirit. Optimism boosts your immune function, so maintaining a positive perspective directly impacts your physical wellness.",
-      wellnessCategories: ["fitness", "mindfulness"],
+      wellnessCategories: ["fitness", "mindfulness"] as WellnessCategory[],
       healthTip: "Incorporate hip-opening stretches and movements that allow for full extension of your body to satisfy your Sagittarius need for expansion.",
       nutritionFocus: "Choose foods that support liver health like turmeric, leafy greens, and plenty of water to complement your active Fire element metabolism.",
       elementAlignment: "Feed your Fire element through adventure and exploration, even if just taking a new route on your daily walk or trying an unfamiliar healthy recipe."
     },
     capricorn: {
       overview: "Your Capricorn constitution emphasizes skeletal strength today, making it important to support bone health through nutrition and weight-bearing exercise. Your knees and joints may need extra attention. Disciplined health routines yield particularly effective results now. Your Earth element thrives on structure, so establishing clear patterns for meals and activities will optimize your physiological functions.",
-      wellnessCategories: ["nutrition", "fitness"],
+      wellnessCategories: ["nutrition", "fitness"] as WellnessCategory[],
       healthTip: "Focus on weight-bearing exercise and proper alignment to support your Capricorn skeletal system and joint health.",
       nutritionFocus: "Incorporate calcium and magnesium-rich foods like dark leafy greens, nuts, and seeds to nourish your Earth element's structural needs.",
       elementAlignment: "Honor your Earth element by creating structure in your day with clearly defined times for meals, exercise, work, and rest."
     },
     aquarius: {
       overview: "Your Aquarius energy highlights circulation and nervous system health today. Your ankles and calves may benefit from movement and stretching. Innovative health approaches resonate with your Air constitution, making this an excellent time to explore new wellness technologies or methodologies. Intellectual stimulation contributes directly to your physical vitality, so learning about health can itself be a wellness practice for you.",
-      wellnessCategories: ["fitness", "mindfulness"],
+      wellnessCategories: ["fitness", "mindfulness"] as WellnessCategory[],
       healthTip: "Practice ankle rotations and calf stretches throughout the day to support circulation in these Aquarius-ruled areas of the body.",
       nutritionFocus: "Incorporate foods rich in omega-3 fatty acids and antioxidants to support nervous system health, which is essential for your mentally-active Air element.",
       elementAlignment: "Balance your Air element by engaging in group fitness or wellness communities that combine social connection with health practices."
     },
     pisces: {
       overview: "Your Pisces intuition guides your health wisdom today, particularly regarding subtle energy systems. Your feet and immune system benefit from extra care. Boundaries between yourself and your environment are more permeable, making it important to protect your energy and be selective about surroundings. Water element hydration is essential, as is emotional fluidity for maintaining physical wellness.",
-      wellnessCategories: ["sleep", "mindfulness"],
+      wellnessCategories: ["sleep", "mindfulness"] as WellnessCategory[],
       healthTip: "Give attention to foot health through gentle massage, proper footwear, and perhaps a warm foot bath with epsom salts to ground your Pisces energy.",
       nutritionFocus: "Choose immune-supporting foods rich in vitamin C and zinc, while ensuring adequate hydration to support your Water element constitution.",
       elementAlignment: "Honor your Water element by spending time near natural water sources like oceans, lakes, or even a small fountain to restore your energetic balance."
