@@ -1,155 +1,149 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Link } from 'wouter';
+import { Star, Mail, Instagram, Twitter, Facebook, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useUser } from '@/context/UserContext';
-import { SuccessModal } from './SuccessModal';
-import { ZodiacSign } from '@shared/types';
+import { Input } from '@/components/ui/input';
+import { zodiacSignNames } from '@/data/zodiacData';
+import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
-const formSchema = z.object({
-  email: z.string().email({ message: 'Please enter a valid email address.' }),
-});
+export function Footer() {
+  const [email, setEmail] = useState('');
+  const { toast } = useToast();
 
-type FormValues = z.infer<typeof formSchema>;
-
-export const Footer: React.FC = () => {
-  const { signUp } = useUser();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: '',
-    },
-  });
-
-  const onSubmit = async (data: FormValues) => {
-    setIsSubmitting(true);
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
     
-    try {
-      const result = await signUp({
-        email: data.email,
-        zodiacSign: 'aries' as ZodiacSign,
-        smsOptIn: false,
-        newsletterOptIn: true,
+    if (!email || !email.includes('@')) {
+      toast({
+        title: 'Invalid Email',
+        description: 'Please enter a valid email address.',
+        variant: 'destructive',
       });
-      
-      if (result.success) {
-        form.reset();
-        setSuccessMessage("You've been added to our newsletter!");
-        setIsSuccessModalOpen(true);
-      } else {
-        form.setError('email', { 
-          type: 'manual', 
-          message: result.message 
-        });
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    } finally {
-      setIsSubmitting(false);
+      return;
     }
+    
+    // In a real app, we would submit this to an API
+    toast({
+      title: 'Thanks for subscribing!',
+      description: 'You\'ve been added to our newsletter.',
+    });
+    
+    setEmail('');
   };
 
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-indigo-950 text-white py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-2">
-            <div className="flex items-center mb-4">
-              <span className="text-2xl font-playfair font-bold">HoroscopeHealth</span>
+    <footer className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container px-4 py-12 md:py-16">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Star className="h-6 w-6 text-primary" />
+              <span className="text-xl font-bold tracking-tight">HoroscopeHealth</span>
             </div>
-            <p className="mb-4 text-gray-300">
-              The first daily health horoscope built to improve your real life.
+            <p className="text-sm text-muted-foreground max-w-xs">
+              Bridging the gap between ancient astrological wisdom and modern wellness science for personalized health insights.
             </p>
-            <p className="text-teal-400 font-medium">
-              Backed by science. Powered by the stars.
-            </p>
+            <div className="flex items-center gap-4">
+              <Button size="icon" variant="ghost" aria-label="Instagram" className="h-8 w-8 rounded-full">
+                <Instagram className="h-4 w-4" />
+              </Button>
+              <Button size="icon" variant="ghost" aria-label="Twitter" className="h-8 w-8 rounded-full">
+                <Twitter className="h-4 w-4" />
+              </Button>
+              <Button size="icon" variant="ghost" aria-label="Facebook" className="h-8 w-8 rounded-full">
+                <Facebook className="h-4 w-4" />
+              </Button>
+              <Button size="icon" variant="ghost" aria-label="Email" className="h-8 w-8 rounded-full">
+                <Mail className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
-          
-          <div>
-            <h3 className="text-lg font-bold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-white transition">About Us</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition">How It Works</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition">Testimonials</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition">FAQ</a></li>
+
+          <div className="space-y-4">
+            <h3 className="text-base font-medium">Quick Links</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/science" className="text-muted-foreground hover:text-foreground transition-colors">
+                  The Science
+                </Link>
+              </li>
+              <li>
+                <Link href="/marketplace" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Wellness Marketplace
+                </Link>
+              </li>
+              <li>
+                <Link href="/zodiac-library" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Zodiac Library
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Contact Us
+                </Link>
+              </li>
             </ul>
           </div>
-          
-          <div>
-            <h3 className="text-lg font-bold mb-4">Connect With Us</h3>
-            <div className="flex space-x-4 mb-4">
-              <a href="#" className="text-gray-300 hover:text-white transition text-xl">
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition text-xl">
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition text-xl">
-                <i className="fab fa-facebook"></i>
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition text-xl">
-                <i className="fab fa-tiktok"></i>
-              </a>
+
+          <div className="space-y-4">
+            <h3 className="text-base font-medium">Zodiac Signs</h3>
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              {zodiacSignNames.map((sign) => (
+                <Link
+                  key={sign.value}
+                  href={`/zodiac-library?sign=${sign.value}`}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {sign.symbol} {sign.label}
+                </Link>
+              ))}
             </div>
-            
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-                <p className="text-sm text-gray-300">Join our newsletter</p>
-                <div className="flex">
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem className="flex-1">
-                        <FormControl>
-                          <Input
-                            placeholder="Your email"
-                            className="bg-white/10 border-white/20 text-white placeholder-white/70 rounded-r-none"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button 
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="bg-teal-600 hover:bg-teal-500 rounded-l-none"
-                  >
-                    <i className="fas fa-paper-plane"></i>
-                  </Button>
-                </div>
-              </form>
-            </Form>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-base font-medium">Newsletter</h3>
+            <p className="text-sm text-muted-foreground">
+              Subscribe to receive personalized horoscopes, wellness tips, and exclusive offers.
+            </p>
+            <form onSubmit={handleSubscribe} className="flex flex-col gap-2">
+              <Input
+                type="email"
+                placeholder="Your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="max-w-xs"
+              />
+              <Button type="submit" className="w-fit">
+                Subscribe
+              </Button>
+            </form>
           </div>
         </div>
-        
-        <div className="border-t border-indigo-800 mt-8 pt-8 text-sm text-gray-400">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p>© {currentYear} HoroscopeHealth. All rights reserved.</p>
-            <div className="flex space-x-4 mt-4 md:mt-0">
-              <a href="#" className="hover:text-white transition">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition">Terms of Service</a>
+
+        <div className="mt-12 flex flex-col md:flex-row justify-between items-center gap-4 pt-6 border-t">
+          <p className="text-xs text-muted-foreground">
+            © {currentYear} HoroscopeHealth. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-xs text-muted-foreground">
+            <Link href="/privacy" className="hover:text-foreground transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-foreground transition-colors">
+              Terms of Service
+            </Link>
+            <div className="flex items-center gap-1">
+              Made with <Heart className="h-3 w-3 text-red-500" />
             </div>
           </div>
         </div>
       </div>
-      
-      <SuccessModal
-        isOpen={isSuccessModalOpen}
-        message={successMessage}
-        onClose={() => setIsSuccessModalOpen(false)}
-      />
     </footer>
   );
-};
+}
