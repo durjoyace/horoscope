@@ -221,8 +221,23 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                       </p>
                       <Button 
                         className="w-full shadow-md hover:shadow-lg transition-all text-sm"
-                        disabled={!email}
-                        onClick={handleSignup}
+                        onClick={() => {
+                          // Scroll to email input if email is not provided
+                          if (!email) {
+                            const emailInput = document.querySelector('input[type="email"]');
+                            if (emailInput) {
+                              emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                              emailInput.focus();
+                              toast({
+                                title: 'Email required',
+                                description: 'Please enter your email address to continue.',
+                                variant: 'default',
+                              });
+                            }
+                          } else {
+                            handleSignup(new Event('click') as React.FormEvent);
+                          }
+                        }}
                       >
                         Get My Horoscope
                       </Button>
