@@ -77,36 +77,51 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signUp = async (data: Partial<User>): Promise<{ success: boolean; message: string }> => {
     try {
       setIsLoading(true);
+      
+      console.log('UserContext - Signup data:', data);
+      
+      const requestBody = {
+        email: data.email,
+        zodiacSign: data.zodiacSign,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phone: data.phone,
+        smsOptIn: data.smsOptIn || false,
+        birthdate: data.birthdate,
+        password: data.password
+      };
+      
+      console.log('UserContext - Request payload:', requestBody);
+      
       const response = await fetch('/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email: data.email,
-          zodiacSign: data.zodiacSign,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          phone: data.phone,
-          smsOptIn: data.smsOptIn || false,
-          birthdate: data.birthdate,
-        }),
+        body: JSON.stringify(requestBody),
       });
-
+      
+      console.log('UserContext - Response status:', response.status);
+      
       const result = await response.json();
+      console.log('UserContext - Server response:', result);
 
       if (result.success) {
-        setUser({
+        const newUser = {
           ...defaultUser,
           ...data,
           isAuthenticated: true,
-        });
+        };
+        
+        console.log('UserContext - Setting user state:', newUser);
+        setUser(newUser);
         return { success: true, message: result.message };
       } else {
+        console.error('UserContext - Signup failed:', result.message);
         return { success: false, message: result.message };
       }
     } catch (error) {
-      console.error('Error during signup:', error);
+      console.error('UserContext - Error during signup:', error);
       return { success: false, message: 'An error occurred during signup. Please try again.' };
     } finally {
       setIsLoading(false);

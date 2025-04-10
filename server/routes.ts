@@ -15,6 +15,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // User signup endpoint
   app.post("/api/signup", async (req: Request, res: Response) => {
     try {
+      console.log('Server - Signup request received:', {
+        email: req.body.email,
+        zodiacSign: req.body.zodiacSign,
+        firstName: req.body.firstName,
+      });
+      
       const userInputSchema = z.object({
         email: z.string().email("Invalid email format"),
         zodiacSign: z.string(),
@@ -23,13 +29,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         phone: z.string().optional(),
         smsOptIn: z.boolean().default(false),
         birthdate: z.string().optional(),
+        password: z.string().optional(),
       });
 
       const validatedInput = userInputSchema.parse(req.body);
+      console.log('Server - Validated input:', {
+        email: validatedInput.email,
+        zodiacSign: validatedInput.zodiacSign,
+        smsOptIn: validatedInput.smsOptIn,
+      });
       
       // Check if user already exists
       const existingUser = await storage.getUserByEmail(validatedInput.email);
       if (existingUser) {
+        console.log('Server - User already exists:', existingUser.email);
         return res.status(200).json({ 
           success: true, 
           message: "Welcome back! We'll continue sending your daily horoscopes.",
@@ -40,6 +53,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
+      console.log('Server - Creating new user with zodiacSign:', validatedInput.zodiacSign);
+      
       // Create new user
       const newUser = await storage.createUser({
         email: validatedInput.email,
@@ -49,7 +64,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         phone: validatedInput.phone,
         smsOptIn: validatedInput.smsOptIn,
         birthdate: validatedInput.birthdate,
-        password: null,
+        password: validatedInput.password || null,
         newsletterOptIn: true,
       });
       
