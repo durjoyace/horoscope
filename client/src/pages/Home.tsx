@@ -788,10 +788,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
+            <h2 className="magazine-subheading text-primary mb-2">
+              START TODAY
+            </h2>
+            <h2 className="magazine-heading text-3xl md:text-5xl mb-6">
               Begin Your Cosmic Wellness Journey
             </h2>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="magazine-lead text-muted-foreground mb-8">
               Join thousands of members receiving personalized daily health horoscopes tailored to their zodiac sign
             </p>
             
