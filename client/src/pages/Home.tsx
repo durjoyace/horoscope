@@ -177,15 +177,16 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             
             <div className="flex-1 flex justify-center lg:justify-end">
               <div className="relative w-full max-w-md">
-                {/* Decorative elements */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/5 rounded-lg transform rotate-3 animate-pulse-slow"></div>
-                <div className="absolute inset-0 border-2 border-primary/10 rounded-lg transform -rotate-2 animate-pulse-slower"></div>
+                {/* Decorative cosmic elements */}
+                <div className="absolute -inset-3 bg-gradient-to-r from-[#ff00ff]/20 via-[#c300ff]/10 to-[#3a00ff]/20 rounded-lg transform rotate-6 animate-pulse-slow"></div>
+                <div className="absolute -inset-6 border-2 border-[#ff00ff]/10 rounded-lg transform -rotate-3 animate-pulse-slower"></div>
+                <div className="absolute -inset-2 border border-[#c300ff]/20 rounded-full animate-spin-slow"></div>
                 
                 {/* Main card */}
-                <div className="relative bg-card border border-primary/20 backdrop-blur-sm rounded-lg p-6 md:p-8 shadow-xl animate-fade-in-up">
+                <div className="relative backdrop-blur-md rounded-lg p-6 md:p-8 shadow-xl animate-fade-in-up bg-gradient-to-br from-[#8400ff]/30 to-[#3a00ff]/30 border border-[#c300ff]/40">
                   <div className="text-center mb-6">
-                    <div className="p-3 bg-primary/10 rounded-full inline-flex justify-center items-center mb-4">
-                      <Star className="h-8 w-8 text-primary animate-spin-slow" />
+                    <div className="p-3 bg-[#ff00ff]/20 rounded-full inline-flex justify-center items-center mb-4">
+                      <Star className="h-8 w-8 text-[#ff00ff] animate-spin-slow" />
                     </div>
                     <h2 className="text-2xl font-bold mb-1">Your Cosmic Health Profile</h2>
                     <p className="text-muted-foreground">Select your zodiac sign to begin</p>
