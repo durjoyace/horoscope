@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>HoroscopeHealth - Your Daily Health Horoscope</title>
+    <meta name="description" content="The first daily health horoscope built to improve your real life. Get personalized wellness advice based on your zodiac sign." />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+      /* Custom font family classes */
+      .font-playfair {
+        font-family: 'Playfair Display', serif;
+      }
+      .font-inter {
+        font-family: 'Inter', sans-serif;
+      }
+      .font-montserrat {
+        font-family: 'Montserrat', sans-serif;
+      }
+      
+      /* Star background pattern */
+      .star-bg {
+        background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+      
+      /* Cosmic gradient */
+      .bg-cosmic-gradient {
+        background-image: linear-gradient(to right, #4B3F72, #2D2B52);
+      }
+      
+      /* Float animation */
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
