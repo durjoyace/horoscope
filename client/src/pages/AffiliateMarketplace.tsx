@@ -131,7 +131,7 @@ const products: Product[] = [
     name: 'Zodiac Wellness Journal',
     price: 24.99,
     image: 'books',
-    description: 'Guided wellness journal with astrological insights for tracking health, habits, and personal growth through cosmic cycles.',
+    description: 'Guided wellness journal with astrological insights for tracking health, habits, and personal growth through zodiac cycles.',
     category: 'books',
     wellnessCategories: ['mindfulness', 'stress', 'sleep'],
     rating: 4.7,

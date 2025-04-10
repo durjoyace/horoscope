@@ -71,7 +71,7 @@ export const testimonials: Testimonial[] = [
     name: "Jessica T.",
     zodiacSign: "Pisces",
     icon: "water",
-    testimonial: "I've always struggled with setting boundaries, but my daily horoscope consistently reminds me when I need to prioritize my emotional wellbeing. It's like having a cosmic wellness coach!",
+    testimonial: "I've always struggled with setting boundaries, but my daily horoscope consistently reminds me when I need to prioritize my emotional wellbeing. It's like having a celestial wellness coach!",
     rating: 5
   },
   {
@@ -122,7 +122,7 @@ export const valuePropositions = [
   },
   {
     title: "Watchouts for Stress, Burnout & Energy Slumps",
-    description: "Timely alerts when cosmic alignments might affect your wellbeing.",
+    description: "Timely alerts when zodiac alignments might affect your wellbeing.",
     icon: "wind"
   },
   {

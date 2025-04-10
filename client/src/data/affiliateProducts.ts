@@ -164,7 +164,7 @@ export const affiliateProducts: AffiliateProduct[] = [
     category: "skincare",
     rating: 4.8,
     recommendedSigns: ["libra", "taurus", "cancer", "leo", "virgo"],
-    affiliateUrl: "https://example.com/cosmic-skincare"
+    affiliateUrl: "https://example.com/horoscope-skincare"
   },
   {
     id: "prod-014",
