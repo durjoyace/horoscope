@@ -50,20 +50,20 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="text-lg font-bold">Quick Links</h3>
             <nav className="flex flex-col space-y-2">
-              <Link href="/">
-                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">Home</a>
+              <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Home
               </Link>
-              <Link href="/zodiac-library">
-                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">Zodiac Library</a>
+              <Link href="/zodiac-library" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Zodiac Library
               </Link>
-              <Link href="/about">
-                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">About</a>
+              <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                About
               </Link>
-              <Link href="/science">
-                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">Our Science</a>
+              <Link href="/science" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Our Science
               </Link>
-              <Link href="/contact">
-                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</a>
+              <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Contact
               </Link>
             </nav>
           </div>

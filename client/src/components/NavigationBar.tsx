@@ -69,34 +69,32 @@ export function NavigationBar({
       <div className="container mx-auto px-4 flex h-16 items-center justify-between">
         {/* Logo and Brand */}
         <div className="flex items-center">
-          <Link href="/">
-            <a className="flex items-center gap-2">
-              <div className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                HoroscopeHealth
-              </div>
-            </a>
+          <Link href="/" className="flex items-center gap-2">
+            <div className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+              HoroscopeHealth
+            </div>
           </Link>
         </div>
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-6">
-          <Link href="/">
-            <a className="text-sm font-medium hover:text-primary transition-colors">Home</a>
+          <Link href="/" className="text-sm font-medium hover:text-primary transition-colors">
+            Home
           </Link>
-          <Link href="/zodiac-library">
-            <a className="text-sm font-medium hover:text-primary transition-colors">Zodiac Library</a>
+          <Link href="/zodiac-library" className="text-sm font-medium hover:text-primary transition-colors">
+            Zodiac Library
           </Link>
-          <Link href="/marketplace">
-            <a className="text-sm font-medium hover:text-primary transition-colors">Marketplace</a>
+          <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors">
+            Marketplace
           </Link>
-          <Link href="/science">
-            <a className="text-sm font-medium hover:text-primary transition-colors">Our Science</a>
+          <Link href="/science" className="text-sm font-medium hover:text-primary transition-colors">
+            Our Science
           </Link>
-          <Link href="/about">
-            <a className="text-sm font-medium hover:text-primary transition-colors">About</a>
+          <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">
+            About
           </Link>
-          <Link href="/contact">
-            <a className="text-sm font-medium hover:text-primary transition-colors">Contact</a>
+          <Link href="/contact" className="text-sm font-medium hover:text-primary transition-colors">
+            Contact
           </Link>
         </nav>
         
@@ -155,45 +153,35 @@ export function NavigationBar({
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="cursor-pointer" asChild>
-                    <Link href="/dashboard">
-                      <a className="flex items-center gap-2 w-full">
-                        <BarChart className="h-4 w-4" />
-                        <span>Dashboard</span>
-                      </a>
+                    <Link href="/dashboard" className="flex items-center gap-2 w-full">
+                      <BarChart className="h-4 w-4" />
+                      <span>Dashboard</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer" asChild>
-                    <Link href="/profile">
-                      <a className="flex items-center gap-2 w-full">
-                        <User className="h-4 w-4" />
-                        <span>Profile</span>
-                      </a>
+                    <Link href="/profile" className="flex items-center gap-2 w-full">
+                      <User className="h-4 w-4" />
+                      <span>Profile</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer" asChild>
-                    <Link href="/settings">
-                      <a className="flex items-center gap-2 w-full">
-                        <Settings className="h-4 w-4" />
-                        <span>Settings</span>
-                      </a>
+                    <Link href="/settings" className="flex items-center gap-2 w-full">
+                      <Settings className="h-4 w-4" />
+                      <span>Settings</span>
                     </Link>
                   </DropdownMenuItem>
                   {isPremium ? (
                     <DropdownMenuItem className="cursor-pointer" asChild>
-                      <Link href="/premium">
-                        <a className="flex items-center gap-2 w-full">
-                          <Star className="h-4 w-4 text-amber-500" />
-                          <span>Premium Features</span>
-                        </a>
+                      <Link href="/premium" className="flex items-center gap-2 w-full">
+                        <Star className="h-4 w-4 text-amber-500" />
+                        <span>Premium Features</span>
                       </Link>
                     </DropdownMenuItem>
                   ) : (
                     <DropdownMenuItem className="cursor-pointer" asChild>
-                      <Link href="/pricing">
-                        <a className="flex items-center gap-2 w-full">
-                          <Shield className="h-4 w-4" />
-                          <span>Upgrade to Premium</span>
-                        </a>
+                      <Link href="/pricing" className="flex items-center gap-2 w-full">
+                        <Shield className="h-4 w-4" />
+                        <span>Upgrade to Premium</span>
                       </Link>
                     </DropdownMenuItem>
                   )}
@@ -211,14 +199,10 @@ export function NavigationBar({
           ) : (
             <div className="hidden md:flex items-center gap-2">
               <Link href="/auth">
-                <a>
-                  <Button variant="outline" size="sm">Log In</Button>
-                </a>
+                <Button variant="outline" size="sm">Log In</Button>
               </Link>
               <Link href="/auth?signup=true">
-                <a>
-                  <Button size="sm">Sign Up</Button>
-                </a>
+                <Button size="sm">Sign Up</Button>
               </Link>
             </div>
           )}
@@ -242,32 +226,32 @@ export function NavigationBar({
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col gap-4 mt-8">
-                <Link href="/">
-                  <a className="text-lg font-medium hover:text-primary transition-colors py-2">Home</a>
+                <Link href="/" className="text-lg font-medium hover:text-primary transition-colors py-2">
+                  Home
                 </Link>
-                <Link href="/zodiac-library">
-                  <a className="text-lg font-medium hover:text-primary transition-colors py-2">Zodiac Library</a>
+                <Link href="/zodiac-library" className="text-lg font-medium hover:text-primary transition-colors py-2">
+                  Zodiac Library
                 </Link>
-                <Link href="/marketplace">
-                  <a className="text-lg font-medium hover:text-primary transition-colors py-2">Marketplace</a>
+                <Link href="/marketplace" className="text-lg font-medium hover:text-primary transition-colors py-2">
+                  Marketplace
                 </Link>
-                <Link href="/science">
-                  <a className="text-lg font-medium hover:text-primary transition-colors py-2">Our Science</a>
+                <Link href="/science" className="text-lg font-medium hover:text-primary transition-colors py-2">
+                  Our Science
                 </Link>
-                <Link href="/about">
-                  <a className="text-lg font-medium hover:text-primary transition-colors py-2">About</a>
+                <Link href="/about" className="text-lg font-medium hover:text-primary transition-colors py-2">
+                  About
                 </Link>
-                <Link href="/contact">
-                  <a className="text-lg font-medium hover:text-primary transition-colors py-2">Contact</a>
+                <Link href="/contact" className="text-lg font-medium hover:text-primary transition-colors py-2">
+                  Contact
                 </Link>
                 {!isLoggedIn && (
                   <>
                     <div className="h-px bg-border my-2"></div>
-                    <Link href="/auth">
-                      <a className="text-lg font-medium hover:text-primary transition-colors py-2">Log In</a>
+                    <Link href="/auth" className="text-lg font-medium hover:text-primary transition-colors py-2">
+                      Log In
                     </Link>
-                    <Link href="/auth?signup=true">
-                      <a className="text-lg font-medium hover:text-primary transition-colors py-2">Sign Up</a>
+                    <Link href="/auth?signup=true" className="text-lg font-medium hover:text-primary transition-colors py-2">
+                      Sign Up
                     </Link>
                   </>
                 )}
