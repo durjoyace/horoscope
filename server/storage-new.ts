@@ -11,19 +11,14 @@ import {
 } from "@shared/schema";
 import { ZodiacSign } from "@shared/types";
 import session from "express-session";
-import { Store as SessionStore } from "express-session";
-import createMemoryStore from "memorystore";
-import { db, pool } from "./db";
 import { eq } from "drizzle-orm";
-import connectPgSimple from "connect-pg-simple";
-import { Pool } from "@neondatabase/serverless";
+import { db, pool } from "./db";
+import connectPg from "connect-pg-simple";
+import createMemoryStore from "memorystore";
 
-// Init Memorystore for sessions
 const MemoryStore = createMemoryStore(session);
 
-// modify the interface with any CRUD methods
-// you might need
-
+// Storage interface with CRUD methods
 export interface IStorage {
   // User operations
   getUser(id: number): Promise<User | undefined>;
@@ -45,9 +40,10 @@ export interface IStorage {
   getUsersForDailyDelivery(): Promise<User[]>;
   
   // Session store for express-session
-  sessionStore: SessionStore;
+  sessionStore: session.Store;
 }
 
+// In-memory storage implementation
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private horoscopes: Map<number, Horoscope>;
@@ -55,7 +51,7 @@ export class MemStorage implements IStorage {
   private userCurrentId: number;
   private horoscopeCurrentId: number;
   private deliveryLogCurrentId: number;
-  public sessionStore: SessionStore;
+  public sessionStore: session.Store;
 
   constructor() {
     // Initialize in-memory storage
@@ -86,22 +82,18 @@ export class MemStorage implements IStorage {
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.userCurrentId++;
     const createdAt = new Date();
-    
-    // Ensure all properties are properly set with fallbacks
-    const user: User = {
-      id,
-      email: insertUser.email,
-      zodiacSign: insertUser.zodiacSign,
+    const user: User = { 
+      ...insertUser, 
+      id, 
+      createdAt,
       password: insertUser.password || null,
       firstName: insertUser.firstName || null,
       lastName: insertUser.lastName || null,
       birthdate: insertUser.birthdate || null,
       phone: insertUser.phone || null,
-      smsOptIn: insertUser.smsOptIn ?? null,
-      newsletterOptIn: insertUser.newsletterOptIn ?? null,
-      createdAt: createdAt
+      smsOptIn: insertUser.smsOptIn !== undefined ? insertUser.smsOptIn : false,
+      newsletterOptIn: insertUser.newsletterOptIn !== undefined ? insertUser.newsletterOptIn : true
     };
-    
     this.users.set(id, user);
     return user;
   }
@@ -148,7 +140,7 @@ export class MemStorage implements IStorage {
       (log) => log.userId === userId,
     );
   }
-  
+
   // Additional query methods
   async getUsersByZodiacSign(sign: ZodiacSign): Promise<User[]> {
     return Array.from(this.users.values()).filter(
@@ -163,27 +155,21 @@ export class MemStorage implements IStorage {
 
 // Database storage implementation using Drizzle ORM
 export class DatabaseStorage implements IStorage {
-  public sessionStore: SessionStore;
-  private pgSessionStore: any;
+  public sessionStore: session.Store;
 
   constructor() {
-    const PgStore = connectPgSimple(session);
-    
-    this.pgSessionStore = new PgStore({
-      conObject: {
-        connectionString: process.env.DATABASE_URL,
-      },
+    const PostgresSessionStore = connectPg(session);
+    this.sessionStore = new PostgresSessionStore({ 
+      pool,
       createTableIfMissing: true
     });
-    
-    this.sessionStore = this.pgSessionStore;
   }
 
   // User operations
   async getUser(id: number): Promise<User | undefined> {
     try {
-      const result = await db.select().from(users).where(eq(users.id, id));
-      return result.length > 0 ? result[0] : undefined;
+      const [user] = await db.select().from(users).where(eq(users.id, id));
+      return user;
     } catch (error) {
       console.error('Error getting user by ID:', error);
       return undefined;
@@ -192,8 +178,8 @@ export class DatabaseStorage implements IStorage {
 
   async getUserByEmail(email: string): Promise<User | undefined> {
     try {
-      const result = await db.select().from(users).where(eq(users.email, email));
-      return result.length > 0 ? result[0] : undefined;
+      const [user] = await db.select().from(users).where(eq(users.email, email));
+      return user;
     } catch (error) {
       console.error('Error getting user by email:', error);
       return undefined;
@@ -202,8 +188,8 @@ export class DatabaseStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     try {
-      const result = await db.insert(users).values(insertUser).returning();
-      return result[0];
+      const [user] = await db.insert(users).values(insertUser).returning();
+      return user;
     } catch (error) {
       console.error('Error creating user:', error);
       throw error;
@@ -212,13 +198,13 @@ export class DatabaseStorage implements IStorage {
   
   async updateUser(id: number, updates: Partial<InsertUser>): Promise<User | undefined> {
     try {
-      const result = await db
+      const [updatedUser] = await db
         .update(users)
         .set(updates)
         .where(eq(users.id, id))
         .returning();
       
-      return result.length > 0 ? result[0] : undefined;
+      return updatedUser;
     } catch (error) {
       console.error('Error updating user:', error);
       return undefined;
@@ -228,8 +214,8 @@ export class DatabaseStorage implements IStorage {
   // Horoscope operations
   async getHoroscope(id: number): Promise<Horoscope | undefined> {
     try {
-      const result = await db.select().from(horoscopes).where(eq(horoscopes.id, id));
-      return result.length > 0 ? result[0] : undefined;
+      const [horoscope] = await db.select().from(horoscopes).where(eq(horoscopes.id, id));
+      return horoscope;
     } catch (error) {
       console.error('Error getting horoscope by ID:', error);
       return undefined;
@@ -238,14 +224,13 @@ export class DatabaseStorage implements IStorage {
   
   async getHoroscopeBySignAndDate(sign: string, date: string): Promise<Horoscope | undefined> {
     try {
-      const result = await db
+      const [horoscope] = await db
         .select()
         .from(horoscopes)
         .where(eq(horoscopes.zodiacSign, sign))
+        .where(eq(horoscopes.date, date));
       
-      // Filter for date in JavaScript
-      const filtered = result.filter(h => h.date === date);
-      return filtered.length > 0 ? filtered[0] : undefined;
+      return horoscope;
     } catch (error) {
       console.error('Error getting horoscope by sign and date:', error);
       return undefined;
@@ -254,8 +239,8 @@ export class DatabaseStorage implements IStorage {
   
   async createHoroscope(insertHoroscope: InsertHoroscope): Promise<Horoscope> {
     try {
-      const result = await db.insert(horoscopes).values(insertHoroscope).returning();
-      return result[0];
+      const [horoscope] = await db.insert(horoscopes).values(insertHoroscope).returning();
+      return horoscope;
     } catch (error) {
       console.error('Error creating horoscope:', error);
       throw error;
@@ -265,8 +250,8 @@ export class DatabaseStorage implements IStorage {
   // Delivery operations
   async createDeliveryLog(insertLog: InsertDeliveryLog): Promise<DeliveryLog> {
     try {
-      const result = await db.insert(deliveryLogs).values(insertLog).returning();
-      return result[0];
+      const [log] = await db.insert(deliveryLogs).values(insertLog).returning();
+      return log;
     } catch (error) {
       console.error('Error creating delivery log:', error);
       throw error;
@@ -275,12 +260,10 @@ export class DatabaseStorage implements IStorage {
   
   async getDeliveryLogsByUser(userId: number): Promise<DeliveryLog[]> {
     try {
-      const result = await db
+      return await db
         .select()
         .from(deliveryLogs)
         .where(eq(deliveryLogs.userId, userId));
-      
-      return result;
     } catch (error) {
       console.error('Error getting delivery logs by user:', error);
       return [];
@@ -290,12 +273,10 @@ export class DatabaseStorage implements IStorage {
   // Additional query methods
   async getUsersByZodiacSign(sign: ZodiacSign): Promise<User[]> {
     try {
-      const result = await db
+      return await db
         .select()
         .from(users)
         .where(eq(users.zodiacSign, sign));
-      
-      return result;
     } catch (error) {
       console.error('Error getting users by zodiac sign:', error);
       return [];
@@ -306,8 +287,7 @@ export class DatabaseStorage implements IStorage {
     try {
       // In a real application, you would apply additional filters here
       // For example, only select users who have opted in for daily delivery
-      const result = await db.select().from(users);
-      return result;
+      return await db.select().from(users);
     } catch (error) {
       console.error('Error getting users for daily delivery:', error);
       return [];
@@ -315,5 +295,5 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-// We're switching to use the database storage
+// Use DatabaseStorage instead of MemStorage since we've added a database
 export const storage = new DatabaseStorage();
