@@ -122,7 +122,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   
-  /* Modern cosmic elements */
+  /* Modern astrological elements */
   .magazine-heading {
     @apply font-bold text-4xl md:text-5xl lg:text-6xl leading-tight;
     background: linear-gradient(to right, #ff00ff, #c300ff, #8400ff, #3a00ff);
@@ -186,7 +186,7 @@
     }
   }
   
-  .cosmic-card {
+  .zodiac-card {
     @apply relative rounded-lg p-6 md:p-8 shadow-md hover:shadow-lg transition-all duration-300;
     border: 1px solid hsl(var(--primary)/0.3);
     background: linear-gradient(135deg, rgba(20, 10, 30, 0.85), rgba(10, 5, 20, 0.9));
@@ -194,7 +194,7 @@
     box-shadow: 0 4px 20px rgba(128, 0, 255, 0.2);
   }
   
-  /* Add some cosmic elements and scientific styling */
+  /* Add some zodiac elements and scientific styling */
   .star-bg {
     position: relative;
     overflow: hidden;
@@ -223,7 +223,7 @@
     animation: twinkle 8s ease-in-out infinite alternate;
   }
   
-  .cosmic-gradient {
+  .zodiac-gradient {
     background: linear-gradient(135deg, 
       rgba(75, 0, 130, 0.5) 0%,
       rgba(25, 25, 112, 0.5) 50%,
@@ -231,7 +231,7 @@
     position: relative;
   }
   
-  .cosmic-gradient::after {
+  .zodiac-gradient::after {
     content: '';
     position: absolute;
     top: 0;

@@ -131,7 +131,7 @@ export const affiliateProducts: AffiliateProduct[] = [
     category: "sleep",
     rating: 4.6,
     recommendedSigns: ["taurus", "cancer", "pisces", "libra", "scorpio"],
-    affiliateUrl: "https://example.com/cosmic-sleep-mask"
+    affiliateUrl: "https://example.com/horoscope-sleep-mask"
   },
   {
     id: "prod-011",
