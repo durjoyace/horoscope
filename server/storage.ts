@@ -10,6 +10,7 @@ import {
   type InsertDeliveryLog
 } from "@shared/schema";
 import { ZodiacSign } from "@shared/types";
+import session from "express-session";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -33,6 +34,9 @@ export interface IStorage {
   // Additional query methods
   getUsersByZodiacSign(sign: ZodiacSign): Promise<User[]>;
   getUsersForDailyDelivery(): Promise<User[]>;
+  
+  // Session store for express-session
+  sessionStore: session.SessionStore;
 }
 
 export class MemStorage implements IStorage {
