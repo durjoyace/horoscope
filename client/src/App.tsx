@@ -101,6 +101,9 @@ function App() {
           <Route path="/dashboard">
             {(params) => <RouteWithProps component={Dashboard} params={params} />}
           </Route>
+          <Route path="/zodiac-library">
+            {(params) => <RouteWithProps component={ZodiacLibrary} params={params} />}
+          </Route>
           <Route>
             {(params) => <RouteWithProps component={NotFound} params={params} />}
           </Route>

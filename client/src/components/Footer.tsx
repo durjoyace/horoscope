@@ -1,154 +1,123 @@
+import React from 'react';
 import { Link } from 'wouter';
-import { Star, Mail, Instagram, Twitter, Facebook, ArrowRight, Heart } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { zodiacSignNames } from '@/data/zodiacData';
-import { ZodiacSign } from '@shared/types';
+import { zodiacSignNames, zodiacElementColors } from '@/data/zodiacData';
 
 export function Footer() {
-  // Current year for copyright
   const currentYear = new Date().getFullYear();
   
-  // Footer navigation
-  const footerNav = [
-    {
-      title: 'Company',
-      links: [
-        { label: 'About Us', href: '/about' },
-        { label: 'Our Science', href: '/science' },
-        { label: 'Careers', href: '/careers' },
-        { label: 'Press', href: '/press' },
-        { label: 'Contact', href: '/contact' },
-      ]
-    },
-    {
-      title: 'Resources',
-      links: [
-        { label: 'Zodiac Library', href: '/zodiac-library' },
-        { label: 'Wellness Marketplace', href: '/marketplace' },
-        { label: 'Premium Reports', href: '/dashboard' },
-        { label: 'Health Compatibility', href: '/compatibility' },
-        { label: 'Horoscope Archive', href: '/archive' },
-      ]
-    },
-    {
-      title: 'Support',
-      links: [
-        { label: 'Help Center', href: '/help' },
-        { label: 'Privacy Policy', href: '/privacy' },
-        { label: 'Terms of Service', href: '/terms' },
-        { label: 'Billing FAQ', href: '/billing-faq' },
-        { label: 'Accessibility', href: '/accessibility' },
-      ]
+  // Group signs by element
+  const signsByElement = zodiacSignNames.reduce((acc: Record<string, typeof zodiacSignNames>, sign: any) => {
+    if (!acc[sign.element]) {
+      acc[sign.element] = [];
     }
-  ];
+    acc[sign.element].push(sign);
+    return acc;
+  }, {} as Record<string, typeof zodiacSignNames>);
   
   return (
-    <footer className="bg-muted/30 border-t">
-      <div className="container mx-auto px-4 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-10">
-          {/* Brand Section */}
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="rounded-full bg-primary/10 p-1">
-                <Star className="h-6 w-6 text-primary" />
-              </div>
-              <span className="font-bold text-xl">HoroscopeHealth</span>
-            </div>
-            <p className="text-muted-foreground mb-6 max-w-md">
-              Your personalized cosmic wellness guide, bridging ancient astrological wisdom with modern health science for holistic wellbeing.
+    <footer className="bg-card border-t">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* Company Column */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-bold">HoroscopeHealth</h3>
+            <p className="text-sm text-muted-foreground">
+              Personalized wellness insights guided by cosmic influences. Your daily 
+              companion for health and astrological alignment.
             </p>
-            
-            {/* Newsletter Signup */}
-            <div className="space-y-4">
-              <h4 className="font-medium">Subscribe to our newsletter</h4>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <Input 
-                  placeholder="Your email address" 
-                  className="bg-background"
-                  type="email"
-                />
-                <Button>
-                  Subscribe
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                By subscribing, you agree to our Privacy Policy and consent to receive updates.
-              </p>
+            <div className="flex gap-4 pt-2">
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                </svg>
+              </Button>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                </svg>
+              </Button>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                </svg>
+              </Button>
             </div>
           </div>
           
-          {/* Navigation Sections */}
-          {footerNav.map((section) => (
-            <div key={section.title} className="md:col-span-1">
-              <h4 className="font-medium text-lg mb-4">{section.title}</h4>
-              <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
-                      {link.label}
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-bold">Quick Links</h3>
+            <nav className="flex flex-col space-y-2">
+              <Link href="/">
+                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">Home</a>
+              </Link>
+              <Link href="/zodiac-library">
+                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">Zodiac Library</a>
+              </Link>
+              <Link href="/about">
+                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">About</a>
+              </Link>
+              <Link href="/science">
+                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">Our Science</a>
+              </Link>
+              <Link href="/contact">
+                <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</a>
+              </Link>
+            </nav>
+          </div>
+          
+          {/* Elements */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-bold">Elements</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {Object.entries(signsByElement).map(([element, signs]) => (
+                <div key={element} className="space-y-1">
+                  <h4 className="text-sm font-medium" 
+                    style={{ color: zodiacElementColors[element as keyof typeof zodiacElementColors] }}>
+                    {element}
+                  </h4>
+                  {signs.map((sign: any) => (
+                    <Link key={sign.value} href={`/zodiac-library?sign=${sign.value}`}>
+                      <a className="block text-xs text-muted-foreground hover:text-foreground transition-colors">
+                        {sign.symbol} {sign.label}
+                      </a>
                     </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          
-          {/* Zodiac Signs */}
-          <div className="md:col-span-1">
-            <h4 className="font-medium text-lg mb-4">Zodiac Signs</h4>
-            <ul className="grid grid-cols-2 gap-x-2 gap-y-3">
-              {zodiacSignNames.map((sign: any) => (
-                <li key={sign.value}>
-                  <Link 
-                    href={`/zodiac-library?sign=${sign.value}`} 
-                    className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
-                  >
-                    <span>{sign.symbol}</span>
-                    <span>{sign.label}</span>
-                  </Link>
-                </li>
+                  ))}
+                </div>
               ))}
-            </ul>
-          </div>
-        </div>
-        
-        {/* Lower Footer */}
-        <div className="border-t mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-sm text-muted-foreground order-2 md:order-1">
-            &copy; {currentYear} HoroscopeHealth. All rights reserved.
+            </div>
           </div>
           
-          <div className="flex items-center gap-6 order-1 md:order-2">
-            <Button variant="ghost" size="icon" asChild>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <Instagram className="h-5 w-5" />
+          {/* Contact/Newsletter */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-bold">Premium Membership</h3>
+            <p className="text-sm text-muted-foreground">
+              Subscribe for deeper insights, weekly reports, and personalized recommendations.
+            </p>
+            <Link href="/pricing">
+              <a>
+                <Button className="w-full">Subscribe Now</Button>
               </a>
-            </Button>
-            <Button variant="ghost" size="icon" asChild>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                <Twitter className="h-5 w-5" />
-              </a>
-            </Button>
-            <Button variant="ghost" size="icon" asChild>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <Facebook className="h-5 w-5" />
-              </a>
-            </Button>
-            <Button variant="ghost" size="icon" asChild>
-              <a href="mailto:hello@horoscopehealth.com" aria-label="Email">
-                <Mail className="h-5 w-5" />
-              </a>
-            </Button>
+            </Link>
           </div>
         </div>
         
-        {/* Made with Love Banner */}
-        <div className="mt-8 text-center text-sm text-muted-foreground flex items-center justify-center gap-1">
-          <span>Made with</span>
-          <Heart className="h-3 w-3 text-red-500 fill-red-500" />
-          <span>and cosmic energy</span>
+        <Separator className="my-8" />
+        
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="text-sm text-muted-foreground">
+            © {currentYear} HoroscopeHealth. All rights reserved.
+          </div>
+          <div className="flex gap-4">
+            <Link href="/privacy">
+              <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+            </Link>
+            <Link href="/terms">
+              <a className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
