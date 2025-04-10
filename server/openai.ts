@@ -49,14 +49,14 @@ export async function generateHealthHoroscope(
       temperature: 0.7
     });
 
-    const content = JSON.parse(response.choices[0].message.content);
+    const content = JSON.parse(response.choices[0].message.content || "{}");
     
     return {
-      overview: content.overview,
-      wellnessCategories: content.wellnessCategories,
-      healthTip: content.healthTip,
-      nutritionFocus: content.nutritionFocus,
-      elementAlignment: content.elementAlignment
+      overview: content.overview || "",
+      wellnessCategories: (content.wellnessCategories || ["nutrition", "sleep"]) as any,
+      healthTip: content.healthTip || "",
+      nutritionFocus: content.nutritionFocus || "",
+      elementAlignment: content.elementAlignment || ""
     };
   } catch (error) {
     console.error(`Error generating horoscope for ${sign}:`, error);
@@ -130,14 +130,14 @@ function generateMockHoroscope(sign: ZodiacSign): HoroscopeContent {
   const mockHoroscopes = {
     aries: {
       overview: "Today, your natural Aries energy is heightened, which is great for physical activities but may lead to restlessness. Focus on channeling this energy productively through structured exercise. Your metabolism is particularly efficient today, so it's an ideal time to adjust your diet if you've been planning to. Remember to balance your fire element with cooling activities throughout the day.",
-      wellnessCategories: ["fitness", "nutrition", "stress"],
+      wellnessCategories: ["fitness", "nutrition", "stress"] as WellnessCategory[],
       healthTip: "Incorporate short, intense bursts of activity throughout your day to release excess energy and prevent the buildup of tension in your shoulders and neck.",
       nutritionFocus: "Include cooling foods like cucumber and leafy greens to balance your natural fire element, while ensuring adequate protein for your active lifestyle.",
       elementAlignment: "Balance your fire element by spending time near water today - a shower, bath, or even sitting by a fountain can help regulate your energy."
     },
     taurus: {
       overview: "Your Taurus constitution brings stability to your health today, making it an excellent time for establishing new wellness routines. Your throat and neck area may need extra attention, so gentle stretches and staying hydrated are essential. Your connection to Earth energy supports grounding practices that can improve your overall sense of physical security and comfort.",
-      wellnessCategories: ["nutrition", "sleep"],
+      wellnessCategories: ["nutrition", "sleep"] as WellnessCategory[],
       healthTip: "Focus on neck stretches and throat care today, perhaps with warm herbal teas containing honey to soothe and nourish this sensitive area for Taurus.",
       nutritionFocus: "Root vegetables and hearty grains will satisfy your Earth element's need for substantial nourishment while supporting sustainable energy levels.",
       elementAlignment: "Connect with your Earth element by walking barefoot outside, gardening, or enjoying time in natural settings today."
