@@ -86,6 +86,9 @@ export function NavigationBar({
           <Link href="/zodiac-library" className="text-sm font-medium hover:text-primary transition-colors">
             Zodiac Library
           </Link>
+          <Link href="/elements" className="text-sm font-medium hover:text-primary transition-colors">
+            Elements
+          </Link>
           <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors">
             Marketplace
           </Link>
@@ -258,6 +261,9 @@ export function NavigationBar({
                   </Link>
                   <Link href="/zodiac-library" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
                     Zodiac Library
+                  </Link>
+                  <Link href="/elements" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
+                    Elements
                   </Link>
                   <Link href="/marketplace" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
                     Marketplace

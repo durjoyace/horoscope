@@ -13,6 +13,7 @@ import Home from "@/pages/Home";
 import Dashboard from "@/pages/Dashboard";
 import NotFound from "@/pages/not-found";
 import ZodiacLibrary from "@/pages/ZodiacLibrary";
+import ElementsGuide from "@/pages/ElementsGuide";
 import AffiliateMarketplace from "@/pages/AffiliateMarketplace";
 import AboutPage from "@/pages/AboutPage";
 import SciencePage from "@/pages/SciencePage";
@@ -100,6 +101,7 @@ function AppContent() {
           <Route path="/auth" component={AuthPage} />
           <ProtectedRoute path="/dashboard" component={Dashboard} />
           <Route path="/zodiac-library" component={ZodiacLibrary} />
+          <Route path="/elements" component={ElementsGuide} />
           <Route path="/marketplace" component={AffiliateMarketplace} />
           <Route path="/about" component={AboutPage} />
           <Route path="/science" component={SciencePage} />
