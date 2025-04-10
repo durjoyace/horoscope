@@ -127,12 +127,12 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                 <span>Where Ancient Wisdom Meets Modern Science</span>
               </div>
               
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 animate-slide-up">
+              <h1 className="magazine-heading mb-6 animate-slide-up">
                 <span className="block">Your Personalized</span>
-                <span className="bg-gradient-to-r from-primary to-primary/70 text-transparent bg-clip-text">Cosmic Wellness Guide</span>
+                <span className="gradient-heading">Cosmic Wellness Guide</span>
               </h1>
               
-              <p className="text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">
+              <p className="magazine-lead text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">
                 Discover how your zodiac sign influences your health tendencies and receive daily personalized wellness recommendations based on your astrological profile.
               </p>
               
@@ -228,10 +228,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+            <h2 className="magazine-subheading text-primary/70 mb-1">
+              THE INSIDE SCOOP
+            </h2>
+            <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
               How Cosmic Health Works
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="magazine-lead text-muted-foreground max-w-2xl mx-auto">
               Our unique methodology bridges ancient astrological wisdom with modern health science
             </p>
           </div>
@@ -283,10 +286,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       <section className="py-16 md:py-24 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+            <h2 className="magazine-subheading text-primary/70 mb-1">
+              EXCLUSIVE FEATURE
+            </h2>
+            <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
               Elemental Health Insights
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="magazine-lead text-muted-foreground max-w-2xl mx-auto">
               Each zodiac sign belongs to one of four elements, influencing your health tendencies and wellness needs
             </p>
           </div>
@@ -571,10 +577,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="flex-1">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">
+              <h2 className="magazine-subheading text-primary/70 mb-1">
+                PREMIUM BENEFITS
+              </h2>
+              <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
                 Beyond Daily Horoscopes
               </h2>
-              <p className="text-xl mb-8 text-muted-foreground">
+              <p className="magazine-lead mb-8 text-muted-foreground">
                 Our premium membership unlocks deeper wellness insights and personalized guidance for your cosmic health journey.
               </p>
               
@@ -706,10 +715,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       <section className="py-16 md:py-24 bg-muted">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+            <h2 className="magazine-subheading text-primary/70 mb-1">
+              SUCCESS STORIES
+            </h2>
+            <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
               What Our Members Say
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="magazine-lead text-muted-foreground max-w-2xl mx-auto">
               Real stories from people who transformed their wellness through cosmic insights
             </p>
           </div>

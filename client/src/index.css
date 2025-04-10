@@ -11,8 +11,18 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
   
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3 {
+    @apply tracking-tight font-bold font-serif;
+    letter-spacing: -0.025em;
+  }
+  
+  h4, h5, h6 {
     @apply tracking-tight font-bold;
+  }
+  
+  /* Magazine-style pullquote */
+  blockquote {
+    @apply font-serif italic text-xl leading-relaxed border-l-4 border-primary pl-4 my-8;
   }
   
   /* Custom scroll bar */
@@ -30,6 +40,27 @@
 }
 
 @layer components {
+  /* Magazine-style elements */
+  .magazine-heading {
+    @apply font-serif font-bold text-4xl md:text-5xl lg:text-6xl leading-tight;
+  }
+  
+  .magazine-subheading {
+    @apply font-serif italic text-xl md:text-2xl text-muted-foreground;
+  }
+  
+  .magazine-lead {
+    @apply text-xl leading-relaxed max-w-prose;
+  }
+  
+  .magazine-card {
+    @apply relative bg-card rounded-lg p-6 shadow-lg hover:shadow-xl transition-all duration-300 border-t-4 border-primary;
+  }
+  
+  .magazine-tag {
+    @apply inline-flex items-center gap-2 px-3 py-1 text-xs font-medium rounded-full;
+  }
+  
   .gradient-heading {
     @apply bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent;
   }
