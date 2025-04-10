@@ -189,7 +189,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                     <div className="p-2 md:p-3 bg-[#ff00ff]/20 rounded-full inline-flex justify-center items-center mb-3 md:mb-4">
                       <Star className="h-6 w-6 md:h-8 md:w-8 text-[#ff00ff] animate-spin-slow" />
                     </div>
-                    <h2 className="text-xl md:text-2xl font-bold mb-1">Your Cosmic Health Profile</h2>
+                    <h2 className="text-xl md:text-2xl font-bold mb-1">Your Horoscope Health Profile</h2>
                     <p className="text-sm text-muted-foreground">Select your zodiac sign to begin</p>
                   </div>
                   
@@ -243,7 +243,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
               SCIENCE MEETS ASTROLOGY
             </h2>
             <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
-              How Cosmic Health Works
+              How Horoscope Health Works
             </h2>
             <p className="magazine-lead text-muted-foreground max-w-2xl mx-auto">
               Our unique methodology bridges ancient astrological wisdom with modern health science
@@ -344,31 +344,30 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             </p>
           </div>
           
+          <div className="flex justify-center mb-6">
+            <Link href="/elements" className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-colors">
+              <Info className="h-4 w-4" />
+              <span>Explore all elements</span>
+            </Link>
+          </div>
+        
           <Tabs defaultValue="fire" className="w-full max-w-4xl mx-auto">
-            <TabsList className="grid grid-cols-2 sm:grid-cols-4 w-full gap-2 sm:gap-0">
-              <TabsTrigger value="fire" className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
-                <Flame className="h-3 w-3 sm:h-4 sm:w-4 text-red-500" /> 
-                <span className="hidden xs:inline">Fire</span>
-                <span className="xs:hidden">Fire Signs</span>
-                <span className="hidden sm:inline">Signs</span>
+            <TabsList className="grid grid-cols-4 w-full gap-1">
+              <TabsTrigger value="fire" className="flex items-center justify-center gap-1 text-xs sm:text-sm px-1 sm:px-2 h-auto py-2">
+                <Flame className="h-4 w-4 text-red-500" /> 
+                <span className="hidden sm:inline">Fire</span>
               </TabsTrigger>
-              <TabsTrigger value="earth" className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
-                <Leaf className="h-3 w-3 sm:h-4 sm:w-4 text-green-600" /> 
-                <span className="hidden xs:inline">Earth</span>
-                <span className="xs:hidden">Earth Signs</span>
-                <span className="hidden sm:inline">Signs</span>
+              <TabsTrigger value="earth" className="flex items-center justify-center gap-1 text-xs sm:text-sm px-1 sm:px-2 h-auto py-2">
+                <Leaf className="h-4 w-4 text-green-600" /> 
+                <span className="hidden sm:inline">Earth</span>
               </TabsTrigger>
-              <TabsTrigger value="air" className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
-                <Wind className="h-3 w-3 sm:h-4 sm:w-4 text-purple-500" /> 
-                <span className="hidden xs:inline">Air</span>
-                <span className="xs:hidden">Air Signs</span>
-                <span className="hidden sm:inline">Signs</span>
+              <TabsTrigger value="air" className="flex items-center justify-center gap-1 text-xs sm:text-sm px-1 sm:px-2 h-auto py-2">
+                <Wind className="h-4 w-4 text-purple-500" /> 
+                <span className="hidden sm:inline">Air</span>
               </TabsTrigger>
-              <TabsTrigger value="water" className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
-                <Droplets className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500" /> 
-                <span className="hidden xs:inline">Water</span>
-                <span className="xs:hidden">Water Signs</span>
-                <span className="hidden sm:inline">Signs</span>
+              <TabsTrigger value="water" className="flex items-center justify-center gap-1 text-xs sm:text-sm px-1 sm:px-2 h-auto py-2">
+                <Droplets className="h-4 w-4 text-blue-500" /> 
+                <span className="hidden sm:inline">Water</span>
               </TabsTrigger>
             </TabsList>
             
@@ -637,7 +636,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="flex-1">
               <h2 className="magazine-subheading mb-2">
-                ENHANCED COSMIC INSIGHTS
+                ENHANCED HOROSCOPE INSIGHTS
               </h2>
               <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
                 Beyond Daily Horoscopes
@@ -858,7 +857,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
               BEGIN YOUR JOURNEY
             </h2>
             <h2 className="magazine-heading text-3xl md:text-5xl mb-6">
-              Discover Your Cosmic Wellness Path
+              Discover Your Horoscope Health Path
             </h2>
             <p className="magazine-lead text-muted-foreground mb-8">
               Join thousands of members receiving personalized daily health horoscopes tailored to their zodiac sign
