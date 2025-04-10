@@ -85,31 +85,31 @@ export default function ZodiacWheel({
     
     return (
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="text-4xl">{signData.symbol}</span>
+            <span className="text-3xl sm:text-4xl">{signData.symbol}</span>
             <div>
-              <h3 className="text-2xl font-bold">{signData.label}</h3>
-              <p className="text-muted-foreground">{signData.dates}</p>
+              <h3 className="text-xl sm:text-2xl font-bold">{signData.label}</h3>
+              <p className="text-sm text-muted-foreground">{signData.dates}</p>
             </div>
           </div>
-          <Badge className={getElementColor(signData.element)}>
+          <Badge className={`mt-1 sm:mt-0 ${getElementColor(signData.element)}`}>
             {signData.element} Element
           </Badge>
         </div>
         
         <div className="grid gap-3">
           <div>
-            <h4 className="font-medium">Ruling Planet</h4>
-            <p>{signData.rulingPlanet}</p>
+            <h4 className="text-sm sm:text-base font-medium">Ruling Planet</h4>
+            <p className="text-sm sm:text-base">{signData.rulingPlanet || signData.planet}</p>
           </div>
           <div>
-            <h4 className="font-medium">Traits</h4>
-            <p>{signData.traits}</p>
+            <h4 className="text-sm sm:text-base font-medium">Traits</h4>
+            <p className="text-sm sm:text-base">{signData.traits || "Unique, Versatile, Adaptable"}</p>
           </div>
           <div>
-            <h4 className="font-medium">Health Focus</h4>
-            <p>{signData.healthFocus}</p>
+            <h4 className="text-sm sm:text-base font-medium">Health Focus</h4>
+            <p className="text-sm sm:text-base">{signData.healthFocus || "Overall wellness and balance"}</p>
           </div>
         </div>
       </div>
@@ -150,8 +150,8 @@ export default function ZodiacWheel({
         }}
       >
         <div className="text-primary font-medium text-center">
-          <div className="text-sm">Zodiac</div>
-          <div className="text-xs">Wheel</div>
+          <div className={`${size === 'sm' ? 'text-xs' : 'text-sm'}`}>Zodiac</div>
+          <div className={`${size === 'sm' ? 'text-[10px]' : 'text-xs'}`}>Wheel</div>
         </div>
       </div>
       
@@ -180,17 +180,17 @@ export default function ZodiacWheel({
                 onClick={() => handleSignClick(sign.value)}
               >
                 <div className="text-center">
-                  <div className="text-2xl mb-1">{sign.symbol}</div>
-                  <div className="text-xs font-medium">{sign.label}</div>
+                  <div className={`${size === 'sm' ? 'text-xl' : 'text-2xl'} mb-0.5 md:mb-1`}>{sign.symbol}</div>
+                  <div className={`${size === 'sm' ? 'text-[10px]' : 'text-xs'} font-medium`}>{sign.label}</div>
                 </div>
               </button>
             </DialogTrigger>
             
             {interactive && (
-              <DialogContent className="max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Zodiac Sign Details</DialogTitle>
-                  <DialogDescription>
+              <DialogContent className="max-w-[90vw] w-full sm:max-w-md p-4 sm:p-6">
+                <DialogHeader className="pb-2 sm:pb-4">
+                  <DialogTitle className="text-lg sm:text-xl">Zodiac Sign Details</DialogTitle>
+                  <DialogDescription className="text-xs sm:text-sm">
                     Learn more about this zodiac sign's characteristics and health insights
                   </DialogDescription>
                 </DialogHeader>

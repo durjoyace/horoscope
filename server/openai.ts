@@ -1,6 +1,5 @@
 import OpenAI from "openai";
-import { ZodiacSign } from "@shared/types";
-import { HoroscopeContent } from "@shared/types";
+import { ZodiacSign, WellnessCategory, HoroscopeContent } from "@shared/types";
 
 if (!process.env.OPENAI_API_KEY) {
   console.warn("OPENAI_API_KEY is not set. Horoscope generation will use mock data.");
