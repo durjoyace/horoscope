@@ -50,9 +50,25 @@ export async function generateHealthHoroscope(
 
     const content = JSON.parse(response.choices[0].message.content || "{}");
     
+    // Make sure wellnessCategories contains only valid WellnessCategory values
+    const validCategories: WellnessCategory[] = [];
+    const categories = content.wellnessCategories || ["nutrition", "sleep"];
+    
+    // Filter out any non-valid category values
+    for (const category of categories) {
+      if (["nutrition", "sleep", "stress", "fitness", "mindfulness"].includes(category)) {
+        validCategories.push(category as WellnessCategory);
+      }
+    }
+    
+    // Ensure we have at least one valid category
+    if (validCategories.length === 0) {
+      validCategories.push("nutrition");
+    }
+    
     return {
       overview: content.overview || "",
-      wellnessCategories: (content.wellnessCategories || ["nutrition", "sleep"]) as any,
+      wellnessCategories: validCategories,
       healthTip: content.healthTip || "",
       nutritionFocus: content.nutritionFocus || "",
       elementAlignment: content.elementAlignment || ""
@@ -143,21 +159,21 @@ function generateMockHoroscope(sign: ZodiacSign): HoroscopeContent {
     },
     gemini: {
       overview: "Your Gemini energy creates a quick-moving metabolism today, which may leave you feeling scattered if not properly fueled. Pay special attention to your respiratory system and nervous system health. Short, varied activities will serve you better than long, monotonous ones. Your natural curiosity can be channeled into trying new healthy foods or exercise routines.",
-      wellnessCategories: ["mindfulness", "fitness"],
+      wellnessCategories: ["mindfulness", "fitness"] as WellnessCategory[],
       healthTip: "Practice focused breathing exercises to strengthen your lungs and calm your active Gemini mind when it becomes overstimulated.",
       nutritionFocus: "Opt for a variety of colorful foods in smaller portions throughout the day to satisfy your Air element's need for diversity and prevent energy crashes.",
       elementAlignment: "Balance your Air element by incorporating grounding practices today, such as standing barefoot on the earth or working with clay."
     },
     cancer: {
       overview: `As a Cancer, your emotional and physical wellness are closely linked today. Your digestive system may be particularly sensitive, so gentle, nurturing foods are recommended. The lunar influence enhances your intuitive abilities regarding what your body needs. Practice emotional self-care as this directly impacts your physical health. Hydration is especially important for balancing your Water element.`,
-      wellnessCategories: ["sleep", "stress", "nutrition"],
+      wellnessCategories: ["sleep", "stress", "nutrition"] as WellnessCategory[],
       healthTip: "Place your hands on your stomach area for a few minutes of conscious breathing to improve digestion and emotional processing.",
       nutritionFocus: "Incorporate easily digestible foods like soups, broths, and steamed vegetables to nurture your sensitive Water element constitution.",
       elementAlignment: "Honor your Water element by ensuring adequate hydration and perhaps taking a nurturing bath with Epsom salts to support emotional and physical cleansing."
     },
     leo: {
       overview: "Your Leo vitality shines today, supporting heart health and circulation. Channel your natural confidence into physical activities that bring you joy. Your spine and back area may need some attention, so maintaining good posture is important. The sun's energy enhances your natural radiance, making this an excellent day for outdoor activities that strengthen your cardiovascular system.",
-      wellnessCategories: ["fitness", "mindfulness"],
+      wellnessCategories: ["fitness", "mindfulness"] as WellnessCategory[],
       healthTip: "Focus on heart-opening exercises like gentle backbends or chest stretches to enhance circulation and support your natural Leo radiance.",
       nutritionFocus: "Foods rich in antioxidants and heart-healthy nutrients like berries, fatty fish, and olive oil will nourish your Fire element's energy system.",
       elementAlignment: "Harmonize your Fire element by spending time in the sunshine (with proper protection) to absorb vital solar energy that resonates with your Leo nature."

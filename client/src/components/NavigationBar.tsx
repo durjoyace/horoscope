@@ -53,7 +53,7 @@ export function NavigationBar({
   // Get user's element for styling if they have a zodiac sign
   const userElement = userZodiacSign ? 
     zodiacSignNames.find(sign => sign.value === userZodiacSign)?.element : null;
-  const getElementColor = (element: string | null) => {
+  const getElementColor = (element: string | null | undefined) => {
     if (!element) return 'bg-primary';
     
     switch (element) {
@@ -67,18 +67,19 @@ export function NavigationBar({
   
   return (
     <header className="bg-background/80 backdrop-blur-md sticky top-0 z-50 w-full border-b">
-      <div className="container mx-auto px-4 flex h-16 items-center justify-between">
+      <div className="container mx-auto px-3 sm:px-4 flex h-14 sm:h-16 items-center justify-between">
         {/* Logo and Brand */}
         <div className="flex items-center">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              HoroscopeHealth
+          <Link href="/" className="flex items-center gap-1 sm:gap-2">
+            <div className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent truncate">
+              <span className="hidden xs:inline">HoroscopeHealth</span>
+              <span className="xs:hidden">HHealth</span>
             </div>
           </Link>
         </div>
         
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-6">
+        <nav className="hidden md:flex gap-3 lg:gap-6">
           <Link href="/" className="text-sm font-medium hover:text-primary transition-colors">
             Home
           </Link>
@@ -221,70 +222,133 @@ export function NavigationBar({
           {/* Mobile menu */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="md:hidden h-8 w-8">
+                <Menu className="h-4 w-4" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <nav className="flex flex-col gap-4 mt-8">
-                <Link href="/" className="text-lg font-medium hover:text-primary transition-colors py-2">
-                  Home
-                </Link>
-                <Link href="/zodiac-library" className="text-lg font-medium hover:text-primary transition-colors py-2">
-                  Zodiac Library
-                </Link>
-                <Link href="/marketplace" className="text-lg font-medium hover:text-primary transition-colors py-2">
-                  Marketplace
-                </Link>
-                <Link href="/science" className="text-lg font-medium hover:text-primary transition-colors py-2">
-                  Our Science
-                </Link>
-                <Link href="/about" className="text-lg font-medium hover:text-primary transition-colors py-2">
-                  About
-                </Link>
-                <Link href="/contact" className="text-lg font-medium hover:text-primary transition-colors py-2">
-                  Contact
-                </Link>
-                {!isLoggedIn && (
+            <SheetContent side="right" className="w-[85vw] max-w-[300px] sm:max-w-[350px] p-4">
+              <div className="flex flex-col h-full">
+                {isLoggedIn && (
+                  <div className="flex items-center gap-3 mb-4 mt-2 pb-4 border-b border-border">
+                    <Avatar className="h-10 w-10 border-2 border-primary/20">
+                      <AvatarImage src="" alt={userEmail} />
+                      <AvatarFallback className={`${getElementColor(userElement)} text-white`}>
+                        {userInitial}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-medium text-sm truncate max-w-[200px]">{userEmail}</p>
+                      {userZodiacSign && (
+                        <p className="text-xs text-muted-foreground flex items-center gap-1">
+                          <span>{userZodiacSign.charAt(0).toUpperCase() + userZodiacSign.slice(1)}</span>
+                          {isPremium && (
+                            <span className="inline-flex items-center px-1.5 py-0.5 bg-amber-100 text-amber-800 text-xs rounded-full ml-1">
+                              <Star className="h-2.5 w-2.5 mr-0.5" />Premium
+                            </span>
+                          )}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              
+                <nav className="flex flex-col gap-1">
+                  <Link href="/" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
+                    Home
+                  </Link>
+                  <Link href="/zodiac-library" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
+                    Zodiac Library
+                  </Link>
+                  <Link href="/marketplace" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
+                    Marketplace
+                  </Link>
+                  <Link href="/science" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
+                    Our Science
+                  </Link>
+                  <Link href="/about" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
+                    About
+                  </Link>
+                  <Link href="/contact" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
+                    Contact
+                  </Link>
+                </nav>
+                
+                {isLoggedIn && (
                   <>
-                    <div className="h-px bg-border my-2"></div>
-                    <Link href="/auth" className="text-lg font-medium hover:text-primary transition-colors py-2">
-                      Log In
-                    </Link>
-                    <Link href="/auth?signup=true" className="text-lg font-medium hover:text-primary transition-colors py-2">
-                      Sign Up
-                    </Link>
+                    <div className="h-px bg-border my-3"></div>
+                    <nav className="flex flex-col gap-1">
+                      <Link href="/dashboard" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
+                        <BarChart className="h-4 w-4" />
+                        Dashboard
+                      </Link>
+                      <Link href="/profile" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
+                        <User className="h-4 w-4" />
+                        Profile
+                      </Link>
+                      {isPremium ? (
+                        <Link href="/premium" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
+                          <Star className="h-4 w-4 text-amber-500" />
+                          Premium Features
+                        </Link>
+                      ) : (
+                        <Link href="/pricing" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
+                          <Shield className="h-4 w-4" />
+                          Upgrade to Premium
+                        </Link>
+                      )}
+                    </nav>
                   </>
                 )}
-                <div className="h-px bg-border my-2"></div>
-                <Button 
-                  variant="outline" 
-                  className="flex justify-start items-center gap-2"
-                  onClick={toggleTheme}
-                >
-                  {theme === 'light' ? (
-                    <>
-                      <Moon className="h-5 w-5" />
-                      <span>Dark Mode</span>
-                    </>
-                  ) : (
-                    <>
-                      <Sun className="h-5 w-5" />
-                      <span>Light Mode</span>
-                    </>
-                  )}
-                </Button>
-                {isLoggedIn && (
-                  <Button 
-                    variant="outline" 
-                    className="flex justify-start items-center gap-2 text-red-600 border-red-200"
-                    onClick={onLogout}
-                  >
-                    <LogOut className="h-5 w-5" />
-                    <span>Log out</span>
-                  </Button>
+                
+                {!isLoggedIn && (
+                  <>
+                    <div className="h-px bg-border my-3"></div>
+                    <div className="flex gap-2 mb-2">
+                      <Link href="/auth" className="flex-1">
+                        <Button variant="outline" size="sm" className="w-full">Log In</Button>
+                      </Link>
+                      <Link href="/auth?signup=true" className="flex-1">
+                        <Button size="sm" className="w-full">Sign Up</Button>
+                      </Link>
+                    </div>
+                  </>
                 )}
-              </nav>
+                
+                <div className="mt-auto pt-4">
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="flex-1 justify-center items-center gap-2"
+                      onClick={toggleTheme}
+                    >
+                      {theme === 'light' ? (
+                        <>
+                          <Moon className="h-4 w-4" />
+                          <span>Dark Mode</span>
+                        </>
+                      ) : (
+                        <>
+                          <Sun className="h-4 w-4" />
+                          <span>Light Mode</span>
+                        </>
+                      )}
+                    </Button>
+                    
+                    {isLoggedIn && (
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="flex-1 justify-center items-center gap-2 text-red-600 border-red-200"
+                        onClick={onLogout}
+                      >
+                        <LogOut className="h-4 w-4" />
+                        <span>Log out</span>
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
             </SheetContent>
           </Sheet>
         </div>
