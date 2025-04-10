@@ -27,7 +27,9 @@ import {
   Puzzle,
   Activity,
   Sun,
-  Moon
+  Moon,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 import ZodiacWheel from '@/components/ZodiacWheel';
@@ -74,23 +76,23 @@ export default function ZodiacLibrary() {
       </div>
       
       {/* Interactive Zodiac Wheel */}
-      <div className="mb-20">
+      <div className="mb-10 md:mb-20">
         <Card>
           <CardHeader className="text-center">
-            <CardTitle className="flex items-center justify-center gap-2">
-              <Star className="h-6 w-6 text-primary" /> 
+            <CardTitle className="flex items-center justify-center gap-2 text-xl md:text-2xl">
+              <Star className="h-5 w-5 md:h-6 md:w-6 text-primary" /> 
               Interactive Zodiac Wheel
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-sm md:text-base">
               Click on any sign to explore its detailed profile and wellness insights
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex justify-center">
+          <CardContent className="flex justify-center p-2 md:p-6">
             <ZodiacWheel
               onSelectSign={setSelectedSign}
               activeSigns={selectedSign ? [selectedSign] : []}
               highlightElements={true}
-              size="lg"
+              size={window.innerWidth < 768 ? "sm" : "lg"}
             />
           </CardContent>
         </Card>
@@ -98,23 +100,23 @@ export default function ZodiacLibrary() {
       
       {/* Zodiac Sign Details */}
       {selectedSignData && (
-        <div className="mb-20">
+        <div className="mb-10 md:mb-20">
           <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
+            <CardHeader className="p-4 md:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className={`p-4 rounded-full ${getElementColor(selectedSignData.element)}`}>
-                    <span className="text-3xl">{selectedSignData.symbol}</span>
+                  <div className={`p-3 md:p-4 rounded-full ${getElementColor(selectedSignData.element)}`}>
+                    <span className="text-2xl md:text-3xl">{selectedSignData.symbol}</span>
                   </div>
                   <div>
-                    <CardTitle className="text-2xl md:text-3xl">{selectedSignData.label}</CardTitle>
-                    <CardDescription className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4" /> 
+                    <CardTitle className="text-xl md:text-2xl lg:text-3xl">{selectedSignData.label}</CardTitle>
+                    <CardDescription className="flex items-center gap-2 text-xs md:text-sm">
+                      <Calendar className="h-3 w-3 md:h-4 md:w-4" /> 
                       {selectedSignData.dates}
                     </CardDescription>
                   </div>
                 </div>
-                <Badge className={getElementColor(selectedSignData.element)}>
+                <Badge className={`mt-2 sm:mt-0 ${getElementColor(selectedSignData.element)}`}>
                   {selectedSignData.element} Element
                 </Badge>
               </div>
@@ -122,15 +124,21 @@ export default function ZodiacLibrary() {
             
             <CardContent>
               <Tabs value={activeTab} onValueChange={setActiveTab}>
-                <TabsList className="grid grid-cols-3 mb-6">
-                  <TabsTrigger value="overview">
-                    <Info className="h-4 w-4 mr-2" /> Overview
+                <TabsList className="grid grid-cols-3 mb-4 md:mb-6">
+                  <TabsTrigger value="overview" className="text-xs md:text-sm px-2 md:px-4 py-1.5 md:py-2">
+                    <Info className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" /> 
+                    <span className="hidden sm:inline">Overview</span>
+                    <span className="sm:hidden">Info</span>
                   </TabsTrigger>
-                  <TabsTrigger value="wellness">
-                    <Activity className="h-4 w-4 mr-2" /> Wellness Profile
+                  <TabsTrigger value="wellness" className="text-xs md:text-sm px-2 md:px-4 py-1.5 md:py-2">
+                    <Activity className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" /> 
+                    <span className="hidden sm:inline">Wellness Profile</span>
+                    <span className="sm:hidden">Wellness</span>
                   </TabsTrigger>
-                  <TabsTrigger value="compatibility">
-                    <Heart className="h-4 w-4 mr-2" /> Compatibility
+                  <TabsTrigger value="compatibility" className="text-xs md:text-sm px-2 md:px-4 py-1.5 md:py-2">
+                    <Heart className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" /> 
+                    <span className="hidden sm:inline">Compatibility</span>
+                    <span className="sm:hidden">Matches</span>
                   </TabsTrigger>
                 </TabsList>
                 
@@ -313,25 +321,33 @@ export default function ZodiacLibrary() {
               </Tabs>
             </CardContent>
             
-            <CardFooter className="flex justify-between">
+            <CardFooter className="flex justify-between px-4 md:px-6 pb-4 md:pb-6">
               <Button 
                 variant="outline" 
+                size="sm"
+                className="text-xs md:text-sm"
                 onClick={() => {
                   const currentIndex = zodiacSignNames.findIndex(s => s.value === selectedSign);
                   const prevIndex = (currentIndex - 1 + zodiacSignNames.length) % zodiacSignNames.length;
                   setSelectedSign(zodiacSignNames[prevIndex].value);
                 }}
               >
-                Previous Sign
+                <ChevronLeft className="h-4 w-4 md:h-5 md:w-5 mr-1 md:mr-2" />
+                <span className="hidden xs:inline">Previous Sign</span>
+                <span className="xs:hidden">Prev</span>
               </Button>
               <Button
+                size="sm"
+                className="text-xs md:text-sm"
                 onClick={() => {
                   const currentIndex = zodiacSignNames.findIndex(s => s.value === selectedSign);
                   const nextIndex = (currentIndex + 1) % zodiacSignNames.length;
                   setSelectedSign(zodiacSignNames[nextIndex].value);
                 }}
               >
-                Next Sign
+                <span className="hidden xs:inline">Next Sign</span>
+                <span className="xs:hidden">Next</span>
+                <ChevronRight className="h-4 w-4 md:h-5 md:w-5 ml-1 md:ml-2" />
               </Button>
             </CardFooter>
           </Card>
@@ -339,15 +355,17 @@ export default function ZodiacLibrary() {
       )}
       
       {/* Compatibility Calculator */}
-      <div className="mb-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Zodiac Compatibility Calculator</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+      <div className="mb-10 md:mb-20">
+        <div className="text-center mb-6 md:mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4">Zodiac Compatibility Calculator</h2>
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
             Discover how different signs interact in relationships, friendships, and wellness partnerships
           </p>
         </div>
         
-        <ZodiacCompatibility />
+        <div className="px-2 md:px-0">
+          <ZodiacCompatibility />
+        </div>
       </div>
     </div>
   );
