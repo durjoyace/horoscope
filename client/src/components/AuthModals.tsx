@@ -140,6 +140,28 @@ export const AuthModals: React.FC<AuthModalsProps> = ({
       return;
     }
     
+    // Make sure the zodiac sign is selected
+    if (!data.zodiacSign) {
+      console.error('Zodiac sign is required');
+      signupForm.setError('zodiacSign', {
+        type: 'manual',
+        message: 'Please select your zodiac sign'
+      });
+      setIsSubmitting(false);
+      return;
+    }
+    
+    // Make sure terms are agreed
+    if (!data.termsAgreed) {
+      console.error('Terms must be agreed to');
+      signupForm.setError('termsAgreed', {
+        type: 'manual',
+        message: 'You must agree to the terms and conditions'
+      });
+      setIsSubmitting(false);
+      return;
+    }
+    
     try {
       console.log('Attempting signup with data:', {
         email: data.email,
@@ -397,9 +419,12 @@ export const AuthModals: React.FC<AuthModalsProps> = ({
                   <FormItem>
                     <FormLabel>Zodiac Sign</FormLabel>
                     <Select 
-                      onValueChange={field.onChange} 
-                      defaultValue={field.value}
-                      value={field.value}
+                      onValueChange={(value) => {
+                        console.log('Zodiac sign selected:', value);
+                        field.onChange(value);
+                      }}
+                      defaultValue={field.value || undefined}
+                      value={field.value || undefined}
                     >
                       <FormControl>
                         <SelectTrigger className="bg-white/10 border-gray-300">
@@ -414,6 +439,9 @@ export const AuthModals: React.FC<AuthModalsProps> = ({
                         ))}
                       </SelectContent>
                     </Select>
+                    <FormDescription>
+                      {field.value ? `Selected: ${field.value}` : 'Required for your daily horoscope'}
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
