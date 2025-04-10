@@ -15,6 +15,7 @@ import {
   Wind,
   Leaf
 } from 'lucide-react';
+import { FeatureCard } from '@/components/FeatureCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -250,74 +251,71 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-            {/* Astrological Analysis Card */}
-            <div 
-              className="text-center group relative cursor-pointer hover:transform hover:scale-105 transition-all duration-300"
-              onClick={() => {
-                const dialog = document.getElementById('astrological-analysis-dialog') as HTMLDialogElement;
-                if (dialog) dialog.showModal();
+            <FeatureCard 
+              icon={<Star className="h-full w-full" />}
+              title="Astrological Analysis"
+              description="We analyze your zodiac sign's elemental constitution, planetary rulers, and traditional health associations to understand your innate tendencies."
+              dialogContent={{
+                sections: [
+                  {
+                    title: "Your Cosmic Blueprint",
+                    content: "We analyze your zodiac sign's elemental constitution (Fire, Earth, Air, or Water), planetary rulers, and traditional health associations to create a comprehensive profile of your innate health tendencies."
+                  },
+                  {
+                    title: "Personalized Analysis",
+                    content: "Each zodiac sign has unique strengths and vulnerabilities in different body systems. For example, Aries rules the head and brain, while Taurus governs the throat and neck. We use these traditional correspondences to provide targeted health insights."
+                  },
+                  {
+                    title: "Temporal Influences",
+                    content: "We track how current planetary movements interact with your natal chart to identify times when certain health aspects need more attention or when you have natural advantages in particular wellness areas."
+                  }
+                ]
               }}
-            >
-              <div className="rounded-xl bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 p-6 shadow-lg border border-primary/10 backdrop-blur-sm mb-6 group-hover:shadow-primary/20 group-hover:border-primary/30 transition-all duration-300">
-                <div className="bg-primary/40 group-hover:bg-primary/60 rounded-full p-4 inline-flex mb-5 transform group-hover:rotate-12 transition-all duration-300 shadow-inner">
-                  <Star className="h-10 w-10 text-primary-foreground group-hover:text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-all duration-300">Astrological Analysis</h3>
-                <p className="text-muted-foreground">
-                  We analyze your zodiac sign's elemental constitution, planetary rulers, and traditional health associations to understand your innate tendencies.
-                </p>
-                <div className="mt-4 text-primary/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-sm font-medium mr-1">Learn more</span>
-                  <ArrowRight className="h-3 w-3" />
-                </div>
-              </div>
-            </div>
+            />
             
-            {/* Scientific Integration Card */}
-            <div 
-              className="text-center group relative cursor-pointer hover:transform hover:scale-105 transition-all duration-300"
-              onClick={() => {
-                const dialog = document.getElementById('scientific-integration-dialog') as HTMLDialogElement;
-                if (dialog) dialog.showModal();
+            <FeatureCard 
+              icon={<Brain className="h-full w-full" />}
+              title="Scientific Integration"
+              description="Our team combines astrological insights with evidence-based wellness research to create recommendations that honor both systems."
+              dialogContent={{
+                sections: [
+                  {
+                    title: "Evidence-Based Practices",
+                    content: "We combine traditional astrological wisdom with modern scientific understanding of nutrition, fitness, sleep science, stress management, and preventive health to create truly holistic recommendations."
+                  },
+                  {
+                    title: "Our Research Methodology",
+                    content: "Our team of experts includes both certified astrologists and healthcare professionals who work together to develop recommendations that are both astronomically aligned and scientifically sound."
+                  },
+                  {
+                    title: "Continuous Improvement",
+                    content: "We continuously review the latest wellness research and medical studies to ensure our recommendations remain current while still honoring the ancient wisdom of astrological health associations."
+                  }
+                ]
               }}
-            >
-              <div className="rounded-xl bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 p-6 shadow-lg border border-primary/10 backdrop-blur-sm mb-6 group-hover:shadow-primary/20 group-hover:border-primary/30 transition-all duration-300">
-                <div className="bg-primary/40 group-hover:bg-primary/60 rounded-full p-4 inline-flex mb-5 transform group-hover:rotate-12 transition-all duration-300 shadow-inner">
-                  <Brain className="h-10 w-10 text-primary-foreground group-hover:text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-all duration-300">Scientific Integration</h3>
-                <p className="text-muted-foreground">
-                  Our team combines astrological insights with evidence-based wellness research to create recommendations that honor both systems.
-                </p>
-                <div className="mt-4 text-primary/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-sm font-medium mr-1">Learn more</span>
-                  <ArrowRight className="h-3 w-3" />
-                </div>
-              </div>
-            </div>
+            />
             
-            {/* Personalized Guidance Card */}
-            <div 
-              className="text-center group relative cursor-pointer hover:transform hover:scale-105 transition-all duration-300"
-              onClick={() => {
-                const dialog = document.getElementById('personalized-guidance-dialog') as HTMLDialogElement;
-                if (dialog) dialog.showModal();
+            <FeatureCard 
+              icon={<HeartPulse className="h-full w-full" />}
+              title="Personalized Guidance"
+              description="You receive daily horoscopes with specific health and wellness recommendations tailored to your sign's unique constitution and current cosmic influences."
+              dialogContent={{
+                sections: [
+                  {
+                    title: "Daily Health Horoscopes",
+                    content: "Every day, you'll receive personalized health insights based on your zodiac sign and current planetary alignments. These include specific wellness categories relevant to your cosmic energy that day."
+                  },
+                  {
+                    title: "Actionable Recommendations",
+                    content: "Your daily horoscope includes practical tips for nutrition, exercise, stress management, and self-care that are specifically aligned with your astrological profile and current cosmic influences."
+                  },
+                  {
+                    title: "Elemental Balance",
+                    content: "Our guidance helps you understand how to balance your dominant elemental energies (Fire, Earth, Air, Water) through specific wellness practices, foods, and activities to achieve optimal wellbeing."
+                  }
+                ]
               }}
-            >
-              <div className="rounded-xl bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 p-6 shadow-lg border border-primary/10 backdrop-blur-sm mb-6 group-hover:shadow-primary/20 group-hover:border-primary/30 transition-all duration-300">
-                <div className="bg-primary/40 group-hover:bg-primary/60 rounded-full p-4 inline-flex mb-5 transform group-hover:rotate-12 transition-all duration-300 shadow-inner">
-                  <HeartPulse className="h-10 w-10 text-primary-foreground group-hover:text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-all duration-300">Personalized Guidance</h3>
-                <p className="text-muted-foreground">
-                  You receive daily horoscopes with specific health and wellness recommendations tailored to your sign's unique constitution and current cosmic influences.
-                </p>
-                <div className="mt-4 text-primary/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-sm font-medium mr-1">Learn more</span>
-                  <ArrowRight className="h-3 w-3" />
-                </div>
-              </div>
-            </div>
+            />
           </div>
           
           <div className="flex justify-center mt-12">
@@ -329,148 +327,6 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             </Button>
           </div>
         </div>
-        
-        {/* Modal Dialogs for each card */}
-        <dialog id="astrological-analysis-dialog" className="modal backdrop:bg-black/50 rounded-lg shadow-xl p-0 w-full max-w-md mx-auto">
-          <div className="bg-background border border-primary/20 rounded-lg overflow-hidden">
-            <div className="p-5 bg-gradient-to-br from-primary/20 to-primary/5 border-b border-primary/20">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="bg-primary/40 rounded-full p-3 inline-flex shadow-md">
-                  <Star className="h-8 w-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-bold">Astrological Analysis</h3>
-              </div>
-              <button 
-                className="absolute top-4 right-4 rounded-full p-1 hover:bg-background/30 transition-colors duration-200"
-                onClick={() => {
-                  const dialog = document.getElementById('astrological-analysis-dialog') as HTMLDialogElement;
-                  if (dialog) dialog.close();
-                }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-              </button>
-            </div>
-            <div className="p-5">
-              <h4 className="font-semibold mb-2">Your Cosmic Blueprint</h4>
-              <p className="text-muted-foreground mb-4">
-                We analyze your zodiac sign's elemental constitution (Fire, Earth, Air, or Water), planetary rulers, and traditional health associations to create a comprehensive profile of your innate health tendencies.
-              </p>
-              
-              <h4 className="font-semibold mb-2">Personalized Analysis</h4>
-              <p className="text-muted-foreground mb-4">
-                Each zodiac sign has unique strengths and vulnerabilities in different body systems. For example, Aries rules the head and brain, while Taurus governs the throat and neck. We use these traditional correspondences to provide targeted health insights.
-              </p>
-              
-              <h4 className="font-semibold mb-2">Temporal Influences</h4>
-              <p className="text-muted-foreground mb-4">
-                We track how current planetary movements interact with your natal chart to identify times when certain health aspects need more attention or when you have natural advantages in particular wellness areas.
-              </p>
-              
-              <div className="mt-6 flex justify-end">
-                <Button onClick={() => {
-                  const dialog = document.getElementById('astrological-analysis-dialog') as HTMLDialogElement;
-                  if (dialog) dialog.close();
-                }}>
-                  Close
-                </Button>
-              </div>
-            </div>
-          </div>
-        </dialog>
-        
-        <dialog id="scientific-integration-dialog" className="modal backdrop:bg-black/50 rounded-lg shadow-xl p-0 w-full max-w-md mx-auto">
-          <div className="bg-background border border-primary/20 rounded-lg overflow-hidden">
-            <div className="p-5 bg-gradient-to-br from-primary/20 to-primary/5 border-b border-primary/20">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="bg-primary/40 rounded-full p-3 inline-flex shadow-md">
-                  <Brain className="h-8 w-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-bold">Scientific Integration</h3>
-              </div>
-              <button 
-                className="absolute top-4 right-4 rounded-full p-1 hover:bg-background/30 transition-colors duration-200"
-                onClick={() => {
-                  const dialog = document.getElementById('scientific-integration-dialog') as HTMLDialogElement;
-                  if (dialog) dialog.close();
-                }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-              </button>
-            </div>
-            <div className="p-5">
-              <h4 className="font-semibold mb-2">Evidence-Based Practices</h4>
-              <p className="text-muted-foreground mb-4">
-                We combine traditional astrological wisdom with modern scientific understanding of nutrition, fitness, sleep science, stress management, and preventive health to create truly holistic recommendations.
-              </p>
-              
-              <h4 className="font-semibold mb-2">Our Research Methodology</h4>
-              <p className="text-muted-foreground mb-4">
-                Our team of experts includes both certified astrologists and healthcare professionals who work together to develop recommendations that are both astronomically aligned and scientifically sound.
-              </p>
-              
-              <h4 className="font-semibold mb-2">Continuous Improvement</h4>
-              <p className="text-muted-foreground mb-4">
-                We continuously review the latest wellness research and medical studies to ensure our recommendations remain current while still honoring the ancient wisdom of astrological health associations.
-              </p>
-              
-              <div className="mt-6 flex justify-end">
-                <Button onClick={() => {
-                  const dialog = document.getElementById('scientific-integration-dialog') as HTMLDialogElement;
-                  if (dialog) dialog.close();
-                }}>
-                  Close
-                </Button>
-              </div>
-            </div>
-          </div>
-        </dialog>
-        
-        <dialog id="personalized-guidance-dialog" className="modal backdrop:bg-black/50 rounded-lg shadow-xl p-0 w-full max-w-md mx-auto">
-          <div className="bg-background border border-primary/20 rounded-lg overflow-hidden">
-            <div className="p-5 bg-gradient-to-br from-primary/20 to-primary/5 border-b border-primary/20">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="bg-primary/40 rounded-full p-3 inline-flex shadow-md">
-                  <HeartPulse className="h-8 w-8 text-primary-foreground" />
-                </div>
-                <h3 className="text-xl font-bold">Personalized Guidance</h3>
-              </div>
-              <button 
-                className="absolute top-4 right-4 rounded-full p-1 hover:bg-background/30 transition-colors duration-200"
-                onClick={() => {
-                  const dialog = document.getElementById('personalized-guidance-dialog') as HTMLDialogElement;
-                  if (dialog) dialog.close();
-                }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-              </button>
-            </div>
-            <div className="p-5">
-              <h4 className="font-semibold mb-2">Daily Health Horoscopes</h4>
-              <p className="text-muted-foreground mb-4">
-                Every day, you'll receive personalized health insights based on your zodiac sign and current planetary alignments. These include specific wellness categories relevant to your cosmic energy that day.
-              </p>
-              
-              <h4 className="font-semibold mb-2">Actionable Recommendations</h4>
-              <p className="text-muted-foreground mb-4">
-                Your daily horoscope includes practical tips for nutrition, exercise, stress management, and self-care that are specifically aligned with your astrological profile and current cosmic influences.
-              </p>
-              
-              <h4 className="font-semibold mb-2">Elemental Balance</h4>
-              <p className="text-muted-foreground mb-4">
-                Our guidance helps you understand how to balance your dominant elemental energies (Fire, Earth, Air, Water) through specific wellness practices, foods, and activities to achieve optimal wellbeing.
-              </p>
-              
-              <div className="mt-6 flex justify-end">
-                <Button onClick={() => {
-                  const dialog = document.getElementById('personalized-guidance-dialog') as HTMLDialogElement;
-                  if (dialog) dialog.close();
-                }}>
-                  Close
-                </Button>
-              </div>
-            </div>
-          </div>
-        </dialog>
       </section>
 
       {/* Elements & Health */}
