@@ -101,15 +101,24 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-primary/10 to-background">
-        {/* Animated Background Elements */}
+      <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-primary/20 via-primary/10 to-background star-bg">
+        {/* Cosmic Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-24 h-24 rounded-full bg-primary/5 animate-float"></div>
-          <div className="absolute top-40 right-20 w-32 h-32 rounded-full bg-primary/10 animate-float-slow"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 rounded-full bg-primary/5 animate-float-slower"></div>
-          <div className="absolute top-1/3 right-1/3 w-16 h-16 rounded-full bg-primary/10 animate-pulse"></div>
+          <div className="absolute top-20 left-10 w-24 h-24 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float"></div>
+          <div className="absolute top-40 right-20 w-32 h-32 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-float-slow"></div>
+          <div className="absolute bottom-20 left-1/4 w-40 h-40 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float-slower"></div>
+          <div className="absolute top-1/3 right-1/3 w-16 h-16 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-pulse"></div>
           
-          {/* Zodiac Symbols Background */}
+          {/* Constellation-like elements */}
+          <div className="absolute inset-0 opacity-30 select-none pointer-events-none">
+            <div className="absolute top-1/4 left-1/5 h-1 w-1 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
+            <div className="absolute top-1/3 right-1/4 h-1.5 w-1.5 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
+            <div className="absolute bottom-1/3 left-1/3 h-1 w-1 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
+            <div className="absolute top-2/3 right-1/5 h-1.5 w-1.5 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
+            <div className="absolute top-1/2 left-1/2 h-1 w-1 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
+          </div>
+          
+          {/* Zodiac Symbols Background - more subtle and modern */}
           <div className="absolute inset-0 opacity-5 select-none pointer-events-none">
             <div className="absolute top-1/4 left-1/5 text-6xl transform rotate-12">♈</div>
             <div className="absolute top-1/3 right-1/4 text-7xl transform -rotate-6">♉</div>
@@ -122,7 +131,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
         <div className="container relative mx-auto px-4 z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
             <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 bg-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium mb-8 backdrop-blur-sm border border-primary/20 shadow-sm animate-fade-in">
+              <div className="inline-flex items-center gap-2 bg-background/40 text-primary px-4 py-2 rounded-full text-sm font-medium mb-8 backdrop-blur-md border border-primary/20 shadow-sm animate-fade-in">
                 <Sparkles className="h-4 w-4" />
                 <span>Where Ancient Wisdom Meets Modern Science</span>
               </div>
@@ -785,14 +794,21 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       </section>
 
       {/* CTA */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="magazine-subheading text-primary mb-2">
-              START TODAY
+      <section className="py-20 md:py-28 cosmic-gradient star-bg relative overflow-hidden">
+        {/* Cosmic elements for the CTA */}
+        <div className="absolute inset-0 opacity-30 select-none pointer-events-none">
+          <div className="absolute top-1/4 right-1/3 h-1 w-1 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
+          <div className="absolute bottom-1/2 left-1/4 h-1.5 w-1.5 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
+          <div className="absolute top-2/3 right-1/4 h-1 w-1 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-3xl mx-auto text-center backdrop-blur-sm py-10 px-6 rounded-xl">
+            <h2 className="magazine-subheading mb-2">
+              BEGIN YOUR JOURNEY
             </h2>
             <h2 className="magazine-heading text-3xl md:text-5xl mb-6">
-              Begin Your Cosmic Wellness Journey
+              Discover Your Cosmic Wellness Path
             </h2>
             <p className="magazine-lead text-muted-foreground mb-8">
               Join thousands of members receiving personalized daily health horoscopes tailored to their zodiac sign
