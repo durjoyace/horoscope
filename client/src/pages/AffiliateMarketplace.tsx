@@ -47,6 +47,9 @@ interface MarketplaceProps {
 // Affiliate product types
 type ProductCategory = 'supplements' | 'teas' | 'books' | 'tools' | 'crystals' | 'all';
 
+// Wellness categories for filtering
+type WellnessCategory = 'nutrition' | 'sleep' | 'stress' | 'fitness' | 'mindfulness' | 'all';
+
 interface Product {
   id: string;
   name: string;
@@ -54,11 +57,14 @@ interface Product {
   image: string;
   description: string;
   category: ProductCategory;
+  wellnessCategories: WellnessCategory[];
   rating: number;
   recommendedSigns: ZodiacSign[];
   bestSeller?: boolean;
   stockLevel: 'in_stock' | 'low_stock' | 'out_of_stock';
   element?: 'Fire' | 'Earth' | 'Air' | 'Water' | 'All';
+  featured?: boolean;
+  discountPercentage?: number;
 }
 
 // Sample affiliate products data
@@ -70,11 +76,13 @@ const products: Product[] = [
     image: 'supplements',
     description: 'A comprehensive multivitamin formula designed to support overall wellness with astrology-inspired herbal blends.',
     category: 'supplements',
+    wellnessCategories: ['nutrition', 'stress'],
     rating: 4.5,
     recommendedSigns: ['aries', 'leo', 'sagittarius'],
     bestSeller: true,
     stockLevel: 'in_stock',
-    element: 'Fire'
+    element: 'Fire',
+    featured: true
   },
   {
     id: 'p2',
@@ -83,10 +91,12 @@ const products: Product[] = [
     image: 'teas',
     description: 'Calming herbal tea blend with chamomile, lavender, and valerian root to help water signs find balance and peace.',
     category: 'teas',
+    wellnessCategories: ['sleep', 'stress'],
     rating: 4.8,
     recommendedSigns: ['cancer', 'scorpio', 'pisces'],
     stockLevel: 'in_stock',
-    element: 'Water'
+    element: 'Water',
+    discountPercentage: 15
   },
   {
     id: 'p3',
@@ -95,10 +105,12 @@ const products: Product[] = [
     image: 'crystals',
     description: 'Collection of earth-attuned crystals including jade, emerald, and moss agate to support earth signs in finding stability.',
     category: 'crystals',
+    wellnessCategories: ['stress', 'mindfulness'],
     rating: 4.2,
     recommendedSigns: ['taurus', 'virgo', 'capricorn'],
     stockLevel: 'low_stock',
-    element: 'Earth'
+    element: 'Earth',
+    featured: true
   },
   {
     id: 'p4',
@@ -107,6 +119,7 @@ const products: Product[] = [
     image: 'supplements',
     description: 'Brain-supporting formula with ginkgo biloba, bacopa, and lion\'s mane mushroom, perfect for enhancing air signs\' mental acuity.',
     category: 'supplements',
+    wellnessCategories: ['stress', 'mindfulness'],
     rating: 4.6,
     recommendedSigns: ['gemini', 'libra', 'aquarius'],
     stockLevel: 'in_stock',
@@ -119,11 +132,13 @@ const products: Product[] = [
     image: 'books',
     description: 'Guided wellness journal with astrological insights for tracking health, habits, and personal growth through cosmic cycles.',
     category: 'books',
+    wellnessCategories: ['mindfulness', 'stress', 'sleep'],
     rating: 4.7,
     recommendedSigns: ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'],
     bestSeller: true,
     stockLevel: 'in_stock',
-    element: 'All'
+    element: 'All',
+    discountPercentage: 10
   },
   {
     id: 'p6',
@@ -132,6 +147,7 @@ const products: Product[] = [
     image: 'teas',
     description: 'Invigorating blend with ginseng, cinnamon, and citrus designed to enhance natural fire sign energy and vitality.',
     category: 'teas',
+    wellnessCategories: ['fitness', 'nutrition'],
     rating: 4.3,
     recommendedSigns: ['aries', 'leo', 'sagittarius'],
     stockLevel: 'in_stock',
@@ -144,10 +160,12 @@ const products: Product[] = [
     image: 'tools',
     description: 'Ergonomic meditation cushion with zodiac constellation designs to support proper posture during mindfulness practices.',
     category: 'tools',
+    wellnessCategories: ['mindfulness', 'stress'],
     rating: 4.4,
     recommendedSigns: ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'],
     stockLevel: 'in_stock',
-    element: 'All'
+    element: 'All',
+    featured: true
   },
   {
     id: 'p8',
@@ -156,6 +174,7 @@ const products: Product[] = [
     image: 'books',
     description: 'Comprehensive guide to plant medicine through the lens of astrology, with personalized herbal recommendations for each sign.',
     category: 'books',
+    wellnessCategories: ['nutrition', 'mindfulness'],
     rating: 4.9,
     recommendedSigns: ['taurus', 'virgo', 'capricorn'],
     stockLevel: 'in_stock',
@@ -221,6 +240,9 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [priceRange, setPriceRange] = useState([0, 100]);
   const [elementFilter, setElementFilter] = useState<string>('All');
+  const [wellnessFilter, setWellnessFilter] = useState<WellnessCategory>('all');
+  const [showFeaturedOnly, setShowFeaturedOnly] = useState(false);
+  const [showDiscounted, setShowDiscounted] = useState(false);
   const [cartItems, setCartItems] = useState<string[]>([]);
   const [showCartNotification, setShowCartNotification] = useState(false);
   
