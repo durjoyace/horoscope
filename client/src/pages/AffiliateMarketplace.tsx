@@ -24,6 +24,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
@@ -284,6 +285,21 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
       return false;
     }
     
+    // Filter by wellness category
+    if (wellnessFilter !== 'all' && !product.wellnessCategories.includes(wellnessFilter)) {
+      return false;
+    }
+    
+    // Filter by featured products
+    if (showFeaturedOnly && !product.featured) {
+      return false;
+    }
+    
+    // Filter by discounted products
+    if (showDiscounted && !product.discountPercentage) {
+      return false;
+    }
+    
     // Filter by user's zodiac sign (if user is logged in)
     if (user?.zodiacSign && !product.recommendedSigns.includes(user.zodiacSign) && 
         product.recommendedSigns.length !== 12) { // 12 means recommended for all signs
@@ -413,6 +429,59 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                   </SelectContent>
                 </Select>
               </div>
+              
+              {/* Wellness Category Filter */}
+              <div>
+                <label className="text-sm font-medium mb-2 block">Wellness Focus</label>
+                <Select value={wellnessFilter} onValueChange={(val) => setWellnessFilter(val as WellnessCategory)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Filter by wellness focus" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Wellness Areas</SelectItem>
+                    <SelectItem value="nutrition">Nutrition</SelectItem>
+                    <SelectItem value="sleep">Sleep & Rest</SelectItem>
+                    <SelectItem value="stress">Stress Management</SelectItem>
+                    <SelectItem value="fitness">Fitness & Energy</SelectItem>
+                    <SelectItem value="mindfulness">Mindfulness & Focus</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              {/* Special Filters */}
+              <div className="space-y-3">
+                <label className="text-sm font-medium mb-2 block">Special Filters</label>
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="featured-only" 
+                    checked={showFeaturedOnly} 
+                    onCheckedChange={(checked) => 
+                      setShowFeaturedOnly(checked as boolean)
+                    }
+                  />
+                  <label
+                    htmlFor="featured-only"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Featured products only
+                  </label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="discounted" 
+                    checked={showDiscounted} 
+                    onCheckedChange={(checked) => 
+                      setShowDiscounted(checked as boolean)
+                    }
+                  />
+                  <label
+                    htmlFor="discounted"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    On sale items
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
           
@@ -483,8 +552,15 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                         ))}
                       </div>
                     </div>
-                    <CardTitle className="text-xl truncate">{product.name}</CardTitle>
-                    <div className="flex items-center gap-2">
+                    <div className="relative">
+                      {product.featured && (
+                        <div className="absolute -top-1 -right-1">
+                          <Badge variant="destructive" className="px-2 py-1">Featured</Badge>
+                        </div>
+                      )}
+                      <CardTitle className="text-xl truncate">{product.name}</CardTitle>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2">
                       <Badge
                         variant={product.element === 'All' 
                           ? 'outline' 
@@ -500,6 +576,13 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                       {product.bestSeller && (
                         <Badge variant="default">Best Seller</Badge>
                       )}
+                    </div>
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {product.wellnessCategories.map(category => (
+                        <Badge key={category} variant="outline" className="text-xs">
+                          {category.charAt(0).toUpperCase() + category.slice(1)}
+                        </Badge>
+                      ))}
                     </div>
                   </CardHeader>
                   <CardContent className="flex-grow pb-2">
@@ -526,7 +609,23 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                     </div>
                   </CardContent>
                   <CardFooter className="pt-0 flex justify-between items-center">
-                    <div className="text-lg font-bold">${product.price.toFixed(2)}</div>
+                    <div>
+                      {product.discountPercentage ? (
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg font-bold text-green-600">
+                            ${(product.price * (1 - product.discountPercentage / 100)).toFixed(2)}
+                          </span>
+                          <span className="text-sm text-muted-foreground line-through">
+                            ${product.price.toFixed(2)}
+                          </span>
+                          <Badge variant="outline" className="text-green-600 border-green-600">
+                            {product.discountPercentage}% off
+                          </Badge>
+                        </div>
+                      ) : (
+                        <div className="text-lg font-bold">${product.price.toFixed(2)}</div>
+                      )}
+                    </div>
                     <Button
                       onClick={() => addToCart(product.id)}
                       disabled={product.stockLevel === 'out_of_stock'}
@@ -553,6 +652,9 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                   setSearchQuery('');
                   setPriceRange([0, 100]);
                   setElementFilter('All');
+                  setWellnessFilter('all');
+                  setShowFeaturedOnly(false);
+                  setShowDiscounted(false);
                 }}
               >
                 Reset Filters
