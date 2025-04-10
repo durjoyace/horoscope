@@ -224,7 +224,7 @@ export default function ZodiacLibrary() {
                     <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
                       <Sun className="h-5 w-5 text-amber-500" /> 
                       <Moon className="h-5 w-5 text-blue-500" /> 
-                      Cosmic Balance Tip
+                      Horoscope Health Balance Tip
                     </h3>
                     <p className="text-muted-foreground">
                       {selectedSignData.element === 'Fire' && 

@@ -72,7 +72,7 @@ interface Product {
 const products: Product[] = [
   {
     id: 'p1',
-    name: 'Cosmic Balance Multivitamin',
+    name: 'Horoscope Health Balance Multivitamin',
     price: 39.99,
     image: 'supplements',
     description: 'A comprehensive multivitamin formula designed to support overall wellness with astrology-inspired herbal blends.',

@@ -119,7 +119,7 @@ export const HeroSection: React.FC = () => {
             <div className="relative w-full max-w-md animate-[float_6s_ease-in-out_infinite]">
               <img
                 src="https://images.pexels.com/photos/1351238/pexels-photo-1351238.jpeg"
-                alt="Cosmic wellness illustration"
+                alt="Horoscope Health wellness illustration"
                 className="rounded-lg shadow-lg w-full h-auto"
                 width="600"
                 height="400"

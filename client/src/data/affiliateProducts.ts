@@ -124,7 +124,7 @@ export const affiliateProducts: AffiliateProduct[] = [
   },
   {
     id: "prod-010",
-    name: "Cosmic Sleep Mask",
+    name: "Horoscope Health Sleep Mask",
     description: "Luxurious silk sleep mask with cooling gel insert and subtle constellation design for deep, restorative sleep.",
     price: 29.95,
     imageUrl: "https://images.pexels.com/photos/3760607/pexels-photo-3760607.jpeg",
@@ -157,7 +157,7 @@ export const affiliateProducts: AffiliateProduct[] = [
   },
   {
     id: "prod-013",
-    name: "Cosmic Clarity Skincare Set",
+    name: "Horoscope Health Clarity Skincare Set",
     description: "Complete skincare regime with adaptogenic ingredients to bring balance and radiance to all skin types.",
     price: 85.00,
     imageUrl: "https://images.pexels.com/photos/3737594/pexels-photo-3737594.jpeg",
