@@ -101,13 +101,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-primary/20 via-primary/10 to-background star-bg">
+      <section className="relative py-16 md:py-20 lg:py-28 overflow-hidden bg-gradient-to-b from-primary/20 via-primary/10 to-background star-bg">
         {/* Cosmic Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-24 h-24 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float"></div>
-          <div className="absolute top-40 right-20 w-32 h-32 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-float-slow"></div>
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float-slower"></div>
-          <div className="absolute top-1/3 right-1/3 w-16 h-16 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-pulse"></div>
+          <div className="absolute top-20 left-10 w-12 h-12 md:w-24 md:h-24 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float"></div>
+          <div className="absolute top-40 right-10 w-20 h-20 md:w-32 md:h-32 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-float-slow"></div>
+          <div className="absolute bottom-20 left-1/4 w-24 h-24 md:w-40 md:h-40 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float-slower"></div>
+          <div className="absolute top-1/3 right-1/3 w-10 h-10 md:w-16 md:h-16 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-pulse"></div>
           
           {/* Constellation-like elements */}
           <div className="absolute inset-0 opacity-30 select-none pointer-events-none">
@@ -120,47 +120,47 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           
           {/* Zodiac Symbols Background - more subtle and modern */}
           <div className="absolute inset-0 opacity-5 select-none pointer-events-none">
-            <div className="absolute top-1/4 left-1/5 text-6xl transform rotate-12">♈</div>
-            <div className="absolute top-1/3 right-1/4 text-7xl transform -rotate-6">♉</div>
-            <div className="absolute bottom-1/4 left-1/3 text-5xl transform rotate-45">♌</div>
-            <div className="absolute top-2/3 right-1/5 text-8xl transform -rotate-12">♓</div>
-            <div className="absolute top-1/2 left-1/2 text-6xl transform rotate-90">♎</div>
+            <div className="absolute top-1/4 left-1/5 text-4xl md:text-6xl transform rotate-12">♈</div>
+            <div className="absolute top-1/3 right-1/4 text-5xl md:text-7xl transform -rotate-6">♉</div>
+            <div className="absolute bottom-1/4 left-1/3 text-4xl md:text-5xl transform rotate-45">♌</div>
+            <div className="absolute top-2/3 right-1/5 text-5xl md:text-8xl transform -rotate-12">♓</div>
+            <div className="absolute top-1/2 left-1/2 text-4xl md:text-6xl transform rotate-90">♎</div>
           </div>
         </div>
         
         <div className="container relative mx-auto px-4 z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
             <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 bg-background/40 text-primary px-4 py-2 rounded-full text-sm font-medium mb-8 backdrop-blur-md border border-primary/20 shadow-sm animate-fade-in">
-                <Sparkles className="h-4 w-4" />
+              <div className="inline-flex items-center gap-2 bg-background/40 text-primary px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium mb-6 md:mb-8 backdrop-blur-md border border-primary/20 shadow-sm animate-fade-in">
+                <Sparkles className="h-3 w-3 md:h-4 md:w-4" />
                 <span>Where Ancient Wisdom Meets Modern Science</span>
               </div>
               
-              <h1 className="magazine-heading mb-6 animate-slide-up">
+              <h1 className="magazine-heading text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6 animate-slide-up">
                 <span className="block">Your Personalized</span>
                 <span className="gradient-heading">Cosmic Wellness Guide</span>
               </h1>
               
-              <p className="magazine-lead text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">
+              <p className="magazine-lead text-sm md:text-base text-muted-foreground mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">
                 Discover how your zodiac sign influences your health tendencies and receive daily personalized wellness recommendations based on your astrological profile.
               </p>
               
               {!isLoggedIn ? (
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-slide-up-delay">
-                  <form onSubmit={handleSignup} className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+                <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start animate-slide-up-delay">
+                  <form onSubmit={handleSignup} className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full max-w-md">
                     <Input
                       type="email"
                       placeholder="Your email address"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="shadow-sm border-primary/20"
+                      className="shadow-sm border-primary/20 text-sm"
                     />
-                    <Button type="submit" disabled={isSubmitting} className="shadow-md hover:shadow-lg transition-all">
+                    <Button type="submit" disabled={isSubmitting} className="shadow-md hover:shadow-lg transition-all text-sm">
                       {isSubmitting ? (
                         <>
                           <span className="mr-2">Signing Up</span>
-                          <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                          <div className="h-3 w-3 md:h-4 md:w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
                         </>
                       ) : (
                         'Get Started'
@@ -175,51 +175,51 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
               )}
             </div>
             
-            <div className="flex-1 flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-md">
+            <div className="flex-1 flex justify-center lg:justify-end mt-8 lg:mt-0">
+              <div className="relative w-full max-w-[320px] md:max-w-md">
                 {/* Decorative cosmic elements */}
-                <div className="absolute -inset-3 bg-gradient-to-r from-[#ff00ff]/20 via-[#c300ff]/10 to-[#3a00ff]/20 rounded-lg transform rotate-6 animate-pulse-slow"></div>
-                <div className="absolute -inset-6 border-2 border-[#ff00ff]/10 rounded-lg transform -rotate-3 animate-pulse-slower"></div>
-                <div className="absolute -inset-2 border border-[#c300ff]/20 rounded-full animate-spin-slow"></div>
+                <div className="absolute -inset-2 md:-inset-3 bg-gradient-to-r from-[#ff00ff]/20 via-[#c300ff]/10 to-[#3a00ff]/20 rounded-lg transform rotate-6 animate-pulse-slow"></div>
+                <div className="absolute -inset-4 md:-inset-6 border-2 border-[#ff00ff]/10 rounded-lg transform -rotate-3 animate-pulse-slower"></div>
+                <div className="absolute -inset-1 md:-inset-2 border border-[#c300ff]/20 rounded-full animate-spin-slow"></div>
                 
                 {/* Main card */}
-                <div className="relative backdrop-blur-md rounded-lg p-6 md:p-8 shadow-xl animate-fade-in-up bg-gradient-to-br from-[#8400ff]/30 to-[#3a00ff]/30 border border-[#c300ff]/40">
-                  <div className="text-center mb-6">
-                    <div className="p-3 bg-[#ff00ff]/20 rounded-full inline-flex justify-center items-center mb-4">
-                      <Star className="h-8 w-8 text-[#ff00ff] animate-spin-slow" />
+                <div className="relative backdrop-blur-md rounded-lg p-4 md:p-6 lg:p-8 shadow-xl animate-fade-in-up bg-gradient-to-br from-[#8400ff]/30 to-[#3a00ff]/30 border border-[#c300ff]/40">
+                  <div className="text-center mb-4 md:mb-6">
+                    <div className="p-2 md:p-3 bg-[#ff00ff]/20 rounded-full inline-flex justify-center items-center mb-3 md:mb-4">
+                      <Star className="h-6 w-6 md:h-8 md:w-8 text-[#ff00ff] animate-spin-slow" />
                     </div>
-                    <h2 className="text-2xl font-bold mb-1">Your Cosmic Health Profile</h2>
-                    <p className="text-muted-foreground">Select your zodiac sign to begin</p>
+                    <h2 className="text-xl md:text-2xl font-bold mb-1">Your Cosmic Health Profile</h2>
+                    <p className="text-sm text-muted-foreground">Select your zodiac sign to begin</p>
                   </div>
                   
-                  <div className="grid grid-cols-4 gap-3 mb-6">
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 md:gap-3 mb-4 md:mb-6">
                     {zodiacSignNames.map((sign) => (
                       <Button
                         key={sign.value}
                         variant={selectedSign === sign.value ? "default" : "outline"}
-                        className={`p-2 h-auto flex flex-col gap-1 transition-all duration-300 ${
+                        className={`p-1.5 md:p-2 h-auto flex flex-col gap-0.5 md:gap-1 transition-all duration-300 ${
                           selectedSign === sign.value 
-                            ? "shadow-md scale-110 border-primary" 
+                            ? "shadow-md scale-105 md:scale-110 border-primary" 
                             : "hover:border-primary/50 hover:scale-105"
                         }`}
                         onClick={() => setSelectedSign(sign.value as ZodiacSign)}
                       >
-                        <span className="text-xl">{sign.symbol}</span>
-                        <span className="text-xs">{sign.label}</span>
+                        <span className="text-lg md:text-xl">{sign.symbol}</span>
+                        <span className="text-[10px] md:text-xs">{sign.label}</span>
                       </Button>
                     ))}
                   </div>
                   
                   {selectedSign && (
                     <div className="text-center animate-fade-in">
-                      <p className="font-medium mb-2">
+                      <p className="font-medium mb-1 md:mb-2 text-sm md:text-base">
                         {zodiacSignNames.find(s => s.value === selectedSign)?.label}
                       </p>
-                      <p className="text-sm text-muted-foreground mb-4">
+                      <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4">
                         {zodiacSignNames.find(s => s.value === selectedSign)?.dates}
                       </p>
                       <Button 
-                        className="w-full shadow-md hover:shadow-lg transition-all"
+                        className="w-full shadow-md hover:shadow-lg transition-all text-sm"
                         disabled={!email}
                         onClick={handleSignup}
                       >
@@ -308,29 +308,41 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           </div>
           
           <Tabs defaultValue="fire" className="w-full max-w-4xl mx-auto">
-            <TabsList className="grid grid-cols-4 w-full">
-              <TabsTrigger value="fire" className="flex items-center gap-2">
-                <Flame className="h-4 w-4 text-red-500" /> Fire Signs
+            <TabsList className="grid grid-cols-2 sm:grid-cols-4 w-full gap-2 sm:gap-0">
+              <TabsTrigger value="fire" className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                <Flame className="h-3 w-3 sm:h-4 sm:w-4 text-red-500" /> 
+                <span className="hidden xs:inline">Fire</span>
+                <span className="xs:hidden">Fire Signs</span>
+                <span className="hidden sm:inline">Signs</span>
               </TabsTrigger>
-              <TabsTrigger value="earth" className="flex items-center gap-2">
-                <Leaf className="h-4 w-4 text-green-600" /> Earth Signs
+              <TabsTrigger value="earth" className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                <Leaf className="h-3 w-3 sm:h-4 sm:w-4 text-green-600" /> 
+                <span className="hidden xs:inline">Earth</span>
+                <span className="xs:hidden">Earth Signs</span>
+                <span className="hidden sm:inline">Signs</span>
               </TabsTrigger>
-              <TabsTrigger value="air" className="flex items-center gap-2">
-                <Wind className="h-4 w-4 text-purple-500" /> Air Signs
+              <TabsTrigger value="air" className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                <Wind className="h-3 w-3 sm:h-4 sm:w-4 text-purple-500" /> 
+                <span className="hidden xs:inline">Air</span>
+                <span className="xs:hidden">Air Signs</span>
+                <span className="hidden sm:inline">Signs</span>
               </TabsTrigger>
-              <TabsTrigger value="water" className="flex items-center gap-2">
-                <Droplets className="h-4 w-4 text-blue-500" /> Water Signs
+              <TabsTrigger value="water" className="flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm">
+                <Droplets className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500" /> 
+                <span className="hidden xs:inline">Water</span>
+                <span className="xs:hidden">Water Signs</span>
+                <span className="hidden sm:inline">Signs</span>
               </TabsTrigger>
             </TabsList>
             
             <TabsContent value="fire">
               <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Flame className="h-5 w-5 text-red-500" />
-                    Fire Signs: Aries, Leo, Sagittarius
+                <CardHeader className="px-4 sm:px-6 py-4 sm:py-6">
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg md:text-xl flex-wrap">
+                    <Flame className="h-4 w-4 sm:h-5 sm:w-5 text-red-500" />
+                    <span>Fire Signs:</span> <span className="font-normal text-sm sm:text-base">Aries, Leo, Sagittarius</span>
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-xs sm:text-sm mt-1">
                     Dynamic, energetic, and passionate
                   </CardDescription>
                 </CardHeader>
