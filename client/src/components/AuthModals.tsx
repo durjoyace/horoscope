@@ -131,8 +131,25 @@ export const AuthModals: React.FC<AuthModalsProps> = ({
 
   const onSignupSubmit = async (data: SignupFormValues) => {
     setIsSubmitting(true);
+    console.log('Signup form data:', data);
+    
+    // Check for validation errors
+    if (Object.keys(signupForm.formState.errors).length > 0) {
+      console.log('Form validation errors:', signupForm.formState.errors);
+      setIsSubmitting(false);
+      return;
+    }
     
     try {
+      console.log('Attempting signup with data:', {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        zodiacSign: data.zodiacSign,
+        birthdate: data.birthdate,
+        smsOptIn: data.smsOptIn,
+      });
+      
       const result = await signUp({
         email: data.email,
         firstName: data.firstName,
@@ -141,8 +158,11 @@ export const AuthModals: React.FC<AuthModalsProps> = ({
         birthdate: data.birthdate,
         phone: data.phone,
         smsOptIn: data.smsOptIn,
+        newsletterOptIn: true,
         password: data.password,
       });
+      
+      console.log('Signup result:', result);
       
       if (result.success) {
         onSignupClose();
@@ -150,6 +170,7 @@ export const AuthModals: React.FC<AuthModalsProps> = ({
         setIsSuccessModalOpen(true);
         signupForm.reset();
       } else {
+        console.error('Signup failed:', result.message);
         signupForm.setError('root', {
           type: 'manual',
           message: result.message

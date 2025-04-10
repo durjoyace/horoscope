@@ -7,6 +7,8 @@ interface User {
   firstName?: string;
   lastName?: string;
   phone?: string;
+  birthdate?: string;
+  password?: string;
   smsOptIn: boolean;
   newsletterOptIn: boolean;
   isAuthenticated: boolean;
@@ -26,6 +28,8 @@ const defaultUser: User = {
   firstName: '',
   lastName: '',
   phone: '',
+  birthdate: '',
+  password: '',
   smsOptIn: false,
   newsletterOptIn: true,
   isAuthenticated: false
