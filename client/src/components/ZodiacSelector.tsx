@@ -19,7 +19,7 @@ export const ZodiacSelector: React.FC = () => {
     if (user?.email) {
       try {
         const result = await signUp({
-          ...user,
+          email: user.email,
           zodiacSign: sign
         });
         
