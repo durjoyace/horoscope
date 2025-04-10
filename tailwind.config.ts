@@ -79,10 +79,78 @@ export default {
             height: "0",
           },
         },
+        "float": {
+          "0%, 100%": {
+            transform: "translateY(0)",
+          },
+          "50%": {
+            transform: "translateY(-15px)",
+          },
+        },
+        "spin-slow": {
+          to: {
+            transform: "rotate(360deg)",
+          },
+        },
+        "pulse-slow": {
+          "0%, 100%": {
+            opacity: "1",
+          },
+          "50%": {
+            opacity: "0.7",
+          },
+        },
+        "pulse-slower": {
+          "0%, 100%": {
+            opacity: "1",
+          },
+          "50%": {
+            opacity: "0.5",
+          },
+        },
+        "fade-in": {
+          from: {
+            opacity: "0",
+          },
+          to: {
+            opacity: "1",
+          },
+        },
+        "fade-in-up": {
+          from: {
+            opacity: "0",
+            transform: "translateY(20px)",
+          },
+          to: {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "slide-up": {
+          from: {
+            transform: "translateY(20px)",
+            opacity: "0.5",
+          },
+          to: {
+            transform: "translateY(0)",
+            opacity: "1",
+          },
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "float": "float 5s ease-in-out infinite",
+        "float-slow": "float 7s ease-in-out infinite",
+        "float-slower": "float 9s ease-in-out infinite",
+        "spin-slow": "spin-slow 10s linear infinite",
+        "pulse-slow": "pulse-slow 5s ease-in-out infinite",
+        "pulse-slower": "pulse-slower 7s ease-in-out infinite",
+        "fade-in": "fade-in 0.7s ease-in-out forwards",
+        "fade-in-delay": "fade-in 0.7s ease-in-out 0.3s forwards",
+        "fade-in-up": "fade-in-up 0.7s ease-out forwards",
+        "slide-up": "slide-up 0.7s ease-out forwards",
+        "slide-up-delay": "slide-up 0.7s ease-out 0.3s forwards",
       },
     },
   },

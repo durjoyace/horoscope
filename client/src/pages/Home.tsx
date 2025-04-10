@@ -101,23 +101,43 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-primary/5 to-background">
-        <div className="container mx-auto px-4">
+      <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-primary/10 to-background">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-10 w-24 h-24 rounded-full bg-primary/5 animate-float"></div>
+          <div className="absolute top-40 right-20 w-32 h-32 rounded-full bg-primary/10 animate-float-slow"></div>
+          <div className="absolute bottom-20 left-1/4 w-40 h-40 rounded-full bg-primary/5 animate-float-slower"></div>
+          <div className="absolute top-1/3 right-1/3 w-16 h-16 rounded-full bg-primary/10 animate-pulse"></div>
+          
+          {/* Zodiac Symbols Background */}
+          <div className="absolute inset-0 opacity-5 select-none pointer-events-none">
+            <div className="absolute top-1/4 left-1/5 text-6xl transform rotate-12">♈</div>
+            <div className="absolute top-1/3 right-1/4 text-7xl transform -rotate-6">♉</div>
+            <div className="absolute bottom-1/4 left-1/3 text-5xl transform rotate-45">♌</div>
+            <div className="absolute top-2/3 right-1/5 text-8xl transform -rotate-12">♓</div>
+            <div className="absolute top-1/2 left-1/2 text-6xl transform rotate-90">♎</div>
+          </div>
+        </div>
+        
+        <div className="container relative mx-auto px-4 z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
             <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium mb-6">
+              <div className="inline-flex items-center gap-2 bg-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium mb-8 backdrop-blur-sm border border-primary/20 shadow-sm animate-fade-in">
                 <Sparkles className="h-4 w-4" />
-                <span>Where Astrology Meets Health Science</span>
+                <span>Where Ancient Wisdom Meets Modern Science</span>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-                Your Personalized Cosmic Wellness Guide
+              
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 animate-slide-up">
+                <span className="block">Your Personalized</span>
+                <span className="bg-gradient-to-r from-primary to-primary/70 text-transparent bg-clip-text">Cosmic Wellness Guide</span>
               </h1>
-              <p className="text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0">
+              
+              <p className="text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">
                 Discover how your zodiac sign influences your health tendencies and receive daily personalized wellness recommendations based on your astrological profile.
               </p>
               
               {!isLoggedIn ? (
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-slide-up-delay">
                   <form onSubmit={handleSignup} className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
                     <Input
                       type="email"
@@ -125,8 +145,9 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
+                      className="shadow-sm border-primary/20"
                     />
-                    <Button type="submit" disabled={isSubmitting}>
+                    <Button type="submit" disabled={isSubmitting} className="shadow-md hover:shadow-lg transition-all">
                       {isSubmitting ? (
                         <>
                           <span className="mr-2">Signing Up</span>
@@ -139,7 +160,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                   </form>
                 </div>
               ) : (
-                <Button size="lg" asChild>
+                <Button size="lg" asChild className="shadow-md hover:shadow-lg transition-all animate-pulse">
                   <Link href="/dashboard">Go to Dashboard</Link>
                 </Button>
               )}
@@ -147,10 +168,16 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             
             <div className="flex-1 flex justify-center lg:justify-end">
               <div className="relative w-full max-w-md">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/5 rounded-lg transform rotate-3"></div>
-                <div className="relative bg-card border rounded-lg p-6 md:p-8 shadow-lg">
+                {/* Decorative elements */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/5 rounded-lg transform rotate-3 animate-pulse-slow"></div>
+                <div className="absolute inset-0 border-2 border-primary/10 rounded-lg transform -rotate-2 animate-pulse-slower"></div>
+                
+                {/* Main card */}
+                <div className="relative bg-card border border-primary/20 backdrop-blur-sm rounded-lg p-6 md:p-8 shadow-xl animate-fade-in-up">
                   <div className="text-center mb-6">
-                    <Star className="h-10 w-10 text-primary mx-auto mb-3" />
+                    <div className="p-3 bg-primary/10 rounded-full inline-flex justify-center items-center mb-4">
+                      <Star className="h-8 w-8 text-primary animate-spin-slow" />
+                    </div>
                     <h2 className="text-2xl font-bold mb-1">Your Cosmic Health Profile</h2>
                     <p className="text-muted-foreground">Select your zodiac sign to begin</p>
                   </div>
@@ -160,7 +187,11 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                       <Button
                         key={sign.value}
                         variant={selectedSign === sign.value ? "default" : "outline"}
-                        className="p-2 h-auto flex flex-col gap-1"
+                        className={`p-2 h-auto flex flex-col gap-1 transition-all duration-300 ${
+                          selectedSign === sign.value 
+                            ? "shadow-md scale-110 border-primary" 
+                            : "hover:border-primary/50 hover:scale-105"
+                        }`}
                         onClick={() => setSelectedSign(sign.value as ZodiacSign)}
                       >
                         <span className="text-xl">{sign.symbol}</span>
@@ -170,7 +201,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                   </div>
                   
                   {selectedSign && (
-                    <div className="text-center">
+                    <div className="text-center animate-fade-in">
                       <p className="font-medium mb-2">
                         {zodiacSignNames.find(s => s.value === selectedSign)?.label}
                       </p>
@@ -178,7 +209,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                         {zodiacSignNames.find(s => s.value === selectedSign)?.dates}
                       </p>
                       <Button 
-                        className="w-full" 
+                        className="w-full shadow-md hover:shadow-lg transition-all"
                         disabled={!email}
                         onClick={handleSignup}
                       >

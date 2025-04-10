@@ -1,147 +1,154 @@
 import { Link } from 'wouter';
-import { Star, Mail, Instagram, Twitter, Facebook, Heart } from 'lucide-react';
+import { Star, Mail, Instagram, Twitter, Facebook, ArrowRight, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { zodiacSignNames } from '@/data/zodiacData';
-import { useState } from 'react';
-import { useToast } from '@/hooks/use-toast';
+import { ZodiacSign } from '@shared/types';
 
 export function Footer() {
-  const [email, setEmail] = useState('');
-  const { toast } = useToast();
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!email || !email.includes('@')) {
-      toast({
-        title: 'Invalid Email',
-        description: 'Please enter a valid email address.',
-        variant: 'destructive',
-      });
-      return;
-    }
-    
-    // In a real app, we would submit this to an API
-    toast({
-      title: 'Thanks for subscribing!',
-      description: 'You\'ve been added to our newsletter.',
-    });
-    
-    setEmail('');
-  };
-
+  // Current year for copyright
   const currentYear = new Date().getFullYear();
-
+  
+  // Footer navigation
+  const footerNav = [
+    {
+      title: 'Company',
+      links: [
+        { label: 'About Us', href: '/about' },
+        { label: 'Our Science', href: '/science' },
+        { label: 'Careers', href: '/careers' },
+        { label: 'Press', href: '/press' },
+        { label: 'Contact', href: '/contact' },
+      ]
+    },
+    {
+      title: 'Resources',
+      links: [
+        { label: 'Zodiac Library', href: '/zodiac-library' },
+        { label: 'Wellness Marketplace', href: '/marketplace' },
+        { label: 'Premium Reports', href: '/dashboard' },
+        { label: 'Health Compatibility', href: '/compatibility' },
+        { label: 'Horoscope Archive', href: '/archive' },
+      ]
+    },
+    {
+      title: 'Support',
+      links: [
+        { label: 'Help Center', href: '/help' },
+        { label: 'Privacy Policy', href: '/privacy' },
+        { label: 'Terms of Service', href: '/terms' },
+        { label: 'Billing FAQ', href: '/billing-faq' },
+        { label: 'Accessibility', href: '/accessibility' },
+      ]
+    }
+  ];
+  
   return (
-    <footer className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container px-4 py-12 md:py-16">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Star className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold tracking-tight">HoroscopeHealth</span>
+    <footer className="bg-muted/30 border-t">
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-10">
+          {/* Brand Section */}
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="rounded-full bg-primary/10 p-1">
+                <Star className="h-6 w-6 text-primary" />
+              </div>
+              <span className="font-bold text-xl">HoroscopeHealth</span>
             </div>
-            <p className="text-sm text-muted-foreground max-w-xs">
-              Bridging the gap between ancient astrological wisdom and modern wellness science for personalized health insights.
+            <p className="text-muted-foreground mb-6 max-w-md">
+              Your personalized cosmic wellness guide, bridging ancient astrological wisdom with modern health science for holistic wellbeing.
             </p>
-            <div className="flex items-center gap-4">
-              <Button size="icon" variant="ghost" aria-label="Instagram" className="h-8 w-8 rounded-full">
-                <Instagram className="h-4 w-4" />
-              </Button>
-              <Button size="icon" variant="ghost" aria-label="Twitter" className="h-8 w-8 rounded-full">
-                <Twitter className="h-4 w-4" />
-              </Button>
-              <Button size="icon" variant="ghost" aria-label="Facebook" className="h-8 w-8 rounded-full">
-                <Facebook className="h-4 w-4" />
-              </Button>
-              <Button size="icon" variant="ghost" aria-label="Email" className="h-8 w-8 rounded-full">
-                <Mail className="h-4 w-4" />
-              </Button>
+            
+            {/* Newsletter Signup */}
+            <div className="space-y-4">
+              <h4 className="font-medium">Subscribe to our newsletter</h4>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Input 
+                  placeholder="Your email address" 
+                  className="bg-background"
+                  type="email"
+                />
+                <Button>
+                  Subscribe
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                By subscribing, you agree to our Privacy Policy and consent to receive updates.
+              </p>
             </div>
           </div>
-
-          <div className="space-y-4">
-            <h3 className="text-base font-medium">Quick Links</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/science" className="text-muted-foreground hover:text-foreground transition-colors">
-                  The Science
-                </Link>
-              </li>
-              <li>
-                <Link href="/marketplace" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Wellness Marketplace
-                </Link>
-              </li>
-              <li>
-                <Link href="/zodiac-library" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Zodiac Library
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Contact Us
-                </Link>
-              </li>
+          
+          {/* Navigation Sections */}
+          {footerNav.map((section) => (
+            <div key={section.title} className="md:col-span-1">
+              <h4 className="font-medium text-lg mb-4">{section.title}</h4>
+              <ul className="space-y-3">
+                {section.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          
+          {/* Zodiac Signs */}
+          <div className="md:col-span-1">
+            <h4 className="font-medium text-lg mb-4">Zodiac Signs</h4>
+            <ul className="grid grid-cols-2 gap-x-2 gap-y-3">
+              {zodiacSignNames.map((sign: any) => (
+                <li key={sign.value}>
+                  <Link 
+                    href={`/zodiac-library?sign=${sign.value}`} 
+                    className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+                  >
+                    <span>{sign.symbol}</span>
+                    <span>{sign.label}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
-
-          <div className="space-y-4">
-            <h3 className="text-base font-medium">Zodiac Signs</h3>
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              {zodiacSignNames.map((sign) => (
-                <Link
-                  key={sign.value}
-                  href={`/zodiac-library?sign=${sign.value}`}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {sign.symbol} {sign.label}
-                </Link>
-              ))}
-            </div>
+        </div>
+        
+        {/* Lower Footer */}
+        <div className="border-t mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="text-sm text-muted-foreground order-2 md:order-1">
+            &copy; {currentYear} HoroscopeHealth. All rights reserved.
           </div>
-
-          <div className="space-y-4">
-            <h3 className="text-base font-medium">Newsletter</h3>
-            <p className="text-sm text-muted-foreground">
-              Subscribe to receive personalized horoscopes, wellness tips, and exclusive offers.
-            </p>
-            <form onSubmit={handleSubscribe} className="flex flex-col gap-2">
-              <Input
-                type="email"
-                placeholder="Your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="max-w-xs"
-              />
-              <Button type="submit" className="w-fit">
-                Subscribe
-              </Button>
-            </form>
+          
+          <div className="flex items-center gap-6 order-1 md:order-2">
+            <Button variant="ghost" size="icon" asChild>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <Instagram className="h-5 w-5" />
+              </a>
+            </Button>
+            <Button variant="ghost" size="icon" asChild>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                <Twitter className="h-5 w-5" />
+              </a>
+            </Button>
+            <Button variant="ghost" size="icon" asChild>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <Facebook className="h-5 w-5" />
+              </a>
+            </Button>
+            <Button variant="ghost" size="icon" asChild>
+              <a href="mailto:hello@horoscopehealth.com" aria-label="Email">
+                <Mail className="h-5 w-5" />
+              </a>
+            </Button>
           </div>
         </div>
-
-        <div className="mt-12 flex flex-col md:flex-row justify-between items-center gap-4 pt-6 border-t">
-          <p className="text-xs text-muted-foreground">
-            © {currentYear} HoroscopeHealth. All rights reserved.
-          </p>
-          <div className="flex gap-6 text-xs text-muted-foreground">
-            <Link href="/privacy" className="hover:text-foreground transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="hover:text-foreground transition-colors">
-              Terms of Service
-            </Link>
-            <div className="flex items-center gap-1">
-              Made with <Heart className="h-3 w-3 text-red-500" />
-            </div>
-          </div>
+        
+        {/* Made with Love Banner */}
+        <div className="mt-8 text-center text-sm text-muted-foreground flex items-center justify-center gap-1">
+          <span>Made with</span>
+          <Heart className="h-3 w-3 text-red-500 fill-red-500" />
+          <span>and cosmic energy</span>
         </div>
       </div>
     </footer>

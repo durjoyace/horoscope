@@ -1,219 +1,317 @@
+import { ZodiacSign } from '@shared/types';
+
 export const zodiacSignNames = [
-  { value: 'aries', label: 'Aries', symbol: '♈', dates: 'Mar 21 - Apr 19', element: 'Fire' },
-  { value: 'taurus', label: 'Taurus', symbol: '♉', dates: 'Apr 20 - May 20', element: 'Earth' },
-  { value: 'gemini', label: 'Gemini', symbol: '♊', dates: 'May 21 - Jun 20', element: 'Air' },
-  { value: 'cancer', label: 'Cancer', symbol: '♋', dates: 'Jun 21 - Jul 22', element: 'Water' },
-  { value: 'leo', label: 'Leo', symbol: '♌', dates: 'Jul 23 - Aug 22', element: 'Fire' },
-  { value: 'virgo', label: 'Virgo', symbol: '♍', dates: 'Aug 23 - Sep 22', element: 'Earth' },
-  { value: 'libra', label: 'Libra', symbol: '♎', dates: 'Sep 23 - Oct 22', element: 'Air' },
-  { value: 'scorpio', label: 'Scorpio', symbol: '♏', dates: 'Oct 23 - Nov 21', element: 'Water' },
-  { value: 'sagittarius', label: 'Sagittarius', symbol: '♐', dates: 'Nov 22 - Dec 21', element: 'Fire' },
-  { value: 'capricorn', label: 'Capricorn', symbol: '♑', dates: 'Dec 22 - Jan 19', element: 'Earth' },
-  { value: 'aquarius', label: 'Aquarius', symbol: '♒', dates: 'Jan 20 - Feb 18', element: 'Air' },
-  { value: 'pisces', label: 'Pisces', symbol: '♓', dates: 'Feb 19 - Mar 20', element: 'Water' },
-];
-
-export const zodiacElementColors = {
-  Fire: 'text-red-500',
-  Earth: 'text-green-600',
-  Air: 'text-purple-500',
-  Water: 'text-blue-500',
-};
-
-export const zodiacDescriptions = {
-  aries: {
-    title: 'Dynamic & Energetic',
-    description: 'As the first sign of the zodiac, Aries individuals are enthusiastic pioneers, known for their courage, determination, and leadership qualities. Their energetic constitution requires regular physical activity to maintain balance.',
-    healthStrengths: ['Quick recovery', 'High energy levels', 'Strong vitality', 'Natural athleticism'],
-    healthChallenges: ['Headaches', 'Inflammation', 'Impulsive health decisions', 'Stress-related issues'],
-    wellnessRecommendations: [
-      'High-intensity interval training',
-      'Anti-inflammatory foods',
-      'Stress management techniques',
-      'Mindfulness practices to balance impulsivity'
+  {
+    value: 'aries' as ZodiacSign,
+    label: 'Aries',
+    symbol: '♈',
+    dates: 'Mar 21 - Apr 19',
+    element: 'Fire',
+    healthTraits: [
+      'High energy levels',
+      'Quick metabolism',
+      'Tendency for headaches',
+      'Prone to inflammation'
     ],
-    bodyAssociations: ['Head', 'Face', 'Brain', 'Adrenal glands'],
-    idealFoods: ['Spinach', 'Peppers', 'Garlic', 'Onions', 'Walnuts'],
-    idealActivities: ['Competitive sports', 'Martial arts', 'Sprint training', 'Mountain climbing']
+    wellnessRecommendations: [
+      'Balance intense activities with rest periods',
+      'Anti-inflammatory diet',
+      'Stress-management techniques',
+      'Head and eye protection during sports'
+    ],
+    compatibility: ['leo', 'sagittarius', 'libra', 'aquarius'],
+    wellnessFocus: 'Stress management and anti-inflammatory nutrition'
   },
-  taurus: {
-    title: 'Grounded & Steadfast',
-    description: 'Taurus individuals embody strength and stability, with a natural connection to the physical world. They value comfort and sensory experiences, making holistic wellness approaches particularly effective for their health.',
-    healthStrengths: ['Strong constitution', 'Endurance', 'Consistency in routines', 'Resilience'],
-    healthChallenges: ['Throat issues', 'Thyroid concerns', 'Stiff neck', 'Resistance to change'],
+  {
+    value: 'taurus' as ZodiacSign,
+    label: 'Taurus',
+    symbol: '♉',
+    dates: 'Apr 20 - May 20',
+    element: 'Earth',
+    healthTraits: [
+      'Strong constitution',
+      'Good endurance',
+      'Throat sensitivity',
+      'May overindulge in comfort foods'
+    ],
     wellnessRecommendations: [
       'Regular, consistent exercise routines',
-      'Natural, high-quality nutrition',
-      'Massage and touch therapies',
-      'Connection with nature and grounding practices'
+      'Mindful eating practices',
+      'Voice care and neck stretches',
+      'Connection with nature'
     ],
-    bodyAssociations: ['Throat', 'Neck', 'Thyroid', 'Voice'],
-    idealFoods: ['Root vegetables', 'Dark leafy greens', 'Pears', 'Avocados', 'Quality proteins'],
-    idealActivities: ['Yoga', 'Walking in nature', 'Gardening', 'Strength training']
+    compatibility: ['virgo', 'capricorn', 'cancer', 'pisces'],
+    wellnessFocus: 'Stable routines and grounding practices'
   },
-  gemini: {
-    title: 'Adaptable & Intellectual',
-    description: 'The twins of the zodiac, Gemini individuals are intellectually curious and socially adaptable. Their busy minds and versatile nature require varied approaches to health that engage both mental and physical aspects.',
-    healthStrengths: ['Adaptability', 'Quick thinking', 'Nervous system resilience', 'Social wellness'],
-    healthChallenges: ['Respiratory sensitivity', 'Nervous tension', 'Scattered energy', 'Inconsistent habits'],
-    wellnessRecommendations: [
-      'Activities that combine mental and physical stimulation',
-      'Breathing exercises and respiratory care',
-      'Varied fitness routines to prevent boredom',
-      'Mind-body practices for nervous system regulation'
+  {
+    value: 'gemini' as ZodiacSign,
+    label: 'Gemini',
+    symbol: '♊',
+    dates: 'May 21 - Jun 20',
+    element: 'Air',
+    healthTraits: [
+      'Quick nervous system',
+      'Respiratory sensitivity',
+      'Adaptable metabolism',
+      'May experience scattered energy'
     ],
-    bodyAssociations: ['Lungs', 'Arms', 'Shoulders', 'Nervous system'],
-    idealFoods: ['Brain-boosting foods', 'Berries', 'Nuts', 'Seeds', 'Oxygenating foods'],
-    idealActivities: ['Group fitness classes', 'Dance', 'Tennis', 'Learning-based movement']
-  },
-  cancer: {
-    title: 'Nurturing & Intuitive',
-    description: 'Cancer individuals possess strong emotional intuition and a nurturing nature. Their health is closely connected to their emotional wellbeing, making emotional balance a cornerstone of their physical health.',
-    healthStrengths: ['Intuitive eating', 'Self-care awareness', 'Emotional intelligence', 'Nurturing abilities'],
-    healthChallenges: ['Digestive sensitivity', 'Emotional eating', 'Water retention', 'Mood fluctuations'],
     wellnessRecommendations: [
-      'Digestive health support through probiotics and gut-friendly foods',
+      'Varied workout routines',
+      'Breathing exercises and lung support',
+      'Nervous system support',
+      'Meditation for mental focus'
+    ],
+    compatibility: ['libra', 'aquarius', 'aries', 'leo'],
+    wellnessFocus: 'Respiratory health and nervous system balance'
+  },
+  {
+    value: 'cancer' as ZodiacSign,
+    label: 'Cancer',
+    symbol: '♋',
+    dates: 'Jun 21 - Jul 22',
+    element: 'Water',
+    healthTraits: [
+      'Strong digestive intuition',
+      'Emotional sensitivity affecting health',
+      'Fluid retention tendencies',
+      'Nurturing self-care abilities'
+    ],
+    wellnessRecommendations: [
+      'Digestive support herbs and foods',
       'Emotional processing practices',
       'Water-based activities',
-      'Creating nurturing environments for health practices'
+      'Creating nurturing environments'
     ],
-    bodyAssociations: ['Stomach', 'Digestive system', 'Breasts', 'Lymphatic system'],
-    idealFoods: ['Fermented foods', 'Sea vegetables', 'Soothing herbs', 'Moon-enriched water'],
-    idealActivities: ['Swimming', 'Water aerobics', 'Gentle yoga', 'Walking near water']
+    compatibility: ['scorpio', 'pisces', 'taurus', 'virgo'],
+    wellnessFocus: 'Emotional wellness and digestive health'
   },
-  leo: {
-    title: 'Charismatic & Vital',
-    description: 'Leo individuals radiate confidence and natural vitality. Their strong life force and warm-hearted nature contribute to robust health, particularly when they engage in expressions of joy and creativity.',
-    healthStrengths: ['Strong heart', 'Vitality', 'Recovery capability', 'Immune resilience'],
-    healthChallenges: ['Heart health concerns', 'Back issues', 'Circulation', 'Heat sensitivity'],
-    wellnessRecommendations: [
-      'Heart-healthy nutrition and cardiovascular exercise',
-      'Spine-supporting movement',
-      'Creative expression as therapy',
-      'Balancing sun exposure for vitamin D without overheating'
+  {
+    value: 'leo' as ZodiacSign,
+    label: 'Leo',
+    symbol: '♌',
+    dates: 'Jul 23 - Aug 22',
+    element: 'Fire',
+    healthTraits: [
+      'Strong vitality and immunity',
+      'Heart and circulation strength',
+      'Potential for back tension',
+      'May ignore minor health signals'
     ],
-    bodyAssociations: ['Heart', 'Spine', 'Upper back', 'Circulatory system'],
-    idealFoods: ['Heart-healthy omega-3s', 'Magnesium-rich foods', 'Antioxidants', 'Berries'],
-    idealActivities: ['Dance', 'Theater-based movement', 'Heart-pumping cardio', 'Yoga for back strength']
-  },
-  virgo: {
-    title: 'Analytical & Precise',
-    description: 'Virgo individuals bring analytical precision to health and wellness, with a natural affinity for nutrition, purification, and detailed health protocols. Their methodical approach helps them maintain wellbeing through attention to detail.',
-    healthStrengths: ['Detailed health awareness', 'Digestive intelligence', 'Analytical approach to wellness', 'Precision in health practices'],
-    healthChallenges: ['Digestive sensitivity', 'Perfectionism causing stress', 'Worry affecting health', 'Absorption issues'],
     wellnessRecommendations: [
-      'Digestive enzymes and gut-supporting foods',
-      'Mindfulness to reduce analytical overthinking',
-      'Methodical but flexible fitness routines',
-      'Detoxification practices'
+      'Heart-supporting nutrition',
+      'Back-strengthening exercises',
+      'Regular health check-ups',
+      'Performance-based exercise for motivation'
     ],
-    bodyAssociations: ['Intestines', 'Digestive system', 'Spleen', 'Nervous system'],
-    idealFoods: ['Fermented foods', 'Fiber-rich vegetables', 'Clean proteins', 'Digestive herbs'],
-    idealActivities: ['Pilates', 'Precise movement practices', 'Hiking', 'Functional fitness']
+    compatibility: ['aries', 'sagittarius', 'gemini', 'libra'],
+    wellnessFocus: 'Cardiovascular health and spine support'
   },
-  libra: {
-    title: 'Harmonious & Balanced',
-    description: 'Libra individuals seek balance in all aspects of life, including health. Their sense of harmony and appreciation for beauty influences their wellness approaches, which often combine aesthetics with functionality.',
-    healthStrengths: ['Balance awareness', 'Kidney function', 'Social wellness', 'Aesthetic motivation'],
-    healthChallenges: ['Kidney and lower back issues', 'Indecision about health routines', 'Hormonal balance', 'Skin concerns'],
+  {
+    value: 'virgo' as ZodiacSign,
+    label: 'Virgo',
+    symbol: '♍',
+    dates: 'Aug 23 - Sep 22',
+    element: 'Earth',
+    healthTraits: [
+      'Digestive sensitivity',
+      'Attention to health details',
+      'Tendency to worry affecting health',
+      'Natural healing abilities'
+    ],
     wellnessRecommendations: [
-      'Balanced fitness routines combining strength and flexibility',
+      'Gut health optimization',
+      'Mindfulness for worry reduction',
+      'Detailed but flexible health routines',
+      'Plant-based nutrition knowledge'
+    ],
+    compatibility: ['taurus', 'capricorn', 'cancer', 'scorpio'],
+    wellnessFocus: 'Digestive health and worry management'
+  },
+  {
+    value: 'libra' as ZodiacSign,
+    label: 'Libra',
+    symbol: '♎',
+    dates: 'Sep 23 - Oct 22',
+    element: 'Air',
+    healthTraits: [
+      'Kidney and adrenal sensitivity',
+      'Need for balance in all health aspects',
+      'Skin health reflective of internal state',
+      'Benefits from beauty in health routines'
+    ],
+    wellnessRecommendations: [
       'Kidney-supporting hydration',
-      'Partner or social fitness activities',
-      'Beautiful environments for wellness practices'
+      'Balanced approach to diet and exercise',
+      'Skin-nourishing practices',
+      'Aesthetically pleasing workout environments'
     ],
-    bodyAssociations: ['Kidneys', 'Lower back', 'Skin', 'Endocrine system'],
-    idealFoods: ['Alkalizing foods', 'Beauty-enhancing nutrients', 'Kidney-supporting herbs', 'Balanced meals'],
-    idealActivities: ['Partner yoga', 'Dance', 'Social sports', 'Aesthetically pleasing movement practices']
+    compatibility: ['gemini', 'aquarius', 'leo', 'sagittarius'],
+    wellnessFocus: 'Balanced wellness and kidney health'
   },
-  scorpio: {
-    title: 'Intense & Transformative',
-    description: 'Scorpio individuals possess tremendous regenerative capabilities and transformative potential. Their deep connection to life\'s mysteries gives them unique insight into healing processes and extreme health transformations.',
-    healthStrengths: ['Regenerative capacity', 'Transformation ability', 'Endurance', 'Willpower'],
-    healthChallenges: ['Reproductive health', 'Elimination systems', 'Hormone fluctuations', 'Intensity leading to burnout'],
+  {
+    value: 'scorpio' as ZodiacSign,
+    label: 'Scorpio',
+    symbol: '♏',
+    dates: 'Oct 23 - Nov 21',
+    element: 'Water',
+    healthTraits: [
+      'Strong regenerative abilities',
+      'Reproductive system sensitivity',
+      'Deep emotional patterns affecting health',
+      'Endurance and persistence in health challenges'
+    ],
     wellnessRecommendations: [
       'Detoxification practices',
-      'Reproductive system support',
-      'Transformative fitness challenges',
-      'Deep healing modalities'
+      'Reproductive health support',
+      'Trauma-informed health approaches',
+      'Transformative exercise routines'
     ],
-    bodyAssociations: ['Reproductive organs', 'Excretory system', 'Pelvis', 'Colon'],
-    idealFoods: ['Deeply colored foods', 'Purifying herbs', 'Fermented foods', 'Regenerative superfoods'],
-    idealActivities: ['Intense interval training', 'Regenerative yoga', 'Water therapy', 'Martial arts']
+    compatibility: ['cancer', 'pisces', 'virgo', 'capricorn'],
+    wellnessFocus: 'Detoxification and reproductive health'
   },
-  sagittarius: {
-    title: 'Adventurous & Philosophical',
-    description: 'Sagittarius individuals bring enthusiasm and a love of freedom to their health practices. Their expansive nature thrives with varied experiences, outdoor activities, and wellness approaches that integrate philosophy with physicality.',
-    healthStrengths: ['Natural optimism', 'Liver resilience', 'Hip flexibility', 'Adventure motivation'],
-    healthChallenges: ['Hip and thigh issues', 'Liver concerns', 'Risk of overexertion', 'Inconsistency'],
+  {
+    value: 'sagittarius' as ZodiacSign,
+    label: 'Sagittarius',
+    symbol: '♐',
+    dates: 'Nov 22 - Dec 21',
+    element: 'Fire',
+    healthTraits: [
+      'Naturally athletic constitution',
+      'Hip, thigh, and liver sensitivity',
+      'Benefits from movement and adventure',
+      'May overdo physical activities'
+    ],
     wellnessRecommendations: [
-      'Outdoor fitness activities',
       'Liver-supporting nutrition',
-      'Hip-opening stretches and mobility work',
-      'Adventure-based movement challenges'
+      'Hip mobility and flexibility work',
+      'Adventure-based fitness',
+      'Moderation in physical exertion'
     ],
-    bodyAssociations: ['Hips', 'Thighs', 'Liver', 'Sciatic nerve'],
-    idealFoods: ['Liver-cleansing herbs', 'International cuisine variety', 'Phytonutrient diversity', 'Adaptogenic herbs'],
-    idealActivities: ['Hiking', 'Long-distance running', 'Archery', 'Outdoor sports']
+    compatibility: ['aries', 'leo', 'libra', 'aquarius'],
+    wellnessFocus: 'Liver health and hip mobility'
   },
-  capricorn: {
-    title: 'Disciplined & Enduring',
-    description: 'Capricorn individuals bring discipline and long-term vision to health practices. Their natural endurance and respect for tradition make them excellent candidates for established wellness protocols with proven results.',
-    healthStrengths: ['Skeletal strength', 'Discipline', 'Longevity focus', 'Structural integrity'],
-    healthChallenges: ['Joint issues', 'Bone density', 'Skin concerns', 'Work-related stress'],
+  {
+    value: 'capricorn' as ZodiacSign,
+    label: 'Capricorn',
+    symbol: '♑',
+    dates: 'Dec 22 - Jan 19',
+    element: 'Earth',
+    healthTraits: [
+      'Strong skeletal structure',
+      'Joint sensitivity, especially knees',
+      'Skin and aging concerns',
+      'Resilience through health challenges'
+    ],
     wellnessRecommendations: [
-      'Bone-strengthening nutrition and exercise',
-      'Structural alignment practices',
-      'Long-term wellness planning',
-      'Time-tested traditional health approaches'
+      'Bone-supporting nutrition',
+      'Joint-protective exercise',
+      'Skin health practices',
+      'Structured fitness routines'
     ],
-    bodyAssociations: ['Bones', 'Joints', 'Knees', 'Skin'],
-    idealFoods: ['Calcium-rich foods', 'Mineral-dense vegetables', 'Bone broths', 'Traditional superfoods'],
-    idealActivities: ['Weight-bearing exercise', 'Climbing', 'Traditional training methods', 'Structural yoga']
+    compatibility: ['taurus', 'virgo', 'scorpio', 'pisces'],
+    wellnessFocus: 'Bone health and structural support'
   },
-  aquarius: {
-    title: 'Innovative & Independent',
-    description: 'Aquarius individuals bring innovation and uniqueness to health approaches. Their forward-thinking nature makes them early adopters of cutting-edge wellness technologies and unconventional healing modalities.',
-    healthStrengths: ['Circulation', 'Electrical energy balance', 'Community health awareness', 'Innovative healing'],
-    healthChallenges: ['Ankle weakness', 'Circulatory issues', 'Electrical imbalances', 'Detachment from body signals'],
+  {
+    value: 'aquarius' as ZodiacSign,
+    label: 'Aquarius',
+    symbol: '♒',
+    dates: 'Jan 20 - Feb 18',
+    element: 'Air',
+    healthTraits: [
+      'Circulation and nervous system sensitivity',
+      'Ankle and calf vulnerability',
+      'Benefits from innovative health approaches',
+      'Electromagnetic sensitivity'
+    ],
     wellnessRecommendations: [
-      'Circulation-enhancing activities',
-      'Electrical balancing practices like grounding',
-      'Community-based fitness',
-      'Revolutionary health technologies'
+      'Circulation-supporting activities',
+      'Ankle strengthening exercises',
+      'Digital detox practices',
+      'Novel health technologies and approaches'
     ],
-    bodyAssociations: ['Ankles', 'Circulation', 'Bioelectrical systems', 'Lower legs'],
-    idealFoods: ['Circulation-enhancing spices', 'Electrically charged foods', 'Novel superfoods', 'Community-grown produce'],
-    idealActivities: ['Group fitness', 'Novel movement practices', 'Electro-muscle stimulation', 'Technology-enhanced training']
+    compatibility: ['gemini', 'libra', 'aries', 'sagittarius'],
+    wellnessFocus: 'Circulation and nervous system health'
   },
-  pisces: {
-    title: 'Intuitive & Compassionate',
-    description: 'Pisces individuals possess extraordinary sensitivity and intuitive healing abilities. Their connection to the collective unconscious gives them unique insight into subtle body processes and energy healing modalities.',
-    healthStrengths: ['Immune intuition', 'Lymphatic awareness', 'Healing energy', 'Adaptability'],
-    healthChallenges: ['Foot issues', 'Lymphatic stagnation', 'Immune fluctuations', 'Boundary maintenance'],
+  {
+    value: 'pisces' as ZodiacSign,
+    label: 'Pisces',
+    symbol: '♓',
+    dates: 'Feb 19 - Mar 20',
+    element: 'Water',
+    healthTraits: [
+      'Immune system fluctuations',
+      'Feet and lymphatic sensitivity',
+      'Strong mind-body connection',
+      'Absorbs environmental influences easily'
+    ],
     wellnessRecommendations: [
-      'Lymphatic support through movement and dry brushing',
-      'Foot health practices',
-      'Immune-enhancing nutrition',
-      'Energy medicine and subtle body practices'
+      'Immune-supporting practices',
+      'Foot care and reflexology',
+      'Water-based healing therapies',
+      'Energetic boundaries and protection'
     ],
-    bodyAssociations: ['Feet', 'Lymphatic system', 'Immune system', 'Pineal gland'],
-    idealFoods: ['Immune-supporting herbs', 'Sea vegetables', 'Omega-rich foods', 'Hydrating fruits'],
-    idealActivities: ['Swimming', 'Dance', 'Tai chi', 'Energy medicine movement']
-  },
+    compatibility: ['cancer', 'scorpio', 'taurus', 'capricorn'],
+    wellnessFocus: 'Immune support and lymphatic health'
+  }
+];
+
+// Map zodiac signs to their elements
+export const zodiacElements: Record<ZodiacSign, string> = {
+  aries: 'Fire',
+  leo: 'Fire',
+  sagittarius: 'Fire',
+  taurus: 'Earth',
+  virgo: 'Earth',
+  capricorn: 'Earth',
+  gemini: 'Air',
+  libra: 'Air',
+  aquarius: 'Air',
+  cancer: 'Water',
+  scorpio: 'Water',
+  pisces: 'Water'
 };
 
-export const zodiacCompatibility = {
-  aries: ['leo', 'sagittarius', 'gemini', 'aquarius'],
-  taurus: ['virgo', 'capricorn', 'cancer', 'pisces'],
-  gemini: ['libra', 'aquarius', 'aries', 'leo'],
-  cancer: ['scorpio', 'pisces', 'taurus', 'virgo'],
-  leo: ['aries', 'sagittarius', 'gemini', 'libra'],
-  virgo: ['taurus', 'capricorn', 'cancer', 'scorpio'],
-  libra: ['gemini', 'aquarius', 'leo', 'sagittarius'],
-  scorpio: ['cancer', 'pisces', 'virgo', 'capricorn'],
-  sagittarius: ['aries', 'leo', 'libra', 'aquarius'],
-  capricorn: ['taurus', 'virgo', 'scorpio', 'pisces'],
-  aquarius: ['gemini', 'libra', 'aries', 'sagittarius'],
-  pisces: ['cancer', 'scorpio', 'taurus', 'capricorn'],
+// Color schemes for zodiac elements (for UI styling)
+export const zodiacElementColors = {
+  'Fire': 'text-red-600 bg-red-100',
+  'Earth': 'text-green-600 bg-green-100',
+  'Air': 'text-purple-600 bg-purple-100',
+  'Water': 'text-blue-600 bg-blue-100',
+  'All': 'text-primary bg-primary/10'
+};
+
+// Element characteristics for health insights
+export const elementCharacteristics = {
+  'Fire': {
+    personality: 'Dynamic, passionate, and energetic',
+    strengths: 'Natural vitality, quick recovery, enthusiasm for physical activity',
+    challenges: 'Inflammation, burnout, impatience with healing processes',
+    nutrition: 'Cooling foods, anti-inflammatory herbs, steady protein intake',
+    movement: 'High-intensity interval training balanced with recovery periods',
+    mindfulness: 'Grounding practices to balance excessive fire energy'
+  },
+  'Earth': {
+    personality: 'Practical, reliable, and grounded',
+    strengths: 'Strong constitution, endurance, consistent health habits',
+    challenges: 'Stagnation, resistance to change, joint stiffness',
+    nutrition: 'Root vegetables, mineral-rich foods, structured meal routines',
+    movement: 'Strength training, hiking in nature, consistent exercise schedules',
+    mindfulness: 'Nature connection and embodiment practices'
+  },
+  'Air': {
+    personality: 'Intellectual, communicative, and adaptable',
+    strengths: 'Mental agility, adaptability to health regimens, breath awareness',
+    challenges: 'Nervous system tension, overthinking health issues, inconsistency',
+    nutrition: 'Light, varied meals, brain-supporting nutrients, regular snacking',
+    movement: 'Varied workout routines, breathwork, coordination exercises',
+    mindfulness: 'Meditation for mental focus and breath awareness'
+  },
+  'Water': {
+    personality: 'Intuitive, emotional, and receptive',
+    strengths: 'Healing intuition, emotional awareness, adaptability',
+    challenges: 'Emotional health impacts, fluid retention, boundary issues',
+    nutrition: 'Hydrating foods, digestive support, emotional eating awareness',
+    movement: 'Swimming, fluid movements, gentle flows like tai chi',
+    mindfulness: 'Emotional processing and energy clearing practices'
+  }
 };

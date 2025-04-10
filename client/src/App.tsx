@@ -1,19 +1,14 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
+import { useEffect, useState } from "react";
+import { ZodiacSign, SubscriptionStatus, SubscriptionTier } from "@shared/types";
+import { NavigationBar } from "@/components/NavigationBar";
+import { Footer } from "@/components/Footer";
+
+// Import all pages
 import Home from "@/pages/Home";
 import Dashboard from "@/pages/Dashboard";
 import NotFound from "@/pages/not-found";
-import { NavigationBar } from "@/components/NavigationBar";
-import { Footer } from "@/components/Footer";
-import { useEffect, useState } from "react";
-import { ZodiacSign, SubscriptionStatus, SubscriptionTier } from "@shared/types";
-
-// New pages
-import AboutPage from "@/pages/AboutPage";
-import SciencePage from "@/pages/SciencePage";
-import ContactPage from "@/pages/ContactPage";
-import AffiliateMarketplace from "@/pages/AffiliateMarketplace";
-import ZodiacLibrary from "@/pages/ZodiacLibrary";
 
 interface UserData {
   email: string;
@@ -25,11 +20,12 @@ interface UserData {
   subscriptionEndDate?: string;
 }
 
-// Router component to handle navigation
-function Router() {
+// Custom wrapper component to pass props to route components
+function RouteWithProps({ component: Component, ...rest }: any) {
   const [user, setUser] = useState<UserData | null>(null);
+  const [, navigate] = useLocation();
 
-  // On mount, check localStorage for existing user data
+  // Load user data from localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -43,44 +39,36 @@ function Router() {
   }, []);
 
   const isLoggedIn = !!user?.email && !!user?.zodiacSign;
-  const isPremium = user?.subscriptionTier === 'premium' && user?.subscriptionStatus === 'active';
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-    window.location.href = "/";
+  
+  const handleUserRegistered = (userData: UserData) => {
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <NavigationBar 
-        isLoggedIn={isLoggedIn} 
-        userEmail={user?.email || ""} 
-        userZodiacSign={user?.zodiacSign}
-        isPremium={isPremium}
-        onLogout={handleLogout}
-      />
-      <main className="flex-grow">
-        <Switch>
-          <Route path="/" component={Home} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/about" component={AboutPage} />
-          <Route path="/science" component={SciencePage} />
-          <Route path="/contact" component={ContactPage} />
-          <Route path="/marketplace" component={AffiliateMarketplace} />
-          <Route path="/zodiac-library" component={ZodiacLibrary} />
-          <Route component={NotFound} />
-        </Switch>
-      </main>
-      <Footer />
-    </div>
+    <Component 
+      user={user} 
+      isLoggedIn={isLoggedIn} 
+      onUserRegistered={handleUserRegistered} 
+      {...rest} 
+    />
   );
 }
 
 function App() {
   return (
     <>
-      <Router />
+      <Switch>
+        <Route path="/">
+          {(params) => <RouteWithProps component={Home} params={params} />}
+        </Route>
+        <Route path="/dashboard">
+          {(params) => <RouteWithProps component={Dashboard} params={params} />}
+        </Route>
+        <Route>
+          {(params) => <RouteWithProps component={NotFound} params={params} />}
+        </Route>
+      </Switch>
       <Toaster />
     </>
   );
