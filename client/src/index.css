@@ -14,10 +14,17 @@
   h1, h2, h3 {
     @apply tracking-tight font-bold;
     letter-spacing: -0.025em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
   }
   
   h4, h5, h6 {
     @apply tracking-tight font-bold;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  }
+  
+  p, span, li {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.95);
   }
   
   /* Custom scroll bar */
@@ -109,13 +116,16 @@
   
   .magazine-lead {
     @apply text-xl leading-relaxed max-w-prose;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    color: rgba(255, 255, 255, 0.9);
   }
   
   .magazine-card {
-    @apply relative bg-card rounded-lg p-6 shadow-lg hover:shadow-xl transition-all duration-300;
-    background: linear-gradient(135deg, hsl(var(--background)), hsl(var(--background)/0.7));
+    @apply relative rounded-lg p-6 shadow-lg hover:shadow-xl transition-all duration-300;
+    background: linear-gradient(135deg, rgba(30, 15, 45, 0.85), rgba(15, 10, 30, 0.9));
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 20px rgba(128, 0, 255, 0.15);
   }
   
   .magazine-tag {
@@ -153,10 +163,11 @@
   }
   
   .cosmic-card {
-    @apply relative bg-card rounded-lg p-6 md:p-8 shadow-md hover:shadow-lg transition-all duration-300;
-    border: 1px solid hsl(var(--primary)/0.2);
-    background: linear-gradient(135deg, hsl(var(--background)), hsl(var(--background)/0.7));
+    @apply relative rounded-lg p-6 md:p-8 shadow-md hover:shadow-lg transition-all duration-300;
+    border: 1px solid hsl(var(--primary)/0.3);
+    background: linear-gradient(135deg, rgba(20, 10, 30, 0.85), rgba(10, 5, 20, 0.9));
     backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(128, 0, 255, 0.2);
   }
   
   /* Add some cosmic elements and scientific styling */
@@ -190,9 +201,9 @@
   
   .cosmic-gradient {
     background: linear-gradient(135deg, 
-      rgba(75, 0, 130, 0.7) 0%,
-      rgba(25, 25, 112, 0.7) 50%,
-      rgba(0, 0, 50, 0.7) 100%);
+      rgba(75, 0, 130, 0.5) 0%,
+      rgba(25, 25, 112, 0.5) 50%,
+      rgba(0, 0, 50, 0.5) 100%);
     position: relative;
   }
   
