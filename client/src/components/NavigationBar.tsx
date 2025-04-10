@@ -23,7 +23,7 @@ import {
   Star
 } from 'lucide-react';
 import { ZodiacSign } from '@shared/types';
-import { zodiacElements } from '@/data/zodiacData';
+import { zodiacSignNames } from '@/data/zodiacData';
 
 interface NavBarProps {
   isLoggedIn: boolean;
@@ -51,7 +51,8 @@ export function NavigationBar({
   const userInitial = userEmail ? userEmail[0].toUpperCase() : 'U';
   
   // Get user's element for styling if they have a zodiac sign
-  const userElement = userZodiacSign ? zodiacElements[userZodiacSign] : null;
+  const userElement = userZodiacSign ? 
+    zodiacSignNames.find(sign => sign.value === userZodiacSign)?.element : null;
   const getElementColor = (element: string | null) => {
     if (!element) return 'bg-primary';
     
