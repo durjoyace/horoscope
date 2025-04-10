@@ -116,7 +116,7 @@ export default function SciencePage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <MoveRight className="h-4 w-4 text-primary flex-shrink-0 mt-1" />
-                  <span>Biological cycles align with cosmic patterns in ways science is still discovering</span>
+                  <span>Biological cycles align with celestial patterns in ways science is still discovering</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <MoveRight className="h-4 w-4 text-primary flex-shrink-0 mt-1" />
@@ -166,7 +166,7 @@ export default function SciencePage() {
               <ul className="text-sm space-y-2">
                 <li className="flex items-start gap-2">
                   <MoveRight className="h-4 w-4 text-primary flex-shrink-0 mt-1" />
-                  <span>Interconnectedness of body systems mirrors cosmic interconnectedness</span>
+                  <span>Interconnectedness of body systems mirrors celestial interconnectedness</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <MoveRight className="h-4 w-4 text-primary flex-shrink-0 mt-1" />

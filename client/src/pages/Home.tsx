@@ -103,7 +103,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative py-10 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-gradient-to-b from-primary/20 via-primary/10 to-background star-bg">
-        {/* Cosmic Background Elements */}
+        {/* Celestial Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 left-10 w-8 h-8 sm:w-12 sm:h-12 md:w-24 md:h-24 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float"></div>
           <div className="absolute top-40 right-10 w-12 h-12 sm:w-20 sm:h-20 md:w-32 md:h-32 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-float-slow"></div>
@@ -178,7 +178,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             
             <div className="flex-1 flex justify-center lg:justify-end mt-8 lg:mt-0">
               <div className="relative w-full max-w-[320px] md:max-w-md">
-                {/* Decorative cosmic elements */}
+                {/* Decorative zodiac elements */}
                 <div className="absolute -inset-2 md:-inset-3 bg-gradient-to-r from-[#ff00ff]/20 via-[#c300ff]/10 to-[#3a00ff]/20 rounded-lg transform rotate-6 animate-pulse-slow"></div>
                 <div className="absolute -inset-4 md:-inset-6 border-2 border-[#ff00ff]/10 rounded-lg transform -rotate-3 animate-pulse-slower"></div>
                 <div className="absolute -inset-1 md:-inset-2 border border-[#c300ff]/20 rounded-full animate-spin-slow"></div>
@@ -258,7 +258,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
               dialogContent={{
                 sections: [
                   {
-                    title: "Your Cosmic Blueprint",
+                    title: "Your Zodiac Blueprint",
                     content: "We analyze your zodiac sign's elemental constitution (Fire, Earth, Air, or Water), planetary rulers, and traditional health associations to create a comprehensive profile of your innate health tendencies."
                   },
                   {
