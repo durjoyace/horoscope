@@ -14,7 +14,11 @@ export const zodiacSignNames = [
     dates: 'March 21 - April 19', 
     symbol: '♈', 
     element: 'Fire', 
-    planet: 'Mars'
+    planet: 'Mars',
+    modality: 'Cardinal',
+    rulingPlanet: 'Mars',
+    traits: 'Energetic, Courageous, Passionate, Impulsive',
+    healthFocus: 'Head, face, and cerebral well-being'
   },
   { 
     value: 'taurus' as ZodiacSign, 

@@ -39,7 +39,16 @@ export default function ZodiacLibrary() {
   const [selectedSign, setSelectedSign] = useState<ZodiacSign>('aries');
   const [activeTab, setActiveTab] = useState('overview');
   
-  const selectedSignData = zodiacSignNames.find(sign => sign.value === selectedSign);
+  // Add missing properties to all zodiac signs
+  const zodiacSignsData = zodiacSignNames.map(sign => ({
+    ...sign,
+    modality: sign.modality || 'Fixed',
+    rulingPlanet: sign.rulingPlanet || sign.planet,
+    traits: sign.traits || 'Unique, Powerful, Adaptive, Versatile',
+    healthFocus: sign.healthFocus || 'Overall wellness and balance'
+  }));
+  
+  const selectedSignData = zodiacSignsData.find(sign => sign.value === selectedSign);
   const wellnessData = zodiacWellnessRecommendations[selectedSign];
 
   const getElementColor = (element: string): string => {
@@ -167,11 +176,12 @@ export default function ZodiacLibrary() {
                         <Sparkles className="h-5 w-5 text-primary" /> Key Strengths
                       </h3>
                       <ul className="space-y-1 text-muted-foreground">
-                        {selectedSignData.traits.split(', ').slice(0, 2).map((trait, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="text-primary mr-2">✓</span> {trait}
-                          </li>
-                        ))}
+                        <li className="flex items-start">
+                          <span className="text-primary mr-2">✓</span> {selectedSignData.label} individuals are naturally gifted
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-primary mr-2">✓</span> Excellent at adapting to new situations
+                        </li>
                         <li className="flex items-start">
                           <span className="text-primary mr-2">✓</span> 
                           {selectedSignData.element === 'Fire' ? 'Passionate and energetic' : 
@@ -185,11 +195,12 @@ export default function ZodiacLibrary() {
                         <Puzzle className="h-5 w-5 text-primary" /> Challenges
                       </h3>
                       <ul className="space-y-1 text-muted-foreground">
-                        {selectedSignData.traits.split(', ').slice(2, 4).map((trait, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="text-amber-500 mr-2">!</span> {trait}
-                          </li>
-                        ))}
+                        <li className="flex items-start">
+                          <span className="text-amber-500 mr-2">!</span> May struggle with consistency
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-amber-500 mr-2">!</span> Can be resistant to change
+                        </li>
                         <li className="flex items-start">
                           <span className="text-amber-500 mr-2">!</span> 
                           {selectedSignData.element === 'Fire' ? 'Can be impulsive and short-tempered' : 
