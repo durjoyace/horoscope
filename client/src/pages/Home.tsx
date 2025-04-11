@@ -13,7 +13,10 @@ import {
   Flame,
   Droplets,
   Wind,
-  Leaf
+  Leaf,
+  Gift,
+  ListChecks,
+  Calendar
 } from 'lucide-react';
 import { FeatureCard } from '@/components/FeatureCard';
 import { Button } from '@/components/ui/button';
@@ -149,18 +152,52 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
               {!isLoggedIn ? (
                 <div className="animate-slide-up-delay">
                   <form onSubmit={handleSignup} className="w-full max-w-md">
-                    {/* Clean, focused signup card like screenshot */}
+                    {/* Integrated benefits + signup card */}
                     <div className="max-w-md mx-auto">
                       <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
                         Begin Your Personalized Health Journey
                       </h3>
                       
-                      {/* Simplified signup form */}
+                      {/* Main signup card with benefits inside */}
                       <div className="relative max-w-md mx-auto">
-                        {/* Main signup card - clean purple gradient */}
                         <div className="bg-gradient-to-br from-[#9a00ff] to-[#5000cc] rounded-2xl p-8 mb-6 shadow-lg">
+                          {/* Benefits directly in the card - top section */}
+                          <div className="mb-6 border-b border-white/20 pb-6">
+                            <h4 className="text-white text-lg font-medium mb-4 flex items-center">
+                              <Gift className="mr-2 h-5 w-5" />
+                              Here's what you'll get:
+                            </h4>
+                            
+                            <div className="space-y-3">
+                              <div className="flex items-center gap-3">
+                                <div className="rounded-full bg-white/20 p-1.5">
+                                  <Sparkles className="h-4 w-4 text-white" />
+                                </div>
+                                <span className="text-white font-medium">Daily personalized health insights</span>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <div className="rounded-full bg-white/20 p-1.5">
+                                  <ListChecks className="h-4 w-4 text-white" />
+                                </div>
+                                <span className="text-white font-medium">Tailored wellness recommendations</span>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <div className="rounded-full bg-white/20 p-1.5">
+                                  <Leaf className="h-4 w-4 text-white" />
+                                </div>
+                                <span className="text-white font-medium">Element-aligned health practices</span>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <div className="rounded-full bg-white/20 p-1.5">
+                                  <Calendar className="h-4 w-4 text-white" />
+                                </div>
+                                <span className="text-white font-medium">Cosmic timing for optimal wellness</span>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Email input and button - bottom section */}
                           <div className="space-y-5">
-                            {/* Email input - clean with icon */}
                             <div className="relative">
                               <Input
                                 type="email"
@@ -173,7 +210,6 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/70" />
                             </div>
                             
-                            {/* Clean white button */}
                             <Button 
                               type="submit" 
                               disabled={isSubmitting} 
@@ -189,38 +225,9 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               )}
                             </Button>
                             
-                            {/* Privacy note */}
-                            <div className="text-white/80 text-sm text-center mt-4">
-                              <div className="flex items-center justify-center gap-2">
-                                <CheckCircle2 className="h-4 w-4" />
-                                <span>No credit card required. We respect your privacy.</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Simple feature highlights with clean design */}
-                      <div className="relative">
-                        <div className="bg-black/30 backdrop-blur-sm rounded-xl p-5 shadow-lg border border-white/10">
-                          <div className="flex flex-col gap-4">
-                            <div className="flex items-center gap-3">
-                              <div className="rounded-full bg-green-500/20 p-1">
-                                <CheckCircle2 className="h-5 w-5 text-green-400" />
-                              </div>
-                              <span className="text-white">Daily personalized health insights</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                              <div className="rounded-full bg-green-500/20 p-1">
-                                <CheckCircle2 className="h-5 w-5 text-green-400" />
-                              </div>
-                              <span className="text-white">Tailored wellness recommendations</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                              <div className="rounded-full bg-green-500/20 p-1">
-                                <CheckCircle2 className="h-5 w-5 text-green-400" />
-                              </div>
-                              <span className="text-white">100% free to get started</span>
+                            <div className="flex items-center justify-center gap-2 text-white/80 text-sm">
+                              <CheckCircle2 className="h-4 w-4" />
+                              <span>No credit card required. 100% free to get started.</span>
                             </div>
                           </div>
                         </div>
