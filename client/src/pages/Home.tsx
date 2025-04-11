@@ -161,73 +161,79 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                       {/* Main signup card with benefits inside */}
                       <div className="relative max-w-md mx-auto">
                         <div className="bg-gradient-to-br from-[#9a00ff] to-[#5000cc] rounded-2xl p-8 mb-6 shadow-lg">
-                          {/* Benefits directly in the card - top section */}
-                          <div className="mb-6 border-b border-white/20 pb-6">
-                            <h4 className="text-white text-lg font-medium mb-4 flex items-center">
-                              <Gift className="mr-2 h-5 w-5" />
-                              Here's what you'll get:
-                            </h4>
-                            
-                            <div className="space-y-3">
-                              <div className="flex items-center gap-3">
-                                <div className="rounded-full bg-white/20 p-1.5">
-                                  <Sparkles className="h-4 w-4 text-white" />
-                                </div>
-                                <span className="text-white font-medium">Daily personalized health insights</span>
-                              </div>
-                              <div className="flex items-center gap-3">
-                                <div className="rounded-full bg-white/20 p-1.5">
-                                  <ListChecks className="h-4 w-4 text-white" />
-                                </div>
-                                <span className="text-white font-medium">Tailored wellness recommendations</span>
-                              </div>
-                              <div className="flex items-center gap-3">
-                                <div className="rounded-full bg-white/20 p-1.5">
-                                  <Leaf className="h-4 w-4 text-white" />
-                                </div>
-                                <span className="text-white font-medium">Element-aligned health practices</span>
-                              </div>
-                              <div className="flex items-center gap-3">
-                                <div className="rounded-full bg-white/20 p-1.5">
-                                  <Calendar className="h-4 w-4 text-white" />
-                                </div>
-                                <span className="text-white font-medium">Cosmic timing for optimal wellness</span>
-                              </div>
+                          {/* Email input with compelling benefits */}
+                          <div className="space-y-6">
+                            <div className="text-center space-y-2">
+                              <h4 className="text-white text-xl font-bold mb-1">
+                                Unlock Your Cosmic Wellness Potential
+                              </h4>
+                              <p className="text-white/80 text-sm">
+                                Join thousands discovering their astrological path to better health
+                              </p>
                             </div>
-                          </div>
-                          
-                          {/* Email input and button - bottom section */}
-                          <div className="space-y-5">
+
+                            {/* Email input with glow effect */}
                             <div className="relative">
+                              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#ff00ff]/40 to-[#00ffff]/40 rounded-full blur-sm opacity-70"></div>
                               <Input
                                 type="email"
                                 placeholder="Enter your email address"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="pl-10 h-14 bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-white/70 rounded-full focus:border-white/40 focus:ring-white/20"
+                                className="relative pl-10 h-14 bg-black/20 backdrop-blur-sm border-white/30 text-white placeholder:text-white/70 rounded-full focus:border-white/70 focus:ring-white/30 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
                               />
-                              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/70" />
+                              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/90" />
                             </div>
                             
-                            <Button 
-                              type="submit" 
-                              disabled={isSubmitting} 
-                              className="w-full h-14 bg-white hover:bg-white/90 text-purple-700 font-semibold text-lg rounded-full"
-                            >
-                              {isSubmitting ? (
-                                <div className="flex items-center justify-center">
-                                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent mr-2" />
-                                  <span>Processing...</span>
-                                </div>
-                              ) : (
-                                'Get My Free Health Horoscope'
-                              )}
-                            </Button>
+                            {/* Premium benefits */}
+                            <div className="grid grid-cols-2 gap-3 pt-2">
+                              <div className="flex items-start space-x-2">
+                                <Sparkles className="h-5 w-5 text-[#ff9500] flex-shrink-0 mt-0.5" />
+                                <span className="text-white text-sm">Daily personalized health insights</span>
+                              </div>
+                              <div className="flex items-start space-x-2">
+                                <Leaf className="h-5 w-5 text-[#4ade80] flex-shrink-0 mt-0.5" />
+                                <span className="text-white text-sm">Element-aligned wellness tips</span>
+                              </div>
+                              <div className="flex items-start space-x-2">
+                                <Star className="h-5 w-5 text-[#facc15] flex-shrink-0 mt-0.5" />
+                                <span className="text-white text-sm">Astrological health forecasts</span>
+                              </div>
+                              <div className="flex items-start space-x-2">
+                                <HeartPulse className="h-5 w-5 text-[#fb7185] flex-shrink-0 mt-0.5" />
+                                <span className="text-white text-sm">Zodiac-specific self-care rituals</span>
+                              </div>
+                            </div>
+
+                            {/* CTA Button with glow */}
+                            <div className="relative mt-2 group">
+                              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#ff00ff] to-[#00ffff] rounded-full opacity-70 group-hover:opacity-100 blur-sm transition duration-300"></div>
+                              <Button 
+                                type="submit" 
+                                disabled={isSubmitting} 
+                                className="relative w-full h-14 bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-bold text-lg rounded-full transition-all duration-300 border border-white/20 shadow-[0_0_20px_rgba(170,0,255,0.5)] group-hover:shadow-[0_0_25px_rgba(170,0,255,0.7)]"
+                              >
+                                {isSubmitting ? (
+                                  <div className="flex items-center justify-center">
+                                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent mr-2" />
+                                    <span>Creating Your Profile...</span>
+                                  </div>
+                                ) : (
+                                  'Reveal My Cosmic Health Path'
+                                )}
+                              </Button>
+                            </div>
                             
-                            <div className="flex items-center justify-center gap-2 text-white/80 text-sm">
-                              <CheckCircle2 className="h-4 w-4" />
-                              <span>No credit card required. 100% free to get started.</span>
+                            {/* Persuasive microcopy */}
+                            <div className="text-center space-y-2 mt-1">
+                              <div className="flex items-center justify-center gap-1.5 text-white/90 text-xs">
+                                <CheckCircle2 className="h-3.5 w-3.5 text-green-400" />
+                                <span>No credit card required • 100% free • Instant access</span>
+                              </div>
+                              <p className="text-white/60 text-xs italic">
+                                "I've gained incredible insights about my body's needs based on my sign" — Sarah K.
+                              </p>
                             </div>
                           </div>
                         </div>
