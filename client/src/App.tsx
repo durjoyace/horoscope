@@ -32,8 +32,8 @@ const queryClient = new QueryClient({
 
 interface UserData {
   email: string;
-  firstName?: string;
-  lastName?: string;
+  firstName?: string | null;
+  lastName?: string | null;
   zodiacSign: ZodiacSign;
   subscriptionStatus?: SubscriptionStatus;
   subscriptionTier?: SubscriptionTier;
