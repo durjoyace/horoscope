@@ -84,6 +84,11 @@ export function Footer() {
                   <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">Contact</span>
                 </Link>
               </li>
+              <li>
+                <Link href="/premium">
+                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">Premium</span>
+                </Link>
+              </li>
             </ul>
           </div>
           

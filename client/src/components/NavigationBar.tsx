@@ -184,7 +184,7 @@ export function NavigationBar({
                     </DropdownMenuItem>
                   ) : (
                     <DropdownMenuItem className="cursor-pointer" asChild>
-                      <Link href="/pricing" className="flex items-center gap-2 w-full">
+                      <Link href="/premium" className="flex items-center gap-2 w-full">
                         <Shield className="h-4 w-4" />
                         <span>Upgrade to Premium</span>
                       </Link>
@@ -297,7 +297,7 @@ export function NavigationBar({
                           Premium Features
                         </Link>
                       ) : (
-                        <Link href="/pricing" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
+                        <Link href="/premium" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
                           <Shield className="h-4 w-4" />
                           Upgrade to Premium
                         </Link>
