@@ -147,30 +147,61 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
               </p>
               
               {!isLoggedIn ? (
-                <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start animate-slide-up-delay">
-                  <form onSubmit={handleSignup} className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full max-w-md">
-                    <Input
-                      type="email"
-                      placeholder="Your email address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="shadow-sm border-primary/20 text-sm"
-                    />
-                    <Button type="submit" disabled={isSubmitting} className="shadow-md hover:shadow-lg transition-all text-sm">
-                      {isSubmitting ? (
-                        <>
-                          <span className="mr-2">Signing Up</span>
-                          <div className="h-3 w-3 md:h-4 md:w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                        </>
-                      ) : (
-                        'Get Started'
-                      )}
-                    </Button>
+                <div className="animate-slide-up-delay">
+                  <form onSubmit={handleSignup} className="w-full max-w-md">
+                    {/* Email signup card with enhanced design */}
+                    <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 md:p-5 border border-primary/30 shadow-xl mb-2">
+                      <div className="flex items-center mb-3">
+                        <div className="bg-primary/20 p-2 rounded-full mr-3">
+                          <Sparkles className="h-4 w-4 text-primary" />
+                        </div>
+                        <h3 className="text-sm font-medium text-white">Join thousands of wellness seekers</h3>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        <div className="relative">
+                          <Input
+                            type="email"
+                            placeholder="Your email address"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-white/60 shadow-inner pl-10 h-12 text-base"
+                          />
+                          <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/70" />
+                        </div>
+                        
+                        <Button 
+                          type="submit" 
+                          disabled={isSubmitting} 
+                          className="w-full h-12 text-base shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all bg-gradient-to-r from-primary to-primary/80"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <span className="mr-2">Signing Up</span>
+                              <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                            </>
+                          ) : (
+                            'Get My Free Health Horoscope'
+                          )}
+                        </Button>
+                      </div>
+                      
+                      <div className="mt-3 text-xs text-center text-white/60">
+                        <div className="flex items-center justify-center gap-1">
+                          <CheckCircle2 className="h-3 w-3 text-primary/70" />
+                          <span>Free daily wellness insights</span>
+                        </div>
+                        <div className="flex items-center justify-center gap-1">
+                          <CheckCircle2 className="h-3 w-3 text-primary/70" />
+                          <span>Cancel anytime • No credit card required</span>
+                        </div>
+                      </div>
+                    </div>
                   </form>
                 </div>
               ) : (
-                <Button size="lg" asChild className="shadow-md hover:shadow-lg transition-all animate-pulse">
+                <Button size="lg" asChild className="shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all animate-pulse bg-gradient-to-r from-primary to-primary/80 h-12 px-6">
                   <Link href="/dashboard">Go to Dashboard</Link>
                 </Button>
               )}
@@ -227,7 +258,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                             const emailInput = document.querySelector('input[type="email"]');
                             if (emailInput) {
                               emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                              emailInput.focus();
+                              (emailInput as HTMLElement).focus();
                               toast({
                                 title: 'Email required',
                                 description: 'Please enter your email address to continue.',
@@ -235,7 +266,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               });
                             }
                           } else {
-                            handleSignup(new Event('click') as React.FormEvent);
+                            handleSignup(new Event('click') as unknown as React.FormEvent);
                           }
                         }}
                       >
