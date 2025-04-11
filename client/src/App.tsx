@@ -19,6 +19,7 @@ import AboutPage from "@/pages/AboutPage";
 import SciencePage from "@/pages/SciencePage";
 import ContactPage from "@/pages/ContactPage";
 import AuthPage from "@/pages/auth-page";
+import PremiumPage from "@/pages/PremiumPage";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -121,6 +122,9 @@ function AppContent() {
           </Route>
           <Route path="/contact">
             <ContactPage />
+          </Route>
+          <Route path="/premium">
+            <PremiumPage />
           </Route>
           <Route>
             <NotFound />
