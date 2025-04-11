@@ -140,9 +140,14 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                 <span>Where Ancient Wisdom Meets Modern Science</span>
               </div>
               
+              {/* Branded header with gradient */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#ff9cfe] to-[#aab2ff] mb-2 sm:mb-3 md:mb-4 animate-slide-up">
+                HOROSCOPE HEALTH
+              </h1>
+              
               <h1 className="magazine-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 md:mb-6 animate-slide-up">
                 <span className="block">Your Personalized</span>
-                <span className="gradient-heading">Horoscope Health Guide</span>
+                <span className="gradient-heading">Cosmic Wellness Guide</span>
               </h1>
               
               <p className="magazine-lead text-sm md:text-base text-muted-foreground mb-4 sm:mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">
@@ -164,12 +169,6 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                           {/* Email input with compelling benefits */}
                           <div className="space-y-6">
                             <div className="text-center space-y-2">
-                              {/* Branded text with gradient */}
-                              <div className="mb-2">
-                                <h3 className="text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#ff9cfe] to-[#aab2ff] inline-block">
-                                  HOROSCOPE HEALTH
-                                </h3>
-                              </div>
                               <h4 className="text-white text-xl font-bold mb-1">
                                 Unlock Your Cosmic Wellness Potential
                               </h4>
