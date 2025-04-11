@@ -16,8 +16,11 @@ import {
   Leaf,
   Gift,
   ListChecks,
-  Calendar
+  Calendar,
+  Quote,
+  RefreshCw
 } from 'lucide-react';
+import { WellnessQuoteWidget } from '@/components/WellnessQuoteWidget';
 import { FeatureCard } from '@/components/FeatureCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -408,6 +411,32 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                 ]
               }}
             />
+          </div>
+          
+          {/* Daily Wellness Quote */}
+          <div className="mt-12 max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="magazine-subheading mb-2">
+                DAILY INSPIRATION
+              </h2>
+              <h2 className="magazine-heading text-2xl md:text-3xl mb-4">
+                Your Wellness Quote of the Day
+              </h2>
+              <p className="magazine-lead text-muted-foreground max-w-2xl mx-auto">
+                Wisdom to guide your wellness journey
+              </p>
+            </div>
+            
+            <div className="max-w-lg mx-auto">
+              {/* Import the WellnessQuoteWidget at the top of the file */}
+              <WellnessQuoteWidget zodiacSign={selectedSign as ZodiacSign || undefined} isPersonalized={!!selectedSign} />
+              
+              {!selectedSign && (
+                <p className="text-center text-sm text-muted-foreground mt-4">
+                  Select your zodiac sign above to receive a personalized wellness quote.
+                </p>
+              )}
+            </div>
           </div>
           
           {/* Premium membership promotion after showcasing value */}
