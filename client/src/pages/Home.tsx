@@ -149,52 +149,59 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
               {!isLoggedIn ? (
                 <div className="animate-slide-up-delay">
                   <form onSubmit={handleSignup} className="w-full max-w-md">
-                    {/* Email signup card with enhanced design */}
-                    <div className="bg-[#1a0033]/90 backdrop-blur-md rounded-xl p-4 md:p-5 border border-[#c300ff]/40 shadow-xl mb-2">
-                      <div className="flex items-center mb-4">
-                        <div className="bg-[#ff00ff]/20 p-2.5 rounded-full mr-3">
-                          <Sparkles className="h-5 w-5 text-[#ff00ff]" />
-                        </div>
-                        <h3 className="text-base font-medium text-white">Start your wellness journey</h3>
-                      </div>
+                    {/* Email signup card with cleaner, more prominent design */}
+                    <div className="max-w-md mx-auto">
+                      <h3 className="text-xl md:text-2xl font-bold text-white mb-5 text-center">
+                        Begin Your Personalized Health Journey
+                      </h3>
                       
-                      <div className="space-y-4">
-                        <div className="relative">
-                          <Input
-                            type="email"
-                            placeholder="Your email address"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            className="bg-black/30 backdrop-blur-sm border-[#c300ff]/30 text-white placeholder:text-white/70 shadow-inner pl-10 h-12 text-base focus:border-[#ff00ff] focus:ring-[#ff00ff]/20"
-                          />
-                          <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#c300ff]" />
+                      <div className="bg-gradient-to-br from-[#8400ff] to-[#3a00ff] rounded-xl p-6 md:p-7 border-2 border-white/20 shadow-2xl mb-5 transform hover:scale-[1.01] transition-all">
+                        <div className="space-y-5">
+                          <div className="relative">
+                            <Input
+                              type="email"
+                              placeholder="Enter your email address"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              required
+                              className="bg-white/10 border-white/30 text-white placeholder:text-white/70 shadow-inner pl-10 h-14 text-lg focus:border-white focus:ring-white/20"
+                            />
+                            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/80" />
+                          </div>
+                          
+                          <Button 
+                            type="submit" 
+                            disabled={isSubmitting} 
+                            className="w-full h-14 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transition-all bg-white text-[#8400ff] hover:bg-white/90"
+                          >
+                            {isSubmitting ? (
+                              <>
+                                <span className="mr-2">Signing Up</span>
+                                <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#8400ff] border-t-transparent" />
+                              </>
+                            ) : (
+                              'Get My Free Health Horoscope'
+                            )}
+                          </Button>
                         </div>
                         
-                        <Button 
-                          type="submit" 
-                          disabled={isSubmitting} 
-                          className="w-full h-12 text-base font-medium shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all bg-gradient-to-r from-[#c300ff] to-[#8400ff]"
-                        >
-                          {isSubmitting ? (
-                            <>
-                              <span className="mr-2">Signing Up</span>
-                              <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                            </>
-                          ) : (
-                            'Get My Free Health Horoscope'
-                          )}
-                        </Button>
+                        <div className="mt-5 text-white/90 text-center">
+                          <p className="text-sm">No credit card required. We respect your privacy.</p>
+                        </div>
                       </div>
                       
-                      <div className="mt-4 text-sm text-center text-white/80">
-                        <div className="flex items-center justify-center gap-2 mb-1">
-                          <CheckCircle2 className="h-4 w-4 text-[#ff00ff]" />
-                          <span>Free personalized health insights</span>
+                      <div className="text-center">
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-3">
+                          <CheckCircle2 className="h-5 w-5 text-[#ff00ff]" />
+                          <span className="text-white font-medium">Daily personalized health insights</span>
                         </div>
-                        <div className="flex items-center justify-center gap-2">
-                          <CheckCircle2 className="h-4 w-4 text-[#ff00ff]" />
-                          <span>We respect your privacy • No credit card needed</span>
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+                          <Sparkles className="h-5 w-5 text-yellow-400" />
+                          <span className="text-white">
+                            <Link href="/marketplace" className="underline text-yellow-300 hover:text-yellow-200 font-medium">
+                              Upgrade to Premium
+                            </Link> for weekly detailed wellness reports
+                          </span>
                         </div>
                       </div>
                     </div>
