@@ -155,7 +155,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                         <div className="bg-primary/20 p-2 rounded-full mr-3">
                           <Sparkles className="h-4 w-4 text-primary" />
                         </div>
-                        <h3 className="text-sm font-medium text-white">Join thousands of wellness seekers</h3>
+                        <h3 className="text-sm font-medium text-white">Start your wellness journey</h3>
                       </div>
                       
                       <div className="space-y-3">
@@ -190,11 +190,11 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                       <div className="mt-3 text-xs text-center text-white/60">
                         <div className="flex items-center justify-center gap-1">
                           <CheckCircle2 className="h-3 w-3 text-primary/70" />
-                          <span>Free daily wellness insights</span>
+                          <span>Free personalized health insights</span>
                         </div>
                         <div className="flex items-center justify-center gap-1">
                           <CheckCircle2 className="h-3 w-3 text-primary/70" />
-                          <span>Cancel anytime • No credit card required</span>
+                          <span>We respect your privacy • No credit card needed</span>
                         </div>
                       </div>
                     </div>
