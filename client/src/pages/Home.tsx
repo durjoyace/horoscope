@@ -150,15 +150,15 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                 <div className="animate-slide-up-delay">
                   <form onSubmit={handleSignup} className="w-full max-w-md">
                     {/* Email signup card with enhanced design */}
-                    <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 md:p-5 border border-primary/30 shadow-xl mb-2">
-                      <div className="flex items-center mb-3">
-                        <div className="bg-primary/20 p-2 rounded-full mr-3">
-                          <Sparkles className="h-4 w-4 text-primary" />
+                    <div className="bg-[#1a0033]/90 backdrop-blur-md rounded-xl p-4 md:p-5 border border-[#c300ff]/40 shadow-xl mb-2">
+                      <div className="flex items-center mb-4">
+                        <div className="bg-[#ff00ff]/20 p-2.5 rounded-full mr-3">
+                          <Sparkles className="h-5 w-5 text-[#ff00ff]" />
                         </div>
-                        <h3 className="text-sm font-medium text-white">Start your wellness journey</h3>
+                        <h3 className="text-base font-medium text-white">Start your wellness journey</h3>
                       </div>
                       
-                      <div className="space-y-3">
+                      <div className="space-y-4">
                         <div className="relative">
                           <Input
                             type="email"
@@ -166,20 +166,20 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-white/60 shadow-inner pl-10 h-12 text-base"
+                            className="bg-black/30 backdrop-blur-sm border-[#c300ff]/30 text-white placeholder:text-white/70 shadow-inner pl-10 h-12 text-base focus:border-[#ff00ff] focus:ring-[#ff00ff]/20"
                           />
-                          <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/70" />
+                          <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#c300ff]" />
                         </div>
                         
                         <Button 
                           type="submit" 
                           disabled={isSubmitting} 
-                          className="w-full h-12 text-base shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all bg-gradient-to-r from-primary to-primary/80"
+                          className="w-full h-12 text-base font-medium shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all bg-gradient-to-r from-[#c300ff] to-[#8400ff]"
                         >
                           {isSubmitting ? (
                             <>
                               <span className="mr-2">Signing Up</span>
-                              <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                              <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
                             </>
                           ) : (
                             'Get My Free Health Horoscope'
@@ -187,13 +187,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                         </Button>
                       </div>
                       
-                      <div className="mt-3 text-xs text-center text-white/60">
-                        <div className="flex items-center justify-center gap-1">
-                          <CheckCircle2 className="h-3 w-3 text-primary/70" />
+                      <div className="mt-4 text-sm text-center text-white/80">
+                        <div className="flex items-center justify-center gap-2 mb-1">
+                          <CheckCircle2 className="h-4 w-4 text-[#ff00ff]" />
                           <span>Free personalized health insights</span>
                         </div>
-                        <div className="flex items-center justify-center gap-1">
-                          <CheckCircle2 className="h-3 w-3 text-primary/70" />
+                        <div className="flex items-center justify-center gap-2">
+                          <CheckCircle2 className="h-4 w-4 text-[#ff00ff]" />
                           <span>We respect your privacy • No credit card needed</span>
                         </div>
                       </div>
@@ -201,7 +201,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                   </form>
                 </div>
               ) : (
-                <Button size="lg" asChild className="shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all animate-pulse bg-gradient-to-r from-primary to-primary/80 h-12 px-6">
+                <Button size="lg" asChild className="shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all animate-pulse bg-gradient-to-r from-[#c300ff] to-[#8400ff] h-12 px-6 font-medium">
                   <Link href="/dashboard">Go to Dashboard</Link>
                 </Button>
               )}
@@ -251,7 +251,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                         {zodiacSignNames.find(s => s.value === selectedSign)?.dates}
                       </p>
                       <Button 
-                        className="w-full shadow-md hover:shadow-lg transition-all text-sm"
+                        className="w-full shadow-md hover:shadow-lg transition-all text-sm bg-gradient-to-r from-[#c300ff] to-[#8400ff] hover:scale-[1.02]"
                         onClick={() => {
                           // Scroll to email input if email is not provided
                           if (!email) {
@@ -365,7 +365,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           </div>
           
           <div className="flex justify-center mt-12">
-            <Button variant="outline" size="lg" asChild>
+            <Button variant="outline" size="lg" asChild className="border-[#c300ff]/30 text-[#c300ff] hover:bg-[#c300ff]/10 hover:text-[#c300ff]">
               <Link href="/science">
                 Learn About Our Methodology
                 <MoveRight className="ml-2 h-4 w-4" />
@@ -391,7 +391,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           </div>
           
           <div className="flex justify-center mb-6">
-            <Link href="/elements" className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-colors">
+            <Link href="/elements" className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#c300ff]/10 hover:bg-[#c300ff]/20 text-[#c300ff] transition-colors">
               <Info className="h-4 w-4" />
               <span>Explore all elements</span>
             </Link>
