@@ -2,12 +2,11 @@ import React from 'react';
 import { Link } from 'wouter';
 import { Facebook, Twitter, Instagram, Mail, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { zodiacSignNames, zodiacElements } from '@/data/zodiacData';
-import { ZodiacSign } from '@shared/types';
+import { zodiacSignNames } from '@/data/zodiacData';
 
 // Group zodiac signs by element
 const groupByElement = () => {
-  const groups: Record<string, typeof zodiacSignNames> = {};
+  const groups: Record<string, any[]> = {};
   
   zodiacSignNames.forEach((sign: any) => {
     if (!groups[sign.element]) {
@@ -98,7 +97,7 @@ export function Footer() {
             <ul className="space-y-2">
               {Object.keys(elementGroups).map(element => (
                 <li key={element}>
-                  <Link href={`/zodiac-library?element=${element}`}>
+                  <Link href="/elements">
                     <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">{element} Signs</span>
                   </Link>
                 </li>
@@ -112,7 +111,7 @@ export function Footer() {
             <div className="grid grid-cols-2 gap-x-4 gap-y-2">
               {zodiacSignNames.map((sign: any) => (
                 <div key={sign.value}>
-                  <Link href={`/zodiac-library?sign=${sign.value}`}>
+                  <Link href="/zodiac-library">
                     <span className="text-muted-foreground hover:text-primary transition-colors flex items-center cursor-pointer">
                       <span className="mr-1">{sign.symbol}</span> {sign.label}
                     </span>
