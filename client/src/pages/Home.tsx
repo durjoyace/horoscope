@@ -151,57 +151,98 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                   <form onSubmit={handleSignup} className="w-full max-w-md">
                     {/* Email signup card with cleaner, more prominent design */}
                     <div className="max-w-md mx-auto">
-                      <h3 className="text-xl md:text-2xl font-bold text-white mb-5 text-center">
-                        Begin Your Personalized Health Journey
+                      <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 text-center relative">
+                        <span className="relative inline-block">
+                          Begin Your Personalized Health Journey
+                          <span className="absolute -top-2 -right-2 text-yellow-300 text-sm">✨</span>
+                        </span>
                       </h3>
                       
-                      <div className="bg-gradient-to-br from-[#8400ff] to-[#3a00ff] rounded-xl p-6 md:p-7 border-2 border-white/20 shadow-2xl mb-5 transform hover:scale-[1.01] transition-all">
-                        <div className="space-y-5">
-                          <div className="relative">
-                            <Input
-                              type="email"
-                              placeholder="Enter your email address"
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
-                              required
-                              className="bg-white/10 border-white/30 text-white placeholder:text-white/70 shadow-inner pl-10 h-14 text-lg focus:border-white focus:ring-white/20"
-                            />
-                            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/80" />
+                      {/* Enhanced signup form with attention-grabbing elements */}
+                      <div className="relative max-w-md mx-auto transform hover:scale-[1.02] transition-all duration-300">
+                        {/* Decorative elements to draw attention */}
+                        <div className="absolute -top-4 -left-4 w-16 h-16 bg-gradient-to-br from-yellow-400 to-pink-500 rounded-full blur-xl opacity-60"></div>
+                        <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-gradient-to-tl from-cyan-400 to-blue-500 rounded-full blur-xl opacity-60"></div>
+                        
+                        {/* Main signup card with enhanced visual treatment */}
+                        <div className="relative bg-gradient-to-br from-[#9a00ff] to-[#3a00ff] rounded-2xl p-7 md:p-8 border-2 border-white/30 shadow-[0_10px_30px_rgba(120,0,255,0.5)] mb-6 overflow-hidden">
+                          {/* Subtle animated background effect */}
+                          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0xLjEuOS0yIDItMmgxMmExIDEgMCAwIDEgMCAySDM4YTIgMiAwIDAgMS0yLTJtMC0xMmMwIDEuMS45IDIgMiAyaDEyYTEgMSAwIDAgMCAwLTJINzhhMiAyIDAgMCAwLTIgMm0tMTIgMGMwLTEuMS45LTIgMi0yaDEyYTEgMSAwIDAgMSAwIDJINjhhMiAyIDAgMCAxLTItMiIvPjwvZz48L2c+PC9zdmc+')] opacity-10"></div>
+                          
+                          <div className="space-y-6 relative">
+                            {/* Email input with enhanced styling */}
+                            <div className="relative">
+                              <div className="absolute -left-2 -top-2 w-10 h-10 bg-blue-500 rounded-full blur opacity-30"></div>
+                              <Input
+                                type="email"
+                                placeholder="Enter your email address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                className="bg-white/10 border-white/40 text-white placeholder:text-white/70 shadow-inner pl-10 h-14 text-lg focus:border-white focus:ring-white/30 rounded-xl"
+                              />
+                              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/90" />
+                            </div>
+                            
+                            {/* CTA button with animation and glow effect */}
+                            <Button 
+                              type="submit" 
+                              disabled={isSubmitting} 
+                              className="w-full bg-white hover:bg-white/95 text-[#8400ff] hover:text-purple-800 shadow-[0_0_15px_rgba(255,255,255,0.4)] h-14 text-lg font-semibold rounded-xl relative overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.6)]"
+                            >
+                              {isSubmitting ? (
+                                <>
+                                  <span className="mr-2">Signing Up</span>
+                                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#8400ff] border-t-transparent" />
+                                </>
+                              ) : (
+                                'Get My Free Health Horoscope'
+                              )}
+                            </Button>
                           </div>
                           
-                          <Button 
-                            type="submit" 
-                            disabled={isSubmitting} 
-                            className="w-full h-14 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transition-all bg-white text-[#8400ff] hover:bg-white/90"
-                          >
-                            {isSubmitting ? (
-                              <>
-                                <span className="mr-2">Signing Up</span>
-                                <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#8400ff] border-t-transparent" />
-                              </>
-                            ) : (
-                              'Get My Free Health Horoscope'
-                            )}
-                          </Button>
-                        </div>
-                        
-                        <div className="mt-5 text-white/90 text-center">
-                          <p className="text-sm">No credit card required. We respect your privacy.</p>
+                          <div className="mt-6 text-white text-center">
+                            <p className="text-sm flex items-center justify-center">
+                              <CheckCircle2 className="h-4 w-4 mr-2 text-green-300" />
+                              No credit card required. We respect your privacy.
+                            </p>
+                          </div>
                         </div>
                       </div>
                       
-                      <div className="text-center">
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-3">
-                          <CheckCircle2 className="h-5 w-5 text-[#ff00ff]" />
-                          <span className="text-white font-medium">Daily personalized health insights</span>
-                        </div>
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
-                          <Sparkles className="h-5 w-5 text-yellow-400" />
-                          <span className="text-white">
-                            <Link href="/marketplace" className="underline text-yellow-300 hover:text-yellow-200 font-medium">
-                              Upgrade to Premium
-                            </Link> for weekly detailed wellness reports
-                          </span>
+                      {/* Enhanced premium membership promotion */}
+                      <div className="relative">
+                        {/* Decorative element to draw attention */}
+                        <div className="absolute -top-1 -right-1 w-12 h-12 bg-gradient-to-br from-yellow-400 to-pink-500 rounded-full blur-lg opacity-30"></div>
+                        
+                        {/* Features section with improved visual hierarchy */}
+                        <div className="bg-white/5 backdrop-blur-sm rounded-xl p-5 shadow-lg border border-white/10">
+                          <div className="flex flex-col items-center justify-center gap-3 mb-4">
+                            <div className="flex items-center justify-center gap-2 w-full">
+                              <CheckCircle2 className="h-5 w-5 min-w-5 text-green-400" />
+                              <span className="text-white font-medium">Daily personalized health insights</span>
+                            </div>
+                            <div className="flex items-center justify-center gap-2 w-full">
+                              <CheckCircle2 className="h-5 w-5 min-w-5 text-green-400" />
+                              <span className="text-white font-medium">Tailored wellness recommendations</span>
+                            </div>
+                          </div>
+                          
+                          {/* Premium CTA with attractive design */}
+                          <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg p-4 transform hover:scale-[1.02] transition-all duration-300 shadow-[0_5px_15px_rgba(250,204,21,0.3)]">
+                            <div className="flex items-center justify-between gap-3">
+                              <div>
+                                <div className="flex items-center mb-1">
+                                  <Sparkles className="h-5 w-5 text-white mr-2" />
+                                  <h4 className="font-bold text-white text-lg">Premium Membership</h4>
+                                </div>
+                                <p className="text-white/90 text-sm">Get weekly in-depth wellness reports</p>
+                              </div>
+                              <Button asChild variant="secondary" className="bg-white text-yellow-600 hover:bg-white/90 whitespace-nowrap">
+                                <Link href="/premium">Upgrade Now</Link>
+                              </Button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>

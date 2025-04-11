@@ -543,9 +543,9 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
           {filteredProducts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts.map((product) => (
-                <Card key={product.id} className="flex flex-col h-full">
-                  <CardHeader className="pb-4">
-                    <div className="flex justify-between items-start mb-2">
+                <Card key={product.id} className="flex flex-col h-full overflow-hidden hover:shadow-lg transition-shadow">
+                  <CardHeader className="pb-3 space-y-3">
+                    <div className="flex justify-between items-start mb-1">
                       {getCategoryIcon(product.category)}
                       <div className="flex gap-1">
                         {[...Array(5)].map((_, i) => (
@@ -560,62 +560,64 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                         ))}
                       </div>
                     </div>
-                    <div className="relative">
+                    
+                    <div className="space-y-1">
                       {product.featured && (
-                        <div className="absolute -top-1 -right-1">
-                          <Badge variant="destructive" className="px-2 py-1">Featured</Badge>
-                        </div>
+                        <Badge variant="destructive" className="mb-1">Featured</Badge>
                       )}
-                      <CardTitle className="text-xl truncate">{product.name}</CardTitle>
+                      <CardTitle className="text-lg">{product.name}</CardTitle>
                     </div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge
-                        variant={product.element === 'All' 
-                          ? 'outline' 
-                          : 'secondary'}
-                        className={
-                          product.element !== 'All'
-                            ? `bg-opacity-10 ${zodiacElementColors[product.element as keyof typeof zodiacElementColors]}`
-                            : ''
-                        }
-                      >
+                    
+                    {/* Element and categories in a simpler format */}
+                    <div className="flex items-center gap-2">
+                      <Badge variant="outline">
                         {product.element} Element
                       </Badge>
                       {product.bestSeller && (
                         <Badge variant="default">Best Seller</Badge>
                       )}
                     </div>
-                    <div className="flex flex-wrap gap-1 mt-2">
-                      {product.wellnessCategories.map(category => (
+                  </CardHeader>
+                  
+                  <CardContent className="flex-grow pb-2 space-y-3">
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {product.description}
+                    </p>
+                    
+                    {/* Only show wellness focus without the extra title to save space */}
+                    <div className="flex flex-wrap gap-1">
+                      {product.wellnessCategories.slice(0, 2).map(category => (
                         <Badge key={category} variant="outline" className="text-xs">
                           {category.charAt(0).toUpperCase() + category.slice(1)}
                         </Badge>
                       ))}
+                      {product.wellnessCategories.length > 2 && (
+                        <Badge variant="outline" className="text-xs">+{product.wellnessCategories.length - 2} more</Badge>
+                      )}
                     </div>
-                  </CardHeader>
-                  <CardContent className="flex-grow pb-2">
-                    <p className="text-sm text-muted-foreground line-clamp-3">
-                      {product.description}
-                    </p>
                     
-                    <div className="mt-4">
-                      <div className="text-sm text-muted-foreground mb-1">Recommended for:</div>
-                      <div className="flex flex-wrap gap-1">
-                        {product.recommendedSigns.length === 12 ? (
-                          <Badge variant="outline">All Signs</Badge>
-                        ) : (
-                          product.recommendedSigns.map((sign) => {
+                    {/* Simplify recommended signs section */}
+                    <div className="flex flex-wrap gap-1 items-center text-xs text-muted-foreground">
+                      <span>For:</span>
+                      {product.recommendedSigns.length === 12 ? (
+                        <span className="font-medium">All Signs</span>
+                      ) : (
+                        <span className="font-medium">
+                          {product.recommendedSigns.slice(0, 3).map((sign, i) => {
                             const signData = zodiacSignNames.find(s => s.value === sign);
                             return (
-                              <Badge key={sign} variant="outline">
+                              <span key={sign}>
+                                {i > 0 && ", "}
                                 {signData?.symbol} {sign.charAt(0).toUpperCase() + sign.slice(1)}
-                              </Badge>
+                              </span>
                             );
-                          })
-                        )}
-                      </div>
+                          })}
+                          {product.recommendedSigns.length > 3 && ` +${product.recommendedSigns.length - 3} more`}
+                        </span>
+                      )}
                     </div>
                   </CardContent>
+                  
                   <CardFooter className="pt-0 flex justify-between items-center">
                     <div>
                       {product.discountPercentage ? (
@@ -626,20 +628,19 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                           <span className="text-sm text-muted-foreground line-through">
                             ${product.price.toFixed(2)}
                           </span>
-                          <Badge variant="outline" className="text-green-600 border-green-600">
-                            {product.discountPercentage}% off
-                          </Badge>
                         </div>
                       ) : (
                         <div className="text-lg font-bold">${product.price.toFixed(2)}</div>
                       )}
                     </div>
+                    
                     <Button
-                      onClick={() => addToCart(product.id)}
-                      disabled={product.stockLevel === 'out_of_stock'}
+                      onClick={() => window.open(product.affiliateLink, '_blank')}
+                      variant="default"
+                      className="px-3 py-1 h-auto"
                     >
                       <ShoppingCart className="mr-2 h-4 w-4" />
-                      Add to Cart
+                      View Product
                     </Button>
                   </CardFooter>
                 </Card>
