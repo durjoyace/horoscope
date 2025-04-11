@@ -164,6 +164,12 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                           {/* Email input with compelling benefits */}
                           <div className="space-y-6">
                             <div className="text-center space-y-2">
+                              {/* Branded text with gradient */}
+                              <div className="mb-2">
+                                <h3 className="text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#ff9cfe] to-[#aab2ff] inline-block">
+                                  HOROSCOPE HEALTH
+                                </h3>
+                              </div>
                               <h4 className="text-white text-xl font-bold mb-1">
                                 Unlock Your Cosmic Wellness Potential
                               </h4>
