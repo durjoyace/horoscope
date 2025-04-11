@@ -913,7 +913,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                       Unlock detailed weekly health forecasts with premium membership
                     </p>
                     <Button variant="link" className="p-0 h-auto mt-2" asChild>
-                      <Link href="/dashboard">
+                      <Link href="/premium">
                         <span>Upgrade</span>
                         <ArrowRight className="ml-1 h-3 w-3" />
                       </Link>
