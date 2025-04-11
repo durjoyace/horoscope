@@ -37,7 +37,8 @@ export default function ZodiacWheel({
   const [selectedSign, setSelectedSign] = useState<ZodiacSign | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
   
-  const width = size === 'sm' ? 300 : size === 'md' ? 500 : 700;
+  // Smaller wheel size for small screens
+  const width = size === 'sm' ? 280 : size === 'md' ? 500 : 700;
   const center = width / 2;
   const radius = (width / 2) * 0.8;
   
@@ -171,17 +172,21 @@ export default function ZodiacWheel({
                     : 'bg-white border border-gray-200 hover:scale-110 hover:shadow-md'
                 }`}
                 style={{
-                  width: radius * 0.3,
-                  height: radius * 0.3,
-                  left: x - (radius * 0.15),
-                  top: y - (radius * 0.15),
+                  // Use smaller buttons for mobile (sm size)
+                  width: size === 'sm' ? radius * 0.25 : radius * 0.3,
+                  height: size === 'sm' ? radius * 0.25 : radius * 0.3,
+                  left: x - (size === 'sm' ? radius * 0.125 : radius * 0.15),
+                  top: y - (size === 'sm' ? radius * 0.125 : radius * 0.15),
                   transform: isActive || isSelected ? 'scale(1.1)' : 'scale(1)',
                 }}
                 onClick={() => handleSignClick(sign.value)}
               >
                 <div className="text-center">
-                  <div className={`${size === 'sm' ? 'text-xl' : 'text-2xl'} mb-0.5 md:mb-1`}>{sign.symbol}</div>
-                  <div className={`${size === 'sm' ? 'text-[10px]' : 'text-xs'} font-medium`}>{sign.label}</div>
+                  <div className={`${size === 'sm' ? 'text-lg' : 'text-2xl'} mb-0.5 md:mb-1`}>{sign.symbol}</div>
+                  {/* Hide label on small size to prevent overflow */}
+                  {size === 'sm' ? (null) : (
+                    <div className="text-xs font-medium">{sign.label}</div>
+                  )}
                 </div>
               </button>
             </DialogTrigger>

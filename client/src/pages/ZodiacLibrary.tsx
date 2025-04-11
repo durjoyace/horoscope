@@ -88,12 +88,34 @@ export default function ZodiacLibrary() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center p-2 md:p-6">
-            <ZodiacWheel
-              onSelectSign={setSelectedSign}
-              activeSigns={selectedSign ? [selectedSign] : []}
-              highlightElements={true}
-              size={window.innerWidth < 768 ? "sm" : "lg"}
-            />
+            <div>
+              <ZodiacWheel
+                onSelectSign={setSelectedSign}
+                activeSigns={selectedSign ? [selectedSign] : []}
+                highlightElements={true}
+                size={window.innerWidth < 768 ? "sm" : "lg"}
+              />
+              
+              {/* Sign labels for mobile view */}
+              {window.innerWidth < 768 && (
+                <div className="grid grid-cols-4 gap-2 mt-6 text-center">
+                  {zodiacSignNames.map(sign => (
+                    <Button 
+                      key={sign.value}
+                      variant="ghost" 
+                      size="sm"
+                      className={`flex flex-col items-center p-2 h-auto ${
+                        selectedSign === sign.value ? 'bg-primary/10 text-primary' : ''
+                      }`}
+                      onClick={() => setSelectedSign(sign.value as ZodiacSign)}
+                    >
+                      <span className="text-lg">{sign.symbol}</span>
+                      <span className="text-xs">{sign.label}</span>
+                    </Button>
+                  ))}
+                </div>
+              )}
+            </div>
           </CardContent>
         </Card>
       </div>
