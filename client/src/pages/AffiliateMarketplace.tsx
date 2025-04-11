@@ -41,7 +41,7 @@ interface MarketplaceProps {
   user?: {
     email: string;
     zodiacSign: ZodiacSign;
-    firstName?: string;
+    firstName?: string | null;
   } | null;
 }
 
