@@ -210,14 +210,10 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                         </div>
                       </div>
                       
-                      {/* Enhanced premium membership promotion */}
+                      {/* Simple feature highlights */}
                       <div className="relative">
-                        {/* Decorative element to draw attention */}
-                        <div className="absolute -top-1 -right-1 w-12 h-12 bg-gradient-to-br from-yellow-400 to-pink-500 rounded-full blur-lg opacity-30"></div>
-                        
-                        {/* Features section with improved visual hierarchy */}
                         <div className="bg-white/5 backdrop-blur-sm rounded-xl p-5 shadow-lg border border-white/10">
-                          <div className="flex flex-col items-center justify-center gap-3 mb-4">
+                          <div className="flex flex-col items-center justify-center gap-3">
                             <div className="flex items-center justify-center gap-2 w-full">
                               <CheckCircle2 className="h-5 w-5 min-w-5 text-green-400" />
                               <span className="text-white font-medium">Daily personalized health insights</span>
@@ -226,21 +222,9 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               <CheckCircle2 className="h-5 w-5 min-w-5 text-green-400" />
                               <span className="text-white font-medium">Tailored wellness recommendations</span>
                             </div>
-                          </div>
-                          
-                          {/* Premium CTA with attractive design */}
-                          <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg p-4 transform hover:scale-[1.02] transition-all duration-300 shadow-[0_5px_15px_rgba(250,204,21,0.3)]">
-                            <div className="flex items-center justify-between gap-3">
-                              <div>
-                                <div className="flex items-center mb-1">
-                                  <Sparkles className="h-5 w-5 text-white mr-2" />
-                                  <h4 className="font-bold text-white text-lg">Premium Membership</h4>
-                                </div>
-                                <p className="text-white/90 text-sm">Get weekly in-depth wellness reports</p>
-                              </div>
-                              <Button asChild variant="secondary" className="bg-white text-yellow-600 hover:bg-white/90 whitespace-nowrap">
-                                <Link href="/premium">Upgrade Now</Link>
-                              </Button>
+                            <div className="flex items-center justify-center gap-2 w-full">
+                              <CheckCircle2 className="h-5 w-5 min-w-5 text-green-400" />
+                              <span className="text-white font-medium">100% free to get started</span>
                             </div>
                           </div>
                         </div>
@@ -410,6 +394,85 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                 ]
               }}
             />
+          </div>
+          
+          {/* Premium membership promotion after showcasing value */}
+          <div className="mt-16 max-w-4xl mx-auto">
+            <div className="bg-gradient-to-br from-[#9a00ff]/20 to-[#3a00ff]/20 backdrop-blur-md rounded-xl p-6 md:p-8 border border-[#c300ff]/30 shadow-lg relative overflow-hidden">
+              {/* Decorative background elements */}
+              <div className="absolute top-0 left-0 w-full h-full">
+                <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-yellow-500/10 rounded-full blur-2xl"></div>
+                <div className="absolute bottom-1/3 left-1/3 w-40 h-40 bg-purple-500/10 rounded-full blur-2xl"></div>
+              </div>
+              
+              <div className="relative">
+                <div className="flex flex-col md:flex-row gap-8">
+                  {/* Left side: Content */}
+                  <div className="flex-1">
+                    <div className="inline-flex items-center gap-1.5 bg-yellow-500/20 text-yellow-500 px-3 py-1.5 rounded-full text-xs font-medium mb-4">
+                      <Sparkles className="h-3.5 w-3.5" />
+                      <span>Premium Membership</span>
+                    </div>
+                    
+                    <h3 className="text-2xl md:text-3xl font-bold mb-4">Elevate Your Wellness Journey</h3>
+                    
+                    <p className="text-muted-foreground mb-6">
+                      Unlock deeper astrological health insights with our premium membership, designed for those seeking comprehensive wellness guidance.
+                    </p>
+                    
+                    <div className="space-y-3 mb-6">
+                      <div className="flex items-start gap-2">
+                        <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span>Weekly in-depth wellness reports based on your specific astrological profile</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span>Personalized exercise and nutrition recommendations</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span>Exclusive access to premium content and monthly special reports</span>
+                      </div>
+                    </div>
+                    
+                    <Button size="lg" asChild className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white">
+                      <Link href="/premium">
+                        Upgrade to Premium
+                        <MoveRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                  
+                  {/* Right side: Pricing */}
+                  <div className="md:w-64 flex-shrink-0">
+                    <div className="bg-white/10 rounded-lg p-5 border border-white/20 backdrop-blur-sm">
+                      <h4 className="text-lg font-bold mb-1">Monthly Plan</h4>
+                      <div className="mb-4">
+                        <span className="text-3xl font-bold">$9.99</span>
+                        <span className="text-muted-foreground">/month</span>
+                      </div>
+                      <ul className="space-y-2 mb-5">
+                        <li className="flex items-center gap-2 text-sm">
+                          <CheckCircle2 className="h-4 w-4 text-green-500" />
+                          <span>Full access to all features</span>
+                        </li>
+                        <li className="flex items-center gap-2 text-sm">
+                          <CheckCircle2 className="h-4 w-4 text-green-500" />
+                          <span>Weekly premium reports</span>
+                        </li>
+                        <li className="flex items-center gap-2 text-sm">
+                          <CheckCircle2 className="h-4 w-4 text-green-500" />
+                          <span>Cancel anytime</span>
+                        </li>
+                      </ul>
+                      <Button asChild variant="outline" className="w-full border-white/30 text-white hover:bg-white/10">
+                        <Link href="/premium">Subscribe Now</Link>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           
           <div className="flex justify-center mt-12">
