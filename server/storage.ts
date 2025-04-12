@@ -276,18 +276,20 @@ export class DatabaseStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     try {
-      // Make sure to exclude premium subscription fields that might not exist in the database
-      const { 
-        isPremium, 
-        stripeCustomerId, 
-        stripeSubscriptionId, 
-        subscriptionStatus, 
-        subscriptionTier, 
-        subscriptionEndDate, 
-        ...userFields 
-      } = insertUser as any;
+      // Select only the fields that exist in the database table
+      const userFields = {
+        email: insertUser.email,
+        password: insertUser.password,
+        firstName: insertUser.firstName,
+        lastName: insertUser.lastName,
+        zodiacSign: insertUser.zodiacSign,
+        birthdate: insertUser.birthdate,
+        phone: insertUser.phone,
+        smsOptIn: insertUser.smsOptIn,
+        newsletterOptIn: insertUser.newsletterOptIn
+      };
       
-      // Log the exact SQL query being executed for debugging
+      // Log the exact fields being inserted for debugging
       console.log('Creating user with fields:', userFields);
       
       const result = await db.insert(users).values(userFields).returning();
@@ -300,20 +302,25 @@ export class DatabaseStorage implements IStorage {
   
   async updateUser(id: number, updates: Partial<InsertUser>): Promise<User | undefined> {
     try {
-      // Remove premium fields that might not exist in the database
-      const { 
-        isPremium, 
-        stripeCustomerId, 
-        stripeSubscriptionId, 
-        subscriptionStatus, 
-        subscriptionTier, 
-        subscriptionEndDate, 
-        ...userFields 
-      } = updates as any;
+      // Filter to only include fields that exist in the database table
+      const validFields: Record<string, any> = {};
+      
+      if ('email' in updates) validFields.email = updates.email;
+      if ('password' in updates) validFields.password = updates.password;
+      if ('firstName' in updates) validFields.firstName = updates.firstName;
+      if ('lastName' in updates) validFields.lastName = updates.lastName;
+      if ('zodiacSign' in updates) validFields.zodiacSign = updates.zodiacSign;
+      if ('birthdate' in updates) validFields.birthdate = updates.birthdate;
+      if ('phone' in updates) validFields.phone = updates.phone;
+      if ('smsOptIn' in updates) validFields.smsOptIn = updates.smsOptIn;
+      if ('newsletterOptIn' in updates) validFields.newsletterOptIn = updates.newsletterOptIn;
+      
+      // Debug the update operation
+      console.log('Updating user with fields:', validFields);
       
       const result = await db
         .update(users)
-        .set(userFields)
+        .set(validFields)
         .where(eq(users.id, id))
         .returning();
       

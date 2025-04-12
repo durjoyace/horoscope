@@ -120,8 +120,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
         description: 'Your daily health horoscopes will start arriving soon.',
       });
       
+      // Store success message in localStorage for the auth page
+      localStorage.setItem('signupSuccess', 'true');
+      
       // Redirect to auth page to complete full profile
-      window.location.href = '/auth?signup=true';
+      setTimeout(() => {
+        window.location.href = '/auth?signup=true';
+      }, 800); // Small delay to ensure localStorage is set
     } catch (error: any) {
       console.error('Signup error:', error);
       toast({
