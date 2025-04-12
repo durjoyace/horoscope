@@ -151,8 +151,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
               </h1>
               
               <h1 className="magazine-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 md:mb-6 animate-slide-up">
-                <span className="block">{t('hero.title.1')}</span>
-                <span className="gradient-heading">{t('hero.title.2')}</span>
+                <span className="block">{t('hero.title1')}</span>
+                <span className="gradient-heading">{t('hero.title2')}</span>
               </h1>
               
               <p className="magazine-lead text-sm md:text-base text-muted-foreground mb-4 sm:mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">

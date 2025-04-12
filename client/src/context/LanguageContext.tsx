@@ -37,6 +37,7 @@ const enTranslations: Record<string, string> = {
   'hero.description': 'Discover how your zodiac sign influences your health tendencies and receive daily personalized wellness recommendations based on your astrological profile.',
   
   // Signup Form
+  'signup.header': 'Begin Your Cosmic Health Journey',
   'signup.title': 'Begin Your Personalized Health Journey',
   'signup.subtitle': 'Unlock Your Cosmic Wellness Potential',
   'signup.join': 'Join thousands discovering their astrological path to better health',
@@ -45,6 +46,10 @@ const enTranslations: Record<string, string> = {
   'signup.benefit2': 'Element-aligned wellness tips',
   'signup.benefit3': 'Astrological health forecasts',
   'signup.benefit4': 'Zodiac-specific self-care rituals',
+  'signup.benefits.insights': 'Daily personalized health insights',
+  'signup.benefits.wellness': 'Element-aligned wellness tips',
+  'signup.benefits.forecasts': 'Astrological health forecasts',
+  'signup.benefits.rituals': 'Zodiac-specific self-care rituals',
   'signup.button.loading': 'Creating Your Profile...',
   'signup.button': 'Reveal My Cosmic Health Path',
   'signup.microcopy': 'No credit card required • 100% free • Instant access',
@@ -181,6 +186,7 @@ const esTranslations: Record<string, string> = {
   'hero.description': 'Descubre cómo tu signo zodiacal influye en tus tendencias de salud y recibe recomendaciones de bienestar personalizadas basadas en tu perfil astrológico.',
   
   // Signup Form
+  'signup.header': 'Comienza Tu Viaje Cósmico de Salud',
   'signup.title': 'Comienza Tu Viaje de Salud Personalizado',
   'signup.subtitle': 'Desbloquea Tu Potencial de Bienestar Cósmico',
   'signup.join': 'Únete a miles de personas que descubren su camino astrológico hacia una mejor salud',
@@ -189,6 +195,10 @@ const esTranslations: Record<string, string> = {
   'signup.benefit2': 'Consejos de bienestar alineados con tu elemento',
   'signup.benefit3': 'Pronósticos de salud astrológicos',
   'signup.benefit4': 'Rituales de autocuidado específicos de tu signo',
+  'signup.benefits.insights': 'Consejos de salud personalizados diarios',
+  'signup.benefits.wellness': 'Consejos de bienestar alineados con tu elemento',
+  'signup.benefits.forecasts': 'Pronósticos de salud astrológicos',
+  'signup.benefits.rituals': 'Rituales de autocuidado específicos de tu signo',
   'signup.button.loading': 'Creando Tu Perfil...',
   'signup.button': 'Revelar Mi Camino de Salud Cósmico',
   'signup.microcopy': 'No se requiere tarjeta de crédito • 100% gratis • Acceso instantáneo',
