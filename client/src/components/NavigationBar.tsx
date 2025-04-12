@@ -35,6 +35,8 @@ interface NavBarProps {
   onLogout: () => void;
 }
 
+
+
 export function NavigationBar({ 
   isLoggedIn, 
   userEmail, 
@@ -44,7 +46,7 @@ export function NavigationBar({
 }: NavBarProps) {
   // This would normally come from a theme context
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const { t } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
   
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
@@ -329,6 +331,14 @@ export function NavigationBar({
                 )}
                 
                 <div className="mt-auto pt-4">
+                  {/* Language selector on mobile */}
+                  <div className="mb-3 flex items-center justify-between">
+                    <p className="text-sm font-medium">{t('nav.language')}</p>
+                    <div className="flex gap-2">
+                      <LanguageSelector />
+                    </div>
+                  </div>
+                  
                   <div className="flex gap-2">
                     <Button 
                       variant="outline" 
