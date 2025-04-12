@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogDescription,
+  DialogFooter 
+} from '@/components/ui/dialog';
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -51,53 +59,41 @@ export function FeatureCard({ icon, title, description, dialogContent }: Feature
         </div>
       </div>
       
-      {isDialogOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm overflow-y-auto p-4 md:p-6" onClick={closeDialog}>
-          <div 
-            className="bg-background rounded-xl shadow-2xl max-w-lg w-full mx-auto my-8 overflow-hidden relative" 
-            onClick={e => e.stopPropagation()}
-          >
-            <div className="p-5 md:p-6 bg-gradient-to-br from-primary/20 to-primary/5 border-b border-primary/20 relative">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="bg-primary/40 rounded-full p-3 inline-flex shadow-md flex-shrink-0">
-                  <div className="h-8 w-8 text-primary-foreground">
-                    {icon}
-                  </div>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="bg-primary/40 rounded-full p-3 inline-flex shadow-md flex-shrink-0">
+                <div className="h-8 w-8 text-primary-foreground">
+                  {icon}
                 </div>
-                <h2 className="text-xl md:text-2xl font-bold">{title}</h2>
               </div>
-              <p className="text-muted-foreground text-sm md:text-base">{description}</p>
-              <button 
-                className="absolute top-4 right-4 rounded-full p-1.5 hover:bg-background/30 transition-colors duration-200 text-foreground/70 hover:text-foreground"
-                onClick={closeDialog}
-                aria-label="Close dialog"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-              </button>
+              <DialogTitle className="text-xl md:text-2xl font-bold">{title}</DialogTitle>
             </div>
-            
-            <div className="p-5 md:p-6">
-              <div className="space-y-5 py-2">
-                {dialogContent.sections.map((section, index) => (
-                  <div key={index} className="mb-4">
-                    <h4 className="font-semibold mb-2 text-base md:text-lg">{section.title}</h4>
-                    <p className="text-sm text-muted-foreground">{section.content}</p>
-                  </div>
-                ))}
+            <DialogDescription className="text-muted-foreground text-sm md:text-base">
+              {description}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-5 py-2">
+            {dialogContent.sections.map((section, index) => (
+              <div key={index} className="mb-4">
+                <h4 className="font-semibold mb-2 text-base md:text-lg">{section.title}</h4>
+                <p className="text-sm text-muted-foreground">{section.content}</p>
               </div>
-              
-              <div className="mt-6 flex justify-end">
-                <Button 
-                  onClick={closeDialog}
-                  className="px-6"
-                >
-                  Close
-                </Button>
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
-      )}
+          
+          <DialogFooter>
+            <Button 
+              onClick={closeDialog}
+              className="px-6"
+            >
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
