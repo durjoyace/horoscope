@@ -73,10 +73,12 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
     }
     
     // Store user data in localStorage for the registration form
-    localStorage.setItem('user', JSON.stringify({
+    const userDataToStore = {
       email,
       zodiacSign: selectedSign
-    }));
+    };
+    localStorage.setItem('user', JSON.stringify(userDataToStore));
+    console.log('Storing initial user data:', userDataToStore);
     
     setIsSubmitting(true);
     
@@ -105,11 +107,14 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       const userData = await response.json();
       console.log('Signup successful:', userData);
       
-      // Also store in localStorage for backup
-      localStorage.setItem('user', JSON.stringify({
+      // Also store in localStorage after successful signup
+      const finalUserData = {
         email,
-        zodiacSign: selectedSign
-      }));
+        zodiacSign: selectedSign,
+        registrationComplete: true
+      };
+      localStorage.setItem('user', JSON.stringify(finalUserData));
+      console.log('Updated user data in localStorage after signup:', finalUserData);
       
       if (onUserRegistered) {
         onUserRegistered(userData);
