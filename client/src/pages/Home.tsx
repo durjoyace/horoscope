@@ -252,9 +252,25 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                   </form>
                 </div>
               ) : (
-                <Button size="lg" asChild className="shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all animate-pulse bg-gradient-to-r from-[#c300ff] to-[#8400ff] h-12 px-6 font-medium">
-                  <Link href="/dashboard">{t('signup.dashboard')}</Link>
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button size="lg" asChild className="shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all animate-pulse bg-gradient-to-r from-[#c300ff] to-[#8400ff] h-12 px-6 font-medium">
+                    <Link href="/dashboard">{t('signup.dashboard')}</Link>
+                  </Button>
+                  
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="shadow-md hover:shadow-lg hover:scale-[1.02] transition-all border-[#c300ff] text-[#c300ff] hover:bg-[#c300ff] hover:text-white h-12 px-6 font-medium"
+                    asChild
+                  >
+                    <Link href="/onboarding">
+                      <span className="flex items-center">
+                        <Star className="mr-2 h-4 w-4" />
+                        {t('onboarding.welcome.start')}
+                      </span>
+                    </Link>
+                  </Button>
+                </div>
               )}
             </div>
             

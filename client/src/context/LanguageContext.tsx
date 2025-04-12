@@ -137,6 +137,49 @@ const enTranslations: Record<string, string> = {
   'theme.dark': 'Dark Mode',
   'theme.light': 'Light Mode',
   
+  // Onboarding Wizard
+  'onboarding.welcome.title': 'Welcome to Horoscope Health',
+  'onboarding.welcome.description': 'Discover your cosmic wellness journey',
+  'onboarding.welcome.intro': 'Let\'s get started by discovering your zodiac sign and creating your personalized wellness profile.',
+  'onboarding.welcome.feature1.title': 'Personalized Insights',
+  'onboarding.welcome.feature1.description': 'Get daily wellness recommendations based on your unique astrological profile.',
+  'onboarding.welcome.feature2.title': 'Cosmic Journey',
+  'onboarding.welcome.feature2.description': 'Track your progress and earn achievements as you explore your cosmic wellness path.',
+  'onboarding.welcome.start': 'Start Your Journey',
+  
+  'onboarding.quiz.step': 'Step',
+  'onboarding.quiz.instruction': 'Choose the option that best describes you.',
+  'onboarding.quiz.back': 'Back',
+  'onboarding.quiz.next': 'Next',
+  'onboarding.quiz.finish': 'See Results',
+  
+  'onboarding.result.title': 'Your Zodiac Match',
+  'onboarding.result.description': 'Based on your personality traits, we\'ve identified your likely zodiac sign.',
+  'onboarding.result.element': 'Element',
+  'onboarding.result.question': 'Is this your zodiac sign? If not, select the correct one:',
+  'onboarding.result.back': 'Retake Quiz',
+  'onboarding.result.continue': 'Continue',
+  
+  'onboarding.profile.title': 'Complete Your Profile',
+  'onboarding.profile.description': 'Just a few more details to personalize your cosmic wellness journey.',
+  'onboarding.profile.email': 'Email Address',
+  'onboarding.profile.firstName': 'First Name',
+  'onboarding.profile.lastName': 'Last Name',
+  'onboarding.profile.birthDate': 'Birth Date',
+  'onboarding.profile.referralCode': 'Referral Code',
+  'onboarding.profile.referralDescription': 'If someone referred you, enter their code to earn bonus features.',
+  'onboarding.profile.back': 'Back',
+  'onboarding.profile.complete': 'Complete Setup',
+  
+  'onboarding.submitting.title': 'Creating Your Cosmic Profile',
+  'onboarding.submitting.description': 'Please wait while we align the stars for your personalized experience...',
+  
+  'onboarding.success.title': 'Welcome to Your Cosmic Wellness Journey!',
+  'onboarding.success.description': 'Your profile has been created successfully.',
+  
+  'onboarding.error.title': 'Something Went Wrong',
+  'onboarding.error.description': 'We couldn\'t complete your registration. Please try again.',
+  
   // Achievement Badges
   'badge.new': 'NEW',
   'badge.earned': 'Earned',
@@ -288,6 +331,49 @@ const esTranslations: Record<string, string> = {
   // Theme
   'theme.dark': 'Modo Oscuro',
   'theme.light': 'Modo Claro',
+  
+  // Onboarding Wizard
+  'onboarding.welcome.title': 'Bienvenido a Horóscopo Salud',
+  'onboarding.welcome.description': 'Descubre tu viaje de bienestar cósmico',
+  'onboarding.welcome.intro': 'Comencemos descubriendo tu signo zodiacal y creando tu perfil de bienestar personalizado.',
+  'onboarding.welcome.feature1.title': 'Información Personalizada',
+  'onboarding.welcome.feature1.description': 'Obtén recomendaciones diarias de bienestar basadas en tu perfil astrológico único.',
+  'onboarding.welcome.feature2.title': 'Viaje Cósmico',
+  'onboarding.welcome.feature2.description': 'Sigue tu progreso y gana logros mientras exploras tu camino de bienestar cósmico.',
+  'onboarding.welcome.start': 'Inicia Tu Viaje',
+  
+  'onboarding.quiz.step': 'Paso',
+  'onboarding.quiz.instruction': 'Elige la opción que mejor te describa.',
+  'onboarding.quiz.back': 'Atrás',
+  'onboarding.quiz.next': 'Siguiente',
+  'onboarding.quiz.finish': 'Ver Resultados',
+  
+  'onboarding.result.title': 'Tu Coincidencia Zodiacal',
+  'onboarding.result.description': 'Basado en tus rasgos de personalidad, hemos identificado tu probable signo zodiacal.',
+  'onboarding.result.element': 'Elemento',
+  'onboarding.result.question': '¿Es este tu signo zodiacal? Si no, selecciona el correcto:',
+  'onboarding.result.back': 'Volver a Realizar el Cuestionario',
+  'onboarding.result.continue': 'Continuar',
+  
+  'onboarding.profile.title': 'Completa Tu Perfil',
+  'onboarding.profile.description': 'Solo algunos detalles más para personalizar tu viaje de bienestar cósmico.',
+  'onboarding.profile.email': 'Correo Electrónico',
+  'onboarding.profile.firstName': 'Nombre',
+  'onboarding.profile.lastName': 'Apellido',
+  'onboarding.profile.birthDate': 'Fecha de Nacimiento',
+  'onboarding.profile.referralCode': 'Código de Referencia',
+  'onboarding.profile.referralDescription': 'Si alguien te recomendó, ingresa su código para obtener funciones adicionales.',
+  'onboarding.profile.back': 'Atrás',
+  'onboarding.profile.complete': 'Completar Configuración',
+  
+  'onboarding.submitting.title': 'Creando Tu Perfil Cósmico',
+  'onboarding.submitting.description': 'Por favor espera mientras alineamos las estrellas para tu experiencia personalizada...',
+  
+  'onboarding.success.title': '¡Bienvenido a Tu Viaje de Bienestar Cósmico!',
+  'onboarding.success.description': 'Tu perfil ha sido creado con éxito.',
+  
+  'onboarding.error.title': 'Algo Salió Mal',
+  'onboarding.error.description': 'No pudimos completar tu registro. Por favor intenta de nuevo.',
   
   // Achievement Badges
   'badge.new': 'NUEVO',

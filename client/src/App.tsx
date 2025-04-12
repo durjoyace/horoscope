@@ -22,6 +22,7 @@ import ContactPage from "@/pages/ContactPage";
 import AuthPage from "@/pages/auth-page";
 import PremiumPage from "@/pages/PremiumPage";
 import AchievementsPage from "@/pages/AchievementsPage";
+import OnboardingPage from "@/pages/OnboardingPage";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -105,6 +106,9 @@ function AppContent() {
           </Route>
           <Route path="/auth">
             <AuthPage />
+          </Route>
+          <Route path="/onboarding">
+            <OnboardingPage />
           </Route>
           <ProtectedRoute path="/dashboard" component={Dashboard} />
           <Route path="/zodiac-library">
