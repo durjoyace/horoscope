@@ -104,7 +104,6 @@ export function setupAuth(app: Express) {
         firstName: firstName || null,
         lastName: lastName || null,
         zodiacSign,
-        isPremium: false,
         newsletterOptIn: true,
         smsOptIn: false,
       });
@@ -120,7 +119,7 @@ export function setupAuth(app: Express) {
             firstName: user.firstName,
             lastName: user.lastName,
             zodiacSign: user.zodiacSign,
-            isPremium: user.isPremium || false
+            isPremium: false
           }
         });
       });
