@@ -75,8 +75,8 @@ export function NavigationBar({
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-1 sm:gap-2">
             <div className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent truncate">
-              <span className="hidden xs:inline">Horoscope Health</span>
-              <span className="xs:hidden">HH</span>
+              <span className="hidden xs:inline">{t('hero.brand')}</span>
+              <span className="xs:hidden">{t('hero.brand.abbr')}</span>
             </div>
           </Link>
         </div>
@@ -115,7 +115,7 @@ export function NavigationBar({
                 <div className="hidden md:flex items-center mr-2">
                   <div className="px-2 py-1 bg-amber-100 text-amber-800 text-xs font-medium rounded-full flex items-center gap-1">
                     <Star className="h-3 w-3" />
-                    <span>Premium</span>
+                    <span>{t('premium.label')}</span>
                   </div>
                 </div>
               )}

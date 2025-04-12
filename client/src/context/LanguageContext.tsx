@@ -31,6 +31,7 @@ const enTranslations: Record<string, string> = {
   // Hero Section
   'hero.tagline': 'Where Ancient Wisdom Meets Modern Science',
   'hero.brand': 'HOROSCOPE HEALTH',
+  'hero.brand.abbr': 'HH',
   'hero.title1': 'Your Personalized',
   'hero.title2': 'Cosmic Wellness Guide',
   'hero.description': 'Discover how your zodiac sign influences your health tendencies and receive daily personalized wellness recommendations based on your astrological profile.',
@@ -174,6 +175,7 @@ const esTranslations: Record<string, string> = {
   // Hero Section
   'hero.tagline': 'Donde la Sabiduría Antigua se Une a la Ciencia Moderna',
   'hero.brand': 'HORÓSCOPO SALUD',
+  'hero.brand.abbr': 'HS',
   'hero.title1': 'Tu Guía de Bienestar',
   'hero.title2': 'Cósmico Personalizado',
   'hero.description': 'Descubre cómo tu signo zodiacal influye en tus tendencias de salud y recibe recomendaciones de bienestar personalizadas basadas en tu perfil astrológico.',
