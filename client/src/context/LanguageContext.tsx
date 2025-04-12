@@ -116,6 +116,9 @@ const enTranslations: Record<string, string> = {
   'premium.features': 'Premium Features',
   'premium.upgrade': 'Upgrade to Premium',
   
+  // Methodology section
+  'methodology.button': 'Learn About Our Methodology',
+  
   // Elements Section
   'elements.title': 'ELEMENTAL ANALYSIS',
   'elements.heading': 'Elemental Health Insights',
@@ -142,6 +145,7 @@ const enTranslations: Record<string, string> = {
   'user.settings': 'Settings',
   
   // Theme
+  'theme.title': 'Theme',
   'theme.dark': 'Dark Mode',
   'theme.light': 'Light Mode',
   
@@ -466,6 +470,9 @@ const esTranslations: Record<string, string> = {
   'premium.label': 'Premium',
   'premium.features': 'Funciones Premium',
   'premium.upgrade': 'Actualizar a Premium',
+  
+  // Methodology section
+  'methodology.button': 'Conoce Nuestra Metodología',
   
   // Elements Section
   'elements.title': 'ANÁLISIS ELEMENTAL',
