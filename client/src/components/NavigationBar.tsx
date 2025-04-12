@@ -210,10 +210,21 @@ export function NavigationBar({
           ) : (
             <div className="hidden md:flex items-center gap-2">
               <Link href="/auth">
-                <Button variant="outline" size="sm">{t('nav.login')}</Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="border-primary/30 text-primary hover:bg-primary/10 hover:text-primary font-medium transition-colors"
+                >
+                  {t('nav.login')}
+                </Button>
               </Link>
               <Link href="/auth?signup=true">
-                <Button size="sm">{t('nav.signup')}</Button>
+                <Button 
+                  size="sm" 
+                  className="bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-medium shadow-sm hover:shadow-md transition-all"
+                >
+                  {t('nav.signup')}
+                </Button>
               </Link>
             </div>
           )}
@@ -228,15 +239,21 @@ export function NavigationBar({
             variant="ghost" 
             size="icon" 
             onClick={toggleTheme} 
-            className="hidden md:flex"
+            className="hidden md:flex h-9 w-9 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors"
+            aria-label={theme === 'light' ? t('theme.dark') : t('theme.light')}
           >
-            {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
           </Button>
           
           {/* Mobile menu */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden h-8 w-8">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="md:hidden h-9 w-9 flex items-center justify-center bg-primary/10 hover:bg-primary/20 transition-colors"
+                aria-label={t('nav.menu')}
+              >
                 <Menu className="h-4 w-4" />
               </Button>
             </SheetTrigger>
@@ -266,51 +283,51 @@ export function NavigationBar({
                   </div>
                 )}
               
-                <nav className="flex flex-col gap-1">
-                  <Link href="/" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    {t('nav.home')}
+                <nav className="flex flex-col gap-1.5 mb-1">
+                  <Link href="/" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
+                    <span>{t('nav.home')}</span>
                   </Link>
-                  <Link href="/zodiac-library" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    {t('nav.zodiac')}
+                  <Link href="/zodiac-library" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
+                    <span>{t('nav.zodiac')}</span>
                   </Link>
-                  <Link href="/elements" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    {t('nav.elements')}
+                  <Link href="/elements" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
+                    <span>{t('nav.elements')}</span>
                   </Link>
-                  <Link href="/marketplace" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    {t('nav.marketplace')}
+                  <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
+                    <span>{t('nav.marketplace')}</span>
                   </Link>
-                  <Link href="/science" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    {t('nav.science')}
+                  <Link href="/science" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
+                    <span>{t('nav.science')}</span>
                   </Link>
-                  <Link href="/about" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    {t('nav.about')}
+                  <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
+                    <span>{t('nav.about')}</span>
                   </Link>
-                  <Link href="/contact" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    {t('nav.contact')}
+                  <Link href="/contact" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
+                    <span>{t('nav.contact')}</span>
                   </Link>
                 </nav>
                 
                 {isLoggedIn && (
                   <>
                     <div className="h-px bg-border my-3"></div>
-                    <nav className="flex flex-col gap-1">
-                      <Link href="/dashboard" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
+                    <nav className="flex flex-col gap-1.5">
+                      <Link href="/dashboard" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center gap-2">
                         <BarChart className="h-4 w-4" />
-                        {t('user.dashboard')}
+                        <span>{t('user.dashboard')}</span>
                       </Link>
-                      <Link href="/profile" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
+                      <Link href="/profile" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center gap-2">
                         <User className="h-4 w-4" />
-                        {t('user.profile')}
+                        <span>{t('user.profile')}</span>
                       </Link>
                       {isPremium ? (
-                        <Link href="/premium" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
+                        <Link href="/premium" className="text-sm font-medium text-amber-500 hover:text-amber-600 transition-colors py-2.5 px-2 rounded-md hover:bg-amber-500/10 flex items-center gap-2">
                           <Star className="h-4 w-4 text-amber-500" />
-                          {t('premium.features')}
+                          <span>{t('premium.features')}</span>
                         </Link>
                       ) : (
-                        <Link href="/premium" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
+                        <Link href="/premium" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center gap-2">
                           <Shield className="h-4 w-4" />
-                          {t('premium.upgrade')}
+                          <span>{t('premium.upgrade')}</span>
                         </Link>
                       )}
                     </nav>
@@ -322,10 +339,21 @@ export function NavigationBar({
                     <div className="h-px bg-border my-3"></div>
                     <div className="flex gap-2 mb-2">
                       <Link href="/auth" className="flex-1">
-                        <Button variant="outline" size="sm" className="w-full">{t('nav.login')}</Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="w-full border-primary/30 text-primary hover:bg-primary/10 hover:text-primary font-medium transition-colors"
+                        >
+                          {t('nav.login')}
+                        </Button>
                       </Link>
                       <Link href="/auth?signup=true" className="flex-1">
-                        <Button size="sm" className="w-full">{t('nav.signup')}</Button>
+                        <Button 
+                          size="sm" 
+                          className="w-full bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-medium shadow-sm hover:shadow-md transition-all"
+                        >
+                          {t('nav.signup')}
+                        </Button>
                       </Link>
                     </div>
                   </>
@@ -342,18 +370,19 @@ export function NavigationBar({
                     <Button 
                       variant="outline" 
                       size="sm"
-                      className="flex-1 justify-center items-center gap-2"
+                      className="flex-1 justify-center items-center gap-2 bg-primary/10 border-primary/20 hover:bg-primary/20 transition-colors"
                       onClick={toggleTheme}
+                      aria-label={theme === 'light' ? t('theme.dark') : t('theme.light')}
                     >
                       {theme === 'light' ? (
                         <>
                           <Moon className="h-4 w-4" />
-                          <span>{t('theme.dark')}</span>
+                          <span className="text-sm">{t('theme.dark')}</span>
                         </>
                       ) : (
                         <>
                           <Sun className="h-4 w-4" />
-                          <span>{t('theme.light')}</span>
+                          <span className="text-sm">{t('theme.light')}</span>
                         </>
                       )}
                     </Button>
@@ -362,11 +391,12 @@ export function NavigationBar({
                       <Button 
                         variant="outline" 
                         size="sm"
-                        className="flex-1 justify-center items-center gap-2 text-red-600 border-red-200"
+                        className="flex-1 justify-center items-center gap-2 text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 transition-colors"
                         onClick={onLogout}
+                        aria-label={t('nav.logout')}
                       >
                         <LogOut className="h-4 w-4" />
-                        <span>{t('nav.logout')}</span>
+                        <span className="text-sm">{t('nav.logout')}</span>
                       </Button>
                     )}
                   </div>
