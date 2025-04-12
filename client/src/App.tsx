@@ -8,6 +8,8 @@ import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { PageTransition } from "@/components/PageTransition";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 // Import all pages
 import Home from "@/pages/Home";
@@ -100,43 +102,45 @@ function AppContent() {
       />
       
       <main className="flex-grow">
-        <Switch>
-          <Route path="/">
-            <Home />
-          </Route>
-          <Route path="/auth">
-            <AuthPage />
-          </Route>
-          <Route path="/onboarding">
-            <OnboardingPage />
-          </Route>
-          <ProtectedRoute path="/dashboard" component={Dashboard} />
-          <Route path="/zodiac-library">
-            <ZodiacLibrary />
-          </Route>
-          <Route path="/elements">
-            <ElementsGuide />
-          </Route>
-          <Route path="/marketplace">
-            <AffiliateMarketplace user={user} />
-          </Route>
-          <Route path="/about">
-            <AboutPage />
-          </Route>
-          <Route path="/science">
-            <SciencePage />
-          </Route>
-          <Route path="/contact">
-            <ContactPage />
-          </Route>
-          <Route path="/premium">
-            <PremiumPage />
-          </Route>
-          <ProtectedRoute path="/achievements" component={AchievementsPage} />
-          <Route>
-            <NotFound />
-          </Route>
-        </Switch>
+        <PageTransition loading={logoutMutation.isPending}>
+          <Switch>
+            <Route path="/">
+              <Home />
+            </Route>
+            <Route path="/auth">
+              <AuthPage />
+            </Route>
+            <Route path="/onboarding">
+              <OnboardingPage />
+            </Route>
+            <ProtectedRoute path="/dashboard" component={Dashboard} />
+            <Route path="/zodiac-library">
+              <ZodiacLibrary />
+            </Route>
+            <Route path="/elements">
+              <ElementsGuide />
+            </Route>
+            <Route path="/marketplace">
+              <AffiliateMarketplace user={user} />
+            </Route>
+            <Route path="/about">
+              <AboutPage />
+            </Route>
+            <Route path="/science">
+              <SciencePage />
+            </Route>
+            <Route path="/contact">
+              <ContactPage />
+            </Route>
+            <Route path="/premium">
+              <PremiumPage />
+            </Route>
+            <ProtectedRoute path="/achievements" component={AchievementsPage} />
+            <Route>
+              <NotFound />
+            </Route>
+          </Switch>
+        </PageTransition>
       </main>
       
       <Footer />
