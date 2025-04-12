@@ -372,8 +372,8 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete }
                         className={`
                           flex items-center space-x-2 rounded-lg border p-4 transition-all
                           ${answers[personalityQuestions[quizStep]?.id] === option.id 
-                            ? 'border-primary bg-primary/5' 
-                            : 'hover:border-accent'}
+                            ? 'border-primary bg-primary/10 shadow-inner shadow-primary/5' 
+                            : 'hover:border-accent hover:bg-background/50'}
                         `}
                       >
                         <RadioGroupItem 
@@ -385,12 +385,14 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete }
                           htmlFor={option.id} 
                           className="flex flex-1 cursor-pointer items-center pl-6"
                         >
-                          <div className="flex items-center space-x-2">
-                            {option.icon}
-                            <span className="font-medium">{option.label}</span>
-                          </div>
-                          <div className="ml-auto text-xs text-muted-foreground">
-                            {option.description}
+                          <div className="flex flex-col w-full">
+                            <div className="flex items-center space-x-2">
+                              {option.icon}
+                              <span className="font-medium">{option.label}</span>
+                            </div>
+                            <div className="text-xs text-muted-foreground mt-1">
+                              {option.description}
+                            </div>
                           </div>
                         </Label>
                       </div>
