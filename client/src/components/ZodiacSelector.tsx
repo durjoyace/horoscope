@@ -1,100 +1,82 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useUser } from '@/context/UserContext';
+import { zodiacSigns } from '@/utils/zodiac';
 import { ZodiacSign } from '@shared/types';
-import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/context/LanguageContext';
-import { cn } from '@/lib/utils';
+import { SuccessModal } from './SuccessModal';
 
-interface ZodiacSelectorProps {
-  onSelect: (sign: ZodiacSign) => void;
-  className?: string;
-  selectedSign?: ZodiacSign;
-  compact?: boolean;
-}
+export const ZodiacSelector: React.FC = () => {
+  const { user, signUp } = useUser();
+  const [selectedSign, setSelectedSign] = useState<ZodiacSign | null>(
+    (user?.zodiacSign as ZodiacSign) || null
+  );
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
-const zodiacSigns: Array<{
-  sign: ZodiacSign;
-  icon: string;
-  dates: string;
-}> = [
-  { sign: 'aries', icon: '♈', dates: 'Mar 21 - Apr 19' },
-  { sign: 'taurus', icon: '♉', dates: 'Apr 20 - May 20' },
-  { sign: 'gemini', icon: '♊', dates: 'May 21 - Jun 20' },
-  { sign: 'cancer', icon: '♋', dates: 'Jun 21 - Jul 22' },
-  { sign: 'leo', icon: '♌', dates: 'Jul 23 - Aug 22' },
-  { sign: 'virgo', icon: '♍', dates: 'Aug 23 - Sep 22' },
-  { sign: 'libra', icon: '♎', dates: 'Sep 23 - Oct 22' },
-  { sign: 'scorpio', icon: '♏', dates: 'Oct 23 - Nov 21' },
-  { sign: 'sagittarius', icon: '♐', dates: 'Nov 22 - Dec 21' },
-  { sign: 'capricorn', icon: '♑', dates: 'Dec 22 - Jan 19' },
-  { sign: 'aquarius', icon: '♒', dates: 'Jan 20 - Feb 18' },
-  { sign: 'pisces', icon: '♓', dates: 'Feb 19 - Mar 20' },
-];
-
-export function ZodiacSelector({ 
-  onSelect, 
-  className, 
-  selectedSign,
-  compact = false
-}: ZodiacSelectorProps) {
-  const { t } = useLanguage();
-  const [selectedZodiacSign, setSelectedZodiacSign] = useState<ZodiacSign | undefined>(selectedSign);
-  
-  const handleSelect = (sign: ZodiacSign) => {
-    setSelectedZodiacSign(sign);
-    onSelect(sign);
+  const handleSignSelect = async (sign: ZodiacSign) => {
+    setSelectedSign(sign);
+    
+    // If user is already logged in, update their zodiac sign
+    if (user?.email) {
+      try {
+        const result = await signUp({
+          email: user.email,
+          zodiacSign: sign,
+          smsOptIn: user.smsOptIn,
+          newsletterOptIn: user.newsletterOptIn
+        });
+        
+        if (result.success) {
+          setSuccessMessage(
+            `${sign.charAt(0).toUpperCase() + sign.slice(1)} selected! Your horoscope preferences have been updated.`
+          );
+          setIsSuccessModalOpen(true);
+        }
+      } catch (error) {
+        console.error('Error updating zodiac sign:', error);
+      }
+    } else {
+      // Just show success message without saving
+      setSuccessMessage(
+        `${sign.charAt(0).toUpperCase() + sign.slice(1)} selected! Sign up to receive your personalized horoscope.`
+      );
+      setIsSuccessModalOpen(true);
+    }
   };
 
   return (
-    <div className={cn("w-full max-w-3xl mx-auto", className)}>
-      <h2 className="text-2xl font-bold text-center mb-4">
-        {t('zodiac.selectTitle')}
-      </h2>
-      <p className="text-center text-muted-foreground mb-6">
-        {t('zodiac.selectDescription')}
-      </p>
-      
-      <div className="grid grid-cols-3 gap-3 md:grid-cols-4 lg:grid-cols-6">
-        {zodiacSigns.map(({ sign, icon, dates }) => (
-          <motion.div
-            key={sign}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex justify-center"
-          >
-            <Button
-              variant="outline"
-              className={cn(
-                "flex flex-col items-center justify-center p-3 h-auto w-full aspect-square rounded-lg border-2 gap-1 hover:bg-primary/5",
-                selectedZodiacSign === sign && "border-primary bg-primary/10 hover:bg-primary/15"
-              )}
-              onClick={() => handleSelect(sign)}
-              aria-label={t(`zodiac.signs.${sign}`)}
-            >
-              <span className="text-3xl">{icon}</span>
-              <span className="font-medium capitalize text-sm">
-                {t(`zodiac.signs.${sign}`)}
-              </span>
-              {!compact && (
-                <span className="text-xs text-muted-foreground mt-1">
-                  {dates}
-                </span>
-              )}
-            </Button>
-          </motion.div>
-        ))}
-      </div>
-      
-      {selectedZodiacSign && (
-        <div className="text-center mt-8 mb-4">
-          <h3 className="text-xl font-semibold capitalize">
-            {t(`zodiac.signs.${selectedZodiacSign}`)}
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            {zodiacSigns.find(s => s.sign === selectedZodiacSign)?.dates}
+    <section className="py-16 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-playfair font-bold mb-4">Find Your Sign</h2>
+          <p className="text-xl max-w-2xl mx-auto">
+            Your zodiac sign reveals unique patterns about your health and wellness needs.
           </p>
         </div>
-      )}
-    </div>
+        
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          {zodiacSigns.map((sign) => (
+            <button
+              key={sign.sign}
+              onClick={() => handleSignSelect(sign.sign)}
+              className={`flex flex-col items-center p-4 rounded-lg hover:bg-gray-50 transition duration-200 ${
+                selectedSign === sign.sign ? 'bg-gray-50 ring-2 ring-indigo-200' : ''
+              }`}
+            >
+              <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mb-3">
+                <i className={`fas fa-${sign.icon} text-indigo-900 text-xl`}></i>
+              </div>
+              <span className="font-medium">{sign.name}</span>
+              <span className="text-xs text-gray-500">{sign.dateRange}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      <SuccessModal
+        isOpen={isSuccessModalOpen}
+        message={successMessage}
+        onClose={() => setIsSuccessModalOpen(false)}
+      />
+    </section>
   );
-}
+};

@@ -78,8 +78,8 @@ export function NavigationBar({
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-1 sm:gap-2">
             <div className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent truncate">
-              <span className="hidden xs:inline">{t('hero.brandName')}</span>
-              <span className="xs:hidden">{t('hero.brandAbbr')}</span>
+              <span className="hidden xs:inline">{t('hero.brand')}</span>
+              <span className="xs:hidden">{t('hero.brand.abbr')}</span>
             </div>
           </Link>
         </div>
