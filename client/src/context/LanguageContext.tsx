@@ -60,6 +60,7 @@ const enTranslations: Record<string, string> = {
   'quote.select': 'Select your zodiac sign above to receive a personalized wellness quote.',
   'quote.personalized': 'Your Personal Wellness Quote',
   'quote.general': 'Wellness Quote of the Day',
+  'quote.refresh': 'Refresh quote',
   
   // How It Works Section
   'how.title': 'SCIENCE MEETS ASTROLOGY',
@@ -111,6 +112,15 @@ const enTranslations: Record<string, string> = {
   'elements.traits.water': 'Emotional, intuitive, and nurturing',
   'elements.section.tendencies': 'Health Tendencies',
   'elements.section.recommendations': 'Wellness Recommendations',
+  
+  // User Settings
+  'user.dashboard': 'Dashboard',
+  'user.profile': 'Profile',
+  'user.settings': 'Settings',
+  
+  // Theme
+  'theme.dark': 'Dark Mode',
+  'theme.light': 'Light Mode',
   
   // Dashboard
   'dashboard.title': 'Your Cosmic Wellness Dashboard',
@@ -193,6 +203,7 @@ const esTranslations: Record<string, string> = {
   'quote.select': 'Selecciona tu signo zodiacal arriba para recibir una frase de bienestar personalizada.',
   'quote.personalized': 'Tu Frase de Bienestar Personal',
   'quote.general': 'Frase de Bienestar del Día',
+  'quote.refresh': 'Actualizar frase',
   
   // How It Works Section
   'how.title': 'CIENCIA SE UNE A LA ASTROLOGÍA',
@@ -204,6 +215,15 @@ const esTranslations: Record<string, string> = {
   'how.card2.description': 'Nuestro equipo combina conocimientos astrológicos con investigación de bienestar basada en evidencia para crear recomendaciones que honran ambos sistemas.',
   'how.card3.title': 'Orientación Personalizada',
   'how.card3.description': 'Recibes horóscopos diarios con recomendaciones específicas de salud y bienestar adaptadas a la constitución única de tu signo y las influencias celestiales actuales.',
+  
+  // User Settings
+  'user.dashboard': 'Panel',
+  'user.profile': 'Perfil',
+  'user.settings': 'Configuración',
+  
+  // Theme
+  'theme.dark': 'Modo Oscuro',
+  'theme.light': 'Modo Claro',
   
   // Premium Section
   'premium.badge': 'Membresía Premium',

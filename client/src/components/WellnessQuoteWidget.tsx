@@ -228,7 +228,7 @@ export function WellnessQuoteWidget({ zodiacSign, isPersonalized = false }: Well
             disabled={isLoading}
           >
             <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-            <span className="sr-only">Refresh quote</span>
+            <span className="sr-only">{t('quote.refresh')}</span>
           </Button>
         </div>
         
@@ -239,7 +239,7 @@ export function WellnessQuoteWidget({ zodiacSign, isPersonalized = false }: Well
             </div>
             <div>
               <h3 className="text-lg font-medium">
-                {isPersonalized && zodiacSign ? t('quote.personal') : t('quote.daily')}
+                {isPersonalized && zodiacSign ? t('quote.personalized') : t('quote.general')}
               </h3>
               {isPersonalized && zodiacSign && (
                 <p className="text-xs text-muted-foreground">
