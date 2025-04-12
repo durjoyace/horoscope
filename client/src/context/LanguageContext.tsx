@@ -6,9 +6,15 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (language: Language) => void;
   t: (key: string) => string;
+  translations: Record<Language, Record<string, any>>;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+export const LanguageContext = createContext<LanguageContextType>({
+  language: 'en',
+  setLanguage: () => {},
+  t: (key: string) => key,
+  translations: { en: {}, es: {} }
+});
 
 // English translations
 const enTranslations: Record<string, string> = {
@@ -30,8 +36,8 @@ const enTranslations: Record<string, string> = {
   
   // Hero Section
   'hero.tagline': 'Where Ancient Wisdom Meets Modern Science',
-  'hero.brand': 'HOROSCOPE HEALTH',
-  'hero.brand.abbr': 'HH',
+  'hero.brandName': 'HOROSCOPE HEALTH',
+  'hero.brandAbbr': 'HH',
   'hero.title1': 'Your Personalized',
   'hero.title2': 'Cosmic Wellness Guide',
   'hero.description': 'Discover how your zodiac sign influences your health tendencies and receive daily personalized wellness recommendations based on your astrological profile.',
@@ -284,8 +290,8 @@ const esTranslations: Record<string, string> = {
   
   // Hero Section
   'hero.tagline': 'Donde la Sabiduría Antigua se Une a la Ciencia Moderna',
-  'hero.brand': 'HORÓSCOPO SALUD',
-  'hero.brand.abbr': 'HS',
+  'hero.brandName': 'HORÓSCOPO SALUD',
+  'hero.brandAbbr': 'HS',
   'hero.title1': 'Tu Guía de Bienestar',
   'hero.title2': 'Cósmico Personalizado',
   'hero.description': 'Descubre cómo tu signo zodiacal influye en tus tendencias de salud y recibe recomendaciones de bienestar personalizadas basadas en tu perfil astrológico.',
@@ -518,26 +524,129 @@ const esTranslations: Record<string, string> = {
   'footer.category.company': 'Empresa',
 };
 
-// Combined translations
-const translations: Record<Language, Record<string, string>> = {
-  en: enTranslations,
-  es: esTranslations,
+// Transform flat translations into nested structure
+function transformTranslations(flatTranslations: Record<string, string>): Record<string, any> {
+  const result: Record<string, any> = {};
+  
+  // First sort keys to ensure parent keys are processed before their children
+  const sortedKeys = Object.keys(flatTranslations).sort();
+  
+  for (const key of sortedKeys) {
+    const value = flatTranslations[key];
+    const parts = key.split('.');
+    let current = result;
+    
+    // Check if this is a nested key (hero.brand.abbr)
+    if (parts.length > 1) {
+      // Handle each part of the path
+      for (let i = 0; i < parts.length - 1; i++) {
+        const part = parts[i];
+        // If the current level doesn't exist or is a string (not an object), 
+        // initialize it as an object
+        if (!current[part] || typeof current[part] !== 'object') {
+          current[part] = {};
+        }
+        current = current[part];
+      }
+    }
+    
+    // Set the final value
+    current[parts[parts.length - 1]] = value;
+  }
+  
+  return result;
+}
+
+// Add zodiac sign translations
+const zodiacSignsEn = {
+  aries: 'Aries',
+  taurus: 'Taurus',
+  gemini: 'Gemini',
+  cancer: 'Cancer',
+  leo: 'Leo',
+  virgo: 'Virgo',
+  libra: 'Libra',
+  scorpio: 'Scorpio',
+  sagittarius: 'Sagittarius',
+  capricorn: 'Capricorn',
+  aquarius: 'Aquarius',
+  pisces: 'Pisces',
+};
+
+const zodiacSignsEs = {
+  aries: 'Aries',
+  taurus: 'Tauro',
+  gemini: 'Géminis',
+  cancer: 'Cáncer',
+  leo: 'Leo',
+  virgo: 'Virgo',
+  libra: 'Libra',
+  scorpio: 'Escorpio',
+  sagittarius: 'Sagitario',
+  capricorn: 'Capricornio',
+  aquarius: 'Acuario',
+  pisces: 'Piscis',
+};
+
+// Add zodiac title translations
+const zodiacTranslationsEn = {
+  signs: zodiacSignsEn,
+  selectTitle: 'Your Horoscope Health Profile',
+  selectDescription: 'Select your zodiac sign to begin',
+};
+
+const zodiacTranslationsEs = {
+  signs: zodiacSignsEs,
+  selectTitle: 'Tu Perfil de Salud del Horóscopo',
+  selectDescription: 'Selecciona tu signo zodiacal para comenzar',
+};
+
+// Combined translations with nested structure
+const nestedEnTranslations = transformTranslations(enTranslations);
+const nestedEsTranslations = transformTranslations(esTranslations);
+
+// Add the zodiac section manually
+nestedEnTranslations.zodiac = zodiacTranslationsEn;
+nestedEsTranslations.zodiac = zodiacTranslationsEs;
+
+const translations = {
+  en: nestedEnTranslations,
+  es: nestedEsTranslations,
 };
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en');
 
+  // Translation function that ensures string output
   const t = (key: string): string => {
-    return translations[language][key] || key;
+    const keys = key.split('.');
+    let result: any = translations[language];
+    
+    for (const k of keys) {
+      if (!result || !result[k]) {
+        console.warn(`Translation key not found: ${key} for language ${language}`);
+        return key; // Return the key itself if translation not found
+      }
+      result = result[k];
+    }
+    
+    // Make sure we're returning a string, not an object
+    if (typeof result === 'object') {
+      console.warn(`Translation key ${key} returned an object instead of a string`);
+      return key; // Return the key itself if result is an object
+    }
+    
+    return result as string;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, translations }}>
       {children}
     </LanguageContext.Provider>
   );
 };
 
+// This hook provides direct access to the language context
 export const useLanguage = (): LanguageContextType => {
   const context = useContext(LanguageContext);
   if (context === undefined) {
