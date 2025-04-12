@@ -116,7 +116,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       
       // Redirect to auth page to complete full profile
       window.location.href = '/auth';
-    } catch (error) {
+    } catch (error: any) {
       console.error('Signup error:', error);
       toast({
         title: 'Signup failed',

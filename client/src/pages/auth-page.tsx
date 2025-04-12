@@ -40,14 +40,34 @@ export default function AuthPage() {
   const searchParams = new URLSearchParams(search);
   const signupParam = searchParams.get("signup");
 
+  // Check for data from localStorage
+  const [storedUserData, setStoredUserData] = useState<{
+    email?: string;
+    zodiacSign?: ZodiacSign;
+  } | null>(null);
+
   useEffect(() => {
+    // Try to get user data from localStorage
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser);
+        setStoredUserData(userData);
+        // Auto-switch to register tab if we have data
+        setActiveTab("register");
+      } catch (error) {
+        console.error("Failed to parse stored user data:", error);
+      }
+    }
+
+    // Also check query parameters
     if (signupParam === "true") {
       setActiveTab("register");
     }
   }, [signupParam]);
 
   useEffect(() => {
-    // Redirect to home if user is already logged in
+    // Redirect to home if user is already logged in with the auth system
     if (user) {
       setLocation("/");
     }
@@ -64,12 +84,12 @@ export default function AuthPage() {
   const registerForm = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      email: "",
+      email: storedUserData?.email || "",
       password: "",
       confirmPassword: "",
       firstName: "",
       lastName: "",
-      zodiacSign: "",
+      zodiacSign: storedUserData?.zodiacSign || "",
     },
   });
 
