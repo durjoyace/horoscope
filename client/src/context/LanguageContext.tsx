@@ -352,6 +352,7 @@ const esTranslations: Record<string, string> = {
   'user.settings': 'Configuración',
   
   // Theme
+  'theme.title': 'Tema',
   'theme.dark': 'Modo Oscuro',
   'theme.light': 'Modo Claro',
   
