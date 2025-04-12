@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Quote, Sparkles, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ZodiacSign } from '@shared/types';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface WellnessQuoteWidgetProps {
   zodiacSign?: ZodiacSign;
@@ -146,6 +147,7 @@ const wellnessQuotes: Record<'Fire' | 'Earth' | 'Air' | 'Water' | 'General', Wel
 export function WellnessQuoteWidget({ zodiacSign, isPersonalized = false }: WellnessQuoteWidgetProps) {
   const [quote, setQuote] = useState<WellnessQuote | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { t } = useLanguage();
 
   const getElementalColor = (element?: 'Fire' | 'Earth' | 'Air' | 'Water') => {
     switch (element) {
@@ -237,11 +239,11 @@ export function WellnessQuoteWidget({ zodiacSign, isPersonalized = false }: Well
             </div>
             <div>
               <h3 className="text-lg font-medium">
-                {isPersonalized && zodiacSign ? 'Your Personal Wellness Quote' : 'Wellness Quote of the Day'}
+                {isPersonalized && zodiacSign ? t('quote.personal') : t('quote.daily')}
               </h3>
               {isPersonalized && zodiacSign && (
                 <p className="text-xs text-muted-foreground">
-                  <span className="capitalize">{zodiacSign}</span> • {quote.element} Element
+                  <span className="capitalize">{zodiacSign}</span> • {t(`elements.${quote.element?.toLowerCase()}`)}
                 </p>
               )}
             </div>

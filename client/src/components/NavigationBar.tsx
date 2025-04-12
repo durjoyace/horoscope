@@ -163,7 +163,7 @@ export function NavigationBar({
                   <DropdownMenuItem className="cursor-pointer" asChild>
                     <Link href="/dashboard" className="flex items-center gap-2 w-full">
                       <BarChart className="h-4 w-4" />
-                      <span>Dashboard</span>
+                      <span>{t('user.dashboard')}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer" asChild>
@@ -199,7 +199,7 @@ export function NavigationBar({
                     onClick={onLogout}
                   >
                     <LogOut className="h-4 w-4" />
-                    <span>Log out</span>
+                    <span>{t('nav.logout')}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -265,25 +265,25 @@ export function NavigationBar({
               
                 <nav className="flex flex-col gap-1">
                   <Link href="/" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    Home
+                    {t('nav.home')}
                   </Link>
                   <Link href="/zodiac-library" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    Zodiac Library
+                    {t('nav.zodiac')}
                   </Link>
                   <Link href="/elements" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    Elements
+                    {t('nav.elements')}
                   </Link>
                   <Link href="/marketplace" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    Marketplace
+                    {t('nav.marketplace')}
                   </Link>
                   <Link href="/science" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    Our Science
+                    {t('nav.science')}
                   </Link>
                   <Link href="/about" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    About
+                    {t('nav.about')}
                   </Link>
                   <Link href="/contact" className="text-base font-medium hover:text-primary transition-colors py-2 px-1">
-                    Contact
+                    {t('nav.contact')}
                   </Link>
                 </nav>
                 
@@ -319,10 +319,10 @@ export function NavigationBar({
                     <div className="h-px bg-border my-3"></div>
                     <div className="flex gap-2 mb-2">
                       <Link href="/auth" className="flex-1">
-                        <Button variant="outline" size="sm" className="w-full">Log In</Button>
+                        <Button variant="outline" size="sm" className="w-full">{t('nav.login')}</Button>
                       </Link>
                       <Link href="/auth?signup=true" className="flex-1">
-                        <Button size="sm" className="w-full">Sign Up</Button>
+                        <Button size="sm" className="w-full">{t('nav.signup')}</Button>
                       </Link>
                     </div>
                   </>
@@ -339,12 +339,12 @@ export function NavigationBar({
                       {theme === 'light' ? (
                         <>
                           <Moon className="h-4 w-4" />
-                          <span>Dark Mode</span>
+                          <span>{t('theme.dark')}</span>
                         </>
                       ) : (
                         <>
                           <Sun className="h-4 w-4" />
-                          <span>Light Mode</span>
+                          <span>{t('theme.light')}</span>
                         </>
                       )}
                     </Button>
@@ -357,7 +357,7 @@ export function NavigationBar({
                         onClick={onLogout}
                       >
                         <LogOut className="h-4 w-4" />
-                        <span>Log out</span>
+                        <span>{t('nav.logout')}</span>
                       </Button>
                     )}
                   </div>
