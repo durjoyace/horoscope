@@ -1,4 +1,4 @@
-import { Switch, Route, useLocation } from "wouter";
+import { Switch, Route, useLocation, Redirect } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
 import { useEffect, useState } from "react";
 import { ZodiacSign, SubscriptionStatus, SubscriptionTier } from "@shared/types";
