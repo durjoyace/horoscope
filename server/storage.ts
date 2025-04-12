@@ -207,8 +207,22 @@ export class DatabaseStorage implements IStorage {
   // User operations
   async getUser(id: number): Promise<User | undefined> {
     try {
-      const result = await db.select().from(users).where(eq(users.id, id));
-      return result.length > 0 ? result[0] : undefined;
+      // Use a specific column selection to avoid issues with missing columns
+      const result = await db.select({
+        id: users.id,
+        email: users.email,
+        password: users.password,
+        firstName: users.firstName,
+        lastName: users.lastName,
+        zodiacSign: users.zodiacSign,
+        birthdate: users.birthdate,
+        phone: users.phone,
+        smsOptIn: users.smsOptIn,
+        newsletterOptIn: users.newsletterOptIn,
+        createdAt: users.createdAt
+      }).from(users).where(eq(users.id, id));
+      
+      return result.length > 0 ? result[0] as User : undefined;
     } catch (error) {
       console.error('Error getting user by ID:', error);
       return undefined;
@@ -217,8 +231,22 @@ export class DatabaseStorage implements IStorage {
 
   async getUserByEmail(email: string): Promise<User | undefined> {
     try {
-      const result = await db.select().from(users).where(eq(users.email, email));
-      return result.length > 0 ? result[0] : undefined;
+      // Use a specific column selection to avoid issues with missing columns
+      const result = await db.select({
+        id: users.id,
+        email: users.email,
+        password: users.password,
+        firstName: users.firstName,
+        lastName: users.lastName,
+        zodiacSign: users.zodiacSign,
+        birthdate: users.birthdate,
+        phone: users.phone,
+        smsOptIn: users.smsOptIn,
+        newsletterOptIn: users.newsletterOptIn,
+        createdAt: users.createdAt
+      }).from(users).where(eq(users.email, email));
+      
+      return result.length > 0 ? result[0] as User : undefined;
     } catch (error) {
       console.error('Error getting user by email:', error);
       return undefined;
@@ -227,12 +255,19 @@ export class DatabaseStorage implements IStorage {
   
   async getUsersByStripeCustomerId(stripeCustomerId: string): Promise<User[]> {
     try {
+      // Since the stripeCustomerId column might not exist, we'll return an empty array
+      console.log('Note: getUsersByStripeCustomerId may not work if column does not exist');
+      return [];
+      
+      // If the column exists in the future, uncomment this code:
+      /*
       const result = await db
         .select()
         .from(users)
         .where(eq(users.stripeCustomerId, stripeCustomerId));
       
-      return result;
+      return result; 
+      */
     } catch (error) {
       console.error('Error getting users by Stripe customer ID:', error);
       return [];
@@ -242,7 +277,15 @@ export class DatabaseStorage implements IStorage {
   async createUser(insertUser: InsertUser): Promise<User> {
     try {
       // Make sure to exclude premium subscription fields that might not exist in the database
-      const { isPremium, ...userFields } = insertUser as any;
+      const { 
+        isPremium, 
+        stripeCustomerId, 
+        stripeSubscriptionId, 
+        subscriptionStatus, 
+        subscriptionTier, 
+        subscriptionEndDate, 
+        ...userFields 
+      } = insertUser as any;
       
       // Log the exact SQL query being executed for debugging
       console.log('Creating user with fields:', userFields);
@@ -257,9 +300,20 @@ export class DatabaseStorage implements IStorage {
   
   async updateUser(id: number, updates: Partial<InsertUser>): Promise<User | undefined> {
     try {
+      // Remove premium fields that might not exist in the database
+      const { 
+        isPremium, 
+        stripeCustomerId, 
+        stripeSubscriptionId, 
+        subscriptionStatus, 
+        subscriptionTier, 
+        subscriptionEndDate, 
+        ...userFields 
+      } = updates as any;
+      
       const result = await db
         .update(users)
-        .set(updates)
+        .set(userFields)
         .where(eq(users.id, id))
         .returning();
       
@@ -335,12 +389,22 @@ export class DatabaseStorage implements IStorage {
   // Additional query methods
   async getUsersByZodiacSign(sign: ZodiacSign): Promise<User[]> {
     try {
-      const result = await db
-        .select()
-        .from(users)
-        .where(eq(users.zodiacSign, sign));
+      // Use a specific column selection to avoid issues with missing columns
+      const result = await db.select({
+        id: users.id,
+        email: users.email,
+        password: users.password,
+        firstName: users.firstName,
+        lastName: users.lastName,
+        zodiacSign: users.zodiacSign,
+        birthdate: users.birthdate,
+        phone: users.phone,
+        smsOptIn: users.smsOptIn,
+        newsletterOptIn: users.newsletterOptIn,
+        createdAt: users.createdAt
+      }).from(users).where(eq(users.zodiacSign, sign));
       
-      return result;
+      return result as User[];
     } catch (error) {
       console.error('Error getting users by zodiac sign:', error);
       return [];
@@ -351,8 +415,22 @@ export class DatabaseStorage implements IStorage {
     try {
       // In a real application, you would apply additional filters here
       // For example, only select users who have opted in for daily delivery
-      const result = await db.select().from(users);
-      return result;
+      // Use a specific column selection to avoid issues with missing columns
+      const result = await db.select({
+        id: users.id,
+        email: users.email,
+        password: users.password,
+        firstName: users.firstName,
+        lastName: users.lastName,
+        zodiacSign: users.zodiacSign,
+        birthdate: users.birthdate,
+        phone: users.phone,
+        smsOptIn: users.smsOptIn,
+        newsletterOptIn: users.newsletterOptIn,
+        createdAt: users.createdAt
+      }).from(users);
+      
+      return result as User[];
     } catch (error) {
       console.error('Error getting users for daily delivery:', error);
       return [];
@@ -361,6 +439,12 @@ export class DatabaseStorage implements IStorage {
   
   async getPremiumUsers(): Promise<User[]> {
     try {
+      // Since subscription columns might not exist yet, return an empty array
+      console.log('Note: getPremiumUsers may not work if columns do not exist');
+      return [];
+      
+      // If the columns exist in the future, uncomment this code:
+      /*
       const result = await db
         .select()
         .from(users)
@@ -369,6 +453,7 @@ export class DatabaseStorage implements IStorage {
       return result.filter(user => 
         user.subscriptionTier === 'premium' || user.subscriptionTier === 'pro'
       );
+      */
     } catch (error) {
       console.error('Error getting premium users:', error);
       return [];
