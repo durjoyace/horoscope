@@ -124,7 +124,10 @@ export function Footer() {
         
         {/* Bottom Credits */}
         <div className="border-t border-primary/10 pt-4 mt-4 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Horoscope Health. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Battle Green Consulting LLC. All rights reserved.</p>
+          <p className="mt-2">
+            For entertainment purposes only. The content provided does not constitute medical advice.
+          </p>
           <p className="mt-2 flex justify-center items-center gap-1">
             Made with <Heart className="h-3 w-3 text-red-500 animate-pulse" fill="currentColor" /> for wellbeing
           </p>
