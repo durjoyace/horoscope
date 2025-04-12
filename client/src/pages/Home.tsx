@@ -224,15 +224,16 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               <Button 
                                 type="submit" 
                                 disabled={isSubmitting} 
-                                className="relative w-full h-14 bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-bold text-lg rounded-full transition-all duration-300 border border-white/20 shadow-[0_0_20px_rgba(170,0,255,0.5)] group-hover:shadow-[0_0_25px_rgba(170,0,255,0.7)]"
+                                className="relative w-full h-12 sm:h-14 bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-bold text-base sm:text-lg rounded-full transition-all duration-300 border border-white/20 shadow-[0_0_20px_rgba(170,0,255,0.5)] group-hover:shadow-[0_0_25px_rgba(170,0,255,0.7)]"
+                                aria-label={t('signup.button')}
                               >
                                 {isSubmitting ? (
                                   <div className="flex items-center justify-center">
                                     <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent mr-2" />
-                                    <span>{t('signup.button.loading')}</span>
+                                    <span className="whitespace-nowrap text-sm sm:text-base">{t('signup.button.loading')}</span>
                                   </div>
                                 ) : (
-                                  t('signup.button')
+                                  <span className="whitespace-nowrap text-sm sm:text-base">{t('signup.button')}</span>
                                 )}
                               </Button>
                             </div>
@@ -371,7 +372,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
               <Button 
                 size="lg" 
                 asChild
-                className="relative bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-bold px-8 py-6 rounded-full transition-all duration-300 border border-white/20 shadow-[0_0_20px_rgba(170,0,255,0.5)] group-hover:shadow-[0_0_25px_rgba(170,0,255,0.7)]"
+                className="relative bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-bold px-6 sm:px-8 py-5 sm:py-6 rounded-full transition-all duration-300 border border-white/20 shadow-[0_0_20px_rgba(170,0,255,0.5)] group-hover:shadow-[0_0_25px_rgba(170,0,255,0.7)] hover:scale-105"
+                aria-label={t('onboarding.welcome.start')}
               >
                 <Link href="/onboarding">
                   <span className="flex items-center justify-center">
@@ -559,10 +561,17 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                       </div>
                     </div>
                     
-                    <Button size="lg" asChild className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white">
+                    <Button 
+                      size="lg" 
+                      asChild 
+                      className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white shadow-lg shadow-yellow-600/20 hover:shadow-xl hover:shadow-yellow-600/30 transition-all hover:scale-105"
+                      aria-label={t('premium.button')}
+                    >
                       <Link href="/premium">
-                        {t('premium.button')}
-                        <MoveRight className="ml-2 h-4 w-4" />
+                        <span className="flex items-center whitespace-nowrap">
+                          {t('premium.button')}
+                          <MoveRight className="ml-2 h-4 w-4" />
+                        </span>
                       </Link>
                     </Button>
                   </div>
@@ -589,8 +598,15 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                           <span>{t('premium.plan.feature3')}</span>
                         </li>
                       </ul>
-                      <Button asChild variant="outline" className="w-full border-white/30 text-white hover:bg-white/10">
-                        <Link href="/premium">{t('premium.plan.button')}</Link>
+                      <Button 
+                        asChild 
+                        variant="outline" 
+                        className="w-full border-white/30 text-white hover:bg-white/10 hover:text-yellow-400 transition-all hover:border-yellow-400/50"
+                        aria-label={t('premium.plan.button')}
+                      >
+                        <Link href="/premium">
+                          <span className="whitespace-nowrap text-sm">{t('premium.plan.button')}</span>
+                        </Link>
                       </Button>
                     </div>
                   </div>
