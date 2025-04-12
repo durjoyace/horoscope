@@ -20,6 +20,7 @@ import {
   Quote,
   RefreshCw
 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 import { WellnessQuoteWidget } from '@/components/WellnessQuoteWidget';
 import { FeatureCard } from '@/components/FeatureCard';
 import { Button } from '@/components/ui/button';
@@ -55,6 +56,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
   const [selectedSign, setSelectedSign] = useState<ZodiacSign | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,21 +142,21 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             <div className="flex-1 text-center lg:text-left">
               <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-background/40 text-primary px-2.5 sm:px-3 py-1.5 sm:py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium mb-4 sm:mb-6 md:mb-8 backdrop-blur-md border border-primary/20 shadow-sm animate-fade-in">
                 <Sparkles className="h-3 w-3 md:h-4 md:w-4" />
-                <span>Where Ancient Wisdom Meets Modern Science</span>
+                <span>{t('hero.tagline')}</span>
               </div>
               
               {/* Branded header with gradient */}
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#ff9cfe] to-[#aab2ff] mb-2 sm:mb-3 md:mb-4 animate-slide-up">
-                HOROSCOPE HEALTH
+                {t('hero.brand')}
               </h1>
               
               <h1 className="magazine-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 md:mb-6 animate-slide-up">
-                <span className="block">Your Personalized</span>
-                <span className="gradient-heading">Cosmic Wellness Guide</span>
+                <span className="block">{t('hero.title.1')}</span>
+                <span className="gradient-heading">{t('hero.title.2')}</span>
               </h1>
               
               <p className="magazine-lead text-sm md:text-base text-muted-foreground mb-4 sm:mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">
-                Discover how your zodiac sign influences your health tendencies and receive daily personalized wellness recommendations based on your astrological profile.
+                {t('hero.description')}
               </p>
               
               {!isLoggedIn ? (
@@ -163,7 +165,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                     {/* Integrated benefits + signup card */}
                     <div className="max-w-md mx-auto">
                       <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
-                        Begin Your Personalized Health Journey
+                        {t('signup.header')}
                       </h3>
                       
                       {/* Main signup card with benefits inside */}
@@ -173,10 +175,10 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                           <div className="space-y-6">
                             <div className="text-center space-y-2">
                               <h4 className="text-white text-xl font-bold mb-1">
-                                Unlock Your Cosmic Wellness Potential
+                                {t('signup.title')}
                               </h4>
                               <p className="text-white/80 text-sm">
-                                Join thousands discovering their astrological path to better health
+                                {t('signup.subtitle')}
                               </p>
                             </div>
 
@@ -185,7 +187,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               <div className="absolute -inset-0.5 bg-gradient-to-r from-[#ff00ff]/40 to-[#00ffff]/40 rounded-full blur-sm opacity-70"></div>
                               <Input
                                 type="email"
-                                placeholder="Enter your email address"
+                                placeholder={t('signup.email.placeholder')}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
@@ -198,19 +200,19 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                             <div className="grid grid-cols-2 gap-3 pt-2">
                               <div className="flex items-start space-x-2">
                                 <Sparkles className="h-5 w-5 text-[#ff9500] flex-shrink-0 mt-0.5" />
-                                <span className="text-white text-sm">Daily personalized health insights</span>
+                                <span className="text-white text-sm">{t('signup.benefits.insights')}</span>
                               </div>
                               <div className="flex items-start space-x-2">
                                 <Leaf className="h-5 w-5 text-[#4ade80] flex-shrink-0 mt-0.5" />
-                                <span className="text-white text-sm">Element-aligned wellness tips</span>
+                                <span className="text-white text-sm">{t('signup.benefits.wellness')}</span>
                               </div>
                               <div className="flex items-start space-x-2">
                                 <Star className="h-5 w-5 text-[#facc15] flex-shrink-0 mt-0.5" />
-                                <span className="text-white text-sm">Astrological health forecasts</span>
+                                <span className="text-white text-sm">{t('signup.benefits.forecasts')}</span>
                               </div>
                               <div className="flex items-start space-x-2">
                                 <HeartPulse className="h-5 w-5 text-[#fb7185] flex-shrink-0 mt-0.5" />
-                                <span className="text-white text-sm">Zodiac-specific self-care rituals</span>
+                                <span className="text-white text-sm">{t('signup.benefits.rituals')}</span>
                               </div>
                             </div>
 
@@ -269,8 +271,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                     <div className="p-2 md:p-3 bg-[#ff00ff]/20 rounded-full inline-flex justify-center items-center mb-3 md:mb-4">
                       <Star className="h-6 w-6 md:h-8 md:w-8 text-[#ff00ff] animate-spin-slow" />
                     </div>
-                    <h2 className="text-xl md:text-2xl font-bold mb-1">Your Horoscope Health Profile</h2>
-                    <p className="text-sm text-muted-foreground">Select your zodiac sign to begin</p>
+                    <h2 className="text-xl md:text-2xl font-bold mb-1">{t('zodiac.profile.title')}</h2>
+                    <p className="text-sm text-muted-foreground">{t('zodiac.profile.subtitle')}</p>
                   </div>
                   
                   <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 md:gap-3 mb-4 md:mb-6">
@@ -309,8 +311,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
                               (emailInput as HTMLElement).focus();
                               toast({
-                                title: 'Email required',
-                                description: 'Please enter your email address to continue.',
+                                title: t('toast.email.required.title'),
+                                description: t('toast.email.required.description'),
                                 variant: 'default',
                               });
                             }
@@ -319,7 +321,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                           }
                         }}
                       >
-                        Get My Horoscope
+                        {t('zodiac.profile.button')}
                       </Button>
                     </div>
                   )}
