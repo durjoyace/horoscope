@@ -214,6 +214,17 @@ const enTranslations: Record<string, string> = {
   'badge.cosmic.1.name': 'Cosmic Novice',
   'badge.cosmic.1.description': 'Took your first steps into the world of astrological wellness with HoroscopeHealth.',
   
+  // Journey Section
+  'journey.badge': 'PERSONALIZED EXPERIENCE',
+  'journey.title': 'Start Your Cosmic Wellness Journey',
+  'journey.description': 'Embark on a personalized journey through the cosmic influences on your wellbeing with our intuitive onboarding process.',
+  'journey.step1.title': 'Discover Your Zodiac Profile',
+  'journey.step1.description': 'Take our personality quiz to confirm your zodiac sign and unique cosmic wellness traits.',
+  'journey.step2.title': 'Unlock Your Star Map',
+  'journey.step2.description': 'Receive a detailed analysis of how celestial bodies influence your health and wellbeing.',
+  'journey.step3.title': 'Personalized Guidance',
+  'journey.step3.description': 'Get tailored wellness recommendations and daily rituals based on your astrological profile.',
+  
   // Dashboard
   'dashboard.title': 'Your Cosmic Wellness Dashboard',
   'dashboard.for': 'Personalized for',
@@ -375,6 +386,17 @@ const esTranslations: Record<string, string> = {
   'onboarding.error.title': 'Algo Salió Mal',
   'onboarding.error.description': 'No pudimos completar tu registro. Por favor intenta de nuevo.',
   
+  // Journey Section
+  'journey.badge': 'EXPERIENCIA PERSONALIZADA',
+  'journey.title': 'Comienza Tu Viaje de Bienestar Cósmico',
+  'journey.description': 'Embárcate en un viaje personalizado a través de las influencias cósmicas en tu bienestar con nuestro proceso de incorporación intuitivo.',
+  'journey.step1.title': 'Descubre Tu Perfil Zodiacal',
+  'journey.step1.description': 'Realiza nuestro cuestionario de personalidad para confirmar tu signo zodiacal y tus rasgos únicos de bienestar cósmico.',
+  'journey.step2.title': 'Desbloquea Tu Mapa Estelar',
+  'journey.step2.description': 'Recibe un análisis detallado de cómo los cuerpos celestes influyen en tu salud y bienestar.',
+  'journey.step3.title': 'Orientación Personalizada',
+  'journey.step3.description': 'Obtén recomendaciones de bienestar y rituales diarios personalizados basados en tu perfil astrológico.',
+
   // Achievement Badges
   'badge.new': 'NUEVO',
   'badge.earned': 'Obtenido',
