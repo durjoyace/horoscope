@@ -21,6 +21,7 @@ import SciencePage from "@/pages/SciencePage";
 import ContactPage from "@/pages/ContactPage";
 import AuthPage from "@/pages/auth-page";
 import PremiumPage from "@/pages/PremiumPage";
+import AchievementsPage from "@/pages/AchievementsPage";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -127,6 +128,7 @@ function AppContent() {
           <Route path="/premium">
             <PremiumPage />
           </Route>
+          <ProtectedRoute path="/achievements" component={AchievementsPage} />
           <Route>
             <NotFound />
           </Route>

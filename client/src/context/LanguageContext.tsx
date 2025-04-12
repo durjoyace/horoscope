@@ -137,6 +137,40 @@ const enTranslations: Record<string, string> = {
   'theme.dark': 'Dark Mode',
   'theme.light': 'Light Mode',
   
+  // Achievement Badges
+  'badge.new': 'NEW',
+  'badge.earned': 'Earned',
+  'badge.dialog.description': 'Continue your cosmic journey to unlock more achievements and discover deeper connections between your zodiac sign and wellness.',
+  'badge.gallery.title': 'Achievement Gallery',
+  'badge.section.new': 'New Achievements',
+  'badge.category.all': 'All Badges',
+  'badge.category.streak': 'Consistency Streaks',
+  'badge.category.zodiac': 'Zodiac Mastery',
+  'badge.category.wellness': 'Wellness Journey',
+  'badge.category.element': 'Elemental Balance',
+  'badge.category.cosmic': 'Cosmic Wisdom',
+  
+  'badge.streak.1.name': '7 Day Streak',
+  'badge.streak.1.description': 'Completed 7 consecutive days of checking your horoscope.',
+  'badge.streak.2.name': '30 Day Streak',
+  'badge.streak.2.description': 'Completed 30 consecutive days of checking your horoscope.',
+  'badge.streak.3.name': '90 Day Streak',
+  'badge.streak.3.description': 'Completed 90 consecutive days of checking your horoscope. You\'re truly committed to your cosmic wellness journey!',
+  
+  'badge.zodiac.1.name': 'Sign Explorer',
+  'badge.zodiac.1.description': 'Read the health insights for your zodiac sign and began your journey to astrological wellness.',
+  'badge.zodiac.2.name': 'Zodiac Enthusiast',
+  'badge.zodiac.2.description': 'Explored compatibility and health insights for three different zodiac signs.',
+  
+  'badge.wellness.1.name': 'Wellness Beginner',
+  'badge.wellness.1.description': 'Started tracking your first wellness metric aligned with your zodiac sign.',
+  
+  'badge.element.1.name': 'Element Aligned',
+  'badge.element.1.description': 'Discovered your elemental affinity and its impact on your health tendencies.',
+  
+  'badge.cosmic.1.name': 'Cosmic Novice',
+  'badge.cosmic.1.description': 'Took your first steps into the world of astrological wellness with HoroscopeHealth.',
+  
   // Dashboard
   'dashboard.title': 'Your Cosmic Wellness Dashboard',
   'dashboard.for': 'Personalized for',
@@ -254,6 +288,40 @@ const esTranslations: Record<string, string> = {
   // Theme
   'theme.dark': 'Modo Oscuro',
   'theme.light': 'Modo Claro',
+  
+  // Achievement Badges
+  'badge.new': 'NUEVO',
+  'badge.earned': 'Obtenido',
+  'badge.dialog.description': 'Continúa tu viaje cósmico para desbloquear más logros y descubrir conexiones más profundas entre tu signo zodiacal y el bienestar.',
+  'badge.gallery.title': 'Galería de Logros',
+  'badge.section.new': 'Nuevos Logros',
+  'badge.category.all': 'Todas las Insignias',
+  'badge.category.streak': 'Rachas de Consistencia',
+  'badge.category.zodiac': 'Maestría Zodiacal',
+  'badge.category.wellness': 'Viaje de Bienestar',
+  'badge.category.element': 'Equilibrio Elemental',
+  'badge.category.cosmic': 'Sabiduría Cósmica',
+  
+  'badge.streak.1.name': 'Racha de 7 Días',
+  'badge.streak.1.description': 'Completaste 7 días consecutivos verificando tu horóscopo.',
+  'badge.streak.2.name': 'Racha de 30 Días',
+  'badge.streak.2.description': 'Completaste 30 días consecutivos verificando tu horóscopo.',
+  'badge.streak.3.name': 'Racha de 90 Días',
+  'badge.streak.3.description': 'Completaste 90 días consecutivos verificando tu horóscopo. ¡Estás verdaderamente comprometido con tu viaje de bienestar cósmico!',
+  
+  'badge.zodiac.1.name': 'Explorador de Signos',
+  'badge.zodiac.1.description': 'Leíste los conocimientos de salud para tu signo zodiacal y comenzaste tu viaje hacia el bienestar astrológico.',
+  'badge.zodiac.2.name': 'Entusiasta Zodiacal',
+  'badge.zodiac.2.description': 'Exploraste compatibilidad y conocimientos de salud para tres signos zodiacales diferentes.',
+  
+  'badge.wellness.1.name': 'Principiante de Bienestar',
+  'badge.wellness.1.description': 'Comenzaste a seguir tu primera métrica de bienestar alineada con tu signo zodiacal.',
+  
+  'badge.element.1.name': 'Alineado con Elementos',
+  'badge.element.1.description': 'Descubriste tu afinidad elemental y su impacto en tus tendencias de salud.',
+  
+  'badge.cosmic.1.name': 'Novato Cósmico',
+  'badge.cosmic.1.description': 'Diste tus primeros pasos en el mundo del bienestar astrológico con HoroscopeHealth.',
   
   // Premium Section
   'premium.badge': 'Membresía Premium',
