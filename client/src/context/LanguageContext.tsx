@@ -59,6 +59,15 @@ const enTranslations: Record<string, string> = {
   'signup.get': 'Get My Horoscope',
   'signup.dashboard': 'Go to Dashboard',
   
+  // Zodiac Profile
+  'zodiac.profile.title': 'Your Horoscope Health Profile',
+  'zodiac.profile.subtitle': 'Select your zodiac sign to begin',
+  'zodiac.profile.button': 'Get My Horoscope',
+  
+  // Toast Notifications
+  'toast.email.required.title': 'Email Required',
+  'toast.email.required.description': 'Please enter your email address to continue',
+  
   // Wellness Quote Widget
   'quote.title': 'DAILY INSPIRATION',
   'quote.heading': 'Your Wellness Quote of the Day',
@@ -207,6 +216,15 @@ const esTranslations: Record<string, string> = {
   'signup.select': 'Selecciona tu signo zodiacal para comenzar',
   'signup.get': 'Obtener Mi Horóscopo',
   'signup.dashboard': 'Ir al Panel',
+  
+  // Zodiac Profile
+  'zodiac.profile.title': 'Tu Perfil de Salud Horoscópico',
+  'zodiac.profile.subtitle': 'Selecciona tu signo zodiacal para comenzar',
+  'zodiac.profile.button': 'Obtener Mi Horóscopo',
+  
+  // Toast Notifications
+  'toast.email.required.title': 'Correo Electrónico Requerido',
+  'toast.email.required.description': 'Por favor ingresa tu correo electrónico para continuar',
   
   // Wellness Quote Widget
   'quote.title': 'INSPIRACIÓN DIARIA',
