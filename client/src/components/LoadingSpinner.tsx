@@ -25,13 +25,19 @@ export function LoadingSpinner({
   const spinner = (
     <div className={cn('flex items-center justify-center', className)}>
       <div className="flex flex-col items-center gap-2">
-        <Loader2 className={cn(
-          'animate-spin text-primary/80', 
-          sizeClasses[size]
-        )} />
+        <div className="relative">
+          <Loader2 className={cn(
+            'animate-spin text-primary', 
+            sizeClasses[size]
+          )} />
+          <div className={cn(
+            'absolute inset-0 animate-pulse rounded-full opacity-30 bg-primary/20',
+            sizeClasses[size]
+          )} />
+        </div>
         {text && (
           <p className={cn(
-            'text-muted-foreground animate-pulse',
+            'text-muted-foreground text-center max-w-[200px]',
             size === 'xs' && 'text-xs',
             size === 'sm' && 'text-xs',
             size === 'md' && 'text-sm',
@@ -46,8 +52,10 @@ export function LoadingSpinner({
   
   if (fullPage) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-50">
-        {spinner}
+      <div className="fixed inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-50 animate-in fade-in duration-300">
+        <div className="p-6 rounded-lg bg-background/30 shadow-lg backdrop-blur-md">
+          {spinner}
+        </div>
       </div>
     );
   }
@@ -73,8 +81,10 @@ export function LoadingOverlay({
       {children}
       
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-background/60 backdrop-blur-[1px] rounded-md z-10">
-          <LoadingSpinner size={size} text={text} />
+        <div className="absolute inset-0 flex items-center justify-center bg-background/70 backdrop-blur-[2px] rounded-md z-10 animate-in fade-in duration-200">
+          <div className="flex flex-col items-center p-4 rounded-lg bg-background/50 shadow-lg">
+            <LoadingSpinner size={size} text={text} />
+          </div>
         </div>
       )}
     </div>
