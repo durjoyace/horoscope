@@ -227,10 +227,10 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                                 {isSubmitting ? (
                                   <div className="flex items-center justify-center">
                                     <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent mr-2" />
-                                    <span>Creating Your Profile...</span>
+                                    <span>{t('signup.button.loading')}</span>
                                   </div>
                                 ) : (
-                                  'Reveal My Cosmic Health Path'
+                                  t('signup.button')
                                 )}
                               </Button>
                             </div>
@@ -239,10 +239,10 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                             <div className="text-center space-y-2 mt-1">
                               <div className="flex items-center justify-center gap-1.5 text-white/90 text-xs">
                                 <CheckCircle2 className="h-3.5 w-3.5 text-green-400" />
-                                <span>No credit card required • 100% free • Instant access</span>
+                                <span>{t('signup.microcopy')}</span>
                               </div>
                               <p className="text-white/60 text-xs italic">
-                                "I've gained incredible insights about my body's needs based on my sign" — Sarah K.
+                                {t('signup.testimonial')}
                               </p>
                             </div>
                           </div>
@@ -253,7 +253,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                 </div>
               ) : (
                 <Button size="lg" asChild className="shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all animate-pulse bg-gradient-to-r from-[#c300ff] to-[#8400ff] h-12 px-6 font-medium">
-                  <Link href="/dashboard">Go to Dashboard</Link>
+                  <Link href="/dashboard">{t('signup.dashboard')}</Link>
                 </Button>
               )}
             </div>
@@ -337,21 +337,21 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="magazine-subheading mb-2">
-              SCIENCE MEETS ASTROLOGY
+              {t('how.title')}
             </h2>
             <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
-              How Horoscope Health Works
+              {t('how.heading')}
             </h2>
             <p className="magazine-lead text-muted-foreground max-w-2xl mx-auto">
-              Our unique methodology bridges ancient astrological wisdom with modern health science
+              {t('how.description')}
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 md:gap-12">
             <FeatureCard 
               icon={<Star className="h-full w-full" />}
-              title="Astrological Analysis"
-              description="We analyze your zodiac sign's elemental constitution, planetary rulers, and traditional health associations to understand your innate tendencies."
+              title={t('how.card1.title')}
+              description={t('how.card1.description')}
               dialogContent={{
                 sections: [
                   {
@@ -372,8 +372,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             
             <FeatureCard 
               icon={<Brain className="h-full w-full" />}
-              title="Scientific Integration"
-              description="Our team combines astrological insights with evidence-based wellness research to create recommendations that honor both systems."
+              title={t('how.card2.title')}
+              description={t('how.card2.description')}
               dialogContent={{
                 sections: [
                   {
@@ -394,8 +394,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             
             <FeatureCard 
               icon={<HeartPulse className="h-full w-full" />}
-              title="Personalized Guidance"
-              description="You receive daily horoscopes with specific health and wellness recommendations tailored to your sign's unique constitution and current celestial influences."
+              title={t('how.card3.title')}
+              description={t('how.card3.description')}
               dialogContent={{
                 sections: [
                   {
@@ -419,13 +419,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           <div className="mt-12 max-w-4xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="magazine-subheading mb-2">
-                DAILY INSPIRATION
+                {t('quote.title')}
               </h2>
               <h2 className="magazine-heading text-2xl md:text-3xl mb-4">
-                Your Wellness Quote of the Day
+                {t('quote.heading')}
               </h2>
               <p className="magazine-lead text-muted-foreground max-w-2xl mx-auto">
-                Wisdom to guide your wellness journey
+                {t('quote.subheading')}
               </p>
             </div>
             
@@ -435,7 +435,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
               
               {!selectedSign && (
                 <p className="text-center text-sm text-muted-foreground mt-4">
-                  Select your zodiac sign above to receive a personalized wellness quote.
+                  {t('quote.select')}
                 </p>
               )}
             </div>
@@ -456,33 +456,33 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                   <div className="flex-1">
                     <div className="inline-flex items-center gap-1.5 bg-yellow-500/20 text-yellow-500 px-3 py-1.5 rounded-full text-xs font-medium mb-4">
                       <Sparkles className="h-3.5 w-3.5" />
-                      <span>Premium Membership</span>
+                      <span>{t('premium.badge')}</span>
                     </div>
                     
-                    <h3 className="text-2xl md:text-3xl font-bold mb-4">Elevate Your Wellness Journey</h3>
+                    <h3 className="text-2xl md:text-3xl font-bold mb-4">{t('premium.title')}</h3>
                     
                     <p className="text-muted-foreground mb-6">
-                      Unlock deeper astrological health insights with our premium membership, designed for those seeking comprehensive wellness guidance.
+                      {t('premium.description')}
                     </p>
                     
                     <div className="space-y-3 mb-6">
                       <div className="flex items-start gap-2">
                         <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span>Weekly in-depth wellness reports based on your specific astrological profile</span>
+                        <span>{t('premium.benefit1')}</span>
                       </div>
                       <div className="flex items-start gap-2">
                         <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span>Personalized exercise and nutrition recommendations</span>
+                        <span>{t('premium.benefit2')}</span>
                       </div>
                       <div className="flex items-start gap-2">
                         <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span>Exclusive access to premium content and monthly special reports</span>
+                        <span>{t('premium.benefit3')}</span>
                       </div>
                     </div>
                     
                     <Button size="lg" asChild className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white">
                       <Link href="/premium">
-                        Upgrade to Premium
+                        {t('premium.button')}
                         <MoveRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
