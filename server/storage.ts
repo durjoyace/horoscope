@@ -107,7 +107,7 @@ export class MemStorage implements IStorage {
       phone: insertUser.phone || null,
       smsOptIn: insertUser.smsOptIn ?? null,
       newsletterOptIn: insertUser.newsletterOptIn ?? null,
-      isPremium: insertUser.isPremium ?? false,
+      isPremium: false,
       stripeCustomerId: null,
       stripeSubscriptionId: null,
       subscriptionStatus: 'none',
@@ -241,7 +241,13 @@ export class DatabaseStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     try {
-      const result = await db.insert(users).values(insertUser).returning();
+      // Make sure to exclude premium subscription fields that might not exist in the database
+      const { isPremium, ...userFields } = insertUser as any;
+      
+      // Log the exact SQL query being executed for debugging
+      console.log('Creating user with fields:', userFields);
+      
+      const result = await db.insert(users).values(userFields).returning();
       return result[0];
     } catch (error) {
       console.error('Error creating user:', error);

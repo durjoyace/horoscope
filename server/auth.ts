@@ -155,7 +155,7 @@ export function setupAuth(app: Express) {
             firstName: user.firstName,
             lastName: user.lastName,
             zodiacSign: user.zodiacSign,
-            isPremium: user.isPremium || false
+            isPremium: false
           }
         });
       });
@@ -194,7 +194,7 @@ export function setupAuth(app: Express) {
         firstName: req.user.firstName,
         lastName: req.user.lastName,
         zodiacSign: req.user.zodiacSign,
-        isPremium: req.user.isPremium || false
+        isPremium: false
       }
     });
   });
