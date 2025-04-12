@@ -75,16 +75,35 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
     setIsSubmitting(true);
     
     try {
-      // This would make an API call in a complete app
-      const userData = {
-        email,
-        zodiacSign: selectedSign,
-        subscriptionStatus: 'none',
-        subscriptionTier: 'free'
-      };
+      // Make an API call to register the user
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          zodiacSign: selectedSign,
+          smsOptIn: false,
+          newsletterOptIn: true,
+          // A temporary password for the user account
+          password: Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8)
+        }),
+      });
       
-      // Store in localStorage for demo purposes
-      localStorage.setItem('user', JSON.stringify(userData));
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Signup failed');
+      }
+      
+      const userData = await response.json();
+      console.log('Signup successful:', userData);
+      
+      // Also store in localStorage for backup
+      localStorage.setItem('user', JSON.stringify({
+        email,
+        zodiacSign: selectedSign
+      }));
       
       if (onUserRegistered) {
         onUserRegistered(userData);
@@ -95,13 +114,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
         description: 'Your daily health horoscopes will start arriving soon.',
       });
       
-      // In a complete app, this would redirect to a dashboard
-      window.location.href = '/dashboard';
+      // Redirect to auth page to complete full profile
+      window.location.href = '/auth';
     } catch (error) {
       console.error('Signup error:', error);
       toast({
         title: 'Signup failed',
-        description: 'An error occurred during signup. Please try again.',
+        description: error.message || 'An error occurred during signup. Please try again.',
         variant: 'destructive',
       });
     } finally {
