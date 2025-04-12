@@ -24,6 +24,8 @@ import {
 } from 'lucide-react';
 import { ZodiacSign } from '@shared/types';
 import { zodiacSignNames } from '@/data/zodiacData';
+import { useLanguage } from '@/context/LanguageContext';
+import { LanguageSelector } from '@/components/LanguageSelector';
 
 interface NavBarProps {
   isLoggedIn: boolean;
@@ -42,6 +44,7 @@ export function NavigationBar({
 }: NavBarProps) {
   // This would normally come from a theme context
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const { t } = useLanguage();
   
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
@@ -81,25 +84,25 @@ export function NavigationBar({
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-3 lg:gap-6">
           <Link href="/" className="text-sm font-medium hover:text-primary transition-colors">
-            Home
+            {t('nav.home')}
           </Link>
           <Link href="/zodiac-library" className="text-sm font-medium hover:text-primary transition-colors">
-            Zodiac Library
+            {t('nav.zodiac')}
           </Link>
           <Link href="/elements" className="text-sm font-medium hover:text-primary transition-colors">
-            Elements
+            {t('nav.elements')}
           </Link>
           <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors">
-            Marketplace
+            {t('nav.marketplace')}
           </Link>
           <Link href="/science" className="text-sm font-medium hover:text-primary transition-colors">
-            Our Science
+            {t('nav.science')}
           </Link>
           <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">
-            About
+            {t('nav.about')}
           </Link>
           <Link href="/contact" className="text-sm font-medium hover:text-primary transition-colors">
-            Contact
+            {t('nav.contact')}
           </Link>
         </nav>
         
@@ -204,13 +207,18 @@ export function NavigationBar({
           ) : (
             <div className="hidden md:flex items-center gap-2">
               <Link href="/auth">
-                <Button variant="outline" size="sm">Log In</Button>
+                <Button variant="outline" size="sm">{t('nav.login')}</Button>
               </Link>
               <Link href="/auth?signup=true">
-                <Button size="sm">Sign Up</Button>
+                <Button size="sm">{t('nav.signup')}</Button>
               </Link>
             </div>
           )}
+          
+          {/* Language selector */}
+          <div className="hidden md:flex">
+            <LanguageSelector />
+          </div>
           
           {/* Theme toggle button */}
           <Button 

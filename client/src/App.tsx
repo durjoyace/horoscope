@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/lib/protected-route";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 // Import all pages
 import Home from "@/pages/Home";
@@ -142,7 +143,9 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <AppContent />
+        <LanguageProvider>
+          <AppContent />
+        </LanguageProvider>
       </AuthProvider>
     </QueryClientProvider>
   );
