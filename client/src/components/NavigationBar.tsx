@@ -283,51 +283,59 @@ export function NavigationBar({
                   </div>
                 )}
               
-                <nav className="flex flex-col gap-1.5 mb-1">
-                  <Link href="/" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
-                    <span>{t('nav.home')}</span>
+                <nav className="flex flex-col gap-2 mb-2">
+                  <Link href="/" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                    <span className="text-sm font-medium">{t('nav.home')}</span>
                   </Link>
-                  <Link href="/zodiac-library" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
-                    <span>{t('nav.zodiac')}</span>
+                  <Link href="/zodiac-library" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                    <span className="text-sm font-medium">{t('nav.zodiac')}</span>
                   </Link>
-                  <Link href="/elements" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
-                    <span>{t('nav.elements')}</span>
+                  <Link href="/elements" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                    <span className="text-sm font-medium">{t('nav.elements')}</span>
                   </Link>
-                  <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
-                    <span>{t('nav.marketplace')}</span>
+                  <Link href="/marketplace" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                    <span className="text-sm font-medium">{t('nav.marketplace')}</span>
                   </Link>
-                  <Link href="/science" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
-                    <span>{t('nav.science')}</span>
+                  <Link href="/science" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                    <span className="text-sm font-medium">{t('nav.science')}</span>
                   </Link>
-                  <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
-                    <span>{t('nav.about')}</span>
+                  <Link href="/about" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                    <span className="text-sm font-medium">{t('nav.about')}</span>
                   </Link>
-                  <Link href="/contact" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center">
-                    <span>{t('nav.contact')}</span>
+                  <Link href="/contact" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                    <span className="text-sm font-medium">{t('nav.contact')}</span>
                   </Link>
                 </nav>
                 
                 {isLoggedIn && (
                   <>
                     <div className="h-px bg-border my-3"></div>
-                    <nav className="flex flex-col gap-1.5">
-                      <Link href="/dashboard" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center gap-2">
-                        <BarChart className="h-4 w-4" />
-                        <span>{t('user.dashboard')}</span>
+                    <nav className="flex flex-col gap-2.5">
+                      <Link href="/dashboard" className="flex items-center gap-3 p-2.5 rounded-md bg-muted/70 hover:bg-muted transition-colors">
+                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                          <BarChart className="h-4 w-4" />
+                        </div>
+                        <span className="text-sm font-medium">{t('user.dashboard')}</span>
                       </Link>
-                      <Link href="/profile" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center gap-2">
-                        <User className="h-4 w-4" />
-                        <span>{t('user.profile')}</span>
+                      <Link href="/profile" className="flex items-center gap-3 p-2.5 rounded-md bg-muted/70 hover:bg-muted transition-colors">
+                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                          <User className="h-4 w-4" />
+                        </div>
+                        <span className="text-sm font-medium">{t('user.profile')}</span>
                       </Link>
                       {isPremium ? (
-                        <Link href="/premium" className="text-sm font-medium text-amber-500 hover:text-amber-600 transition-colors py-2.5 px-2 rounded-md hover:bg-amber-500/10 flex items-center gap-2">
-                          <Star className="h-4 w-4 text-amber-500" />
-                          <span>{t('premium.features')}</span>
+                        <Link href="/premium" className="flex items-center gap-3 p-2.5 rounded-md bg-amber-50/40 hover:bg-amber-50/70 transition-colors">
+                          <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
+                            <Star className="h-4 w-4" />
+                          </div>
+                          <span className="text-sm font-medium text-amber-700">{t('premium.features')}</span>
                         </Link>
                       ) : (
-                        <Link href="/premium" className="text-sm font-medium hover:text-primary transition-colors py-2.5 px-2 rounded-md hover:bg-primary/10 flex items-center gap-2">
-                          <Shield className="h-4 w-4" />
-                          <span>{t('premium.upgrade')}</span>
+                        <Link href="/premium" className="flex items-center gap-3 p-2.5 rounded-md bg-gradient-to-r from-purple-50 to-fuchsia-50 hover:from-purple-100 hover:to-fuchsia-100 transition-colors">
+                          <div className="h-8 w-8 rounded-full bg-gradient-to-r from-purple-500 to-fuchsia-500 flex items-center justify-center text-white">
+                            <Shield className="h-4 w-4" />
+                          </div>
+                          <span className="text-sm font-medium text-primary">{t('premium.upgrade')}</span>
                         </Link>
                       )}
                     </nav>
@@ -337,23 +345,19 @@ export function NavigationBar({
                 {!isLoggedIn && (
                   <>
                     <div className="h-px bg-border my-3"></div>
-                    <div className="flex gap-2 mb-2">
-                      <Link href="/auth" className="flex-1">
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="w-full border-primary/30 text-primary hover:bg-primary/10 hover:text-primary font-medium transition-colors"
-                        >
-                          {t('nav.login')}
-                        </Button>
+                    <div className="flex flex-col gap-2.5 mb-2">
+                      <p className="text-sm text-muted-foreground px-1">{t('nav.account')}</p>
+                      <Link href="/auth" className="flex items-center gap-3 p-2.5 rounded-md bg-muted/70 hover:bg-muted transition-colors">
+                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                          <User className="h-4 w-4" />
+                        </div>
+                        <span className="text-sm font-medium">{t('nav.login')}</span>
                       </Link>
-                      <Link href="/auth?signup=true" className="flex-1">
-                        <Button 
-                          size="sm" 
-                          className="w-full bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-medium shadow-sm hover:shadow-md transition-all"
-                        >
-                          {t('nav.signup')}
-                        </Button>
+                      <Link href="/auth?signup=true" className="flex items-center gap-3 p-2.5 rounded-md bg-gradient-to-br from-purple-600/10 to-fuchsia-500/10 hover:from-purple-600/20 hover:to-fuchsia-500/20 transition-colors">
+                        <div className="h-8 w-8 rounded-full bg-gradient-to-r from-purple-500 to-fuchsia-500 flex items-center justify-center text-white">
+                          <Star className="h-4 w-4" />
+                        </div>
+                        <span className="text-sm font-medium">{t('nav.signup')}</span>
                       </Link>
                     </div>
                   </>
@@ -361,42 +365,68 @@ export function NavigationBar({
                 
                 <div className="mt-auto pt-4">
                   {/* Language selector on mobile */}
-                  <div className="mb-3 flex flex-col gap-2">
-                    <p className="text-sm font-medium mb-1">{t('nav.language')}</p>
+                  <div className="mb-4 flex flex-col gap-2">
+                    <div className="flex items-center gap-2">
+                      <div className="h-1 w-1 rounded-full bg-primary"></div>
+                      <p className="text-sm font-medium text-muted-foreground">{t('nav.language')}</p>
+                    </div>
                     <MobileLanguageSelector />
                   </div>
                   
-                  <div className="flex gap-2">
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      className="flex-1 justify-center items-center gap-2 bg-primary/10 border-primary/20 hover:bg-primary/20 transition-colors"
-                      onClick={toggleTheme}
-                      aria-label={theme === 'light' ? t('theme.dark') : t('theme.light')}
-                    >
-                      {theme === 'light' ? (
-                        <>
-                          <Moon className="h-4 w-4" />
-                          <span className="text-sm">{t('theme.dark')}</span>
-                        </>
-                      ) : (
-                        <>
-                          <Sun className="h-4 w-4" />
-                          <span className="text-sm">{t('theme.light')}</span>
-                        </>
-                      )}
-                    </Button>
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-2">
+                      <div className="h-1 w-1 rounded-full bg-primary"></div>
+                      <p className="text-sm font-medium text-muted-foreground">{t('theme.title')}</p>
+                    </div>
+                    
+                    <div className="flex gap-3">
+                      <Button 
+                        variant={theme === 'light' ? "outline" : "default"}
+                        size="lg"
+                        className={`
+                          flex-1 justify-center items-center gap-2 py-5 rounded-md
+                          ${theme !== 'light' ? 
+                            'bg-primary/90 hover:bg-primary text-white' : 
+                            'bg-muted/50 hover:bg-muted border-primary/10'
+                          }
+                          transition-all duration-200
+                        `}
+                        onClick={() => theme !== 'dark' && toggleTheme()}
+                        aria-label={t('theme.dark')}
+                      >
+                        <Moon className="h-5 w-5" />
+                        <span className="font-medium">{t('theme.dark')}</span>
+                      </Button>
+                      
+                      <Button 
+                        variant={theme === 'dark' ? "outline" : "default"}
+                        size="lg"
+                        className={`
+                          flex-1 justify-center items-center gap-2 py-5 rounded-md
+                          ${theme !== 'dark' ? 
+                            'bg-primary/90 hover:bg-primary text-white' : 
+                            'bg-muted/50 hover:bg-muted border-primary/10'
+                          }
+                          transition-all duration-200
+                        `}
+                        onClick={() => theme !== 'light' && toggleTheme()}
+                        aria-label={t('theme.light')}
+                      >
+                        <Sun className="h-5 w-5" />
+                        <span className="font-medium">{t('theme.light')}</span>
+                      </Button>
+                    </div>
                     
                     {isLoggedIn && (
                       <Button 
                         variant="outline" 
                         size="sm"
-                        className="flex-1 justify-center items-center gap-2 text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 transition-colors"
+                        className="mt-2 w-full justify-center items-center gap-2 py-4 text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 transition-colors"
                         onClick={onLogout}
                         aria-label={t('nav.logout')}
                       >
                         <LogOut className="h-4 w-4" />
-                        <span className="text-sm">{t('nav.logout')}</span>
+                        <span className="font-medium">{t('nav.logout')}</span>
                       </Button>
                     )}
                   </div>

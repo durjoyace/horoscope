@@ -18,18 +18,33 @@ export function MobileLanguageSelector() {
 
   return (
     <div className="flex gap-2">
-      {languages.map((lang) => (
-        <Button
-          key={lang.code}
-          variant={language === lang.code ? "default" : "outline"} 
-          size="sm"
-          className="flex-1 justify-center items-center gap-1"
-          onClick={() => setLanguage(lang.code)}
-        >
-          <span className="mr-1">{lang.flag}</span>
-          <span>{lang.label}</span>
-        </Button>
-      ))}
+      {languages.map((lang) => {
+        const isActive = language === lang.code;
+        
+        return (
+          <Button
+            key={lang.code}
+            variant={isActive ? "default" : "outline"} 
+            size="sm"
+            className={`
+              flex-1 justify-center items-center gap-2 py-5
+              ${isActive ? 
+                'bg-primary/90 hover:bg-primary shadow-sm' : 
+                'border-primary/20 hover:border-primary/40 hover:bg-primary/5'
+              }
+              transition-all duration-200
+            `}
+            onClick={() => setLanguage(lang.code)}
+            aria-label={`Switch to ${lang.label}`}
+          >
+            <span className="text-base">{lang.flag}</span>
+            <span className="font-medium">{lang.label}</span>
+            {isActive && (
+              <span className="absolute top-1 right-1.5 h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>
+            )}
+          </Button>
+        );
+      })}
     </div>
   );
 }
