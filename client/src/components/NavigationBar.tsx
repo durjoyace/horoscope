@@ -169,27 +169,27 @@ export function NavigationBar({
                   <DropdownMenuItem className="cursor-pointer" asChild>
                     <Link href="/profile" className="flex items-center gap-2 w-full">
                       <User className="h-4 w-4" />
-                      <span>Profile</span>
+                      <span>{t('user.profile')}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer" asChild>
                     <Link href="/settings" className="flex items-center gap-2 w-full">
                       <Settings className="h-4 w-4" />
-                      <span>Settings</span>
+                      <span>{t('user.settings')}</span>
                     </Link>
                   </DropdownMenuItem>
                   {isPremium ? (
                     <DropdownMenuItem className="cursor-pointer" asChild>
                       <Link href="/premium" className="flex items-center gap-2 w-full">
                         <Star className="h-4 w-4 text-amber-500" />
-                        <span>Premium Features</span>
+                        <span>{t('premium.features')}</span>
                       </Link>
                     </DropdownMenuItem>
                   ) : (
                     <DropdownMenuItem className="cursor-pointer" asChild>
                       <Link href="/premium" className="flex items-center gap-2 w-full">
                         <Shield className="h-4 w-4" />
-                        <span>Upgrade to Premium</span>
+                        <span>{t('premium.upgrade')}</span>
                       </Link>
                     </DropdownMenuItem>
                   )}
@@ -254,7 +254,7 @@ export function NavigationBar({
                           <span>{userZodiacSign.charAt(0).toUpperCase() + userZodiacSign.slice(1)}</span>
                           {isPremium && (
                             <span className="inline-flex items-center px-1.5 py-0.5 bg-amber-100 text-amber-800 text-xs rounded-full ml-1">
-                              <Star className="h-2.5 w-2.5 mr-0.5" />Premium
+                              <Star className="h-2.5 w-2.5 mr-0.5" />{t('premium.label')}
                             </span>
                           )}
                         </p>
@@ -293,21 +293,21 @@ export function NavigationBar({
                     <nav className="flex flex-col gap-1">
                       <Link href="/dashboard" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
                         <BarChart className="h-4 w-4" />
-                        Dashboard
+                        {t('user.dashboard')}
                       </Link>
                       <Link href="/profile" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
                         <User className="h-4 w-4" />
-                        Profile
+                        {t('user.profile')}
                       </Link>
                       {isPremium ? (
                         <Link href="/premium" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
                           <Star className="h-4 w-4 text-amber-500" />
-                          Premium Features
+                          {t('premium.features')}
                         </Link>
                       ) : (
                         <Link href="/premium" className="text-base font-medium hover:text-primary transition-colors py-2 px-1 flex items-center gap-2">
                           <Shield className="h-4 w-4" />
-                          Upgrade to Premium
+                          {t('premium.upgrade')}
                         </Link>
                       )}
                     </nav>

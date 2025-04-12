@@ -88,6 +88,9 @@ const enTranslations: Record<string, string> = {
   'premium.pricing.feature3': 'Cancel anytime',
   'premium.pricing.button': 'Subscribe Now',
   'premium.methodology': 'Learn About Our Methodology',
+  'premium.label': 'Premium',
+  'premium.features': 'Premium Features',
+  'premium.upgrade': 'Upgrade to Premium',
   
   // Elements Section
   'elements.title': 'ELEMENTAL ANALYSIS',
@@ -218,6 +221,9 @@ const esTranslations: Record<string, string> = {
   'premium.pricing.feature3': 'Cancela cuando quieras',
   'premium.pricing.button': 'Suscríbete Ahora',
   'premium.methodology': 'Conoce Nuestra Metodología',
+  'premium.label': 'Premium',
+  'premium.features': 'Funciones Premium',
+  'premium.upgrade': 'Actualizar a Premium',
   
   // Elements Section
   'elements.title': 'ANÁLISIS ELEMENTAL',
