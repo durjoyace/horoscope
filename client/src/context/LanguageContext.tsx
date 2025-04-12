@@ -96,6 +96,14 @@ const enTranslations: Record<string, string> = {
   'premium.benefit2': 'Personalized exercise and nutrition recommendations',
   'premium.benefit3': 'Exclusive access to premium content and monthly special reports',
   'premium.button': 'Upgrade to Premium',
+  // For pricing box
+  'premium.plan.title': 'Monthly Plan',
+  'premium.plan.period': '/month',
+  'premium.plan.feature1': 'Full access to all features',
+  'premium.plan.feature2': 'Weekly premium reports',
+  'premium.plan.feature3': 'Cancel anytime',
+  'premium.plan.button': 'Subscribe Now',
+  // Keep legacy keys for backward compatibility
   'premium.pricing.title': 'Monthly Plan',
   'premium.pricing.price': '$9.99',
   'premium.pricing.period': '/month',
@@ -439,6 +447,14 @@ const esTranslations: Record<string, string> = {
   'premium.benefit2': 'Recomendaciones personalizadas de ejercicio y nutrición',
   'premium.benefit3': 'Acceso exclusivo a contenido premium e informes mensuales especiales',
   'premium.button': 'Actualizar a Premium',
+  // For pricing box (new keys)
+  'premium.plan.title': 'Plan Mensual',
+  'premium.plan.period': '/mes',
+  'premium.plan.feature1': 'Acceso completo a todas las funciones',
+  'premium.plan.feature2': 'Informes premium semanales',
+  'premium.plan.feature3': 'Cancela cuando quieras',
+  'premium.plan.button': 'Suscríbete Ahora',
+  // Keep legacy keys for backward compatibility
   'premium.pricing.title': 'Plan Mensual',
   'premium.pricing.price': '$9.99',
   'premium.pricing.period': '/mes',
