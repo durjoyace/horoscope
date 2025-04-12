@@ -18,7 +18,9 @@ import {
   ListChecks,
   Calendar,
   Quote,
-  RefreshCw
+  RefreshCw,
+  Rocket,
+  Lightbulb
 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { WellnessQuoteWidget } from '@/components/WellnessQuoteWidget';
@@ -235,21 +237,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               </Button>
                             </div>
                             
-                            {/* Onboarding Journey Button */}
-                            <div className="mt-4 text-center">
-                              <Button 
-                                variant="outline" 
-                                className="shadow-md hover:shadow-lg hover:scale-[1.02] transition-all border-white/30 text-white hover:bg-white/10 h-12 px-6 font-medium w-full"
-                                asChild
-                              >
-                                <Link href="/onboarding">
-                                  <span className="flex items-center justify-center">
-                                    <Sparkles className="mr-2 h-4 w-4" />
-                                    {t('onboarding.welcome.start')}
-                                  </span>
-                                </Link>
-                              </Button>
-                            </div>
+
                             
                             {/* Persuasive microcopy */}
                             <div className="text-center space-y-2 mt-1">
@@ -358,6 +346,65 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                     </div>
                   )}
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Start Your Journey Section */}
+      <section className="py-16 bg-gradient-to-b from-background to-background/80">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+              <Rocket className="h-4 w-4" />
+              <span>{t('journey.badge')}</span>
+            </div>
+            
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('journey.title')}</h2>
+            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+              {t('journey.description')}
+            </p>
+            
+            <div className="relative inline-block group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#ff00ff] to-[#00ffff] rounded-full opacity-70 group-hover:opacity-100 blur-md transition duration-300"></div>
+              <Button 
+                size="lg" 
+                asChild
+                className="relative bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-bold px-8 py-6 rounded-full transition-all duration-300 border border-white/20 shadow-[0_0_20px_rgba(170,0,255,0.5)] group-hover:shadow-[0_0_25px_rgba(170,0,255,0.7)]"
+              >
+                <Link href="/onboarding">
+                  <span className="flex items-center justify-center">
+                    <Sparkles className="mr-2 h-5 w-5" />
+                    {t('onboarding.welcome.start')}
+                  </span>
+                </Link>
+              </Button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+              <div className="bg-white/5 border border-white/10 p-5 rounded-lg backdrop-blur-sm">
+                <div className="bg-primary/20 rounded-full p-3 inline-flex mb-4">
+                  <Sparkles className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="font-semibold mb-2">{t('journey.step1.title')}</h3>
+                <p className="text-sm text-muted-foreground">{t('journey.step1.description')}</p>
+              </div>
+              
+              <div className="bg-white/5 border border-white/10 p-5 rounded-lg backdrop-blur-sm">
+                <div className="bg-primary/20 rounded-full p-3 inline-flex mb-4">
+                  <Star className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="font-semibold mb-2">{t('journey.step2.title')}</h3>
+                <p className="text-sm text-muted-foreground">{t('journey.step2.description')}</p>
+              </div>
+              
+              <div className="bg-white/5 border border-white/10 p-5 rounded-lg backdrop-blur-sm">
+                <div className="bg-primary/20 rounded-full p-3 inline-flex mb-4">
+                  <Lightbulb className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="font-semibold mb-2">{t('journey.step3.title')}</h3>
+                <p className="text-sm text-muted-foreground">{t('journey.step3.description')}</p>
               </div>
             </div>
           </div>
