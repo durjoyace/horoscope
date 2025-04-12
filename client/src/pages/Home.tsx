@@ -235,6 +235,22 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               </Button>
                             </div>
                             
+                            {/* Onboarding Journey Button */}
+                            <div className="mt-4 text-center">
+                              <Button 
+                                variant="outline" 
+                                className="shadow-md hover:shadow-lg hover:scale-[1.02] transition-all border-white/30 text-white hover:bg-white/10 h-12 px-6 font-medium"
+                                asChild
+                              >
+                                <Link href="/onboarding">
+                                  <span className="flex items-center">
+                                    <Star className="mr-2 h-4 w-4" />
+                                    {t('onboarding.welcome.start')}
+                                  </span>
+                                </Link>
+                              </Button>
+                            </div>
+                            
                             {/* Persuasive microcopy */}
                             <div className="text-center space-y-2 mt-1">
                               <div className="flex items-center justify-center gap-1.5 text-white/90 text-xs">
