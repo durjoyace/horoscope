@@ -401,7 +401,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
               
               <div className="bg-white/5 border border-white/10 p-5 rounded-lg backdrop-blur-sm">
                 <div className="bg-primary/20 rounded-full p-3 inline-flex mb-4">
-                  <Lightbulb className="h-5 w-5 text-primary" />
+                  <Brain className="h-5 w-5 text-primary" />
                 </div>
                 <h3 className="font-semibold mb-2">{t('journey.step3.title')}</h3>
                 <p className="text-sm text-muted-foreground">{t('journey.step3.description')}</p>
