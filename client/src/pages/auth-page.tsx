@@ -46,25 +46,7 @@ export default function AuthPage() {
     zodiacSign?: ZodiacSign;
   } | null>(null);
 
-  useEffect(() => {
-    // Try to get user data from localStorage
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      try {
-        const userData = JSON.parse(storedUser);
-        setStoredUserData(userData);
-        // Auto-switch to register tab if we have data
-        setActiveTab("register");
-      } catch (error) {
-        console.error("Failed to parse stored user data:", error);
-      }
-    }
 
-    // Also check query parameters
-    if (signupParam === "true") {
-      setActiveTab("register");
-    }
-  }, [signupParam]);
 
   useEffect(() => {
     // Redirect to home if user is already logged in with the auth system
@@ -81,17 +63,57 @@ export default function AuthPage() {
     },
   });
 
+  // Initialize the register form with default empty values first
   const registerForm = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      email: storedUserData?.email || "",
+      email: "",
       password: "",
       confirmPassword: "",
       firstName: "",
       lastName: "",
-      zodiacSign: storedUserData?.zodiacSign || "",
+      zodiacSign: "",
     },
   });
+  
+  // Use a separate useEffect to load and apply data from localStorage
+  useEffect(() => {
+    // Try to get user data from localStorage
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser);
+        setStoredUserData(userData);
+        
+        // Auto-switch to register tab if we have data
+        setActiveTab("register");
+        
+        // Set the form values
+        if (userData.email) {
+          registerForm.setValue("email", userData.email);
+        }
+        if (userData.zodiacSign) {
+          registerForm.setValue("zodiacSign", userData.zodiacSign);
+        }
+        
+        console.log("Loaded user data from localStorage:", userData);
+      } catch (error) {
+        console.error("Failed to parse stored user data:", error);
+      }
+    }
+
+    // Also check query parameters
+    if (signupParam === "true") {
+      setActiveTab("register");
+    }
+    
+    // Check for signup success
+    const signupSuccess = localStorage.getItem("signupSuccess");
+    if (signupSuccess === "true") {
+      // Remove it to prevent showing multiple times
+      localStorage.removeItem("signupSuccess");
+    }
+  }, [signupParam, registerForm, setActiveTab]);
 
   const onLoginSubmit = async (data: LoginFormValues) => {
     loginMutation.mutate(data);
