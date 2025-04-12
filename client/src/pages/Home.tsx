@@ -491,27 +491,27 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                   {/* Right side: Pricing */}
                   <div className="md:w-64 flex-shrink-0">
                     <div className="bg-white/10 rounded-lg p-5 border border-white/20 backdrop-blur-sm">
-                      <h4 className="text-lg font-bold mb-1">Monthly Plan</h4>
+                      <h4 className="text-lg font-bold mb-1">{t('premium.plan.title')}</h4>
                       <div className="mb-4">
                         <span className="text-3xl font-bold">$9.99</span>
-                        <span className="text-muted-foreground">/month</span>
+                        <span className="text-muted-foreground">{t('premium.plan.period')}</span>
                       </div>
                       <ul className="space-y-2 mb-5">
                         <li className="flex items-center gap-2 text-sm">
                           <CheckCircle2 className="h-4 w-4 text-green-500" />
-                          <span>Full access to all features</span>
+                          <span>{t('premium.plan.feature1')}</span>
                         </li>
                         <li className="flex items-center gap-2 text-sm">
                           <CheckCircle2 className="h-4 w-4 text-green-500" />
-                          <span>Weekly premium reports</span>
+                          <span>{t('premium.plan.feature2')}</span>
                         </li>
                         <li className="flex items-center gap-2 text-sm">
                           <CheckCircle2 className="h-4 w-4 text-green-500" />
-                          <span>Cancel anytime</span>
+                          <span>{t('premium.plan.feature3')}</span>
                         </li>
                       </ul>
                       <Button asChild variant="outline" className="w-full border-white/30 text-white hover:bg-white/10">
-                        <Link href="/premium">Subscribe Now</Link>
+                        <Link href="/premium">{t('premium.plan.button')}</Link>
                       </Button>
                     </div>
                   </div>
@@ -523,7 +523,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           <div className="flex justify-center mt-12">
             <Button variant="outline" size="lg" asChild className="border-[#c300ff]/30 text-[#c300ff] hover:bg-[#c300ff]/10 hover:text-[#c300ff]">
               <Link href="/science">
-                Learn About Our Methodology
+                {t('methodology.button')}
                 <MoveRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -536,20 +536,20 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="magazine-subheading mb-2">
-              ELEMENTAL ANALYSIS
+              {t('elements.title')}
             </h2>
             <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
-              Elemental Health Insights
+              {t('elements.heading')}
             </h2>
             <p className="magazine-lead text-muted-foreground max-w-2xl mx-auto">
-              Each zodiac sign belongs to one of four elements, influencing your health tendencies and wellness needs
+              {t('elements.description')}
             </p>
           </div>
           
           <div className="flex justify-center mb-6">
             <Link href="/elements" className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#c300ff]/10 hover:bg-[#c300ff]/20 text-[#c300ff] transition-colors">
               <Info className="h-4 w-4" />
-              <span>Explore all elements</span>
+              <span>{t('elements.explore')}</span>
             </Link>
           </div>
         
@@ -557,19 +557,19 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             <TabsList className="grid grid-cols-4 w-full gap-1">
               <TabsTrigger value="fire" className="flex items-center justify-center gap-1 text-xs sm:text-sm px-1 sm:px-2 h-auto py-2">
                 <Flame className="h-4 w-4 text-red-500" /> 
-                <span className="hidden sm:inline">Fire</span>
+                <span className="hidden sm:inline">{t('elements.fire')}</span>
               </TabsTrigger>
               <TabsTrigger value="earth" className="flex items-center justify-center gap-1 text-xs sm:text-sm px-1 sm:px-2 h-auto py-2">
                 <Leaf className="h-4 w-4 text-green-600" /> 
-                <span className="hidden sm:inline">Earth</span>
+                <span className="hidden sm:inline">{t('elements.earth')}</span>
               </TabsTrigger>
               <TabsTrigger value="air" className="flex items-center justify-center gap-1 text-xs sm:text-sm px-1 sm:px-2 h-auto py-2">
                 <Wind className="h-4 w-4 text-purple-500" /> 
-                <span className="hidden sm:inline">Air</span>
+                <span className="hidden sm:inline">{t('elements.air')}</span>
               </TabsTrigger>
               <TabsTrigger value="water" className="flex items-center justify-center gap-1 text-xs sm:text-sm px-1 sm:px-2 h-auto py-2">
                 <Droplets className="h-4 w-4 text-blue-500" /> 
-                <span className="hidden sm:inline">Water</span>
+                <span className="hidden sm:inline">{t('elements.water')}</span>
               </TabsTrigger>
             </TabsList>
             
