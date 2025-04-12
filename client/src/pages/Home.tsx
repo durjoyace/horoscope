@@ -72,6 +72,12 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       return;
     }
     
+    // Store user data in localStorage for the registration form
+    localStorage.setItem('user', JSON.stringify({
+      email,
+      zodiacSign: selectedSign
+    }));
+    
     setIsSubmitting(true);
     
     try {
@@ -115,7 +121,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       });
       
       // Redirect to auth page to complete full profile
-      window.location.href = '/auth';
+      window.location.href = '/auth?signup=true';
     } catch (error: any) {
       console.error('Signup error:', error);
       toast({
@@ -217,6 +223,35 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/90" />
                             </div>
                             
+                            {/* Zodiac sign selector - ADDING THIS */}
+                            <div className="mt-4">
+                              <h5 className="text-white font-medium mb-2">Select your zodiac sign:</h5>
+                              <div className="grid grid-cols-4 gap-2">
+                                {zodiacSignNames.map((sign) => (
+                                  <Button
+                                    key={sign.value}
+                                    variant={selectedSign === sign.value ? "default" : "outline"}
+                                    className={`p-1 h-auto flex flex-col gap-0.5 transition-all duration-300 ${
+                                      selectedSign === sign.value 
+                                        ? "bg-primary text-white shadow-md scale-105" 
+                                        : "bg-black/20 text-white hover:border-white/70"
+                                    }`}
+                                    onClick={() => setSelectedSign(sign.value as ZodiacSign)}
+                                  >
+                                    <span className="text-lg">{sign.symbol}</span>
+                                    <span className="text-[9px]">{sign.label}</span>
+                                  </Button>
+                                ))}
+                              </div>
+                              {selectedSign && (
+                                <div className="mt-2 text-center animate-fade-in">
+                                  <p className="text-white text-sm">
+                                    Selected: <span className="font-bold">{zodiacSignNames.find(s => s.value === selectedSign)?.label}</span>
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                            
                             {/* Premium benefits */}
                             <div className="grid grid-cols-2 gap-3 pt-2">
                               <div className="flex items-start space-x-2">
@@ -256,8 +291,6 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                                 )}
                               </Button>
                             </div>
-                            
-
                             
                             {/* Persuasive microcopy */}
                             <div className="text-center space-y-2 mt-1">
