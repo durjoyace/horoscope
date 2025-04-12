@@ -26,6 +26,7 @@ import { ZodiacSign } from '@shared/types';
 import { zodiacSignNames } from '@/data/zodiacData';
 import { useLanguage } from '@/context/LanguageContext';
 import { LanguageSelector } from '@/components/LanguageSelector';
+import { MobileLanguageSelector } from '@/components/MobileLanguageSelector';
 
 interface NavBarProps {
   isLoggedIn: boolean;
@@ -332,11 +333,9 @@ export function NavigationBar({
                 
                 <div className="mt-auto pt-4">
                   {/* Language selector on mobile */}
-                  <div className="mb-3 flex items-center justify-between">
-                    <p className="text-sm font-medium">{t('nav.language')}</p>
-                    <div className="flex gap-2">
-                      <LanguageSelector />
-                    </div>
+                  <div className="mb-3 flex flex-col gap-2">
+                    <p className="text-sm font-medium mb-1">{t('nav.language')}</p>
+                    <MobileLanguageSelector />
                   </div>
                   
                   <div className="flex gap-2">
