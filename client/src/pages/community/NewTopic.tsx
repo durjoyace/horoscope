@@ -106,7 +106,7 @@ export default function NewTopic() {
         <CardHeader>
           <CardTitle>{t('community.createNewTopic') || 'Create New Topic'}</CardTitle>
           <CardDescription>
-            {t('community.shareThoughts') || 
+            {t('community.shareThoughts', { sign: sign?.charAt(0).toUpperCase() + sign?.slice(1) || '' }) || 
              `Share your thoughts with the ${sign?.charAt(0).toUpperCase() + sign?.slice(1)} community`}
           </CardDescription>
         </CardHeader>
@@ -190,7 +190,7 @@ export default function NewTopic() {
                 {createTopicMutation.isPending && (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 )}
-                Post Topic
+                {t('community.postTopic') || 'Post Topic'}
               </Button>
             </form>
           </Form>

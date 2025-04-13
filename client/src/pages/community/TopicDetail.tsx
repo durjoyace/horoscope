@@ -11,6 +11,7 @@ import { formatDistanceToNow, format } from "date-fns";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/use-auth";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface ForumTopic {
   id: number;
@@ -66,6 +67,7 @@ export default function TopicDetail() {
   const { sign, topicId } = useParams<{ sign: string; topicId: string }>();
   const [_, navigate] = useLocation();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [replyContent, setReplyContent] = useState("");
   
   // Get topic details
@@ -172,8 +174,8 @@ export default function TopicDetail() {
   const handleAddReply = () => {
     if (!user) {
       toast({
-        title: "Authentication Required",
-        description: "Please log in to reply to topics",
+        title: t('auth.authRequired') || "Authentication Required",
+        description: t('auth.loginToReply') || "Please log in to reply to topics",
         variant: "destructive"
       });
       return;
@@ -181,8 +183,8 @@ export default function TopicDetail() {
     
     if (!replyContent.trim()) {
       toast({
-        title: "Empty Reply",
-        description: "Please enter some content for your reply",
+        title: t('community.emptyReply') || "Empty Reply",
+        description: t('community.enterContent') || "Please enter some content for your reply",
         variant: "destructive"
       });
       return;
@@ -194,8 +196,8 @@ export default function TopicDetail() {
   const handleLikeTopic = () => {
     if (!user) {
       toast({
-        title: "Authentication Required",
-        description: "Please log in to like topics",
+        title: t('auth.authRequired') || "Authentication Required",
+        description: t('auth.loginToLike') || "Please log in to like topics",
         variant: "destructive"
       });
       return;
@@ -207,8 +209,8 @@ export default function TopicDetail() {
   const handleLikeReply = (replyId: number) => {
     if (!user) {
       toast({
-        title: "Authentication Required",
-        description: "Please log in to like replies",
+        title: t('auth.authRequired') || "Authentication Required",
+        description: t('auth.loginToLikeReplies') || "Please log in to like replies",
         variant: "destructive"
       });
       return;
@@ -263,7 +265,7 @@ export default function TopicDetail() {
         onClick={() => navigate(`/community/${sign}`)}
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Forum
+        {t('community.backToForum') || 'Back to Forum'}
       </Button>
       
       {/* Topic */}
@@ -318,8 +320,8 @@ export default function TopicDetail() {
         
         <CardFooter className="flex justify-between items-center pt-0">
           <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-            <span>{topic.viewCount} views</span>
-            <span>{replies.length} replies</span>
+            <span>{topic.viewCount} {t('community.views') || 'views'}</span>
+            <span>{replies.length} {t('community.replies') || 'replies'}</span>
             <Button 
               variant="ghost" 
               size="sm" 
@@ -327,7 +329,7 @@ export default function TopicDetail() {
               onClick={handleLikeTopic}
             >
               <Heart className={`h-4 w-4 mr-1 ${likeMutation.isPending ? 'animate-pulse' : ''}`} />
-              <span>{topic.likeCount} likes</span>
+              <span>{topic.likeCount} {t('community.likes') || 'likes'}</span>
             </Button>
           </div>
         </CardFooter>
@@ -336,12 +338,12 @@ export default function TopicDetail() {
       {/* Reply Form */}
       <Card className="mb-8">
         <CardHeader>
-          <CardTitle className="text-lg">Reply to this topic</CardTitle>
+          <CardTitle className="text-lg">{t('community.replyToTopic') || 'Reply to this topic'}</CardTitle>
         </CardHeader>
         
         <CardContent>
           <Textarea
-            placeholder="Share your thoughts..."
+            placeholder={t('community.shareThoughtsPlaceholder') || "Share your thoughts..."}
             value={replyContent}
             onChange={(e) => setReplyContent(e.target.value)}
             rows={4}
@@ -358,7 +360,7 @@ export default function TopicDetail() {
             ) : (
               <Send className="h-4 w-4 mr-2" />
             )}
-            Post Reply
+            {t('community.postReply') || 'Post Reply'}
           </Button>
         </CardContent>
       </Card>
@@ -366,7 +368,9 @@ export default function TopicDetail() {
       {/* Replies */}
       <div className="space-y-6">
         <h3 className="text-xl font-bold mb-4">
-          {replies.length > 0 ? `${replies.length} Replies` : "No Replies Yet"}
+          {replies.length > 0 
+            ? `${replies.length} ${t('community.replies') || 'Replies'}` 
+            : t('community.noRepliesYet') || "No Replies Yet"}
         </h3>
         
         {replies.map((reply) => (
@@ -378,7 +382,7 @@ export default function TopicDetail() {
                     <AvatarFallback>{getUserInitials(reply.userId)}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <div className="font-medium">User {reply.userId}</div>
+                    <div className="font-medium">{t('community.user', { id: reply.userId.toString() }) || `User ${reply.userId}`}</div>
                     <div className="text-xs text-muted-foreground">
                       {formatDistanceToNow(new Date(reply.createdAt), { addSuffix: true })}
                     </div>
@@ -418,7 +422,7 @@ export default function TopicDetail() {
                 onClick={() => handleLikeReply(reply.id)}
               >
                 <Heart className="h-4 w-4 mr-1" />
-                <span className="text-sm">{reply.likeCount}</span>
+                <span className="text-sm">{reply.likeCount} {t('community.likes') || 'likes'}</span>
               </Button>
             </CardFooter>
           </Card>
