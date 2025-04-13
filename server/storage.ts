@@ -23,7 +23,7 @@ import session from "express-session";
 import { Store as SessionStore } from "express-session";
 import createMemoryStore from "memorystore";
 import { db, pool } from "./db";
-import { eq, and } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 import connectPgSimple from "connect-pg-simple";
 import { Pool } from "@neondatabase/serverless";
 

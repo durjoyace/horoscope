@@ -714,6 +714,542 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Community Features Routes
+  
+  // Get forum topics by zodiac sign
+  app.get("/api/community/topics/:zodiacSign", async (req: Request, res: Response) => {
+    try {
+      const zodiacSign = req.params.zodiacSign;
+      
+      // Validate the zodiac sign
+      if (!zodiacSignSchema.safeParse(zodiacSign).success) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid zodiac sign"
+        });
+      }
+      
+      // Get pagination parameters
+      const page = parseInt(req.query.page as string) || 1;
+      const pageSize = parseInt(req.query.pageSize as string) || 10;
+      const offset = (page - 1) * pageSize;
+      
+      const topics = await storage.getForumTopicsByZodiacSign(zodiacSign, pageSize, offset);
+      
+      res.status(200).json({
+        success: true,
+        data: topics,
+        pagination: {
+          page,
+          pageSize,
+          hasMore: topics.length === pageSize // Simple way to check if there might be more
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching forum topics:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not retrieve forum topics. Please try again later."
+      });
+    }
+  });
+  
+  // Get a specific forum topic by ID
+  app.get("/api/community/topics/detail/:id", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid topic ID"
+        });
+      }
+      
+      const topic = await storage.getForumTopic(id);
+      
+      if (!topic) {
+        return res.status(404).json({
+          success: false,
+          message: "Topic not found"
+        });
+      }
+      
+      // Increment view count
+      await storage.incrementTopicViewCount(id);
+      
+      res.status(200).json({
+        success: true,
+        data: topic
+      });
+    } catch (error) {
+      console.error("Error fetching forum topic:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not retrieve forum topic. Please try again later."
+      });
+    }
+  });
+  
+  // Create a new forum topic
+  app.post("/api/community/topics", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      
+      const { title, content, zodiacSign, category } = req.body;
+      
+      if (!title || !content || !zodiacSign) {
+        return res.status(400).json({
+          success: false,
+          message: "Title, content, and zodiacSign are required"
+        });
+      }
+      
+      // Validate zodiac sign
+      if (!zodiacSignSchema.safeParse(zodiacSign).success) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid zodiac sign"
+        });
+      }
+      
+      const topic = await storage.createForumTopic({
+        title,
+        content,
+        userId: req.user.id,
+        zodiacSign,
+        category: category || 'general',
+        isPinned: false,
+      });
+      
+      res.status(201).json({
+        success: true,
+        data: topic
+      });
+    } catch (error) {
+      console.error("Error creating forum topic:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not create forum topic. Please try again later."
+      });
+    }
+  });
+  
+  // Update a forum topic
+  app.put("/api/community/topics/:id", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid topic ID"
+        });
+      }
+      
+      const topic = await storage.getForumTopic(id);
+      
+      if (!topic) {
+        return res.status(404).json({
+          success: false,
+          message: "Topic not found"
+        });
+      }
+      
+      // Check if the user is the owner of the topic
+      if (topic.userId !== req.user.id) {
+        return res.status(403).json({
+          success: false,
+          message: "You don't have permission to update this topic"
+        });
+      }
+      
+      const { title, content, category } = req.body;
+      
+      if (!title && !content && !category) {
+        return res.status(400).json({
+          success: false,
+          message: "At least one field (title, content, or category) is required"
+        });
+      }
+      
+      const updatedTopic = await storage.updateForumTopic(id, {
+        title,
+        content,
+        category
+      });
+      
+      res.status(200).json({
+        success: true,
+        data: updatedTopic
+      });
+    } catch (error) {
+      console.error("Error updating forum topic:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not update forum topic. Please try again later."
+      });
+    }
+  });
+  
+  // Delete a forum topic
+  app.delete("/api/community/topics/:id", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid topic ID"
+        });
+      }
+      
+      const topic = await storage.getForumTopic(id);
+      
+      if (!topic) {
+        return res.status(404).json({
+          success: false,
+          message: "Topic not found"
+        });
+      }
+      
+      // Check if the user is the owner of the topic
+      if (topic.userId !== req.user.id) {
+        return res.status(403).json({
+          success: false,
+          message: "You don't have permission to delete this topic"
+        });
+      }
+      
+      const success = await storage.deleteForumTopic(id);
+      
+      if (!success) {
+        return res.status(500).json({
+          success: false,
+          message: "Could not delete the topic"
+        });
+      }
+      
+      res.status(200).json({
+        success: true,
+        message: "Topic deleted successfully"
+      });
+    } catch (error) {
+      console.error("Error deleting forum topic:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not delete forum topic. Please try again later."
+      });
+    }
+  });
+  
+  // Like a forum topic
+  app.post("/api/community/topics/:id/like", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid topic ID"
+        });
+      }
+      
+      const topic = await storage.getForumTopic(id);
+      
+      if (!topic) {
+        return res.status(404).json({
+          success: false,
+          message: "Topic not found"
+        });
+      }
+      
+      await storage.incrementTopicLikeCount(id);
+      
+      res.status(200).json({
+        success: true,
+        message: "Topic liked successfully"
+      });
+    } catch (error) {
+      console.error("Error liking forum topic:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not like forum topic. Please try again later."
+      });
+    }
+  });
+  
+  // Get replies for a specific topic
+  app.get("/api/community/topics/:id/replies", async (req: Request, res: Response) => {
+    try {
+      const topicId = parseInt(req.params.id);
+      if (isNaN(topicId)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid topic ID"
+        });
+      }
+      
+      // Get pagination parameters
+      const page = parseInt(req.query.page as string) || 1;
+      const pageSize = parseInt(req.query.pageSize as string) || 20;
+      const offset = (page - 1) * pageSize;
+      
+      const replies = await storage.getForumRepliesByTopicId(topicId, pageSize, offset);
+      
+      res.status(200).json({
+        success: true,
+        data: replies,
+        pagination: {
+          page,
+          pageSize,
+          hasMore: replies.length === pageSize
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching forum replies:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not retrieve forum replies. Please try again later."
+      });
+    }
+  });
+  
+  // Add a reply to a topic
+  app.post("/api/community/topics/:id/replies", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      
+      const topicId = parseInt(req.params.id);
+      if (isNaN(topicId)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid topic ID"
+        });
+      }
+      
+      const topic = await storage.getForumTopic(topicId);
+      
+      if (!topic) {
+        return res.status(404).json({
+          success: false,
+          message: "Topic not found"
+        });
+      }
+      
+      const { content } = req.body;
+      
+      if (!content) {
+        return res.status(400).json({
+          success: false,
+          message: "Content is required"
+        });
+      }
+      
+      const reply = await storage.createForumReply({
+        topicId,
+        userId: req.user.id,
+        content
+      });
+      
+      res.status(201).json({
+        success: true,
+        data: reply
+      });
+    } catch (error) {
+      console.error("Error creating forum reply:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not create forum reply. Please try again later."
+      });
+    }
+  });
+  
+  // Update a reply
+  app.put("/api/community/replies/:id", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid reply ID"
+        });
+      }
+      
+      const reply = await storage.getForumReply(id);
+      
+      if (!reply) {
+        return res.status(404).json({
+          success: false,
+          message: "Reply not found"
+        });
+      }
+      
+      // Check if the user is the owner of the reply
+      if (reply.userId !== req.user.id) {
+        return res.status(403).json({
+          success: false,
+          message: "You don't have permission to update this reply"
+        });
+      }
+      
+      const { content } = req.body;
+      
+      if (!content) {
+        return res.status(400).json({
+          success: false,
+          message: "Content is required"
+        });
+      }
+      
+      const updatedReply = await storage.updateForumReply(id, { content });
+      
+      res.status(200).json({
+        success: true,
+        data: updatedReply
+      });
+    } catch (error) {
+      console.error("Error updating forum reply:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not update forum reply. Please try again later."
+      });
+    }
+  });
+  
+  // Delete a reply
+  app.delete("/api/community/replies/:id", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid reply ID"
+        });
+      }
+      
+      const reply = await storage.getForumReply(id);
+      
+      if (!reply) {
+        return res.status(404).json({
+          success: false,
+          message: "Reply not found"
+        });
+      }
+      
+      // Check if the user is the owner of the reply
+      if (reply.userId !== req.user.id) {
+        return res.status(403).json({
+          success: false,
+          message: "You don't have permission to delete this reply"
+        });
+      }
+      
+      const success = await storage.deleteForumReply(id);
+      
+      if (!success) {
+        return res.status(500).json({
+          success: false,
+          message: "Could not delete the reply"
+        });
+      }
+      
+      res.status(200).json({
+        success: true,
+        message: "Reply deleted successfully"
+      });
+    } catch (error) {
+      console.error("Error deleting forum reply:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not delete forum reply. Please try again later."
+      });
+    }
+  });
+  
+  // Like a reply
+  app.post("/api/community/replies/:id/like", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid reply ID"
+        });
+      }
+      
+      const reply = await storage.getForumReply(id);
+      
+      if (!reply) {
+        return res.status(404).json({
+          success: false,
+          message: "Reply not found"
+        });
+      }
+      
+      await storage.incrementReplyLikeCount(id);
+      
+      res.status(200).json({
+        success: true,
+        message: "Reply liked successfully"
+      });
+    } catch (error) {
+      console.error("Error liking forum reply:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not like forum reply. Please try again later."
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
