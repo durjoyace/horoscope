@@ -14,7 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/context/LanguageContext";
 import { WellnessTip, getRandomTip } from "@/data/wellnessTips";
 import { Badge } from "@/components/ui/badge";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { ZodiacSign } from "@/data/wellnessTips";
 import { cn } from "@/lib/utils";
 

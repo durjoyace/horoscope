@@ -3,8 +3,8 @@ import WellnessTipPopup from './WellnessTipPopup';
 import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
-import useLocalStorage from '@/hooks/useLocalStorage';
-import { ZodiacSign } from '@/data/wellnessTips';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import type { ZodiacSign } from '@/data/wellnessTips';
 
 interface WellnessTipManagerProps {
   userZodiacSign?: ZodiacSign;
@@ -37,7 +37,7 @@ const WellnessTipManager: React.FC<WellnessTipManagerProps> = ({
       const timer = setTimeout(() => {
         setShowTip(true);
         setLastShown(now);
-        setTipsCounter(prevCount => prevCount + 1);
+        setTipsCounter((prevCount: number) => prevCount + 1);
       }, autoShowDelay);
       
       return () => clearTimeout(timer);
@@ -47,7 +47,7 @@ const WellnessTipManager: React.FC<WellnessTipManagerProps> = ({
   const handleShowTip = () => {
     setShowTip(true);
     setLastShown(Date.now());
-    setTipsCounter(prevCount => prevCount + 1);
+    setTipsCounter((prevCount: number) => prevCount + 1);
   };
   
   const handleCloseTip = () => {
