@@ -1,0 +1,122 @@
+This is the clarity you need — here is a complete Replit-ready directive you can copy-paste or send to whoever is building this. This will produce a polished, credible, Gen Z/Millennial-friendly science-based astrology wellness brand.
+
+⸻
+
+Replit Build Instructions: Final Design System for Horoscope Health
+
+A credible, minimalist, science-based astrology system for wellness-conscious Gen Z and Millennials.
+
+⸻
+
+Core Brand Concept:
+
+“Horoscope Health uses modern science and behavioral research to help you get the most from your zodiac tendencies.”
+
+Think Aura Health x Ritual x Levels meets astrology.
+
+⸻
+
+1. Design Style Guide
+
+Colors:
+
+:root {
+  --background: #F7F7F7;
+  --text-primary: #1C1C1E;
+  --text-secondary: #606060;
+  --accent-blue: #2D68C4;
+  --accent-green: #4C9F70;
+  --accent-neutral: #D1C7B7;
+  --button-bg: var(--accent-green);
+  --button-text: #FFFFFF;
+}
+
+
+
+⸻
+
+Fonts:
+
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+	•	Headings: Space Grotesk
+	•	Body: IBM Plex Sans
+	•	Data/Numbers: Roboto Mono (Optional)
+
+⸻
+
+2. Homepage Structure (index.html)
+
+<header class="site-header">
+  <h1>Horoscope Health</h1>
+  <p class="tagline">Where Astrology Meets Science-Backed Wellness</p>
+</header>
+
+<section class="intro">
+  <h2>Designed for Your Zodiac. Powered by Data.</h2>
+  <p>We use astrology as a starting point — then apply research-backed wellness guidance to help you sleep better, move smarter, and feel more balanced.</p>
+</section>
+
+<section class="features">
+  <div class="feature">
+    <h3>Personalized Daily Wellness</h3>
+    <p>Health nudges based on your zodiac tendencies, optimized through behavioral science.</p>
+  </div>
+
+  <div class="feature">
+    <h3>Sleep & Energy Insights</h3>
+    <p>Track how your energy aligns with lunar cycles and circadian rhythms.</p>
+  </div>
+
+  <div class="feature">
+    <h3>Nutrition & Mindfulness Tips</h3>
+    <p>Simple, actionable advice you can trust — no pseudoscience.</p>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Get Your Personalized Health Guide</h2>
+  <button>Start My Free Assessment</button>
+</section>
+
+
+
+⸻
+
+3. Design Rules
+
+Section	Visual Treatment
+Hero Header	Clean background, bold type, subtle star-map or constellation line pattern (SVG or transparent PNG)
+Features	Minimal line icons for each feature (zodiac neutral)
+Buttons	Rounded, solid color background var(--button-bg) with white text
+Background Sections	Alternate between var(--background) and var(--accent-neutral)
+Charts/Data	Optional future state: Sleep tracking visuals, lunar phase graphs, minimal radial charts
+
+
+
+⸻
+
+4. Notes for Replit Developer
+
+“Remove all gradient boxes, neon colors, and heavy drop shadows. This should feel like a premium wellness product — clean, minimal, and trustworthy. Use the color palette and fonts provided. All sections should have generous padding and white space. Replace zodiac mascot illustrations with minimalist line icons or abstract symbols. Prioritize typography and layout for credibility.”
+
+⸻
+
+Optional Visual Reference Links:
+	•	https://www.ritual.com/
+	•	https://www.eightsleep.com/
+	•	https://levelshealth.com/
+	•	https://aurahealth.io/
+
+⸻
+
+Next Deliverables I Can Generate for You:
+	1.	Wireframe layout diagram for mobile + desktop
+	2.	Minimalist zodiac icon pack
+	3.	Homepage copywriting for SEO + conversion
+	4.	Full Replit-ready CSS file
+	5.	Brand voice guidelines
+
+⸻
+
+Let me know which deliverable you want me to generate next — I’ll prioritize based on your rollout goals.
