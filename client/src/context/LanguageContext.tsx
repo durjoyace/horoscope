@@ -34,6 +34,10 @@ const enTranslations: Record<string, string> = {
   'community.allCategories': 'All Categories',
   'community.topics': 'Topics',
   'community.pinned': 'Pinned',
+  'community.editTopic': 'Edit Topic',
+  'community.deleteTopic': 'Delete Topic',
+  'community.editReply': 'Edit Reply',
+  'community.deleteReply': 'Delete Reply',
   
   // Auth messages
   'auth.authRequired': 'Authentication Required',
@@ -321,6 +325,10 @@ const esTranslations: Record<string, string> = {
   'community.allCategories': 'Todas las Categorías',
   'community.topics': 'Temas',
   'community.pinned': 'Destacado',
+  'community.editTopic': 'Editar Tema',
+  'community.deleteTopic': 'Eliminar Tema',
+  'community.editReply': 'Editar Respuesta',
+  'community.deleteReply': 'Eliminar Respuesta',
   
   // Auth messages
   'auth.authRequired': 'Autenticación Requerida',

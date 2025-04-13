@@ -279,7 +279,7 @@ export default function TopicDetail() {
                   <Avatar className={`h-6 w-6 ${getUserAvatarColor(topic.userId)}`}>
                     <AvatarFallback>{getUserInitials(topic.userId)}</AvatarFallback>
                   </Avatar>
-                  User {topic.userId}
+                  {t('community.user', { id: topic.userId.toString() }) || `User ${topic.userId}`}
                 </span>
                 <span>
                   {format(new Date(topic.createdAt), "PPp")}
@@ -296,6 +296,8 @@ export default function TopicDetail() {
                   variant="ghost" 
                   size="sm"
                   onClick={() => navigate(`/community/${sign}/edit-topic/${topic.id}`)}
+                  aria-label={t('community.editTopic') || 'Edit Topic'}
+                  title={t('community.editTopic') || 'Edit Topic'}
                 >
                   <Edit className="h-4 w-4" />
                 </Button>
@@ -304,6 +306,8 @@ export default function TopicDetail() {
                   variant="ghost" 
                   size="sm"
                   className="text-red-500 hover:text-red-700"
+                  aria-label={t('community.deleteTopic') || 'Delete Topic'}
+                  title={t('community.deleteTopic') || 'Delete Topic'}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -394,6 +398,8 @@ export default function TopicDetail() {
                     <Button 
                       variant="ghost" 
                       size="sm"
+                      aria-label={t('community.editReply') || 'Edit Reply'}
+                      title={t('community.editReply') || 'Edit Reply'}
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
@@ -402,6 +408,8 @@ export default function TopicDetail() {
                       variant="ghost" 
                       size="sm"
                       className="text-red-500 hover:text-red-700"
+                      aria-label={t('community.deleteReply') || 'Delete Reply'}
+                      title={t('community.deleteReply') || 'Delete Reply'}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
