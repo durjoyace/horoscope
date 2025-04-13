@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, ArrowLeft } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { queryClient, apiRequest } from "@/lib/queryClient";
+import { useLanguage } from "@/context/LanguageContext";
 
 const formSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters").max(100, "Title cannot exceed 100 characters"),
@@ -28,18 +29,19 @@ export default function NewTopic() {
   const { sign } = useParams<{ sign: string }>();
   const [_, navigate] = useLocation();
   const { toast } = useToast();
+  const { t } = useLanguage();
   
   // Redirect if user is not authenticated
   useEffect(() => {
     if (!user) {
       toast({
-        title: "Authentication Required",
-        description: "Please log in to create a topic",
+        title: t('auth.required') || "Authentication Required",
+        description: t('auth.loginToCreateTopic') || "Please log in to create a topic",
         variant: "destructive",
       });
       navigate("/auth");
     }
-  }, [user, navigate, toast]);
+  }, [user, navigate, toast, t]);
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -66,15 +68,15 @@ export default function NewTopic() {
     },
     onSuccess: () => {
       toast({
-        title: "Success",
-        description: "Topic created successfully",
+        title: t('common.success') || "Success",
+        description: t('community.topicCreated') || "Topic created successfully",
       });
       queryClient.invalidateQueries({ queryKey: ['/api/community/topics', sign] });
       navigate(`/community/${sign}`);
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
+        title: t('common.error') || "Error",
         description: error.message,
         variant: "destructive",
       });
@@ -97,14 +99,15 @@ export default function NewTopic() {
         onClick={() => navigate(`/community/${sign}`)}
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Forum
+        {t('navigation.backToForum') || 'Back to Forum'}
       </Button>
       
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle>Create New Topic</CardTitle>
+          <CardTitle>{t('community.createNewTopic') || 'Create New Topic'}</CardTitle>
           <CardDescription>
-            Share your thoughts with the {sign?.charAt(0).toUpperCase() + sign?.slice(1)} community
+            {t('community.shareThoughts', { sign: sign?.charAt(0).toUpperCase() + sign?.slice(1) }) || 
+             `Share your thoughts with the ${sign?.charAt(0).toUpperCase() + sign?.slice(1)} community`}
           </CardDescription>
         </CardHeader>
         
@@ -116,12 +119,12 @@ export default function NewTopic() {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Title</FormLabel>
+                    <FormLabel>{t('form.title') || 'Title'}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Topic title" {...field} />
+                      <Input placeholder={t('form.topicTitlePlaceholder') || "Topic title"} {...field} />
                     </FormControl>
                     <FormDescription>
-                      A clear, concise title that describes your topic
+                      {t('form.titleDescription') || 'A clear, concise title that describes your topic'}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -133,25 +136,25 @@ export default function NewTopic() {
                 name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category</FormLabel>
+                    <FormLabel>{t('form.category') || 'Category'}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a category" />
+                          <SelectValue placeholder={t('form.selectCategoryPlaceholder') || "Select a category"} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="general">General</SelectItem>
-                        <SelectItem value="wellness">Wellness</SelectItem>
-                        <SelectItem value="nutrition">Nutrition</SelectItem>
-                        <SelectItem value="fitness">Fitness</SelectItem>
-                        <SelectItem value="relationships">Relationships</SelectItem>
-                        <SelectItem value="career">Career</SelectItem>
-                        <SelectItem value="spirituality">Spirituality</SelectItem>
+                        <SelectItem value="general">{t('categories.general') || 'General'}</SelectItem>
+                        <SelectItem value="wellness">{t('categories.wellness') || 'Wellness'}</SelectItem>
+                        <SelectItem value="nutrition">{t('categories.nutrition') || 'Nutrition'}</SelectItem>
+                        <SelectItem value="fitness">{t('categories.fitness') || 'Fitness'}</SelectItem>
+                        <SelectItem value="relationships">{t('categories.relationships') || 'Relationships'}</SelectItem>
+                        <SelectItem value="career">{t('categories.career') || 'Career'}</SelectItem>
+                        <SelectItem value="spirituality">{t('categories.spirituality') || 'Spirituality'}</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormDescription>
-                      Select the most appropriate category for your topic
+                      {t('form.categoryDescription') || 'Select the most appropriate category for your topic'}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -163,16 +166,16 @@ export default function NewTopic() {
                 name="content"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Content</FormLabel>
+                    <FormLabel>{t('form.content') || 'Content'}</FormLabel>
                     <FormControl>
                       <Textarea 
-                        placeholder="Share your thoughts or questions..." 
+                        placeholder={t('form.contentPlaceholder') || "Share your thoughts or questions..."} 
                         className="min-h-[200px]"
                         {...field} 
                       />
                     </FormControl>
                     <FormDescription>
-                      Provide detailed information to encourage meaningful responses
+                      {t('form.contentDescription') || 'Provide detailed information to encourage meaningful responses'}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

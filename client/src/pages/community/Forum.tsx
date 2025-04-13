@@ -144,8 +144,8 @@ export default function Forum() {
   const handleLikeTopic = async (topicId: number) => {
     if (!user) {
       toast({
-        title: "Authentication Required",
-        description: "Please log in to like topics",
+        title: t('auth.required') || "Authentication Required",
+        description: t('auth.loginToLike') || "Please log in to like topics",
         variant: "destructive"
       });
       return;
@@ -165,9 +165,9 @@ export default function Forum() {
   if (topicsError) {
     return (
       <div className="p-6 text-center">
-        <p className="text-red-500">Error loading forum topics</p>
+        <p className="text-red-500">{t('community.error') || 'Error loading forum topics'}</p>
         <Button variant="outline" onClick={() => refetchTopics()} className="mt-4">
-          Try Again
+          {t('common.tryAgain') || 'Try Again'}
         </Button>
       </div>
     );
@@ -310,7 +310,7 @@ export default function Forum() {
               disabled={page === 1} 
               onClick={() => setPage(p => Math.max(1, p - 1))}
             >
-              Previous
+              {t('pagination.previous') || 'Previous'}
             </Button>
             
             <Button 
@@ -318,7 +318,7 @@ export default function Forum() {
               disabled={!topicsData?.pagination?.hasMore} 
               onClick={() => setPage(p => p + 1)}
             >
-              Next
+              {t('pagination.next') || 'Next'}
             </Button>
           </div>
         </>
