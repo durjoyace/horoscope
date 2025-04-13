@@ -1,6 +1,3 @@
-/* Import science-based styles */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Space+Grotesk:wght@500;700&family=Roboto+Mono&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,7 +12,6 @@
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     text-size-adjust: 100%;
-    font-family: 'IBM Plex Sans', sans-serif;
   }
   
   /* Better handling of input fields on mobile */
@@ -26,17 +22,17 @@
   h1, h2, h3 {
     @apply tracking-tight font-bold;
     letter-spacing: -0.025em;
-    font-family: 'Space Grotesk', sans-serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
   }
   
   h4, h5, h6 {
     @apply tracking-tight font-bold;
-    font-family: 'Space Grotesk', sans-serif;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   }
   
-  .data-point, code, pre {
-    font-family: 'Roboto Mono', monospace;
-    color: #325288;
+  p, span, li {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.95);
   }
   
   /* Custom scroll bar */
@@ -50,18 +46,6 @@
   
   ::-webkit-scrollbar-thumb {
     @apply bg-muted rounded-full hover:bg-muted/80 transition-colors;
-  }
-  
-  /* Science-driven color variables */
-  :root {
-    --background: #F7F7F7;
-    --text-primary: #1C1C1E;
-    --text-secondary: #606060;
-    --accent-blue: #2D68C4;
-    --accent-green: #4C9F70;
-    --accent-neutral: #D1C7B7;
-    --button-bg: var(--accent-green);
-    --button-text: #FFFFFF;
   }
 }
 
@@ -110,12 +94,14 @@
   }
 }
 
-@keyframes subtle-pulse {
+@keyframes twinkle {
   0%, 100% {
-    opacity: 0.8;
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
   }
   50% {
-    opacity: 0.4;
+    opacity: 0.3;
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
   }
 }
 
@@ -136,203 +122,82 @@
     -webkit-tap-highlight-color: transparent;
   }
   
-  /* Clean minimalist design elements */
-  .site-header {
-    padding: 3rem 0;
-    text-align: center;
+  /* Modern astrological elements */
+  .magazine-heading {
+    @apply font-bold text-4xl md:text-5xl lg:text-6xl leading-tight;
+    background: linear-gradient(to right, #ff00ff, #c300ff, #8400ff, #3a00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
   }
   
-  .site-header h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 3rem;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
+  .magazine-subheading {
+    @apply font-medium text-sm uppercase tracking-widest;
+    color: hsl(var(--primary)/0.9);
   }
   
-  .tagline {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 1.25rem;
-    color: var(--text-secondary);
+  .magazine-lead {
+    @apply text-xl leading-relaxed max-w-prose;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    color: rgba(255, 255, 255, 0.9);
   }
   
-  .section-heading {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 2.5rem;
-    color: var(--text-primary);
-    margin-bottom: 1.5rem;
+  .magazine-card {
+    @apply relative rounded-lg p-6 shadow-lg hover:shadow-xl transition-all duration-300;
+    background: linear-gradient(135deg, rgba(30, 15, 45, 0.85), rgba(15, 10, 30, 0.9));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 20px rgba(128, 0, 255, 0.15);
   }
   
-  .section-lead {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 1.25rem;
-    line-height: 1.6;
-    color: var(--text-secondary);
-    max-width: 42rem;
-    margin-bottom: 2rem;
+  .magazine-tag {
+    @apply inline-flex items-center gap-2 px-3 py-1 text-xs font-medium rounded-full;
+    background-color: hsl(var(--primary)/0.15);
+    color: hsl(var(--primary));
   }
   
-  .feature-card {
-    background-color: white;
-    border-radius: 8px;
-    padding: 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  .gradient-heading {
+    background: linear-gradient(to right, #ff00ff, #c300ff, #8400ff, #3a00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
   }
   
-  .feature-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-  
-  .feature-card h3 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 500;
-    font-size: 1.5rem;
-    color: var(--text-primary);
-    margin-bottom: 1rem;
-  }
-  
-  .feature-card p {
-    font-family: 'IBM Plex Sans', sans-serif;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-  
-  .data-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.375rem 0.75rem;
-    border-radius: 4px;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.875rem;
-    font-weight: 500;
-    background-color: rgba(76, 159, 112, 0.1);
-    color: var(--accent-green);
-  }
-  
-  .science-border {
+  .animated-border {
     @apply relative overflow-hidden;
-    border: 1px solid var(--accent-sand);
-    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
-  /* Science-specific components */
-  .evidence-card {
-    background-color: white;
-    border-radius: 8px;
-    padding: 1.5rem;
-    border-left: 3px solid var(--accent-blue);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  .animated-border::after {
+    @apply content-[''] absolute inset-0 border border-primary/30 rounded-lg;
+    animation: border-pulse 3s ease-in-out infinite;
   }
   
-  .sources-list {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.9rem;
-    color: var(--text-primary);
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--accent-sand);
-  }
-  
-  .sources-list li {
-    margin-bottom: 0.5rem;
-    list-style-type: decimal;
-  }
-  
-  .cta-button {
-    background-color: var(--button-bg);
-    color: var(--button-text);
-    font-family: 'Space Grotesk', sans-serif;
-    padding: 0.875rem 2rem;
-    border-radius: 6px;
-    font-weight: 500;
-    font-size: 1rem;
-    text-align: center;
-    transition: all 0.2s ease;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .cta-button:hover {
-    background-color: #4a9168;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .cta-section {
-    background-color: var(--accent-neutral);
-    padding: 4rem 2rem;
-    text-align: center;
-    margin: 4rem 0;
+  @keyframes border-pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
   }
   
   .zodiac-card {
     @apply relative rounded-lg p-6 md:p-8 shadow-md hover:shadow-lg transition-all duration-300;
-    border: 1px solid var(--accent-sand);
-    background-color: white;
-    border-left: 3px solid var(--accent-blue);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid hsl(var(--primary)/0.3);
+    background: linear-gradient(135deg, rgba(20, 10, 30, 0.85), rgba(10, 5, 20, 0.9));
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(128, 0, 255, 0.2);
   }
   
-  /* Add science-inspired components */
-  .science-data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: 'IBM Plex Sans', sans-serif;
-  }
-  
-  .science-data-table th {
-    background-color: var(--accent-sand);
-    padding: 0.75rem 1rem;
-    text-align: left;
-    font-weight: 600;
-  }
-  
-  .science-data-table td {
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .science-data-point {
-    font-family: 'Roboto Mono', monospace;
-    font-size: 0.9rem;
-    color: var(--accent-blue);
-    background-color: rgba(50, 82, 136, 0.05);
-    padding: 0.15rem 0.5rem;
-    border-radius: 3px;
-    display: inline-block;
-  }
-  
-  /* Constellation-inspired subtle patterns */
-  .constellation-bg {
-    position: relative;
-    overflow: hidden;
-    background-color: var(--background);
-  }
-  
-  .constellation-bg::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-      linear-gradient(to right, rgba(45, 104, 196, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(45, 104, 196, 0.05) 1px, transparent 1px);
-    background-size: 24px 24px;
-    opacity: 0.4;
-    z-index: -1;
-  }
-  
-  /* Subtle star pattern */
+  /* Add some zodiac elements and scientific styling */
   .star-bg {
     position: relative;
     overflow: hidden;
-    background-color: var(--background);
   }
   
   .star-bg::before {
@@ -343,78 +208,37 @@
     right: 0;
     bottom: 0;
     background-image: 
-      radial-gradient(circle at 20% 30%, rgba(45, 104, 196, 0.08) 1px, transparent 1px),
-      radial-gradient(circle at 40% 70%, rgba(76, 159, 112, 0.08) 1px, transparent 1px),
-      radial-gradient(circle at 60% 20%, rgba(45, 104, 196, 0.08) 1px, transparent 1px),
-      radial-gradient(circle at 80% 60%, rgba(76, 159, 112, 0.08) 1px, transparent 1px);
-    background-size: 120px 120px;
-    opacity: 0.7;
+      radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6) 2px, transparent 2px),
+      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.5) 2px, transparent 2px),
+      radial-gradient(circle at 60% 60%, rgba(255, 255, 255, 0.9) 1px, transparent 1px),
+      radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.7) 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.8) 2px, transparent 2px),
+      radial-gradient(circle at 90% 90%, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+    background-size: 300px 300px;
+    opacity: 0.5;
     z-index: -1;
+    animation: twinkle 8s ease-in-out infinite alternate;
   }
   
-  /* Section layouts */
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-  
-  .section {
-    padding: 4rem 0;
-  }
-  
-  .section-alt {
-    background-color: var(--accent-neutral);
-    padding: 4rem 0;
-  }
-  
-  .intro-section {
-    padding: 5rem 0;
-    text-align: center;
-  }
-  
-  .features-section {
-    padding: 5rem 0;
-  }
-  
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-  }
-  
-  /* Minimal Zodiac icon sizes */
-  .zodiac-icon {
-    width: 2rem;
-    height: 2rem;
-    opacity: 0.8;
-  }
-  
-  .zodiac-icon-sm {
-    width: 1.5rem;
-    height: 1.5rem;
-    opacity: 0.8;
-  }
-  
-  .data-pattern {
+  .zodiac-gradient {
+    background: linear-gradient(135deg, 
+      rgba(75, 0, 130, 0.5) 0%,
+      rgba(25, 25, 112, 0.5) 50%,
+      rgba(0, 0, 50, 0.5) 100%);
     position: relative;
-    background-color: white;
-    overflow: hidden;
   }
   
-  .data-pattern::before {
+  .zodiac-gradient::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: 
-      linear-gradient(90deg, var(--accent-sand) 1px, transparent 1px),
-      linear-gradient(0deg, var(--accent-sand) 1px, transparent 1px);
-    background-size: 20px 20px;
-    background-position: -1px -1px;
-    opacity: 0.1;
+    background: radial-gradient(circle at center, rgba(128, 0, 255, 0.4) 0%, transparent 70%);
     z-index: -1;
   }
   
@@ -443,8 +267,8 @@
     animation: spin-slow 20s linear infinite;
   }
   
-  .animate-subtle-pulse {
-    animation: subtle-pulse 4s ease-in-out infinite;
+  .animate-twinkle {
+    animation: twinkle 4s ease-in-out infinite;
   }
   
   .animate-fade-in {
