@@ -14,6 +14,7 @@ import { Link } from 'wouter';
 import { Star, CalendarDays, Activity, Droplets, Gift, Lock, ChevronRight, Award } from 'lucide-react';
 import { AchievementBadgeContainer } from '@/components/AchievementBadgeContainer';
 import { AchievementBadgeProps } from '@/components/AchievementBadge';
+import SocialSharing from '@/components/SocialSharing';
 
 // Mock user data
 const mockUser = {
@@ -108,6 +109,14 @@ const Dashboard: React.FC = () => {
                   <p className="font-semibold mb-1">Recommended:</p>
                   <p className="text-muted-foreground">{mockHoroscope.recommended}</p>
                 </div>
+              </div>
+              
+              {/* Social Sharing */}
+              <div className="mt-4 pt-4 border-t border-border/30">
+                <SocialSharing 
+                  title={`${mockUser.zodiacSign.charAt(0).toUpperCase() + mockUser.zodiacSign.slice(1)} Horoscope for ${new Date().toLocaleDateString()}`}
+                  text={mockHoroscope.forecast}
+                />
               </div>
             </CardContent>
           </Card>
