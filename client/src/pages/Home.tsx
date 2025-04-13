@@ -446,28 +446,28 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              <div className="bg-white/5 border border-white/10 p-5 rounded-lg backdrop-blur-sm">
-                <div className="bg-primary/20 rounded-full p-3 inline-flex mb-4">
-                  <Sparkles className="h-5 w-5 text-primary" />
+              <div className="bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border border-purple-500/20 p-5 rounded-lg backdrop-blur-sm shadow-md">
+                <div className="bg-purple-500/20 rounded-full p-3 inline-flex mb-4">
+                  <Sparkles className="h-5 w-5 text-purple-400" />
                 </div>
-                <h3 className="font-semibold mb-2">{t('journey.step1.title')}</h3>
-                <p className="text-sm text-muted-foreground">{t('journey.step1.description')}</p>
+                <h3 className="font-semibold mb-2 text-slate-100">{t('journey.step1.title')}</h3>
+                <p className="text-sm text-slate-300">{t('journey.step1.description')}</p>
               </div>
               
-              <div className="bg-white/5 border border-white/10 p-5 rounded-lg backdrop-blur-sm">
-                <div className="bg-primary/20 rounded-full p-3 inline-flex mb-4">
-                  <Star className="h-5 w-5 text-primary" />
+              <div className="bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border border-purple-500/20 p-5 rounded-lg backdrop-blur-sm shadow-md">
+                <div className="bg-purple-500/20 rounded-full p-3 inline-flex mb-4">
+                  <Star className="h-5 w-5 text-purple-400" />
                 </div>
-                <h3 className="font-semibold mb-2">{t('journey.step2.title')}</h3>
-                <p className="text-sm text-muted-foreground">{t('journey.step2.description')}</p>
+                <h3 className="font-semibold mb-2 text-slate-100">{t('journey.step2.title')}</h3>
+                <p className="text-sm text-slate-300">{t('journey.step2.description')}</p>
               </div>
               
-              <div className="bg-white/5 border border-white/10 p-5 rounded-lg backdrop-blur-sm">
-                <div className="bg-primary/20 rounded-full p-3 inline-flex mb-4">
-                  <Brain className="h-5 w-5 text-primary" />
+              <div className="bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border border-purple-500/20 p-5 rounded-lg backdrop-blur-sm shadow-md">
+                <div className="bg-purple-500/20 rounded-full p-3 inline-flex mb-4">
+                  <Brain className="h-5 w-5 text-purple-400" />
                 </div>
-                <h3 className="font-semibold mb-2">{t('journey.step3.title')}</h3>
-                <p className="text-sm text-muted-foreground">{t('journey.step3.description')}</p>
+                <h3 className="font-semibold mb-2 text-slate-100">{t('journey.step3.title')}</h3>
+                <p className="text-sm text-slate-300">{t('journey.step3.description')}</p>
               </div>
             </div>
           </div>
@@ -583,49 +583,49 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             </div>
           </div>
           
-          {/* Premium membership promotion - Modern wellness style */}
+          {/* Premium membership promotion - Cosmic style */}
           <div className="mt-16 max-w-4xl mx-auto">
-            <div className="bg-gradient-to-br from-teal-500/20 to-blue-700/20 backdrop-blur-md rounded-xl p-6 md:p-8 border border-cyan-500/30 shadow-lg relative overflow-hidden">
-              {/* Modern wellness background elements */}
+            <div className="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 backdrop-blur-md rounded-xl p-6 md:p-8 border border-purple-500/30 shadow-lg relative overflow-hidden">
+              {/* Cosmic background elements */}
               <div className="absolute top-0 left-0 w-full h-full">
-                <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
-                <div className="absolute bottom-1/3 left-1/3 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl"></div>
+                <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl"></div>
+                <div className="absolute bottom-1/3 left-1/3 w-40 h-40 bg-fuchsia-500/20 rounded-full blur-2xl"></div>
               </div>
               
               <div className="relative">
                 <div className="flex flex-col md:flex-row gap-8">
                   {/* Left side: Content */}
                   <div className="flex-1">
-                    <div className="inline-flex items-center gap-1.5 bg-teal-500/20 text-teal-500 px-3 py-1.5 rounded-full text-xs font-medium mb-4">
-                      <HeartPulse className="h-3.5 w-3.5" />
+                    <div className="inline-flex items-center gap-1.5 bg-purple-500/20 text-purple-300 px-3 py-1.5 rounded-full text-xs font-medium mb-4">
+                      <Sparkles className="h-3.5 w-3.5" />
                       <span>{t('premium.badge')}</span>
                     </div>
                     
-                    <h3 className="text-2xl md:text-3xl font-bold mb-4">{t('premium.title')}</h3>
+                    <h3 className="text-2xl md:text-3xl font-bold mb-4 text-slate-100">{t('premium.title')}</h3>
                     
-                    <p className="text-muted-foreground mb-6">
+                    <p className="text-slate-300 mb-6">
                       {t('premium.description')}
                     </p>
                     
                     <div className="space-y-3 mb-6">
                       <div className="flex items-start gap-2">
-                        <CheckCircle2 className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
-                        <span>{t('premium.benefit1')}</span>
+                        <CheckCircle2 className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                        <span className="text-slate-200">{t('premium.benefit1')}</span>
                       </div>
                       <div className="flex items-start gap-2">
-                        <CheckCircle2 className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
-                        <span>{t('premium.benefit2')}</span>
+                        <CheckCircle2 className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                        <span className="text-slate-200">{t('premium.benefit2')}</span>
                       </div>
                       <div className="flex items-start gap-2">
-                        <CheckCircle2 className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
-                        <span>{t('premium.benefit3')}</span>
+                        <CheckCircle2 className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                        <span className="text-slate-200">{t('premium.benefit3')}</span>
                       </div>
                     </div>
                     
                     <Button 
                       size="lg" 
                       asChild 
-                      className="bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 transition-all hover:scale-105"
+                      className="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white shadow-lg shadow-purple-600/20 hover:shadow-xl hover:shadow-purple-600/30 transition-all hover:scale-105"
                       aria-label={t('premium.button')}
                     >
                       <Link href="/premium">
@@ -639,30 +639,30 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                   
                   {/* Right side: Pricing */}
                   <div className="md:w-64 flex-shrink-0">
-                    <div className="bg-white/10 rounded-lg p-5 border border-white/20 backdrop-blur-sm">
-                      <h4 className="text-lg font-bold mb-1">{t('premium.plan.title')}</h4>
+                    <div className="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 rounded-lg p-5 border border-purple-500/20 backdrop-blur-sm">
+                      <h4 className="text-lg font-bold mb-1 text-slate-100">{t('premium.plan.title')}</h4>
                       <div className="mb-4">
-                        <span className="text-3xl font-bold">$9.99</span>
-                        <span className="text-muted-foreground">{t('premium.plan.period')}</span>
+                        <span className="text-3xl font-bold text-white">$9.99</span>
+                        <span className="text-purple-200/80">{t('premium.plan.period')}</span>
                       </div>
                       <ul className="space-y-2 mb-5">
                         <li className="flex items-center gap-2 text-sm">
-                          <CheckCircle2 className="h-4 w-4 text-green-500" />
-                          <span>{t('premium.plan.feature1')}</span>
+                          <CheckCircle2 className="h-4 w-4 text-purple-400" />
+                          <span className="text-slate-200">{t('premium.plan.feature1')}</span>
                         </li>
                         <li className="flex items-center gap-2 text-sm">
-                          <CheckCircle2 className="h-4 w-4 text-green-500" />
-                          <span>{t('premium.plan.feature2')}</span>
+                          <CheckCircle2 className="h-4 w-4 text-purple-400" />
+                          <span className="text-slate-200">{t('premium.plan.feature2')}</span>
                         </li>
                         <li className="flex items-center gap-2 text-sm">
-                          <CheckCircle2 className="h-4 w-4 text-green-500" />
-                          <span>{t('premium.plan.feature3')}</span>
+                          <CheckCircle2 className="h-4 w-4 text-purple-400" />
+                          <span className="text-slate-200">{t('premium.plan.feature3')}</span>
                         </li>
                       </ul>
                       <Button 
                         asChild 
                         variant="outline" 
-                        className="w-full border-white/30 text-white hover:bg-white/10 hover:text-yellow-400 transition-all hover:border-yellow-400/50"
+                        className="w-full border-purple-500/50 text-white hover:bg-purple-500/10 hover:text-purple-300 transition-all hover:border-purple-400/70"
                         aria-label={t('premium.plan.button')}
                       >
                         <Link href="/premium">
@@ -677,7 +677,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           </div>
           
           <div className="flex justify-center mt-12">
-            <Button variant="outline" size="lg" asChild className="border-teal-500/30 text-teal-600 dark:text-teal-400 hover:bg-teal-500/10 hover:text-teal-700 dark:hover:text-teal-300">
+            <Button variant="outline" size="lg" asChild className="border-purple-500/30 text-purple-400 hover:bg-purple-500/10 hover:text-purple-300 hover:border-purple-400/50 transition-all">
               <Link href="/science">
                 {t('methodology.button')}
                 <MoveRight className="ml-2 h-4 w-4" />
@@ -703,8 +703,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           </div>
           
           <div className="flex justify-center mb-6">
-            <Link href="/elements" className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 text-teal-600 dark:text-teal-400 transition-colors">
-              <Info className="h-4 w-4" />
+            <Link href="/elements" className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 hover:text-purple-300 transition-colors">
+              <Sparkles className="h-4 w-4" />
               <span>{t('elements.explore')}</span>
             </Link>
           </div>
