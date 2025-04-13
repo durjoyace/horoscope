@@ -23,7 +23,7 @@ import {
   Star
 } from 'lucide-react';
 import { ZodiacSign } from '@shared/types';
-import { zodiacSignNames } from '@/data/zodiacData';
+import { zodiacSignNames, zodiacElements } from '@/data/zodiacData';
 import { useLanguage } from '@/context/LanguageContext';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import { MobileLanguageSelector } from '@/components/MobileLanguageSelector';
@@ -58,7 +58,7 @@ export function NavigationBar({
   
   // Get user's element for styling if they have a zodiac sign
   const userElement = userZodiacSign ? 
-    zodiacSignNames.find(sign => sign.value === userZodiacSign)?.element : null;
+    zodiacElements[userZodiacSign as ZodiacSign] : null;
   const getElementColor = (element: string | null | undefined) => {
     if (!element) return 'bg-primary';
     
