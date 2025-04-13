@@ -10,6 +10,7 @@ import { formatDistanceToNow } from "date-fns";
 import { queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/use-auth";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface ForumTopic {
   id: number;
@@ -72,6 +73,7 @@ export default function Forum() {
   const [page, setPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const { toast } = useToast();
+  const { t } = useLanguage();
   
   // Convert URL parameter to proper zodiac sign format
   const zodiacSign = sign?.toLowerCase();
@@ -176,10 +178,10 @@ export default function Forum() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
         <div>
           <h1 className="text-3xl font-bold mb-2 flex items-center">
-            {getZodiacEmoji(zodiacSign)} {capitalizeFirstLetter(zodiacSign)} Community
+            {getZodiacEmoji(zodiacSign)} {capitalizeFirstLetter(zodiacSign)} {t('community.community') || 'Community'}
           </h1>
           <p className="text-muted-foreground">
-            Connect with fellow {capitalizeFirstLetter(zodiacSign)} members to share insights and experiences
+            {t('community.connect') || `Connect with fellow ${capitalizeFirstLetter(zodiacSign)} members to share insights and experiences`}
           </p>
         </div>
         
@@ -188,7 +190,7 @@ export default function Forum() {
           className="mt-4 md:mt-0"
           onClick={() => navigate(`/community/${zodiacSign}/new-topic`)}
         >
-          <Plus className="mr-2 h-4 w-4" /> New Topic
+          <Plus className="mr-2 h-4 w-4" /> {t('community.newTopic') || 'New Topic'}
         </Button>
       </div>
       
@@ -198,7 +200,7 @@ export default function Forum() {
             value="all" 
             onClick={() => setSelectedCategory("all")}
           >
-            All
+            {t('community.all') || 'All'}
           </TabsTrigger>
           
           {categories.map((category) => (
@@ -216,12 +218,14 @@ export default function Forum() {
       {filteredTopics.length === 0 ? (
         <Card className="mb-8">
           <CardContent className="p-6 text-center">
-            <p className="text-lg text-muted-foreground mb-4">No topics found for this category</p>
+            <p className="text-lg text-muted-foreground mb-4">
+              {t('community.noTopics') || 'No topics found for this category'}
+            </p>
             <Button 
               variant="outline" 
               onClick={() => navigate(`/community/${zodiacSign}/new-topic`)}
             >
-              <Plus className="mr-2 h-4 w-4" /> Start the First Discussion
+              <Plus className="mr-2 h-4 w-4" /> {t('community.startDiscussion') || 'Start the First Discussion'}
             </Button>
           </CardContent>
         </Card>
