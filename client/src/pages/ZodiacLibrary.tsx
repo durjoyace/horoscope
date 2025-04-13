@@ -271,7 +271,10 @@ export default function ZodiacLibrary() {
                       <AccordionTrigger>Nutrition Recommendations</AccordionTrigger>
                       <AccordionContent>
                         <ul className="space-y-2">
-                          {wellnessData.nutritionTips.map((tip, index) => (
+                          <li className="flex items-start">
+                            <span className="text-green-500 mr-2">•</span> {wellnessData.recommendation}
+                          </li>
+                          {wellnessData.nutritionTips && wellnessData.nutritionTips.map((tip, index) => (
                             <li key={index} className="flex items-start">
                               <span className="text-green-500 mr-2">•</span> {tip}
                             </li>
@@ -284,7 +287,10 @@ export default function ZodiacLibrary() {
                       <AccordionTrigger>Ideal Exercise Types</AccordionTrigger>
                       <AccordionContent>
                         <ul className="space-y-2">
-                          {wellnessData.exerciseTypes.map((exercise, index) => (
+                          <li className="flex items-start">
+                            <span className="text-blue-500 mr-2">•</span> {wellnessData.strength}
+                          </li>
+                          {wellnessData.exerciseTypes && wellnessData.exerciseTypes.map((exercise, index) => (
                             <li key={index} className="flex items-start">
                               <span className="text-blue-500 mr-2">•</span> {exercise}
                             </li>
@@ -297,7 +303,10 @@ export default function ZodiacLibrary() {
                       <AccordionTrigger>Relaxation Methods</AccordionTrigger>
                       <AccordionContent>
                         <ul className="space-y-2">
-                          {wellnessData.relaxationMethods.map((method, index) => (
+                          <li className="flex items-start">
+                            <span className="text-purple-500 mr-2">•</span> Focus on {wellnessData.challenge}
+                          </li>
+                          {wellnessData.relaxationMethods && wellnessData.relaxationMethods.map((method, index) => (
                             <li key={index} className="flex items-start">
                               <span className="text-purple-500 mr-2">•</span> {method}
                             </li>
@@ -310,7 +319,13 @@ export default function ZodiacLibrary() {
                       <AccordionTrigger>Daily Wellness Habits</AccordionTrigger>
                       <AccordionContent>
                         <ul className="space-y-2">
-                          {wellnessData.dailyWellnessHabits.map((habit, index) => (
+                          <li className="flex items-start">
+                            <span className="text-amber-500 mr-2">•</span> {wellnessData.challenge} - focus area
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-amber-500 mr-2">•</span> {wellnessData.recommendation}
+                          </li>
+                          {wellnessData.dailyWellnessHabits && wellnessData.dailyWellnessHabits.map((habit, index) => (
                             <li key={index} className="flex items-start">
                               <span className="text-amber-500 mr-2">•</span> {habit}
                             </li>
