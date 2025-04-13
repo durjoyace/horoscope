@@ -20,7 +20,9 @@ import {
   Quote,
   RefreshCw,
   Rocket,
-  Lightbulb
+  Lightbulb,
+  Activity as ActivitySquare,
+  LineChart
 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { WellnessQuoteWidget } from '@/components/WellnessQuoteWidget';
@@ -147,30 +149,30 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative py-10 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-gradient-to-b from-primary/20 via-primary/10 to-background star-bg">
-        {/* Celestial Background Elements */}
+      <section className="relative py-10 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-science-gradient data-grid">
+        {/* Science-inspired Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-8 h-8 sm:w-12 sm:h-12 md:w-24 md:h-24 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float"></div>
-          <div className="absolute top-40 right-10 w-12 h-12 sm:w-20 sm:h-20 md:w-32 md:h-32 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-float-slow"></div>
-          <div className="absolute bottom-20 left-1/4 w-16 h-16 sm:w-24 sm:h-24 md:w-40 md:h-40 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float-slower"></div>
-          <div className="absolute top-1/3 right-1/3 w-8 h-8 sm:w-10 sm:h-10 md:w-16 md:h-16 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-pulse"></div>
+          <div className="absolute top-20 left-10 w-8 h-8 sm:w-12 sm:h-12 md:w-24 md:h-24 rounded-full bg-[#2D68C4]/5 backdrop-blur-sm animate-fade-in"></div>
+          <div className="absolute top-40 right-10 w-12 h-12 sm:w-20 sm:h-20 md:w-32 md:h-32 rounded-full bg-[#4C9F70]/5 backdrop-blur-sm animate-subtle-pulse"></div>
+          <div className="absolute bottom-20 left-1/4 w-16 h-16 sm:w-24 sm:h-24 md:w-40 md:h-40 rounded-full bg-[#2D68C4]/5 backdrop-blur-sm animate-float-slow"></div>
+          <div className="absolute top-1/3 right-1/3 w-8 h-8 sm:w-10 sm:h-10 md:w-16 md:h-16 rounded-full bg-[#4C9F70]/5 backdrop-blur-sm animate-pulse-slow"></div>
           
-          {/* Constellation-like elements */}
-          <div className="absolute inset-0 opacity-30 select-none pointer-events-none">
-            <div className="absolute top-1/4 left-1/5 h-1 w-1 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
-            <div className="absolute top-1/3 right-1/4 h-1.5 w-1.5 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
-            <div className="absolute bottom-1/3 left-1/3 h-1 w-1 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
-            <div className="absolute top-2/3 right-1/5 h-1.5 w-1.5 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
-            <div className="absolute top-1/2 left-1/2 h-1 w-1 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
+          {/* Data visualization elements */}
+          <div className="absolute inset-0 opacity-10 select-none pointer-events-none">
+            <div className="absolute top-1/4 left-1/5 h-8 w-8 border border-[#2D68C4]/30 rounded-full"></div>
+            <div className="absolute top-1/3 right-1/4 h-12 w-12 border border-[#4C9F70]/30 rounded-full"></div>
+            <div className="absolute bottom-1/3 left-1/3 h-10 w-10 border border-[#2D68C4]/30 rounded-full"></div>
+            <div className="absolute top-2/3 right-1/5 h-14 w-14 border border-[#4C9F70]/30 rounded-full"></div>
+            <div className="absolute top-1/2 left-1/2 h-20 w-20 border border-[#2D68C4]/30 rounded-full"></div>
           </div>
           
-          {/* Zodiac Symbols Background - more subtle and modern */}
+          {/* Minimal Zodiac Elements */}
           <div className="absolute inset-0 opacity-5 select-none pointer-events-none">
-            <div className="absolute top-1/4 left-1/5 text-3xl sm:text-4xl md:text-6xl transform rotate-12">♈</div>
-            <div className="absolute top-1/3 right-1/4 text-3xl sm:text-5xl md:text-7xl transform -rotate-6">♉</div>
-            <div className="absolute bottom-1/4 left-1/3 text-3xl sm:text-4xl md:text-5xl transform rotate-45">♌</div>
-            <div className="absolute top-2/3 right-1/5 text-3xl sm:text-5xl md:text-8xl transform -rotate-12">♓</div>
-            <div className="absolute top-1/2 left-1/2 text-3xl sm:text-4xl md:text-6xl transform rotate-90">♎</div>
+            <div className="absolute top-1/4 left-1/5 font-mono text-sm sm:text-base md:text-lg text-[#2D68C4]">Aries</div>
+            <div className="absolute top-1/3 right-1/4 font-mono text-sm sm:text-base md:text-lg text-[#4C9F70]">Taurus</div>
+            <div className="absolute bottom-1/4 left-1/3 font-mono text-sm sm:text-base md:text-lg text-[#2D68C4]">Leo</div>
+            <div className="absolute top-2/3 right-1/5 font-mono text-sm sm:text-base md:text-lg text-[#4C9F70]">Pisces</div>
+            <div className="absolute top-1/2 left-1/2 font-mono text-sm sm:text-base md:text-lg text-[#2D68C4]">Libra</div>
           </div>
         </div>
         
@@ -182,14 +184,14 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                 <span>{t('hero.tagline')}</span>
               </div>
               
-              {/* Branded header with gradient */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#ff9cfe] to-[#aab2ff] mb-2 sm:mb-3 md:mb-4 animate-slide-up">
+              {/* Branded header - science-based */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#2D68C4] font-heading mb-2 sm:mb-3 md:mb-4 animate-slide-up">
                 {t('hero.brand')}
               </h1>
               
-              <h1 className="magazine-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 md:mb-6 animate-slide-up">
-                <span className="block">{t('hero.title1')}</span>
-                <span className="gradient-heading">{t('hero.title2')}</span>
+              <h1 className="section-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 md:mb-6 animate-slide-up">
+                <span className="block text-[#1C1C1E]">{t('hero.title1')}</span>
+                <span className="text-[#4C9F70]">{t('hero.title2')}</span>
               </h1>
               
               <p className="magazine-lead text-sm md:text-base text-muted-foreground mb-4 sm:mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">
@@ -205,37 +207,37 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                         {t('signup.header')}
                       </h3>
                       
-                      {/* Main signup card with benefits inside */}
+                      {/* Main signup card with benefits inside - science-based */}
                       <div className="relative max-w-md mx-auto">
-                        <div className="bg-gradient-to-br from-[#9a00ff] to-[#5000cc] rounded-2xl p-8 mb-6 shadow-lg">
+                        <div className="bg-white rounded-xl p-8 mb-6 shadow-lg border border-[#D1C7B7]/50">
                           {/* Email input with compelling benefits */}
                           <div className="space-y-6">
                             <div className="text-center space-y-2">
-                              <h4 className="text-white text-xl font-bold mb-1">
+                              <h4 className="text-[#1C1C1E] text-xl font-bold mb-1 font-heading">
                                 {t('signup.title')}
                               </h4>
-                              <p className="text-white/80 text-sm">
+                              <p className="text-[#606060] text-sm font-body">
                                 {t('signup.subtitle')}
                               </p>
                             </div>
 
-                            {/* Email input with glow effect */}
+                            {/* Email input with subtle highlight */}
                             <div className="relative">
-                              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#ff00ff]/40 to-[#00ffff]/40 rounded-full blur-sm opacity-70"></div>
+                              <div className="absolute -inset-0.5 bg-[#2D68C4]/20 rounded-lg blur-sm"></div>
                               <Input
                                 type="email"
                                 placeholder={t('signup.email.placeholder')}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="relative pl-10 h-14 bg-black/20 backdrop-blur-sm border-white/30 text-white placeholder:text-white/70 rounded-full focus:border-white/70 focus:ring-white/30 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+                                className="relative pl-10 h-14 bg-white border-[#2D68C4]/30 text-[#1C1C1E] placeholder:text-[#606060]/70 rounded-lg focus:border-[#2D68C4] focus:ring-[#2D68C4]/30 shadow-sm"
                               />
-                              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/90" />
+                              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#2D68C4]" />
                             </div>
                             
-                            {/* Zodiac sign selector - ADDING THIS */}
+                            {/* Zodiac sign selector - science-based */}
                             <div className="mt-4">
-                              <h5 className="text-white font-medium mb-2">Select your zodiac sign:</h5>
+                              <h5 className="text-[#1C1C1E] font-medium mb-2">Select your zodiac sign:</h5>
                               <div className="grid grid-cols-4 gap-2">
                                 {zodiacSignNames.map((sign) => (
                                   <Button
@@ -243,8 +245,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                                     variant={selectedSign === sign.value ? "default" : "outline"}
                                     className={`p-1 h-auto flex flex-col gap-0.5 transition-all duration-300 ${
                                       selectedSign === sign.value 
-                                        ? "bg-primary text-white shadow-md scale-105" 
-                                        : "bg-black/20 text-white hover:border-white/70"
+                                        ? "bg-[#2D68C4] text-white shadow-md scale-105" 
+                                        : "bg-white text-[#1C1C1E] border-[#D1C7B7] hover:border-[#2D68C4] hover:bg-[#2D68C4]/5"
                                     }`}
                                     onClick={() => setSelectedSign(sign.value as ZodiacSign)}
                                   >
@@ -255,40 +257,40 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               </div>
                               {selectedSign && (
                                 <div className="mt-2 text-center animate-fade-in">
-                                  <p className="text-white text-sm">
-                                    Selected: <span className="font-bold">{zodiacSignNames.find(s => s.value === selectedSign)?.label}</span>
+                                  <p className="text-[#1C1C1E] text-sm">
+                                    Selected: <span className="font-bold text-[#2D68C4]">{zodiacSignNames.find(s => s.value === selectedSign)?.label}</span>
                                   </p>
                                 </div>
                               )}
                             </div>
                             
-                            {/* Premium benefits */}
+                            {/* Premium benefits - science-based */}
                             <div className="grid grid-cols-2 gap-3 pt-2">
                               <div className="flex items-start space-x-2">
-                                <Sparkles className="h-5 w-5 text-[#ff9500] flex-shrink-0 mt-0.5" />
-                                <span className="text-white text-sm">{t('signup.benefits.insights')}</span>
+                                <ActivitySquare className="h-5 w-5 text-[#2D68C4] flex-shrink-0 mt-0.5" />
+                                <span className="text-[#1C1C1E] text-sm">{t('signup.benefits.insights')}</span>
                               </div>
                               <div className="flex items-start space-x-2">
-                                <Leaf className="h-5 w-5 text-[#4ade80] flex-shrink-0 mt-0.5" />
-                                <span className="text-white text-sm">{t('signup.benefits.wellness')}</span>
+                                <Leaf className="h-5 w-5 text-[#4C9F70] flex-shrink-0 mt-0.5" />
+                                <span className="text-[#1C1C1E] text-sm">{t('signup.benefits.wellness')}</span>
                               </div>
                               <div className="flex items-start space-x-2">
-                                <Star className="h-5 w-5 text-[#facc15] flex-shrink-0 mt-0.5" />
-                                <span className="text-white text-sm">{t('signup.benefits.forecasts')}</span>
+                                <LineChart className="h-5 w-5 text-[#2D68C4] flex-shrink-0 mt-0.5" />
+                                <span className="text-[#1C1C1E] text-sm">{t('signup.benefits.forecasts')}</span>
                               </div>
                               <div className="flex items-start space-x-2">
-                                <HeartPulse className="h-5 w-5 text-[#fb7185] flex-shrink-0 mt-0.5" />
-                                <span className="text-white text-sm">{t('signup.benefits.rituals')}</span>
+                                <HeartPulse className="h-5 w-5 text-[#4C9F70] flex-shrink-0 mt-0.5" />
+                                <span className="text-[#1C1C1E] text-sm">{t('signup.benefits.rituals')}</span>
                               </div>
                             </div>
 
-                            {/* CTA Button with glow */}
-                            <div className="relative mt-2 group">
-                              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#ff00ff] to-[#00ffff] rounded-full opacity-70 group-hover:opacity-100 blur-sm transition duration-300"></div>
+                            {/* CTA Button - science-based */}
+                            <div className="relative mt-4 group">
+                              <div className="absolute -inset-0.5 bg-[#2D68C4]/20 rounded-lg blur-sm"></div>
                               <Button 
                                 type="submit" 
                                 disabled={isSubmitting} 
-                                className="relative w-full h-12 sm:h-14 bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-bold text-base sm:text-lg rounded-full transition-all duration-300 border border-white/20 shadow-[0_0_20px_rgba(170,0,255,0.5)] group-hover:shadow-[0_0_25px_rgba(170,0,255,0.7)]"
+                                className="relative w-full h-12 sm:h-14 bg-[#2D68C4] hover:bg-[#2D68C4]/90 text-white font-medium text-base sm:text-lg rounded-lg transition-all duration-300 shadow-sm hover:shadow-md hover:scale-[1.01]"
                                 aria-label={t('signup.button')}
                               >
                                 {isSubmitting ? (
@@ -302,13 +304,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               </Button>
                             </div>
                             
-                            {/* Persuasive microcopy */}
-                            <div className="text-center space-y-2 mt-1">
-                              <div className="flex items-center justify-center gap-1.5 text-white/90 text-xs">
-                                <CheckCircle2 className="h-3.5 w-3.5 text-green-400" />
+                            {/* Persuasive microcopy - science-based */}
+                            <div className="text-center space-y-2 mt-3">
+                              <div className="flex items-center justify-center gap-1.5 text-[#1C1C1E]/80 text-xs">
+                                <CheckCircle2 className="h-3.5 w-3.5 text-[#4C9F70]" />
                                 <span>{t('signup.microcopy')}</span>
                               </div>
-                              <p className="text-white/60 text-xs italic">
+                              <p className="text-[#606060] text-xs italic">
                                 {t('signup.testimonial')}
                               </p>
                             </div>
@@ -343,19 +345,18 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             
             <div className="flex-1 flex justify-center lg:justify-end mt-8 lg:mt-0">
               <div className="relative w-full max-w-[320px] md:max-w-md">
-                {/* Decorative zodiac elements */}
-                <div className="absolute -inset-2 md:-inset-3 bg-gradient-to-r from-[#ff00ff]/20 via-[#c300ff]/10 to-[#3a00ff]/20 rounded-lg transform rotate-6 animate-pulse-slow"></div>
-                <div className="absolute -inset-4 md:-inset-6 border-2 border-[#ff00ff]/10 rounded-lg transform -rotate-3 animate-pulse-slower"></div>
-                <div className="absolute -inset-1 md:-inset-2 border border-[#c300ff]/20 rounded-full animate-spin-slow"></div>
+                {/* Decorative science-based elements */}
+                <div className="absolute -inset-2 md:-inset-3 bg-[#2D68C4]/10 rounded-lg transform rotate-2 animate-pulse-slow"></div>
+                <div className="absolute -inset-4 md:-inset-6 border border-[#4C9F70]/10 rounded-lg transform -rotate-1 animate-pulse-slower"></div>
                 
-                {/* Main card */}
-                <div className="relative backdrop-blur-md rounded-lg p-4 md:p-6 lg:p-8 shadow-xl animate-fade-in-up bg-gradient-to-br from-[#8400ff]/30 to-[#3a00ff]/30 border border-[#c300ff]/40">
+                {/* Main card - science-based */}
+                <div className="relative rounded-lg p-4 md:p-6 lg:p-8 shadow-lg animate-fade-in-up bg-white border border-[#D1C7B7]/30">
                   <div className="text-center mb-4 md:mb-6">
-                    <div className="p-2 md:p-3 bg-[#ff00ff]/20 rounded-full inline-flex justify-center items-center mb-3 md:mb-4">
-                      <Star className="h-6 w-6 md:h-8 md:w-8 text-[#ff00ff] animate-spin-slow" />
+                    <div className="p-2 md:p-3 bg-[#2D68C4]/10 rounded-full inline-flex justify-center items-center mb-3 md:mb-4">
+                      <LineChart className="h-6 w-6 md:h-8 md:w-8 text-[#2D68C4]" />
                     </div>
-                    <h2 className="text-xl md:text-2xl font-bold mb-1">{t('zodiac.profile.title')}</h2>
-                    <p className="text-sm text-muted-foreground">{t('zodiac.profile.subtitle')}</p>
+                    <h2 className="text-xl md:text-2xl font-bold mb-1 text-[#1C1C1E]">{t('zodiac.profile.title')}</h2>
+                    <p className="text-sm text-[#606060]">{t('zodiac.profile.subtitle')}</p>
                   </div>
                   
                   <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 md:gap-3 mb-4 md:mb-6">
@@ -365,8 +366,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                         variant={selectedSign === sign.value ? "default" : "outline"}
                         className={`p-1.5 md:p-2 h-auto flex flex-col gap-0.5 md:gap-1 transition-all duration-300 ${
                           selectedSign === sign.value 
-                            ? "shadow-md scale-105 md:scale-110 border-primary" 
-                            : "hover:border-primary/50 hover:scale-105"
+                            ? "bg-[#2D68C4] text-white shadow-md scale-105" 
+                            : "bg-white text-[#1C1C1E] border-[#D1C7B7] hover:border-[#2D68C4] hover:bg-[#2D68C4]/5"
                         }`}
                         onClick={() => setSelectedSign(sign.value as ZodiacSign)}
                       >
@@ -378,14 +379,14 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                   
                   {selectedSign && (
                     <div className="text-center animate-fade-in">
-                      <p className="font-medium mb-1 md:mb-2 text-sm md:text-base">
+                      <p className="font-medium mb-1 md:mb-2 text-sm md:text-base text-[#1C1C1E]">
                         {zodiacSignNames.find(s => s.value === selectedSign)?.label}
                       </p>
-                      <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4">
+                      <p className="text-xs md:text-sm text-[#606060] mb-3 md:mb-4">
                         {zodiacSignNames.find(s => s.value === selectedSign)?.dates}
                       </p>
                       <Button 
-                        className="w-full shadow-md hover:shadow-lg transition-all text-sm bg-gradient-to-r from-[#c300ff] to-[#8400ff] hover:scale-[1.02]"
+                        className="w-full shadow-sm hover:shadow-md transition-all text-sm bg-[#2D68C4] hover:bg-[#2D68C4]/90 hover:scale-[1.01]"
                         onClick={() => {
                           // Scroll to email input if email is not provided
                           if (!email) {
@@ -415,31 +416,30 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
         </div>
       </section>
 
-      {/* Start Your Journey Section */}
-      <section className="py-16 bg-gradient-to-b from-background to-background/80">
+      {/* Start Your Journey Section - science-based */}
+      <section className="py-16 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <Award className="h-4 w-4" />
+            <div className="inline-flex items-center gap-2 bg-[#2D68C4]/10 text-[#2D68C4] px-4 py-2 rounded-full text-sm font-medium mb-6">
+              <ActivitySquare className="h-4 w-4" />
               <span>{t('journey.badge')}</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('journey.title')}</h2>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#1C1C1E]">{t('journey.title')}</h2>
+            <p className="text-[#606060] mb-8 max-w-2xl mx-auto">
               {t('journey.description')}
             </p>
             
-            <div className="relative inline-block group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-[#ff00ff] to-[#00ffff] rounded-full opacity-70 group-hover:opacity-100 blur-md transition duration-300"></div>
+            <div className="inline-block">
               <Button 
                 size="lg" 
                 asChild
-                className="relative bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-bold px-6 sm:px-8 py-5 sm:py-6 rounded-full transition-all duration-300 border border-white/20 shadow-[0_0_20px_rgba(170,0,255,0.5)] group-hover:shadow-[0_0_25px_rgba(170,0,255,0.7)] hover:scale-105"
+                className="bg-[#2D68C4] hover:bg-[#2D68C4]/90 text-white font-medium px-6 sm:px-8 py-5 sm:py-6 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md hover:scale-[1.01]"
                 aria-label={t('onboarding.welcome.start')}
               >
                 <Link href="/onboarding">
                   <span className="flex items-center justify-center">
-                    <Sparkles className="mr-2 h-5 w-5" />
+                    <LineChart className="mr-2 h-5 w-5" />
                     {t('onboarding.welcome.start')}
                   </span>
                 </Link>
@@ -447,52 +447,52 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              <div className="bg-white/5 border border-white/10 p-5 rounded-lg backdrop-blur-sm">
-                <div className="bg-primary/20 rounded-full p-3 inline-flex mb-4">
-                  <Sparkles className="h-5 w-5 text-primary" />
+              <div className="bg-white border border-[#D1C7B7]/30 p-5 rounded-lg shadow-sm hover:shadow-md transition-all">
+                <div className="bg-[#2D68C4]/10 rounded-full p-3 inline-flex mb-4">
+                  <ActivitySquare className="h-5 w-5 text-[#2D68C4]" />
                 </div>
-                <h3 className="font-semibold mb-2">{t('journey.step1.title')}</h3>
-                <p className="text-sm text-muted-foreground">{t('journey.step1.description')}</p>
+                <h3 className="font-semibold mb-2 text-[#1C1C1E]">{t('journey.step1.title')}</h3>
+                <p className="text-sm text-[#606060]">{t('journey.step1.description')}</p>
               </div>
               
-              <div className="bg-white/5 border border-white/10 p-5 rounded-lg backdrop-blur-sm">
-                <div className="bg-primary/20 rounded-full p-3 inline-flex mb-4">
-                  <Star className="h-5 w-5 text-primary" />
+              <div className="bg-white border border-[#D1C7B7]/30 p-5 rounded-lg shadow-sm hover:shadow-md transition-all">
+                <div className="bg-[#4C9F70]/10 rounded-full p-3 inline-flex mb-4">
+                  <LineChart className="h-5 w-5 text-[#4C9F70]" />
                 </div>
-                <h3 className="font-semibold mb-2">{t('journey.step2.title')}</h3>
-                <p className="text-sm text-muted-foreground">{t('journey.step2.description')}</p>
+                <h3 className="font-semibold mb-2 text-[#1C1C1E]">{t('journey.step2.title')}</h3>
+                <p className="text-sm text-[#606060]">{t('journey.step2.description')}</p>
               </div>
               
-              <div className="bg-white/5 border border-white/10 p-5 rounded-lg backdrop-blur-sm">
-                <div className="bg-primary/20 rounded-full p-3 inline-flex mb-4">
-                  <Brain className="h-5 w-5 text-primary" />
+              <div className="bg-white border border-[#D1C7B7]/30 p-5 rounded-lg shadow-sm hover:shadow-md transition-all">
+                <div className="bg-[#2D68C4]/10 rounded-full p-3 inline-flex mb-4">
+                  <Brain className="h-5 w-5 text-[#2D68C4]" />
                 </div>
-                <h3 className="font-semibold mb-2">{t('journey.step3.title')}</h3>
-                <p className="text-sm text-muted-foreground">{t('journey.step3.description')}</p>
+                <h3 className="font-semibold mb-2 text-[#1C1C1E]">{t('journey.step3.title')}</h3>
+                <p className="text-sm text-[#606060]">{t('journey.step3.description')}</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* How It Works - science-based */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="magazine-subheading mb-2">
+            <h2 className="text-[#2D68C4] font-medium mb-2">
               {t('how.title')}
             </h2>
-            <h2 className="magazine-heading text-3xl md:text-4xl mb-4">
+            <h2 className="text-[#1C1C1E] text-3xl md:text-4xl font-bold mb-4">
               {t('how.heading')}
             </h2>
-            <p className="magazine-lead text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-[#606060] max-w-2xl mx-auto">
               {t('how.description')}
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 md:gap-12">
             <FeatureCard 
-              icon={<Star className="h-full w-full" />}
+              icon={<LineChart className="h-full w-full text-[#2D68C4]" />}
               title={t('how.card1.title')}
               description={t('how.card1.description')}
               dialogContent={{
@@ -514,7 +514,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             />
             
             <FeatureCard 
-              icon={<Brain className="h-full w-full" />}
+              icon={<Brain className="h-full w-full text-[#4C9F70]" />}
               title={t('how.card2.title')}
               description={t('how.card2.description')}
               dialogContent={{
@@ -536,7 +536,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             />
             
             <FeatureCard 
-              icon={<HeartPulse className="h-full w-full" />}
+              icon={<ActivitySquare className="h-full w-full text-[#2D68C4]" />}
               title={t('how.card3.title')}
               description={t('how.card3.description')}
               dialogContent={{
