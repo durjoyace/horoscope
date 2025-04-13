@@ -100,10 +100,14 @@ export class MemStorage implements IStorage {
   private horoscopes: Map<number, Horoscope>;
   private deliveryLogs: Map<number, DeliveryLog>;
   private ads: Map<number, Ad>;
+  private forumTopics: Map<number, ForumTopic>;
+  private forumReplies: Map<number, ForumReply>;
   private userCurrentId: number;
   private horoscopeCurrentId: number;
   private deliveryLogCurrentId: number;
   private adCurrentId: number;
+  private forumTopicCurrentId: number;
+  private forumReplyCurrentId: number;
   public sessionStore: SessionStore;
 
   constructor() {
@@ -112,10 +116,14 @@ export class MemStorage implements IStorage {
     this.horoscopes = new Map();
     this.deliveryLogs = new Map();
     this.ads = new Map();
+    this.forumTopics = new Map();
+    this.forumReplies = new Map();
     this.userCurrentId = 1;
     this.horoscopeCurrentId = 1;
     this.deliveryLogCurrentId = 1;
     this.adCurrentId = 1;
+    this.forumTopicCurrentId = 1;
+    this.forumReplyCurrentId = 1;
     
     // Initialize session store
     this.sessionStore = new MemoryStore({
@@ -333,6 +341,158 @@ export class MemStorage implements IStorage {
       const clicks = ad.clicks ?? 0;
       ad.clicks = clicks + 1;
       this.ads.set(id, ad);
+    }
+  }
+
+  // Forum Topic operations
+  async getForumTopic(id: number): Promise<ForumTopic | undefined> {
+    return this.forumTopics.get(id);
+  }
+
+  async getForumTopicsByZodiacSign(sign: string, limit?: number, offset?: number): Promise<ForumTopic[]> {
+    let topics = Array.from(this.forumTopics.values()).filter(
+      (topic) => topic.zodiacSign === sign
+    );
+    
+    // Sort by most recent first
+    topics.sort((a, b) => {
+      if (!a.createdAt || !b.createdAt) return 0;
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+    
+    // Apply pagination if specified
+    if (offset !== undefined && limit !== undefined) {
+      topics = topics.slice(offset, offset + limit);
+    } else if (limit !== undefined) {
+      topics = topics.slice(0, limit);
+    }
+    
+    return topics;
+  }
+
+  async createForumTopic(insertTopic: InsertForumTopic): Promise<ForumTopic> {
+    const id = this.forumTopicCurrentId++;
+    const now = new Date();
+    
+    const topic: ForumTopic = {
+      id,
+      title: insertTopic.title,
+      content: insertTopic.content,
+      userId: insertTopic.userId,
+      zodiacSign: insertTopic.zodiacSign,
+      category: insertTopic.category || 'general',
+      isPinned: insertTopic.isPinned || false,
+      viewCount: 0,
+      likeCount: 0,
+      createdAt: now,
+      updatedAt: now
+    };
+    
+    this.forumTopics.set(id, topic);
+    return topic;
+  }
+
+  async updateForumTopic(id: number, updates: Partial<InsertForumTopic>): Promise<ForumTopic | undefined> {
+    const topic = await this.getForumTopic(id);
+    if (!topic) return undefined;
+    
+    const updatedTopic = { 
+      ...topic, 
+      ...updates,
+      updatedAt: new Date()
+    };
+    
+    this.forumTopics.set(id, updatedTopic);
+    return updatedTopic;
+  }
+
+  async deleteForumTopic(id: number): Promise<boolean> {
+    return this.forumTopics.delete(id);
+  }
+
+  async incrementTopicViewCount(id: number): Promise<void> {
+    const topic = await this.getForumTopic(id);
+    if (topic) {
+      topic.viewCount = (topic.viewCount || 0) + 1;
+      this.forumTopics.set(id, topic);
+    }
+  }
+
+  async incrementTopicLikeCount(id: number): Promise<void> {
+    const topic = await this.getForumTopic(id);
+    if (topic) {
+      topic.likeCount = (topic.likeCount || 0) + 1;
+      this.forumTopics.set(id, topic);
+    }
+  }
+
+  // Forum Reply operations
+  async getForumReply(id: number): Promise<ForumReply | undefined> {
+    return this.forumReplies.get(id);
+  }
+
+  async getForumRepliesByTopicId(topicId: number, limit?: number, offset?: number): Promise<ForumReply[]> {
+    let replies = Array.from(this.forumReplies.values()).filter(
+      (reply) => reply.topicId === topicId
+    );
+    
+    // Sort by oldest first by default (chronological order)
+    replies.sort((a, b) => {
+      if (!a.createdAt || !b.createdAt) return 0;
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    });
+    
+    // Apply pagination if specified
+    if (offset !== undefined && limit !== undefined) {
+      replies = replies.slice(offset, offset + limit);
+    } else if (limit !== undefined) {
+      replies = replies.slice(0, limit);
+    }
+    
+    return replies;
+  }
+
+  async createForumReply(insertReply: InsertForumReply): Promise<ForumReply> {
+    const id = this.forumReplyCurrentId++;
+    const now = new Date();
+    
+    const reply: ForumReply = {
+      id,
+      topicId: insertReply.topicId,
+      userId: insertReply.userId,
+      content: insertReply.content,
+      likeCount: 0,
+      createdAt: now,
+      updatedAt: now
+    };
+    
+    this.forumReplies.set(id, reply);
+    return reply;
+  }
+
+  async updateForumReply(id: number, updates: Partial<InsertForumReply>): Promise<ForumReply | undefined> {
+    const reply = await this.getForumReply(id);
+    if (!reply) return undefined;
+    
+    const updatedReply = { 
+      ...reply, 
+      ...updates,
+      updatedAt: new Date()
+    };
+    
+    this.forumReplies.set(id, updatedReply);
+    return updatedReply;
+  }
+
+  async deleteForumReply(id: number): Promise<boolean> {
+    return this.forumReplies.delete(id);
+  }
+
+  async incrementReplyLikeCount(id: number): Promise<void> {
+    const reply = await this.getForumReply(id);
+    if (reply) {
+      reply.likeCount = (reply.likeCount || 0) + 1;
+      this.forumReplies.set(id, reply);
     }
   }
 }
@@ -803,6 +963,203 @@ export class DatabaseStorage implements IStorage {
       }
     } catch (error) {
       console.error('Error incrementing ad clicks:', error);
+    }
+  }
+
+  // Forum Topic operations
+  async getForumTopic(id: number): Promise<ForumTopic | undefined> {
+    try {
+      const result = await db.select().from(forumTopics).where(eq(forumTopics.id, id));
+      return result.length > 0 ? result[0] : undefined;
+    } catch (error) {
+      console.error('Error getting forum topic by ID:', error);
+      return undefined;
+    }
+  }
+
+  async getForumTopicsByZodiacSign(sign: string, limit?: number, offset?: number): Promise<ForumTopic[]> {
+    try {
+      let query = db.select().from(forumTopics).where(eq(forumTopics.zodiacSign, sign));
+      
+      // Apply pagination if specified - this would be better handled with proper SQL limits
+      // but we'll keep it simple for now
+      const result = await query;
+      
+      let topics = [...result];
+      
+      // Sort by most recent first
+      topics.sort((a, b) => {
+        if (!a.createdAt || !b.createdAt) return 0;
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
+      
+      // Apply pagination
+      if (offset !== undefined && limit !== undefined) {
+        topics = topics.slice(offset, offset + limit);
+      } else if (limit !== undefined) {
+        topics = topics.slice(0, limit);
+      }
+      
+      return topics;
+    } catch (error) {
+      console.error('Error getting forum topics by zodiac sign:', error);
+      return [];
+    }
+  }
+
+  async createForumTopic(insertTopic: InsertForumTopic): Promise<ForumTopic> {
+    try {
+      const result = await db.insert(forumTopics).values(insertTopic).returning();
+      return result[0];
+    } catch (error) {
+      console.error('Error creating forum topic:', error);
+      throw error;
+    }
+  }
+
+  async updateForumTopic(id: number, updates: Partial<InsertForumTopic>): Promise<ForumTopic | undefined> {
+    try {
+      // Include updatedAt timestamp
+      const updateData = { ...updates, updatedAt: new Date() };
+      
+      const result = await db
+        .update(forumTopics)
+        .set(updateData)
+        .where(eq(forumTopics.id, id))
+        .returning();
+      
+      return result.length > 0 ? result[0] : undefined;
+    } catch (error) {
+      console.error('Error updating forum topic:', error);
+      return undefined;
+    }
+  }
+
+  async deleteForumTopic(id: number): Promise<boolean> {
+    try {
+      const result = await db
+        .delete(forumTopics)
+        .where(eq(forumTopics.id, id))
+        .returning();
+      
+      return result.length > 0;
+    } catch (error) {
+      console.error('Error deleting forum topic:', error);
+      return false;
+    }
+  }
+
+  async incrementTopicViewCount(id: number): Promise<void> {
+    try {
+      await db
+        .update(forumTopics)
+        .set({ viewCount: sql`${forumTopics.viewCount} + 1` })
+        .where(eq(forumTopics.id, id));
+    } catch (error) {
+      console.error('Error incrementing topic view count:', error);
+    }
+  }
+
+  async incrementTopicLikeCount(id: number): Promise<void> {
+    try {
+      await db
+        .update(forumTopics)
+        .set({ likeCount: sql`${forumTopics.likeCount} + 1` })
+        .where(eq(forumTopics.id, id));
+    } catch (error) {
+      console.error('Error incrementing topic like count:', error);
+    }
+  }
+
+  // Forum Reply operations
+  async getForumReply(id: number): Promise<ForumReply | undefined> {
+    try {
+      const result = await db.select().from(forumReplies).where(eq(forumReplies.id, id));
+      return result.length > 0 ? result[0] : undefined;
+    } catch (error) {
+      console.error('Error getting forum reply by ID:', error);
+      return undefined;
+    }
+  }
+
+  async getForumRepliesByTopicId(topicId: number, limit?: number, offset?: number): Promise<ForumReply[]> {
+    try {
+      let query = db.select().from(forumReplies).where(eq(forumReplies.topicId, topicId));
+      
+      const result = await query;
+      
+      let replies = [...result];
+      
+      // Sort by oldest first by default (chronological order)
+      replies.sort((a, b) => {
+        if (!a.createdAt || !b.createdAt) return 0;
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      });
+      
+      // Apply pagination
+      if (offset !== undefined && limit !== undefined) {
+        replies = replies.slice(offset, offset + limit);
+      } else if (limit !== undefined) {
+        replies = replies.slice(0, limit);
+      }
+      
+      return replies;
+    } catch (error) {
+      console.error('Error getting forum replies by topic ID:', error);
+      return [];
+    }
+  }
+
+  async createForumReply(insertReply: InsertForumReply): Promise<ForumReply> {
+    try {
+      const result = await db.insert(forumReplies).values(insertReply).returning();
+      return result[0];
+    } catch (error) {
+      console.error('Error creating forum reply:', error);
+      throw error;
+    }
+  }
+
+  async updateForumReply(id: number, updates: Partial<InsertForumReply>): Promise<ForumReply | undefined> {
+    try {
+      // Include updatedAt timestamp
+      const updateData = { ...updates, updatedAt: new Date() };
+      
+      const result = await db
+        .update(forumReplies)
+        .set(updateData)
+        .where(eq(forumReplies.id, id))
+        .returning();
+      
+      return result.length > 0 ? result[0] : undefined;
+    } catch (error) {
+      console.error('Error updating forum reply:', error);
+      return undefined;
+    }
+  }
+
+  async deleteForumReply(id: number): Promise<boolean> {
+    try {
+      const result = await db
+        .delete(forumReplies)
+        .where(eq(forumReplies.id, id))
+        .returning();
+      
+      return result.length > 0;
+    } catch (error) {
+      console.error('Error deleting forum reply:', error);
+      return false;
+    }
+  }
+
+  async incrementReplyLikeCount(id: number): Promise<void> {
+    try {
+      await db
+        .update(forumReplies)
+        .set({ likeCount: sql`${forumReplies.likeCount} + 1` })
+        .where(eq(forumReplies.id, id));
+    } catch (error) {
+      console.error('Error incrementing reply like count:', error);
     }
   }
 }
