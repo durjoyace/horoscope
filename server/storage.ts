@@ -129,6 +129,77 @@ export class MemStorage implements IStorage {
     this.sessionStore = new MemoryStore({
       checkPeriod: 86400000 // prune expired entries every 24h
     });
+    
+    // Initialize with sample topics for each zodiac sign
+    this.initializeForumTopics();
+  }
+  
+  // Initialize forum topics with sample data for each zodiac sign
+  private initializeForumTopics() {
+    const adminUser = this.createDefaultAdminUser();
+    
+    // Create sample topics for each zodiac sign
+    const zodiacSigns: ZodiacSign[] = [
+      'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+      'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'
+    ];
+    
+    // Import initial topics from our data file
+    import('../client/src/data/initialForumTopics').then(({ initialForumTopics }) => {
+      zodiacSigns.forEach(sign => {
+        const signTopics = initialForumTopics[sign];
+        if (signTopics) {
+          signTopics.forEach(topicData => {
+            const topicId = this.forumTopicCurrentId++;
+            const now = new Date();
+            
+            const topic: ForumTopic = {
+              id: topicId,
+              title: topicData.title,
+              content: topicData.content,
+              userId: adminUser.id,
+              zodiacSign: sign,
+              category: topicData.category,
+              isPinned: topicData.isPinned || false,
+              viewCount: Math.floor(Math.random() * 50) + 5, // Random view count
+              likeCount: Math.floor(Math.random() * 10), // Random like count
+              createdAt: now,
+              updatedAt: now
+            };
+            
+            this.forumTopics.set(topicId, topic);
+          });
+        }
+      });
+    }).catch(err => {
+      console.error("Failed to initialize forum topics:", err);
+    });
+  }
+  
+  // Create a default admin user for sample content
+  private createDefaultAdminUser(): User {
+    const adminUserId = this.userCurrentId++;
+    const adminUser: User = {
+      id: adminUserId,
+      email: "admin@horoscopehealth.com",
+      password: "hashed_password_placeholder", // In a real app, this would be properly hashed
+      firstName: "Admin",
+      lastName: "User",
+      zodiacSign: "leo",
+      birthdate: null,
+      phone: null,
+      smsOptIn: false,
+      newsletterOptIn: true,
+      stripeCustomerId: null,
+      stripeSubscriptionId: null,
+      subscriptionStatus: 'none',
+      subscriptionTier: 'free',
+      subscriptionEndDate: null,
+      createdAt: new Date()
+    };
+    
+    this.users.set(adminUserId, adminUser);
+    return adminUser;
   }
 
   // User operations
@@ -513,6 +584,112 @@ export class DatabaseStorage implements IStorage {
     });
     
     this.sessionStore = this.pgSessionStore;
+    
+    // Check if we need to initialize the database with sample data
+    this.initializeForumTopicsIfEmpty();
+  }
+  
+  // Initialize forum topics if the database is empty
+  private async initializeForumTopicsIfEmpty() {
+    try {
+      // Check if there are any topics in the database
+      const existingTopics = await db.select({ count: sql`count(*)` }).from(forumTopics);
+      const count = Number(existingTopics[0]?.count || 0);
+      
+      if (count === 0) {
+        console.log("Initializing forum topics in database...");
+        const adminUser = await this.createDefaultAdminUser();
+        
+        // Create sample topics for each zodiac sign
+        const zodiacSigns: ZodiacSign[] = [
+          'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+          'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'
+        ];
+        
+        // Import initial topics from our data file
+        import('../client/src/data/initialForumTopics').then(async ({ initialForumTopics }) => {
+          for (const sign of zodiacSigns) {
+            const signTopics = initialForumTopics[sign];
+            if (signTopics) {
+              for (const topicData of signTopics) {
+                const now = new Date();
+                
+                try {
+                  await db.insert(forumTopics).values({
+                    title: topicData.title,
+                    content: topicData.content,
+                    userId: adminUser.id,
+                    zodiacSign: sign,
+                    category: topicData.category,
+                    isPinned: topicData.isPinned || false,
+                    viewCount: Math.floor(Math.random() * 50) + 5, // Random view count
+                    likeCount: Math.floor(Math.random() * 10), // Random like count
+                    createdAt: now,
+                    updatedAt: now
+                  });
+                } catch (err) {
+                  console.error(`Error inserting topic for ${sign}:`, err);
+                }
+              }
+            }
+          }
+          console.log("Forum topics initialization complete");
+        }).catch(err => {
+          console.error("Failed to initialize forum topics:", err);
+        });
+      }
+    } catch (err) {
+      console.error("Error checking forum topics count:", err);
+    }
+  }
+  
+  // Create a default admin user for sample content
+  private async createDefaultAdminUser(): Promise<User> {
+    try {
+      // Check if admin user already exists
+      const existingAdmin = await this.getUserByEmail("admin@horoscopehealth.com");
+      if (existingAdmin) {
+        return existingAdmin;
+      }
+      
+      // Create admin user if it doesn't exist
+      const now = new Date();
+      const [adminUser] = await db.insert(users).values({
+        email: "admin@horoscopehealth.com",
+        password: "hashed_password_placeholder", // In a real app, this would be properly hashed
+        firstName: "Admin",
+        lastName: "User",
+        zodiacSign: "leo",
+        birthdate: null,
+        phone: null,
+        smsOptIn: false,
+        newsletterOptIn: true,
+        createdAt: now
+      }).returning();
+      
+      return adminUser as User;
+    } catch (err) {
+      console.error("Error creating admin user:", err);
+      // Return a mock user as fallback
+      return {
+        id: 1,
+        email: "admin@horoscopehealth.com",
+        password: "hashed_password_placeholder",
+        firstName: "Admin",
+        lastName: "User",
+        zodiacSign: "leo",
+        birthdate: null,
+        phone: null,
+        smsOptIn: false,
+        newsletterOptIn: true,
+        createdAt: new Date(),
+        stripeCustomerId: null,
+        stripeSubscriptionId: null,
+        subscriptionStatus: 'none',
+        subscriptionTier: 'free',
+        subscriptionEndDate: null
+      };
+    }
   }
 
   // User operations
