@@ -98,7 +98,12 @@ export function Footer() {
               {Object.keys(elementGroups).map(element => (
                 <li key={element}>
                   <Link href="/elements">
-                    <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">{element} Signs</span>
+                    <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
+                      {element === 'Fire' && '🔥 Fire Signs'}
+                      {element === 'Earth' && '🌿 Earth Signs'}
+                      {element === 'Air' && '💨 Air Signs'}
+                      {element === 'Water' && '💧 Water Signs'}
+                    </span>
                   </Link>
                 </li>
               ))}
