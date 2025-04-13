@@ -26,6 +26,7 @@ import PremiumPage from "@/pages/PremiumPage";
 import AchievementsPage from "@/pages/AchievementsPage";
 import OnboardingPage from "@/pages/OnboardingPage";
 import SavedTipsPage from "@/pages/SavedTipsPage";
+import GiftPage from "@/pages/GiftPage";
 
 // Community pages
 import CommunityHome from "@/pages/community/CommunityHome";
@@ -149,6 +150,9 @@ function AppContent() {
             <ProtectedRoute path="/achievements" component={AchievementsPage} />
             <Route path="/wellness-tips">
               <SavedTipsPage />
+            </Route>
+            <Route path="/gift">
+              <GiftPage />
             </Route>
             
             {/* Community Routes */}
