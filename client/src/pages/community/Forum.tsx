@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
-import { Loader2, MessageSquare, Heart, Eye, Edit, Trash2, Plus } from "lucide-react";
+import { Loader2, MessageSquare, Heart, Eye, Edit, Trash2, Plus, ChevronLeft, ChevronRight } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";

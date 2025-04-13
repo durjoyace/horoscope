@@ -129,7 +129,7 @@ export function Footer() {
         
         {/* Bottom Credits */}
         <div className="border-t border-primary/10 pt-4 mt-4 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Battle Green Consulting LLC. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} AstroHealth Consulting LLC. All rights reserved.</p>
           <p className="mt-2">
             For entertainment purposes only. The content provided does not constitute medical advice.
           </p>
