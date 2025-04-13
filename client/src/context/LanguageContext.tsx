@@ -55,6 +55,7 @@ const enTranslations: Record<string, string> = {
   'nav.science': 'Our Science',
   'nav.contact': 'Contact',
   'nav.premium': 'Premium',
+  'nav.wellnessTips': 'Wellness Tips',
   'nav.login': 'Login',
   'nav.signup': 'Sign Up',
   'nav.logout': 'Logout',

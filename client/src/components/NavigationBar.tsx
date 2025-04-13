@@ -101,6 +101,9 @@ export function NavigationBar({
           <Link href="/community" className="text-sm font-medium hover:text-primary transition-colors">
             Community
           </Link>
+          <Link href="/wellness-tips" className="text-sm font-medium hover:text-primary transition-colors">
+            {t('nav.wellnessTips') || 'Wellness Tips'}
+          </Link>
           <Link href="/science" className="text-sm font-medium hover:text-primary transition-colors">
             {t('nav.science')}
           </Link>
@@ -307,6 +310,9 @@ export function NavigationBar({
                   </Link>
                   <Link href="/community" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
                     <span className="text-sm font-medium">Community</span>
+                  </Link>
+                  <Link href="/wellness-tips" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                    <span className="text-sm font-medium">{t('nav.wellnessTips') || 'Wellness Tips'}</span>
                   </Link>
                   <Link href="/science" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
                     <span className="text-sm font-medium">{t('nav.science')}</span>
