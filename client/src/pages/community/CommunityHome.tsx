@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { useLanguage } from '@/context/LanguageContext';
 import { zodiacSignNames, zodiacElements } from '@/data/zodiacData';
 import { ZodiacSign } from '@shared/types';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { ChevronRight, MessageSquare, Users } from 'lucide-react';
 
 export function CommunityHome() {
@@ -59,12 +59,12 @@ export function CommunityHome() {
                 <span>{t('community.your') || 'Your'} {userZodiacSign.charAt(0).toUpperCase() + userZodiacSign.slice(1)} {t('community.community') || 'Community'}</span>
               </CardTitle>
               <CardDescription>
-                {t('community.personal', 'Your personalized community based on your zodiac sign')}
+                {t('community.personal') || 'Your personalized community based on your zodiac sign'}
               </CardDescription>
             </CardHeader>
             <CardContent className="pb-4">
               <p className="text-sm">
-                {t('community.recommendation', 'Recommended topics and discussions tailored specifically for')} {userZodiacSign.charAt(0).toUpperCase() + userZodiacSign.slice(1)}.
+                {t('community.recommendation') || 'Recommended topics and discussions tailored specifically for'} {userZodiacSign.charAt(0).toUpperCase() + userZodiacSign.slice(1)}.
               </p>
             </CardContent>
             <CardFooter>
@@ -72,7 +72,7 @@ export function CommunityHome() {
                 href={`/community/${userZodiacSign}`}
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 py-2 px-4 rounded-md flex items-center justify-center gap-2 transition-colors"
               >
-                <span>{t('community.enter', 'Enter Your Community')}</span>
+                <span>{t('community.enter') || 'Enter Your Community'}</span>
                 <ChevronRight className="h-4 w-4" />
               </Link>
             </CardFooter>
@@ -97,18 +97,18 @@ export function CommunityHome() {
                     </Badge>
                   </div>
                   <CardDescription>
-                    {t(`zodiac.${sign.value}.brief`, `${sign.label} community for wellness discussions`)}
+                    {t(`zodiac.${sign.value}.brief`) || `${sign.label} community for wellness discussions`}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pb-3">
                   <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-1">
                       <MessageSquare className="h-4 w-4" />
-                      <span>~24 {t('community.topics', 'Topics')}</span>
+                      <span>~24 {t('community.topics') || 'Topics'}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Users className="h-4 w-4" />
-                      <span>~120 {t('community.members', 'Members')}</span>
+                      <span>~120 {t('community.members') || 'Members'}</span>
                     </div>
                   </div>
                 </CardContent>
@@ -117,7 +117,7 @@ export function CommunityHome() {
                     href={`/community/${sign.value}`}
                     className="w-full bg-muted hover:bg-muted/80 py-2 px-4 rounded-md flex items-center justify-center gap-1 transition-colors"
                   >
-                    <span>{t('community.view', 'View Community')}</span>
+                    <span>{t('community.view') || 'View Community'}</span>
                     <ChevronRight className="h-4 w-4" />
                   </Link>
                 </CardFooter>
