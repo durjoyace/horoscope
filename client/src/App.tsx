@@ -26,6 +26,10 @@ import PremiumPage from "@/pages/PremiumPage";
 import AchievementsPage from "@/pages/AchievementsPage";
 import OnboardingPage from "@/pages/OnboardingPage";
 
+// Admin pages
+import AdminDashboard from "@/pages/admin";
+import AdminAnalytics from "@/pages/admin/analytics";
+
 // Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -136,6 +140,11 @@ function AppContent() {
               <PremiumPage />
             </Route>
             <ProtectedRoute path="/achievements" component={AchievementsPage} />
+            
+            {/* Admin Routes */}
+            <ProtectedRoute path="/admin" component={AdminDashboard} />
+            <ProtectedRoute path="/admin/analytics" component={AdminAnalytics} />
+            
             <Route>
               <NotFound />
             </Route>
