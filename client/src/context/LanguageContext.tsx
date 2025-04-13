@@ -130,6 +130,23 @@ const enTranslations: Record<string, string> = {
   'premium.benefit2': 'Personalized nutrition and fitness recommendations based on your profile',
   'premium.benefit3': 'Access to expert-reviewed content and evidence-based health protocols',
   'premium.button': 'Upgrade to Premium',
+  'premium.heading': 'Advanced Wellness Integration',
+  // Premium Features
+  'premium.features': 'Premium Features',
+  'premium.features.weekly': 'Weekly in-depth health reports',
+  'premium.features.compatibility': 'Compatibility insights',
+  'premium.features.career': 'Career wellness guidance',
+  'premium.features.health': 'Personalized health protocols',
+  'premium.features.rituals': 'Custom wellness rituals',
+  'premium.features.support': 'Priority wellness support',
+  // Preview section
+  'premium.preview.title': 'Weekly Health Report Preview',
+  'premium.preview.subtitle': 'Sample of your personalized premium content',
+  'premium.preview.section1.title': 'Physical Wellness Focus',
+  'premium.preview.section1.content': 'Your cosmic alignment this week suggests focusing on joint mobility and flexibility exercises for optimal physical wellness.',
+  'premium.preview.section2.title': 'Mental Balance Recommendation',
+  'premium.preview.section2.content': 'The current planetary positions indicate a need for mindfulness practices to maintain emotional equilibrium.',
+  'premium.preview.note': 'Unlock full reports with premium membership',
   // For pricing box
   'premium.plan.title': 'Monthly Plan',
   'premium.plan.period': '/month',
@@ -147,7 +164,6 @@ const enTranslations: Record<string, string> = {
   'premium.pricing.button': 'Subscribe Now',
   'premium.methodology': 'Learn About Our Methodology',
   'premium.label': 'Premium',
-  'premium.features': 'Premium Features',
   'premium.upgrade': 'Upgrade to Premium',
   
   // Methodology section
@@ -633,7 +649,24 @@ const esTranslations: Record<string, string> = {
   'premium.benefit2': 'Recomendaciones personalizadas de ejercicio y nutrición',
   'premium.benefit3': 'Acceso exclusivo a contenido premium e informes mensuales especiales',
   'premium.button': 'Actualizar a Premium',
-  // For pricing box (new keys)
+  'premium.heading': 'Integración Avanzada de Bienestar',
+  // Premium Features
+  'premium.features': 'Funciones Premium',
+  'premium.features.weekly': 'Informes de salud semanales detallados',
+  'premium.features.compatibility': 'Análisis de compatibilidad',
+  'premium.features.career': 'Orientación de bienestar profesional',
+  'premium.features.health': 'Protocolos de salud personalizados',
+  'premium.features.rituals': 'Rituales de bienestar a medida',
+  'premium.features.support': 'Soporte prioritario de bienestar',
+  // Preview section
+  'premium.preview.title': 'Vista Previa del Informe Semanal',
+  'premium.preview.subtitle': 'Muestra de tu contenido premium personalizado',
+  'premium.preview.section1.title': 'Enfoque en Bienestar Físico',
+  'premium.preview.section1.content': 'Tu alineación cósmica esta semana sugiere enfocarte en ejercicios de movilidad y flexibilidad para un óptimo bienestar físico.',
+  'premium.preview.section2.title': 'Recomendación de Equilibrio Mental',
+  'premium.preview.section2.content': 'Las posiciones planetarias actuales indican una necesidad de prácticas de atención plena para mantener el equilibrio emocional.',
+  'premium.preview.note': 'Desbloquea informes completos con membresía premium',
+  // For pricing box
   'premium.plan.title': 'Plan Mensual',
   'premium.plan.period': '/mes',
   'premium.plan.feature1': 'Acceso completo a todas las funciones',
