@@ -33,11 +33,11 @@ export const WhyItWorks: React.FC = () => {
           </div>
           
           <div className="relative">
-            <div className="rounded-lg overflow-hidden shadow-lg relative z-10">
+            <div className="rounded-lg overflow-hidden shadow-lg relative z-0">
               <HoroscopePreview />
             </div>
             
-            <div className="absolute -bottom-6 -right-6 p-4 bg-amber-500 rounded-lg shadow-lg z-0">
+            <div className="absolute -bottom-6 -right-6 p-4 bg-amber-500 rounded-lg shadow-lg z-20">
               <p className="text-indigo-950 font-medium">
                 <i className="fas fa-check-circle mr-2"></i> Evidence-based recommendations
               </p>
