@@ -42,6 +42,27 @@ const enTranslations: Record<string, string> = {
   'community.connect': 'Connect with fellow members to share insights and experiences',
   'community.newTopic': 'New Topic',
   'community.all': 'All',
+  'community.description': 'Connect with others who share your zodiac sign. Discuss sign-specific wellness topics, share experiences, and get personalized advice tailored to your astrological profile.',
+  'community.your': 'Your',
+  'community.personal': 'Your personalized community based on your zodiac sign',
+  'community.recommendation': 'Recommended topics and discussions tailored specifically for',
+  'community.enter': 'Enter Your Community',
+  'community.view': 'View Community',
+  'community.members': 'Members',
+  
+  // Zodiac Sign Brief Descriptions for Community
+  'zodiac.aries.brief': 'Dynamic Aries community for wellness and motivation discussions',
+  'zodiac.taurus.brief': 'Grounded Taurus community for holistic wellness discussions',
+  'zodiac.gemini.brief': 'Versatile Gemini community for mental wellness discussions',
+  'zodiac.cancer.brief': 'Nurturing Cancer community for emotional wellness discussions',
+  'zodiac.leo.brief': 'Vibrant Leo community for confidence and wellness discussions',
+  'zodiac.virgo.brief': 'Analytical Virgo community for health optimization discussions',
+  'zodiac.libra.brief': 'Balanced Libra community for harmony and wellness discussions',
+  'zodiac.scorpio.brief': 'Intense Scorpio community for transformative wellness discussions',
+  'zodiac.sagittarius.brief': 'Adventurous Sagittarius community for holistic wellness discussions',
+  'zodiac.capricorn.brief': 'Disciplined Capricorn community for structured wellness discussions',
+  'zodiac.aquarius.brief': 'Innovative Aquarius community for progressive wellness discussions',
+  'zodiac.pisces.brief': 'Intuitive Pisces community for spiritual wellness discussions',
   
   // Auth messages
   'auth.authRequired': 'Authentication Required',
