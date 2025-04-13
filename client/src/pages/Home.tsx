@@ -147,51 +147,51 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
 
   return (
     <div className="flex flex-col">
-      {/* Hero Section - Modern health-oriented design with pizzazz */}
+      {/* Hero Section - Modern cosmic-wellness design with pizzazz */}
       <section className="relative py-10 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
-        {/* Dynamic background with energy */}
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 dark:from-teal-900/30 dark:via-cyan-900/20 dark:to-blue-900/30 overflow-hidden">
-          {/* Vibrant, energetic shapes with wellness palette */}
-          <div className="absolute top-0 left-0 w-full h-full opacity-40 dark:opacity-20 mix-blend-soft-light">
-            <div className="absolute top-1/4 left-1/5 w-72 h-72 rounded-full bg-gradient-to-r from-teal-400 to-cyan-400 dark:from-teal-600 dark:to-cyan-600 blur-2xl animate-pulse-slow"></div>
-            <div className="absolute bottom-1/3 right-1/5 w-96 h-96 rounded-full bg-gradient-to-l from-blue-400 to-emerald-400 dark:from-blue-600 dark:to-emerald-600 blur-2xl animate-pulse-slower"></div>
-            <div className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-gradient-to-tr from-indigo-400 to-teal-400 dark:from-indigo-600 dark:to-teal-600 blur-2xl animate-pulse"></div>
+        {/* Dynamic background with energy - using black and purple tones */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-slate-950 to-slate-900 overflow-hidden">
+          {/* Vibrant, energetic shapes with purple cosmic palette */}
+          <div className="absolute top-0 left-0 w-full h-full opacity-30 mix-blend-soft-light">
+            <div className="absolute top-1/4 left-1/5 w-72 h-72 rounded-full bg-gradient-to-r from-purple-700 to-violet-700 blur-2xl animate-pulse-slow"></div>
+            <div className="absolute bottom-1/3 right-1/5 w-96 h-96 rounded-full bg-gradient-to-l from-indigo-700 to-purple-700 blur-2xl animate-pulse-slower"></div>
+            <div className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-gradient-to-tr from-fuchsia-700 to-purple-800 blur-2xl animate-pulse"></div>
           </div>
           
           {/* Modern geometric patterns with motion */}
           <div className="absolute inset-0 select-none pointer-events-none">
-            <div className="absolute top-1/4 right-1/5 w-24 h-1 rounded-full bg-gradient-to-r from-emerald-300 to-teal-300 dark:from-emerald-500 dark:to-teal-500 opacity-60 dark:opacity-40 transform rotate-45 animate-pulse-slow"></div>
-            <div className="absolute bottom-1/3 left-1/4 w-24 h-1 rounded-full bg-gradient-to-r from-blue-300 to-cyan-300 dark:from-blue-500 dark:to-cyan-500 opacity-60 dark:opacity-40 transform -rotate-45 animate-pulse-slow"></div>
-            <div className="absolute top-1/2 left-2/3 w-32 h-1 rounded-full bg-gradient-to-r from-teal-300 to-blue-300 dark:from-teal-500 dark:to-blue-500 opacity-60 dark:opacity-40 transform rotate-12 animate-pulse-slow"></div>
+            <div className="absolute top-1/4 right-1/5 w-24 h-1 rounded-full bg-gradient-to-r from-purple-400 to-violet-500 opacity-60 transform rotate-45 animate-pulse-slow"></div>
+            <div className="absolute bottom-1/3 left-1/4 w-24 h-1 rounded-full bg-gradient-to-r from-fuchsia-400 to-purple-500 opacity-60 transform -rotate-45 animate-pulse-slow"></div>
+            <div className="absolute top-1/2 left-2/3 w-32 h-1 rounded-full bg-gradient-to-r from-violet-400 to-indigo-500 opacity-60 transform rotate-12 animate-pulse-slow"></div>
             
-            {/* Subtle wellness symbols */}
-            <div className="absolute top-1/3 right-1/3 text-teal-400 dark:text-teal-300 opacity-10 text-6xl transform rotate-12">❊</div>
-            <div className="absolute bottom-1/4 left-1/4 text-blue-400 dark:text-blue-300 opacity-10 text-6xl transform -rotate-12">✧</div>
+            {/* Subtle cosmic symbols */}
+            <div className="absolute top-1/3 right-1/3 text-purple-400 opacity-10 text-6xl transform rotate-12">✦</div>
+            <div className="absolute bottom-1/4 left-1/4 text-violet-400 opacity-10 text-6xl transform -rotate-12">✧</div>
           </div>
         </div>
         
         <div className="container relative mx-auto px-4 z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-5 sm:gap-8 lg:gap-12">
             <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-teal-100 to-cyan-100 dark:from-teal-900/60 dark:to-cyan-900/60 text-teal-700 dark:text-teal-300 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs md:text-sm font-medium mb-6 sm:mb-8 md:mb-10 border border-teal-200/50 dark:border-teal-700/30 shadow-md animate-fade-in">
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-purple-900/80 to-indigo-900/80 text-purple-200 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs md:text-sm font-medium mb-6 sm:mb-8 md:mb-10 border border-purple-500/30 shadow-md animate-fade-in">
                 <Activity className="h-3.5 w-3.5 md:h-4 md:w-4 mr-1" />
                 <span className="tracking-wide">{t('hero.tagline')}</span>
               </div>
               
-              {/* Dynamic branded header with gradient text */}
+              {/* Dynamic branded header with cosmic gradient text */}
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-3 sm:mb-4 md:mb-5 animate-fade-in-delay relative">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-500">
                   {t('hero.brand')}
                 </span>
-                <div className="absolute -bottom-1.5 left-0 w-24 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full"></div>
+                <div className="absolute -bottom-1.5 left-0 w-24 h-1 bg-gradient-to-r from-purple-500 to-fuchsia-500 rounded-full"></div>
               </h1>
               
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-4 sm:mb-5 md:mb-7 text-slate-800 dark:text-slate-100 font-medium animate-fade-in-delay-2">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-4 sm:mb-5 md:mb-7 text-slate-100 font-medium animate-fade-in-delay-2">
                 <span className="block">{t('hero.title1')}</span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500 dark:from-emerald-400 dark:to-cyan-400">{t('hero.title2')}</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-500">{t('hero.title2')}</span>
               </h1>
               
-              <p className="magazine-lead text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 mb-6 sm:mb-7 md:mb-9 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay-3 leading-relaxed">
+              <p className="magazine-lead text-sm sm:text-base md:text-lg text-slate-300 mb-6 sm:mb-7 md:mb-9 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay-3 leading-relaxed">
                 {t('hero.description')}
               </p>
               
@@ -206,7 +206,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                       
                       {/* Main signup card with benefits inside - Modern wellness style */}
                       <div className="relative max-w-md mx-auto">
-                        <div className="bg-gradient-to-br from-teal-600 to-blue-700 rounded-2xl p-8 mb-6 shadow-lg">
+                        <div className="bg-gradient-to-br from-purple-900 to-indigo-900 rounded-2xl p-8 mb-6 shadow-lg">
                           {/* Email input with compelling benefits */}
                           <div className="space-y-6">
                             <div className="text-center space-y-2">
@@ -218,9 +218,9 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               </p>
                             </div>
 
-                            {/* Clean, modern email input */}
+                            {/* Clean, modern email input with cosmic style */}
                             <div className="relative">
-                              <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-400/30 to-cyan-400/30 rounded-full blur-sm opacity-60"></div>
+                              <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-400/30 to-fuchsia-400/30 rounded-full blur-sm opacity-60"></div>
                               <Input
                                 type="email"
                                 placeholder={t('signup.email.placeholder')}
@@ -261,33 +261,33 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               )}
                             </div>
                             
-                            {/* Premium benefits with modern wellness icons */}
+                            {/* Premium benefits with cosmic icons */}
                             <div className="grid grid-cols-2 gap-3 pt-2">
                               <div className="flex items-start space-x-2">
-                                <Brain className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                                <Brain className="h-5 w-5 text-purple-300 flex-shrink-0 mt-0.5" />
                                 <span className="text-white text-sm">{t('signup.benefits.insights')}</span>
                               </div>
                               <div className="flex items-start space-x-2">
-                                <Leaf className="h-5 w-5 text-emerald-300 flex-shrink-0 mt-0.5" />
+                                <Sparkles className="h-5 w-5 text-fuchsia-300 flex-shrink-0 mt-0.5" />
                                 <span className="text-white text-sm">{t('signup.benefits.wellness')}</span>
                               </div>
                               <div className="flex items-start space-x-2">
-                                <Activity className="h-5 w-5 text-blue-300 flex-shrink-0 mt-0.5" />
+                                <Activity className="h-5 w-5 text-violet-300 flex-shrink-0 mt-0.5" />
                                 <span className="text-white text-sm">{t('signup.benefits.forecasts')}</span>
                               </div>
                               <div className="flex items-start space-x-2">
-                                <HeartPulse className="h-5 w-5 text-teal-300 flex-shrink-0 mt-0.5" />
+                                <Star className="h-5 w-5 text-indigo-300 flex-shrink-0 mt-0.5" />
                                 <span className="text-white text-sm">{t('signup.benefits.rituals')}</span>
                               </div>
                             </div>
 
-                            {/* Modern wellness-styled CTA Button */}
+                            {/* Cosmic-styled CTA Button */}
                             <div className="relative mt-4 group">
-                              <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-400/60 to-blue-400/60 rounded-full opacity-70 group-hover:opacity-100 blur-sm transition duration-300"></div>
+                              <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-400/60 to-fuchsia-400/60 rounded-full opacity-70 group-hover:opacity-100 blur-sm transition duration-300"></div>
                               <Button 
                                 type="submit" 
                                 disabled={isSubmitting} 
-                                className="relative w-full h-12 sm:h-14 bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white font-bold text-base sm:text-lg rounded-full transition-all duration-300 border border-white/20 shadow-md group-hover:shadow-lg"
+                                className="relative w-full h-12 sm:h-14 bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white font-bold text-base sm:text-lg rounded-full transition-all duration-300 border border-white/20 shadow-md group-hover:shadow-lg"
                                 aria-label={t('signup.button')}
                               >
                                 {isSubmitting ? (
@@ -342,19 +342,19 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             
             <div className="flex-1 flex justify-center lg:justify-end mt-8 lg:mt-0">
               <div className="relative w-full max-w-[320px] md:max-w-md">
-                {/* Modern wellness decorative elements */}
-                <div className="absolute -inset-2 md:-inset-3 bg-gradient-to-r from-teal-500/10 via-blue-500/10 to-cyan-500/10 rounded-lg transform rotate-3 animate-pulse-slow"></div>
-                <div className="absolute -inset-4 md:-inset-6 border-2 border-teal-500/10 rounded-lg transform -rotate-1 animate-pulse-slower"></div>
-                <div className="absolute -inset-1 md:-inset-2 border border-blue-500/10 rounded-full animate-spin-slow"></div>
+                {/* Cosmic decorative elements */}
+                <div className="absolute -inset-2 md:-inset-3 bg-gradient-to-r from-purple-500/10 via-fuchsia-500/10 to-indigo-500/10 rounded-lg transform rotate-3 animate-pulse-slow"></div>
+                <div className="absolute -inset-4 md:-inset-6 border-2 border-purple-500/10 rounded-lg transform -rotate-1 animate-pulse-slower"></div>
+                <div className="absolute -inset-1 md:-inset-2 border border-indigo-500/10 rounded-full animate-spin-slow"></div>
                 
-                {/* Main card - Wellness styled */}
-                <div className="relative backdrop-blur-md rounded-lg p-4 md:p-6 lg:p-8 shadow-xl animate-fade-in-up bg-gradient-to-br from-teal-500/20 to-blue-700/20 border border-cyan-500/30">
+                {/* Main card - Cosmic styled */}
+                <div className="relative backdrop-blur-md rounded-lg p-4 md:p-6 lg:p-8 shadow-xl animate-fade-in-up bg-gradient-to-br from-purple-900/40 to-indigo-900/40 border border-purple-500/30">
                   <div className="text-center mb-4 md:mb-6">
-                    <div className="p-2 md:p-3 bg-gradient-to-br from-teal-500/20 to-blue-500/20 rounded-full inline-flex justify-center items-center mb-3 md:mb-4">
-                      <Activity className="h-6 w-6 md:h-8 md:w-8 text-cyan-500 animate-pulse" />
+                    <div className="p-2 md:p-3 bg-gradient-to-br from-purple-500/20 to-fuchsia-500/20 rounded-full inline-flex justify-center items-center mb-3 md:mb-4">
+                      <Sparkles className="h-6 w-6 md:h-8 md:w-8 text-purple-400 animate-pulse" />
                     </div>
-                    <h2 className="text-xl md:text-2xl font-bold mb-1">{t('zodiac.profile.title')}</h2>
-                    <p className="text-sm text-muted-foreground">{t('zodiac.profile.subtitle')}</p>
+                    <h2 className="text-xl md:text-2xl font-bold mb-1 text-slate-100">{t('zodiac.profile.title')}</h2>
+                    <p className="text-sm text-purple-200/80">{t('zodiac.profile.subtitle')}</p>
                   </div>
                   
                   <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 md:gap-3 mb-4 md:mb-6">
@@ -384,7 +384,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                         {zodiacSignNames.find(s => s.value === selectedSign)?.dates}
                       </p>
                       <Button 
-                        className="w-full shadow-md hover:shadow-lg transition-all text-sm bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 hover:scale-[1.02]"
+                        className="w-full shadow-md hover:shadow-lg transition-all text-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 hover:scale-[1.02]"
                         onClick={() => {
                           // Scroll to email input if email is not provided
                           if (!email) {
