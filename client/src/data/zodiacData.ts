@@ -1,18 +1,18 @@
 import { ZodiacSign } from "@shared/types";
 
 export const zodiacSignNames = [
-  { value: "aries", label: "Aries" },
-  { value: "taurus", label: "Taurus" },
-  { value: "gemini", label: "Gemini" },
-  { value: "cancer", label: "Cancer" },
-  { value: "leo", label: "Leo" },
-  { value: "virgo", label: "Virgo" },
-  { value: "libra", label: "Libra" },
-  { value: "scorpio", label: "Scorpio" },
-  { value: "sagittarius", label: "Sagittarius" },
-  { value: "capricorn", label: "Capricorn" },
-  { value: "aquarius", label: "Aquarius" },
-  { value: "pisces", label: "Pisces" },
+  { value: "aries", label: "Aries", symbol: "♈", dates: "Mar 21 - Apr 19", element: "Fire", modality: "Cardinal", planet: "Mars", rulingPlanet: "Mars", traits: "Energetic, Courageous, Passionate", healthFocus: "Head, brain, and adrenal glands" },
+  { value: "taurus", label: "Taurus", symbol: "♉", dates: "Apr 20 - May 20", element: "Earth", modality: "Fixed", planet: "Venus", rulingPlanet: "Venus", traits: "Patient, Reliable, Persistent", healthFocus: "Neck, throat, and thyroid" },
+  { value: "gemini", label: "Gemini", symbol: "♊", dates: "May 21 - Jun 20", element: "Air", modality: "Mutable", planet: "Mercury", rulingPlanet: "Mercury", traits: "Curious, Adaptable, Communicative", healthFocus: "Lungs, shoulders, arms, and nervous system" },
+  { value: "cancer", label: "Cancer", symbol: "♋", dates: "Jun 21 - Jul 22", element: "Water", modality: "Cardinal", planet: "Moon", rulingPlanet: "Moon", traits: "Nurturing, Intuitive, Emotional", healthFocus: "Stomach, breasts, and digestive system" },
+  { value: "leo", label: "Leo", symbol: "♌", dates: "Jul 23 - Aug 22", element: "Fire", modality: "Fixed", planet: "Sun", rulingPlanet: "Sun", traits: "Confident, Generous, Creative", healthFocus: "Heart, spine, and upper back" },
+  { value: "virgo", label: "Virgo", symbol: "♍", dates: "Aug 23 - Sep 22", element: "Earth", modality: "Mutable", planet: "Mercury", rulingPlanet: "Mercury", traits: "Analytical, Practical, Methodical", healthFocus: "Intestines and digestive system" },
+  { value: "libra", label: "Libra", symbol: "♎", dates: "Sep 23 - Oct 22", element: "Air", modality: "Cardinal", planet: "Venus", rulingPlanet: "Venus", traits: "Diplomatic, Fair, Social", healthFocus: "Kidneys, lower back, and skin" },
+  { value: "scorpio", label: "Scorpio", symbol: "♏", dates: "Oct 23 - Nov 21", element: "Water", modality: "Fixed", planet: "Pluto", rulingPlanet: "Pluto", traits: "Passionate, Resourceful, Brave", healthFocus: "Reproductive system and elimination" },
+  { value: "sagittarius", label: "Sagittarius", symbol: "♐", dates: "Nov 22 - Dec 21", element: "Fire", modality: "Mutable", planet: "Jupiter", rulingPlanet: "Jupiter", traits: "Optimistic, Freedom-loving, Honest", healthFocus: "Hips, thighs, and liver" },
+  { value: "capricorn", label: "Capricorn", symbol: "♑", dates: "Dec 22 - Jan 19", element: "Earth", modality: "Cardinal", planet: "Saturn", rulingPlanet: "Saturn", traits: "Ambitious, Disciplined, Patient", healthFocus: "Bones, joints, and skin" },
+  { value: "aquarius", label: "Aquarius", symbol: "♒", dates: "Jan 20 - Feb 18", element: "Air", modality: "Fixed", planet: "Uranus", rulingPlanet: "Uranus", traits: "Progressive, Original, Independent", healthFocus: "Circulation, ankles, and calves" },
+  { value: "pisces", label: "Pisces", symbol: "♓", dates: "Feb 19 - Mar 20", element: "Water", modality: "Mutable", planet: "Neptune", rulingPlanet: "Neptune", traits: "Compassionate, Artistic, Intuitive", healthFocus: "Feet, immune system, and lymphatics" },
 ];
 
 export const zodiacSignDates = {

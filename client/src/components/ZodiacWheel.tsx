@@ -142,7 +142,7 @@ export default function ZodiacWheel({
       
       {/* Center */}
       <div 
-        className="absolute rounded-full bg-primary/20 flex items-center justify-center"
+        className="absolute rounded-full bg-white border border-primary/30 shadow-sm flex items-center justify-center z-10"
         style={{
           width: radius * 0.5,
           height: radius * 0.5,
