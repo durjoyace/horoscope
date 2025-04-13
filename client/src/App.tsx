@@ -27,6 +27,7 @@ import AchievementsPage from "@/pages/AchievementsPage";
 import OnboardingPage from "@/pages/OnboardingPage";
 
 // Community pages
+import CommunityHome from "@/pages/community/CommunityHome";
 import Forum from "@/pages/community/Forum";
 import NewTopic from "@/pages/community/NewTopic";
 import TopicDetail from "@/pages/community/TopicDetail";
@@ -147,6 +148,9 @@ function AppContent() {
             <ProtectedRoute path="/achievements" component={AchievementsPage} />
             
             {/* Community Routes */}
+            <Route path="/community">
+              <CommunityHome />
+            </Route>
             <Route path="/community/:sign">
               <Forum />
             </Route>
