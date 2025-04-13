@@ -40,6 +40,7 @@ import { zodiacSignNames, zodiacWellnessRecommendations } from '@/data/zodiacDat
 export default function ZodiacLibrary() {
   const [selectedSign, setSelectedSign] = useState<ZodiacSign>('aries');
   const [activeTab, setActiveTab] = useState('overview');
+  const [view, setView] = useState<'wheel' | 'compatibility'>('wheel');
   
   // Add missing properties to all zodiac signs
   const zodiacSignsData = zodiacSignNames.map(sign => ({
@@ -66,7 +67,7 @@ export default function ZodiacLibrary() {
   return (
     <div className="container mx-auto px-4 py-12">
       {/* Header */}
-      <div className="text-center mb-16">
+      <div className="text-center mb-8 md:mb-12">
         <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
           Zodiac Wellness Library
         </h1>
@@ -75,53 +76,85 @@ export default function ZodiacLibrary() {
         </p>
       </div>
       
-      {/* Interactive Zodiac Wheel */}
-      <div className="mb-10 md:mb-20">
-        <Card>
-          <CardHeader className="text-center">
-            <CardTitle className="flex items-center justify-center gap-2 text-xl md:text-2xl">
-              <Star className="h-5 w-5 md:h-6 md:w-6 text-primary" /> 
-              Interactive Zodiac Wheel
-            </CardTitle>
-            <CardDescription className="text-sm md:text-base">
-              Click on any sign to explore its detailed profile and wellness insights
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex justify-center p-2 md:p-6">
-            <div>
-              <ZodiacWheel
-                onSelectSign={setSelectedSign}
-                activeSigns={selectedSign ? [selectedSign] : []}
-                highlightElements={true}
-                size={window.innerWidth < 768 ? "sm" : "lg"}
-              />
-              
-              {/* Sign labels for mobile view */}
-              {window.innerWidth < 768 && (
-                <div className="grid grid-cols-4 gap-2 mt-6 text-center">
-                  {zodiacSignNames.map(sign => (
-                    <Button 
-                      key={sign.value}
-                      variant="ghost" 
-                      size="sm"
-                      className={`flex flex-col items-center p-2 h-auto ${
-                        selectedSign === sign.value ? 'bg-primary/10 text-primary' : ''
-                      }`}
-                      onClick={() => setSelectedSign(sign.value as ZodiacSign)}
-                    >
-                      <span className="text-lg">{sign.symbol}</span>
-                      <span className="text-xs">{sign.label}</span>
-                    </Button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+      {/* Navigation Tabs */}
+      <div className="flex justify-center mb-10">
+        <div className="inline-flex bg-muted p-1 rounded-lg">
+          <button 
+            onClick={() => setView('wheel')} 
+            className={`px-4 py-2.5 rounded-md flex items-center gap-2 text-sm md:text-base font-medium transition-colors ${
+              view === 'wheel' 
+                ? 'bg-background text-foreground shadow-sm' 
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            <Star className="h-4 w-4" />
+            <span>Zodiac Wheel</span>
+          </button>
+          
+          <button 
+            onClick={() => setView('compatibility')} 
+            className={`px-4 py-2.5 rounded-md flex items-center gap-2 text-sm md:text-base font-medium transition-colors ${
+              view === 'compatibility' 
+                ? 'bg-background text-foreground shadow-sm' 
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            <Heart className="h-4 w-4" />
+            <span>Compatibility Calculator</span>
+          </button>
+        </div>
       </div>
       
-      {/* Zodiac Sign Details */}
-      {selectedSignData && (
+      {/* Content based on selected view */}
+      {view === 'wheel' ? (
+        <>
+          {/* Interactive Zodiac Wheel */}
+          <div className="mb-10 md:mb-20">
+            <Card>
+              <CardHeader className="text-center">
+                <CardTitle className="flex items-center justify-center gap-2 text-xl md:text-2xl">
+                  <Star className="h-5 w-5 md:h-6 md:w-6 text-primary" /> 
+                  Interactive Zodiac Wheel
+                </CardTitle>
+                <CardDescription className="text-sm md:text-base">
+                  Click on any sign to explore its detailed profile and wellness insights
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex justify-center p-2 md:p-6">
+                <div>
+                  <ZodiacWheel
+                    onSelectSign={setSelectedSign}
+                    activeSigns={selectedSign ? [selectedSign] : []}
+                    highlightElements={true}
+                    size={window.innerWidth < 768 ? "sm" : "lg"}
+                  />
+                  
+                  {/* Sign labels for mobile view */}
+                  {window.innerWidth < 768 && (
+                    <div className="grid grid-cols-4 gap-2 mt-6 text-center">
+                      {zodiacSignNames.map(sign => (
+                        <Button 
+                          key={sign.value}
+                          variant="ghost" 
+                          size="sm"
+                          className={`flex flex-col items-center p-2 h-auto ${
+                            selectedSign === sign.value ? 'bg-primary/10 text-primary' : ''
+                          }`}
+                          onClick={() => setSelectedSign(sign.value as ZodiacSign)}
+                        >
+                          <span className="text-lg">{sign.symbol}</span>
+                          <span className="text-xs">{sign.label}</span>
+                        </Button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          
+          {/* Zodiac Sign Details */}
+          {selectedSignData && (
         <div className="mb-10 md:mb-20">
           <Card>
             <CardHeader className="p-4 md:p-6">
@@ -391,19 +424,91 @@ export default function ZodiacLibrary() {
         </div>
       )}
       
-      {/* Compatibility Calculator */}
-      <div className="mb-10 md:mb-20">
-        <div className="text-center mb-6 md:mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4">Zodiac Compatibility Calculator</h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-            Discover how different signs interact in relationships, friendships, and wellness partnerships
-          </p>
+          {/* Close the wheel view */}
+          </>
+      ) : (
+        /* Compatibility Calculator View */
+        <div className="mb-10 md:mb-20 relative">
+          {/* Background gradient for visual appeal */}
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-primary/10 rounded-3xl -z-10"></div>
+          
+          {/* Decorative elements */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/3 translate-x-1/4 blur-2xl"></div>
+          <div className="absolute bottom-0 left-0 w-40 h-40 bg-primary/5 rounded-full translate-y-1/4 -translate-x-1/4 blur-2xl"></div>
+          
+          <div className="pt-10 pb-12 px-4 md:px-8 md:pt-12 md:pb-16 rounded-3xl border border-primary/10">
+            <div className="text-center mb-8 md:mb-12">
+              <div className="inline-flex items-center justify-center mb-4 bg-primary/10 text-primary px-4 py-1 rounded-full text-sm font-medium">
+                Featured Tool
+              </div>
+              <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
+                Zodiac Compatibility Calculator
+              </h2>
+              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+                Discover how different signs interact in relationships, friendships, and wellness partnerships
+              </p>
+            </div>
+            
+            <div className="px-0 md:px-4 lg:px-8">
+              <ZodiacCompatibility />
+            </div>
+            
+            <div className="text-center mt-8">
+              <p className="text-sm text-muted-foreground mb-3">
+                Want more detailed compatibility insights?
+              </p>
+              <Button className="bg-gradient-to-r from-[#8a00ff] to-[#5000ff] text-white">
+                Get Premium Analysis
+              </Button>
+            </div>
+          </div>
+          
+          {/* Additional information about compatibility */}
+          <div className="mt-16 grid md:grid-cols-3 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Heart className="h-5 w-5 text-red-500" /> Love Compatibility
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Understand how your zodiac sign's traits influence romantic relationships and 
+                  find your most harmonious love matches based on astrological elements and modalities.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-5 w-5 text-blue-500" /> Friendship Dynamics
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Discover which zodiac signs naturally complement your social energy and learn how
+                  to navigate potential conflicts based on elemental and planetary influences.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Activity className="h-5 w-5 text-green-500" /> Wellness Partnerships
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Find ideal wellness accountability partners based on zodiac compatibility, 
+                  and learn which signs can help you achieve balance in your health journey.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-        
-        <div className="px-2 md:px-0">
-          <ZodiacCompatibility />
-        </div>
-      </div>
+      )}
     </div>
   );
 }
