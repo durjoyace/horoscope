@@ -33,6 +33,83 @@ import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 
+// Define types for analytics data
+interface UserEngagementStats {
+  totalUsers: number;
+  activeUsers: {
+    daily: number;
+    weekly: number;
+    monthly: number;
+  };
+  signupsByZodiacSign: Record<string, number>;
+  engagementRate: number;
+  premiumConversion: number;
+  deliveryStats: {
+    emailDeliveryRate: number;
+    smsDeliveryRate: number;
+    totalDeliveries: number;
+  };
+}
+
+interface ContentPerformanceMetrics {
+  topPerformingHoroscopes: Array<{
+    date: string;
+    sign: string;
+    openRate: number;
+    clickRate: number;
+  }>;
+  mostEngagedZodiacSigns: Array<{
+    sign: string;
+    engagementScore: number;
+  }>;
+  categoryEngagement: Record<string, number>;
+}
+
+interface UserRetentionData {
+  retentionRate: number;
+  retentionByZodiacSign: Record<string, number>;
+  churnRate: number;
+  averageSessionDuration: number;
+}
+
+interface AnalyticsDashboardData {
+  userEngagement: UserEngagementStats;
+  contentPerformance: ContentPerformanceMetrics;
+  userRetention: UserRetentionData;
+  lastUpdated: string;
+}
+
+interface ApiResponse {
+  success: boolean;
+  data: AnalyticsDashboardData;
+}
+
+// Chart data interfaces
+interface SignupChartData {
+  name: string;
+  value: number;
+  color: string;
+}
+
+interface TopHoroscopeChartData {
+  name: string;
+  open: number;
+  click: number;
+  color: string;
+}
+
+interface CategoryChartData {
+  name: string;
+  value: number;
+  color: string;
+}
+
+interface RetentionChartData {
+  name: string;
+  retention: number;
+  color: string;
+}
+
 // Define colors for our charts
 const COLORS = [
   "#8B5CF6", // Purple
@@ -59,16 +136,9 @@ export default function AnalyticsDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
 
   // Fetch analytics data
-  const { data: analyticsData, isLoading, error } = useQuery<{success: boolean, data: any}>({
+  const { data: analyticsData, isLoading, error } = useQuery<ApiResponse>({
     queryKey: ["/api/admin/analytics"],
     retry: 1,
-    onError: (err) => {
-      toast({
-        title: "Error loading analytics",
-        description: err instanceof Error ? err.message : "Failed to load analytics data",
-        variant: "destructive",
-      });
-    },
   });
 
   // Handle loading state
@@ -93,17 +163,17 @@ export default function AnalyticsDashboard() {
   const data = analyticsData.data;
   
   // Format the data for zodiac sign distribution chart
-  const signupsByZodiacData = Object.entries(data.userEngagement.signupsByZodiacSign).map(
+  const signupsByZodiacData: SignupChartData[] = Object.entries(data.userEngagement.signupsByZodiacSign).map(
     ([sign, count], index) => ({
       name: sign.charAt(0).toUpperCase() + sign.slice(1),
-      value: count,
+      value: count as number,
       color: COLORS[index % COLORS.length],
     })
-  ).sort((a, b) => b.value - a.value);
+  ).sort((a, b) => (b.value as number) - (a.value as number));
 
   // Format the data for content performance chart
-  const topHoroscopesData = data.contentPerformance.topPerformingHoroscopes.map(
-    (item, index) => ({
+  const topHoroscopesData: TopHoroscopeChartData[] = data.contentPerformance.topPerformingHoroscopes.map(
+    (item: any, index: number) => ({
       name: item.sign.charAt(0).toUpperCase() + item.sign.slice(1),
       open: item.openRate,
       click: item.clickRate,
@@ -112,22 +182,22 @@ export default function AnalyticsDashboard() {
   );
 
   // Format the data for category engagement chart
-  const categoryEngagementData = Object.entries(data.contentPerformance.categoryEngagement).map(
+  const categoryEngagementData: CategoryChartData[] = Object.entries(data.contentPerformance.categoryEngagement).map(
     ([category, value], index) => ({
       name: category.charAt(0).toUpperCase() + category.slice(1),
-      value: value,
+      value: value as number,
       color: COLORS[index % COLORS.length],
     })
-  ).sort((a, b) => b.value - a.value);
+  ).sort((a, b) => (b.value as number) - (a.value as number));
   
   // Format the data for retention by zodiac sign
-  const retentionBySignData = Object.entries(data.userRetention.retentionByZodiacSign).map(
+  const retentionBySignData: RetentionChartData[] = Object.entries(data.userRetention.retentionByZodiacSign).map(
     ([sign, retention], index) => ({
       name: sign.charAt(0).toUpperCase() + sign.slice(1),
-      retention: retention,
+      retention: retention as number,
       color: COLORS[index % COLORS.length],
     })
-  ).sort((a, b) => b.retention - a.retention);
+  ).sort((a, b) => (b.retention as number) - (a.retention as number));
 
   return (
     <div className="container mx-auto px-4 py-10 space-y-6">

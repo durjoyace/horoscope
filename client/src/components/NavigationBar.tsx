@@ -181,6 +181,12 @@ export function NavigationBar({
                       <span>{t('user.settings')}</span>
                     </Link>
                   </DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer" asChild>
+                    <Link href="/admin" className="flex items-center gap-2 w-full">
+                      <BarChart className="h-4 w-4 text-purple-500" />
+                      <span>Admin Dashboard</span>
+                    </Link>
+                  </DropdownMenuItem>
                   {isPremium ? (
                     <DropdownMenuItem className="cursor-pointer" asChild>
                       <Link href="/premium" className="flex items-center gap-2 w-full">
@@ -322,6 +328,12 @@ export function NavigationBar({
                           <User className="h-4 w-4" />
                         </div>
                         <span className="text-sm font-medium">{t('user.profile')}</span>
+                      </Link>
+                      <Link href="/admin" className="flex items-center gap-3 p-2.5 rounded-md bg-muted/70 hover:bg-muted transition-colors">
+                        <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                          <BarChart className="h-4 w-4" />
+                        </div>
+                        <span className="text-sm font-medium">Admin Dashboard</span>
                       </Link>
                       {isPremium ? (
                         <Link href="/premium" className="flex items-center gap-3 p-2.5 rounded-md bg-amber-50/40 hover:bg-amber-50/70 transition-colors">
