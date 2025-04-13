@@ -318,7 +318,88 @@ const enTranslations: Record<string, string> = {
   'tips.removedTitle': 'Tip Removed',
   'tips.removedDescription': 'The wellness tip has been removed from your collection.',
   'tips.savedCollection': 'Saved Wellness Tips',
-  'tips.noSavedTitle': 'No Saved Tips Yet',
+  'tips.noSavedTitle': 'No Saved Tips',
+  
+  // Features Section
+  'features.heading': 'Personalized Wellness Features',
+  'features.subheading': 'Our platform combines astrological insights with evidence-based wellness approaches to create a truly personalized experience.',
+  
+  // Features - Personalized
+  'features.personalized.title': 'Personalized Analysis',
+  'features.personalized.desc': 'Get wellness recommendations tailored to your zodiac profile and personal needs.',
+  'features.personalized.detail.title1': 'Your Cosmic Profile',
+  'features.personalized.detail.content1': 'Our algorithm analyzes your zodiac sign\'s elemental properties and planetary influences to identify your natural wellness tendencies.',
+  'features.personalized.detail.title2': 'Personalized Recommendations',
+  'features.personalized.detail.content2': 'Receive daily wellness suggestions that align with your cosmic profile and adapt to your feedback over time.',
+  
+  // Features - Mental
+  'features.mental.title': 'Mental Wellness',
+  'features.mental.desc': 'Discover mindfulness and stress-reduction techniques aligned with your zodiac traits.',
+  'features.mental.detail.title1': 'Sign-Specific Mindfulness',
+  'features.mental.detail.content1': 'Access meditation and mindfulness practices designed to complement your zodiac sign\'s natural mental patterns.',
+  'features.mental.detail.title2': 'Stress Response Insights',
+  'features.mental.detail.content2': 'Learn how your sign typically responds to stress and discover targeted techniques to maintain mental balance.',
+  
+  // Features - Alignment
+  'features.alignment.title': 'Cosmic Alignment',
+  'features.alignment.desc': 'Sync your wellness routines with astrological patterns for optimal results.',
+  'features.alignment.detail.title1': 'Planetary Timing',
+  'features.alignment.detail.content1': 'Time your wellness activities to align with favorable planetary positions for your sign.',
+  'features.alignment.detail.title2': 'Seasonal Adaptation',
+  'features.alignment.detail.content2': 'Adjust your health practices according to seasonal changes that particularly affect your zodiac element.',
+  
+  // Features - Physical
+  'features.physical.title': 'Physical Wellness',
+  'features.physical.desc': 'Exercise and movement recommendations tailored to your zodiac strengths.',
+  'features.physical.detail.title1': 'Element-Based Activity',
+  'features.physical.detail.content1': 'Discover physical activities that complement your zodiac element\'s natural energy patterns.',
+  'features.physical.detail.title2': 'Strength Optimization',
+  'features.physical.detail.content2': 'Focus on exercises that enhance your sign\'s natural physical strengths while addressing potential weaknesses.',
+  
+  // Features - Holistic
+  'features.holistic.title': 'Holistic Integration',
+  'features.holistic.desc': 'Connect mind, body, and cosmic influences for complete wellness.',
+  'features.holistic.detail.title1': 'Whole-Being Approach',
+  'features.holistic.detail.content1': 'Our recommendations integrate physical, mental, and spiritual practices specific to your zodiac profile.',
+  'features.holistic.detail.title2': 'Elemental Balance',
+  'features.holistic.detail.content2': 'Learn techniques to balance your dominant element with complementary practices from other elemental domains.',
+  
+  // Features - Daily
+  'features.daily.title': 'Daily Guidance',
+  'features.daily.desc': 'Receive daily horoscope readings with actionable wellness advice.',
+  'features.daily.detail.title1': 'Daily Horoscope',
+  'features.daily.detail.content1': 'Start each day with insights about cosmic influences affecting your sign and how they might impact your wellbeing.',
+  'features.daily.detail.title2': 'Practical Recommendations',
+  'features.daily.detail.content2': 'Get specific, actionable wellness suggestions tailored to the day\'s astrological forecast for your sign.',
+  
+  // Features - Insights
+  'features.insights.title': 'Wellness Insights',
+  'features.insights.desc': 'Gain deeper understanding of your health patterns through astrological analysis.',
+  'features.insights.detail.title1': 'Pattern Recognition',
+  'features.insights.detail.content1': 'Identify recurring wellness challenges related to your zodiac sign and learn effective strategies to address them.',
+  'features.insights.detail.title2': 'Preventive Guidance',
+  'features.insights.detail.content2': 'Receive personalized tips to prevent health issues common to your zodiac sign before they arise.',
+  
+  // Testimonials Section
+  'testimonials.heading': 'What Our Users Say',
+  'testimonials.subheading': 'Discover how HoroscopeHealth has transformed wellness routines for people just like you.',
+  'testimonials.quote1': 'As a Cancer, I\'ve always been sensitive to my environment. HoroscopeHealth helped me understand my need for emotional wellness practices and how they affect my physical health. My sleep quality has improved dramatically!',
+  'testimonials.author1': 'Sarah K.',
+  'testimonials.quote2': 'The personalized exercise recommendations were spot-on for my Leo energy. I\'ve finally found a fitness routine I can stick with because it actually works with my natural tendencies instead of against them.',
+  'testimonials.author2': 'Michael R.',
+  'testimonials.quote3': 'Being a Virgo, I was skeptical about mixing astrology with health science. But the evidence-based approach won me over, and the personalized nutrition guidance has helped me resolve digestive issues I\'ve had for years.',
+  'testimonials.author3': 'Jennifer L.',
+  'testimonials.quote4': 'The mental wellness techniques tailored for Pisces have been life-changing for me. I\'ve finally found meditation practices that work with my intuitive nature rather than forcing me into a one-size-fits-all approach.',
+  'testimonials.author4': 'David W.',
+  'testimonials.quote5': 'As a Taurus, consistency is key for me. The structured wellness plans that still honor my need for comfort and pleasure have helped me build sustainable health habits for the first time in my life.',
+  'testimonials.author5': 'Melissa T.',
+  
+  // CTA Section
+  'cta.heading': 'Start Your Cosmic Wellness Journey Today',
+  'cta.subheading': 'Join thousands who have transformed their wellness routine with personalized astrological insights',
+  'cta.button': 'Get Started Now',
+  'cta.disclaimer': 'The astrological insights provided on this website are for informational and entertainment purposes only and should not replace professional medical advice.',
+  'cta.copyright': '© {year} Battle Green Consulting LLC. All rights reserved.',
   'tips.noSavedDescription': 'Your saved wellness tips will appear here.',
   'tips.goExplore': 'Explore Wellness Tips',
   'tips.allCategories': 'All',
