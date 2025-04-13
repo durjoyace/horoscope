@@ -292,6 +292,23 @@ const enTranslations: Record<string, string> = {
   'dashboard.premium.monthly.title': 'Unlock Monthly Forecasts',
   'dashboard.premium.monthly.description': 'Upgrade to Premium for comprehensive monthly wellness forecasts and planning tools.',
   
+  // Wellness Tips
+  'tips.title': 'Wellness Tip',
+  'tips.daily': 'Daily Tip',
+  'tips.close': 'Close',
+  'tips.next': 'Next Tip',
+  'tips.save': 'Save Tip',
+  'tips.share': 'Share Tip',
+  'tips.category.nutrition': 'Nutrition',
+  'tips.category.exercise': 'Exercise',
+  'tips.category.mindfulness': 'Mindfulness',
+  'tips.category.sleep': 'Sleep',
+  'tips.category.hydration': 'Hydration',
+  'tips.personalized': 'Personalized for your cosmic profile',
+  'tips.element': 'Element',
+  'tips.zodiac': 'Zodiac',
+  'tips.universal': 'Universal',
+  
   // Footer
   'footer.copyright': '© 2025 Horoscope Health. All rights reserved.',
   'footer.disclaimer': 'Disclaimer: The astrological insights provided on this website are for informational and entertainment purposes only and should not replace professional medical advice.',
@@ -582,6 +599,23 @@ const esTranslations: Record<string, string> = {
   'dashboard.premium.weekly.description': 'Actualiza a Premium para acceder a pronósticos de bienestar semanales detallados adaptados a tu signo zodiacal.',
   'dashboard.premium.monthly.title': 'Desbloquea Pronósticos Mensuales',
   'dashboard.premium.monthly.description': 'Actualiza a Premium para obtener pronósticos de bienestar mensuales completos y herramientas de planificación.',
+  
+  // Wellness Tips
+  'tips.title': 'Consejo de Bienestar',
+  'tips.daily': 'Consejo Diario',
+  'tips.close': 'Cerrar',
+  'tips.next': 'Siguiente Consejo',
+  'tips.save': 'Guardar Consejo',
+  'tips.share': 'Compartir Consejo',
+  'tips.category.nutrition': 'Nutrición',
+  'tips.category.exercise': 'Ejercicio',
+  'tips.category.mindfulness': 'Atención Plena',
+  'tips.category.sleep': 'Sueño',
+  'tips.category.hydration': 'Hidratación',
+  'tips.personalized': 'Personalizado para tu perfil cósmico',
+  'tips.element': 'Elemento',
+  'tips.zodiac': 'Zodiaco',
+  'tips.universal': 'Universal',
   
   // Footer
   'footer.copyright': '© 2025 Horóscopo Salud. Todos los derechos reservados.',
