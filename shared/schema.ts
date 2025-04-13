@@ -81,6 +81,31 @@ export const ads = pgTable("ads", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Community features
+export const forumTopics = pgTable("forum_topics", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  userId: integer("user_id").notNull(),
+  zodiacSign: text("zodiac_sign").notNull(),
+  category: text("category").notNull().default('general'), // 'general', 'wellness', 'nutrition', etc.
+  isPinned: boolean("is_pinned").default(false),
+  viewCount: integer("view_count").default(0),
+  likeCount: integer("like_count").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const forumReplies = pgTable("forum_replies", {
+  id: serial("id").primaryKey(),
+  topicId: integer("topic_id").notNull(),
+  userId: integer("user_id").notNull(),
+  content: text("content").notNull(),
+  likeCount: integer("like_count").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
@@ -108,6 +133,21 @@ export const insertAdSchema = createInsertSchema(ads).omit({
   clicks: true,
 });
 
+export const insertForumTopicSchema = createInsertSchema(forumTopics).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  viewCount: true,
+  likeCount: true,
+});
+
+export const insertForumReplySchema = createInsertSchema(forumReplies).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  likeCount: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
@@ -122,3 +162,9 @@ export type PremiumReport = typeof premiumReports.$inferSelect;
 
 export type InsertAd = z.infer<typeof insertAdSchema>;
 export type Ad = typeof ads.$inferSelect;
+
+export type InsertForumTopic = z.infer<typeof insertForumTopicSchema>;
+export type ForumTopic = typeof forumTopics.$inferSelect;
+
+export type InsertForumReply = z.infer<typeof insertForumReplySchema>;
+export type ForumReply = typeof forumReplies.$inferSelect;

@@ -3,6 +3,8 @@ import {
   horoscopes, 
   deliveryLogs, 
   ads,
+  forumTopics,
+  forumReplies,
   type User, 
   type InsertUser, 
   type Horoscope, 
@@ -10,7 +12,11 @@ import {
   type DeliveryLog,
   type InsertDeliveryLog,
   type Ad,
-  type InsertAd
+  type InsertAd,
+  type ForumTopic,
+  type InsertForumTopic,
+  type ForumReply,
+  type InsertForumReply
 } from "@shared/schema";
 import { ZodiacSign } from "@shared/types";
 import session from "express-session";
@@ -66,6 +72,24 @@ export interface IStorage {
   getUsersByZodiacSign(sign: ZodiacSign): Promise<User[]>;
   getUsersForDailyDelivery(): Promise<User[]>;
   getPremiumUsers(): Promise<User[]>;
+  
+  // Community features
+  // Forum topics
+  getForumTopic(id: number): Promise<ForumTopic | undefined>;
+  getForumTopicsByZodiacSign(sign: string, limit?: number, offset?: number): Promise<ForumTopic[]>;
+  createForumTopic(topic: InsertForumTopic): Promise<ForumTopic>;
+  updateForumTopic(id: number, topic: Partial<InsertForumTopic>): Promise<ForumTopic | undefined>;
+  deleteForumTopic(id: number): Promise<boolean>;
+  incrementTopicViewCount(id: number): Promise<void>;
+  incrementTopicLikeCount(id: number): Promise<void>;
+  
+  // Forum replies
+  getForumReply(id: number): Promise<ForumReply | undefined>;
+  getForumRepliesByTopicId(topicId: number, limit?: number, offset?: number): Promise<ForumReply[]>;
+  createForumReply(reply: InsertForumReply): Promise<ForumReply>;
+  updateForumReply(id: number, reply: Partial<InsertForumReply>): Promise<ForumReply | undefined>;
+  deleteForumReply(id: number): Promise<boolean>;
+  incrementReplyLikeCount(id: number): Promise<void>;
   
   // Session store for express-session
   sessionStore: SessionStore;
