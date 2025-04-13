@@ -514,6 +514,27 @@ const esTranslations: Record<string, string> = {
   'community.connect': 'Conéctate con otros miembros para compartir ideas y experiencias',
   'community.newTopic': 'Nuevo Tema',
   'community.all': 'Todos',
+  'community.description': 'Conéctate con otras personas que comparten tu signo zodiacal. Discute temas de bienestar específicos para tu signo, comparte experiencias y obtén consejos personalizados adaptados a tu perfil astrológico.',
+  'community.your': 'Tu',
+  'community.personal': 'Tu comunidad personalizada basada en tu signo zodiacal',
+  'community.recommendation': 'Temas y discusiones recomendados específicamente para',
+  'community.enter': 'Entrar a Tu Comunidad',
+  'community.view': 'Ver Comunidad',
+  'community.members': 'Miembros',
+  
+  // Zodiac Sign Brief Descriptions for Community
+  'zodiac.aries.brief': 'Comunidad dinámica de Aries para discusiones sobre bienestar y motivación',
+  'zodiac.taurus.brief': 'Comunidad centrada de Tauro para discusiones sobre bienestar holístico',
+  'zodiac.gemini.brief': 'Comunidad versátil de Géminis para discusiones sobre bienestar mental',
+  'zodiac.cancer.brief': 'Comunidad nutricia de Cáncer para discusiones sobre bienestar emocional',
+  'zodiac.leo.brief': 'Comunidad vibrante de Leo para discusiones sobre confianza y bienestar',
+  'zodiac.virgo.brief': 'Comunidad analítica de Virgo para discusiones sobre optimización de la salud',
+  'zodiac.libra.brief': 'Comunidad equilibrada de Libra para discusiones sobre armonía y bienestar',
+  'zodiac.scorpio.brief': 'Comunidad intensa de Escorpio para discusiones sobre bienestar transformador',
+  'zodiac.sagittarius.brief': 'Comunidad aventurera de Sagitario para discusiones sobre bienestar holístico',
+  'zodiac.capricorn.brief': 'Comunidad disciplinada de Capricornio para discusiones sobre bienestar estructurado',
+  'zodiac.aquarius.brief': 'Comunidad innovadora de Acuario para discusiones sobre bienestar progresivo',
+  'zodiac.pisces.brief': 'Comunidad intuitiva de Piscis para discusiones sobre bienestar espiritual',
   
   // Auth messages
   'auth.authRequired': 'Autenticación Requerida',
