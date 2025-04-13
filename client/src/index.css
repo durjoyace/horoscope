@@ -1,9 +1,9 @@
+/* Import science-based styles */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Space+Grotesk:wght@500;700&family=Roboto+Mono&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import science-based styles */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Space+Grotesk:wght@500;700&family=Roboto+Mono&display=swap');
 
 @layer base {
   * {
@@ -174,23 +174,49 @@
     font-weight: 700;
   }
   
-  .animated-border {
+  .science-border {
     @apply relative overflow-hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--accent-sand);
+    border-radius: 8px;
   }
   
-  .animated-border::after {
-    @apply content-[''] absolute inset-0 border border-primary/30 rounded-lg;
-    animation: border-pulse 3s ease-in-out infinite;
+  /* Science-specific components */
+  .evidence-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border-left: 3px solid var(--accent-blue);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
   
-  @keyframes border-pulse {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
+  .sources-list {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--accent-sand);
+  }
+  
+  .sources-list li {
+    margin-bottom: 0.5rem;
+    list-style-type: decimal;
+  }
+  
+  .science-cta-button {
+    background-color: var(--accent-green);
+    color: white;
+    font-family: 'Space Grotesk', sans-serif;
+    padding: 0.75rem 1.25rem;
+    border-radius: 4px;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.2s ease;
+  }
+  
+  .science-cta-button:hover {
+    background-color: #4C8A81;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   
   .zodiac-card {
@@ -230,10 +256,11 @@
     display: inline-block;
   }
   
-  /* Add some zodiac elements and scientific styling */
+  /* Science-inspired abstract backgrounds */
   .star-bg {
     position: relative;
     overflow: hidden;
+    background-color: var(--background-color);
   }
   
   .star-bg::before {
@@ -244,37 +271,39 @@
     right: 0;
     bottom: 0;
     background-image: 
-      radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
-      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6) 2px, transparent 2px),
-      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
-      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
-      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.5) 2px, transparent 2px),
-      radial-gradient(circle at 60% 60%, rgba(255, 255, 255, 0.9) 1px, transparent 1px),
-      radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.7) 1px, transparent 1px),
-      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.8) 2px, transparent 2px),
-      radial-gradient(circle at 90% 90%, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
-    background-size: 300px 300px;
-    opacity: 0.5;
+      radial-gradient(circle at 10% 10%, rgba(50, 82, 136, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 20% 20%, rgba(93, 163, 153, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 30% 30%, rgba(50, 82, 136, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 40% 40%, rgba(93, 163, 153, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, rgba(50, 82, 136, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 60% 60%, rgba(93, 163, 153, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 70% 70%, rgba(50, 82, 136, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, rgba(93, 163, 153, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 90% 90%, rgba(50, 82, 136, 0.1) 1px, transparent 1px);
+    background-size: 100px 100px;
+    opacity: 0.8;
     z-index: -1;
-    animation: twinkle 8s ease-in-out infinite alternate;
   }
   
-  .zodiac-gradient {
-    background: linear-gradient(135deg, 
-      rgba(75, 0, 130, 0.5) 0%,
-      rgba(25, 25, 112, 0.5) 50%,
-      rgba(0, 0, 50, 0.5) 100%);
+  .data-pattern {
     position: relative;
+    background-color: white;
+    overflow: hidden;
   }
   
-  .zodiac-gradient::after {
+  .data-pattern::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at center, rgba(128, 0, 255, 0.4) 0%, transparent 70%);
+    background-image: 
+      linear-gradient(90deg, var(--accent-sand) 1px, transparent 1px),
+      linear-gradient(0deg, var(--accent-sand) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: -1px -1px;
+    opacity: 0.1;
     z-index: -1;
   }
   
