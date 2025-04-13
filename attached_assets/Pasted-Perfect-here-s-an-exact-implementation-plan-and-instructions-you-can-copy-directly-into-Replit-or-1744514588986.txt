@@ -1,0 +1,124 @@
+Perfect — here’s an exact implementation plan and instructions you can copy directly into Replit (or share with a developer).
+
+⸻
+
+Replit Implementation Instructions for Horoscope Health
+
+Goal: Re-design site to feel science-backed, modern, and credible.
+
+⸻
+
+1. Update Global Styles in style.css
+
+:root {
+  /* Neutral science-driven palette */
+  --background-color: #F7F7F7;
+  --text-color: #1C1C1E;
+  --accent-green: #5DA399;
+  --accent-blue: #325288;
+  --accent-sand: #D1C7B7;
+
+  --heading-font: 'Space Grotesk', sans-serif;
+  --body-font: 'IBM Plex Sans', sans-serif;
+  --mono-font: 'Roboto Mono', monospace;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--body-font);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  font-family: var(--heading-font);
+  color: var(--text-color);
+}
+
+code, .data-point {
+  font-family: var(--mono-font);
+  color: var(--accent-blue);
+}
+
+
+
+⸻
+
+2. Homepage Layout Recommendations (in index.html)
+
+<header>
+  <h1>Horoscope Health</h1>
+  <p>Where Astrology Meets Wellness Science</p>
+</header>
+
+<section class="why-science">
+  <h2>Built on Data. Personalized for You.</h2>
+  <p>We analyze your astrological profile to generate daily health insights grounded in behavioral science, sleep research, and biofeedback principles.</p>
+</section>
+
+<section class="features">
+  <div class="feature">
+    <h3>Evidence-Based Insights</h3>
+    <p>Daily health guidance rooted in sleep patterns, nutrition trends, and emotional wellbeing research.</p>
+  </div>
+
+  <div class="feature">
+    <h3>Personalized by Zodiac</h3>
+    <p>Your sign provides tendencies — our system turns them into actionable advice.</p>
+  </div>
+
+  <div class="feature">
+    <h3>Trusted by 10,000+ Users</h3>
+    <p>Real results. Real stories.</p>
+  </div>
+</section>
+
+
+
+⸻
+
+3. Design System Elements to Create
+
+Element	Recommendation
+Zodiac Icons	Minimal line icons (or abstract geometric symbols) — avoid cartoon mascots
+Data Points	Use .data-point class with font-family: var(--mono-font); for numbers
+CTA Buttons	Background: var(--accent-green) with white text, slight border-radius
+Section Breaks	Use subtle off-white sand color #D1C7B7 for contrast sections
+
+
+
+⸻
+
+4. Suggested Fonts to Add in head:
+
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Space+Grotesk:wght@500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+
+
+
+⸻
+
+5. Image & Asset Notes
+
+Avoid illustrations.
+
+Instead:
+	•	Use abstract patterns (star maps, constellations, waveforms)
+	•	Real photography of nature, space, and people
+	•	Line icons for zodiac signs
+
+⸻
+
+Final Instructions to Replit or Developer:
+
+“Re-design Horoscope Health to feel modern, science-driven, and credible. Implement the color palette, fonts, and structure above. Use minimal design — no cartoons. Create a clean data-focused layout with personalized wellness messaging. Reference Eight Sleep and Levels Health for inspiration.”
+
+⸻
+
+Would you like me to:
+	•	Generate a homepage wireframe graphic?
+	•	Write new copy for your hero/header section?
+	•	Create your zodiac line icon set?
+
+Let me know and I’ll make it happen.
