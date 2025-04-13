@@ -379,6 +379,7 @@ const esTranslations: Record<string, string> = {
   'nav.science': 'Nuestra Ciencia',
   'nav.contact': 'Contacto',
   'nav.premium': 'Premium',
+  'nav.wellnessTips': 'Consejos de Bienestar',
   'nav.login': 'Iniciar Sesión',
   'nav.signup': 'Registrarse',
   'nav.logout': 'Cerrar Sesión',
