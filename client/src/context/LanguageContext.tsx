@@ -12,6 +12,35 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 // English translations
 const enTranslations: Record<string, string> = {
+  // Community
+  'community.title': 'Community',
+  'community.forum': 'Forum',
+  'community.backToForum': 'Back to Forum',
+  'community.createNewTopic': 'Create New Topic',
+  'community.shareThoughts': 'Share your thoughts with the {sign} community',
+  'community.shareThoughtsPlaceholder': 'Share your thoughts...',
+  'community.postTopic': 'Post Topic',
+  'community.postReply': 'Post Reply',
+  'community.replyToTopic': 'Reply to this topic',
+  'community.views': 'views',
+  'community.replies': 'replies',
+  'community.likes': 'likes',
+  'community.noRepliesYet': 'No Replies Yet',
+  'community.user': 'User {id}',
+  'community.emptyReply': 'Empty Reply',
+  'community.enterContent': 'Please enter some content for your reply',
+  'community.loadMore': 'Load More',
+  'community.selectCategory': 'Select Category',
+  'community.allCategories': 'All Categories',
+  'community.topics': 'Topics',
+  'community.pinned': 'Pinned',
+  
+  // Auth messages
+  'auth.authRequired': 'Authentication Required',
+  'auth.loginToReply': 'Please log in to reply to topics',
+  'auth.loginToLike': 'Please log in to like topics',
+  'auth.loginToLikeReplies': 'Please log in to like replies',
+  'auth.loginToPost': 'Please log in to create topics',
   // Navigation
   'nav.home': 'Home',
   'nav.dashboard': 'Dashboard',
@@ -270,6 +299,35 @@ const enTranslations: Record<string, string> = {
 
 // Spanish translations
 const esTranslations: Record<string, string> = {
+  // Community
+  'community.title': 'Comunidad',
+  'community.forum': 'Foro',
+  'community.backToForum': 'Volver al Foro',
+  'community.createNewTopic': 'Crear Nuevo Tema',
+  'community.shareThoughts': 'Comparte tus pensamientos con la comunidad de {sign}',
+  'community.shareThoughtsPlaceholder': 'Comparte tus pensamientos...',
+  'community.postTopic': 'Publicar Tema',
+  'community.postReply': 'Publicar Respuesta',
+  'community.replyToTopic': 'Responder a este tema',
+  'community.views': 'vistas',
+  'community.replies': 'respuestas',
+  'community.likes': 'me gusta',
+  'community.noRepliesYet': 'Aún No Hay Respuestas',
+  'community.user': 'Usuario {id}',
+  'community.emptyReply': 'Respuesta Vacía',
+  'community.enterContent': 'Por favor ingresa contenido para tu respuesta',
+  'community.loadMore': 'Cargar Más',
+  'community.selectCategory': 'Seleccionar Categoría',
+  'community.allCategories': 'Todas las Categorías',
+  'community.topics': 'Temas',
+  'community.pinned': 'Destacado',
+  
+  // Auth messages
+  'auth.authRequired': 'Autenticación Requerida',
+  'auth.loginToReply': 'Por favor inicia sesión para responder a los temas',
+  'auth.loginToLike': 'Por favor inicia sesión para dar me gusta a los temas',
+  'auth.loginToLikeReplies': 'Por favor inicia sesión para dar me gusta a las respuestas',
+  'auth.loginToPost': 'Por favor inicia sesión para crear temas',
   // Navigation
   'nav.home': 'Inicio',
   'nav.dashboard': 'Panel',
