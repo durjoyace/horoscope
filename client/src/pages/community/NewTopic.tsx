@@ -106,7 +106,7 @@ export default function NewTopic() {
         <CardHeader>
           <CardTitle>{t('community.createNewTopic') || 'Create New Topic'}</CardTitle>
           <CardDescription>
-            {t('community.shareThoughts', { sign: sign?.charAt(0).toUpperCase() + sign?.slice(1) }) || 
+            {t('community.shareThoughts') || 
              `Share your thoughts with the ${sign?.charAt(0).toUpperCase() + sign?.slice(1)} community`}
           </CardDescription>
         </CardHeader>
