@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { 
   Card, 
   CardContent, 
-  CardDescription, 
   CardHeader, 
-  CardTitle,
-  CardFooter 
+  CardTitle
 } from "@/components/ui/card";
 import { 
   DropdownMenu,
@@ -18,10 +16,10 @@ import { Badge } from '@/components/ui/badge';
 import { Share2, BookmarkMinus, MoreVertical, ArrowLeft } from 'lucide-react';
 import { WellnessTip } from '@/data/wellnessTips';
 import { useLanguage } from '@/context/LanguageContext';
-import useLocalStorage from '@/hooks/useLocalStorage';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { useNavigate } from 'wouter';
+import { Link, useLocation } from 'wouter';
 
 // Map categories to colors
 const categoryColors: Record<string, string> = {
@@ -45,16 +43,16 @@ const SavedTipsPage: React.FC = () => {
   const [savedTips, setSavedTips] = useLocalStorage<WellnessTip[]>('saved-wellness-tips', []);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const [, setLocation] = useLocation();
   
   const filteredTips = activeCategory 
-    ? savedTips.filter(tip => tip.category === activeCategory)
+    ? savedTips.filter((tip: WellnessTip) => tip.category === activeCategory)
     : savedTips;
     
-  const uniqueCategories = Array.from(new Set(savedTips.map(tip => tip.category)));
+  const uniqueCategories = Array.from(new Set(savedTips.map((tip: WellnessTip) => tip.category)));
   
   const handleRemoveTip = (tipId: number) => {
-    const updatedTips = savedTips.filter(tip => tip.id !== tipId);
+    const updatedTips = savedTips.filter((tip: WellnessTip) => tip.id !== tipId);
     setSavedTips(updatedTips);
     
     toast({
@@ -88,7 +86,7 @@ const SavedTipsPage: React.FC = () => {
       <div className="flex justify-between items-center mb-8">
         <Button
           variant="ghost"
-          onClick={() => navigate(-1)}
+          onClick={() => setLocation('/')}
           className="flex items-center text-sm font-medium"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -105,7 +103,7 @@ const SavedTipsPage: React.FC = () => {
           <p className="text-muted-foreground mb-6">
             {t('tips.noSavedDescription') || 'Your saved wellness tips will appear here.'}
           </p>
-          <Button onClick={() => navigate('/')}>
+          <Button onClick={() => setLocation('/')}>
             {t('tips.goExplore') || 'Explore Wellness Tips'}
           </Button>
         </div>
@@ -138,7 +136,7 @@ const SavedTipsPage: React.FC = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredTips.map(tip => (
+            {filteredTips.map((tip: WellnessTip) => (
               <Card key={tip.id} className="border border-purple-500/20 bg-black/40 backdrop-blur-md">
                 <CardHeader className="pb-2">
                   <div className="flex justify-between items-start">
