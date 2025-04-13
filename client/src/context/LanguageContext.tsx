@@ -38,6 +38,10 @@ const enTranslations: Record<string, string> = {
   'community.deleteTopic': 'Delete Topic',
   'community.editReply': 'Edit Reply',
   'community.deleteReply': 'Delete Reply',
+  'community.community': 'Community',
+  'community.connect': 'Connect with fellow members to share insights and experiences',
+  'community.newTopic': 'New Topic',
+  'community.all': 'All',
   
   // Auth messages
   'auth.authRequired': 'Authentication Required',
@@ -485,6 +489,10 @@ const esTranslations: Record<string, string> = {
   'community.deleteTopic': 'Eliminar Tema',
   'community.editReply': 'Editar Respuesta',
   'community.deleteReply': 'Eliminar Respuesta',
+  'community.community': 'Comunidad',
+  'community.connect': 'Conéctate con otros miembros para compartir ideas y experiencias',
+  'community.newTopic': 'Nuevo Tema',
+  'community.all': 'Todos',
   
   // Auth messages
   'auth.authRequired': 'Autenticación Requerida',
