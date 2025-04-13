@@ -12,6 +12,12 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 // English translations
 const enTranslations: Record<string, string> = {
+  // Pagination
+  'pagination.previous': 'Previous',
+  'pagination.next': 'Next',
+  'pagination.page': 'Page',
+  'pagination.of': 'of',
+  
   // Community
   'community.title': 'Community',
   'community.forum': 'Forum',
@@ -484,6 +490,12 @@ const enTranslations: Record<string, string> = {
 
 // Spanish translations
 const esTranslations: Record<string, string> = {
+  // Pagination
+  'pagination.previous': 'Anterior',
+  'pagination.next': 'Siguiente',
+  'pagination.page': 'Página',
+  'pagination.of': 'de',
+  
   // Community
   'community.title': 'Comunidad',
   'community.forum': 'Foro',

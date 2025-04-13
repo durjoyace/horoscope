@@ -309,16 +309,20 @@ export default function Forum() {
               variant="outline" 
               disabled={page === 1} 
               onClick={() => setPage(p => Math.max(1, p - 1))}
+              className="flex items-center space-x-1"
             >
-              {t('pagination.previous') || 'Previous'}
+              <ChevronLeft className="h-4 w-4" />
+              <span>{t('pagination.previous')}</span>
             </Button>
             
             <Button 
               variant="outline" 
               disabled={!topicsData?.pagination?.hasMore} 
               onClick={() => setPage(p => p + 1)}
+              className="flex items-center space-x-1"
             >
-              {t('pagination.next') || 'Next'}
+              <span>{t('pagination.next')}</span>
+              <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
         </>
