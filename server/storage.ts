@@ -2,19 +2,22 @@ import {
   users, 
   horoscopes, 
   deliveryLogs, 
+  ads,
   type User, 
   type InsertUser, 
   type Horoscope, 
   type InsertHoroscope,
   type DeliveryLog,
-  type InsertDeliveryLog
+  type InsertDeliveryLog,
+  type Ad,
+  type InsertAd
 } from "@shared/schema";
 import { ZodiacSign } from "@shared/types";
 import session from "express-session";
 import { Store as SessionStore } from "express-session";
 import createMemoryStore from "memorystore";
 import { db, pool } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import connectPgSimple from "connect-pg-simple";
 import { Pool } from "@neondatabase/serverless";
 
@@ -48,6 +51,17 @@ export interface IStorage {
   getUserLoginHistory(userId: number): Promise<any[]>;
   getContentInteractions(contentType: string): Promise<any[]>;
   
+  // Ad operations
+  getAd(id: number): Promise<Ad | undefined>;
+  createAd(ad: InsertAd): Promise<Ad>;
+  updateAd(id: number, ad: Partial<InsertAd>): Promise<Ad | undefined>;
+  deleteAd(id: number): Promise<boolean>;
+  getAllAds(): Promise<Ad[]>;
+  getActiveAds(): Promise<Ad[]>;
+  getAdsByPosition(position: string): Promise<Ad[]>;
+  incrementAdImpressions(id: number): Promise<void>;
+  incrementAdClicks(id: number): Promise<void>;
+  
   // Additional query methods
   getUsersByZodiacSign(sign: ZodiacSign): Promise<User[]>;
   getUsersForDailyDelivery(): Promise<User[]>;
@@ -61,9 +75,11 @@ export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private horoscopes: Map<number, Horoscope>;
   private deliveryLogs: Map<number, DeliveryLog>;
+  private ads: Map<number, Ad>;
   private userCurrentId: number;
   private horoscopeCurrentId: number;
   private deliveryLogCurrentId: number;
+  private adCurrentId: number;
   public sessionStore: SessionStore;
 
   constructor() {
@@ -71,9 +87,11 @@ export class MemStorage implements IStorage {
     this.users = new Map();
     this.horoscopes = new Map();
     this.deliveryLogs = new Map();
+    this.ads = new Map();
     this.userCurrentId = 1;
     this.horoscopeCurrentId = 1;
     this.deliveryLogCurrentId = 1;
+    this.adCurrentId = 1;
     
     // Initialize session store
     this.sessionStore = new MemoryStore({
@@ -114,7 +132,6 @@ export class MemStorage implements IStorage {
       phone: insertUser.phone || null,
       smsOptIn: insertUser.smsOptIn ?? null,
       newsletterOptIn: insertUser.newsletterOptIn ?? null,
-      isPremium: false,
       stripeCustomerId: null,
       stripeSubscriptionId: null,
       subscriptionStatus: 'none',
@@ -150,11 +167,20 @@ export class MemStorage implements IStorage {
   async createHoroscope(insertHoroscope: InsertHoroscope): Promise<Horoscope> {
     const id = this.horoscopeCurrentId++;
     const createdAt = new Date();
+    // Create with proper null handling for optional fields
     const horoscope: Horoscope = { 
-      ...insertHoroscope, 
-      id, 
-      createdAt,
-      isPremium: insertHoroscope.isPremium || false 
+      id,
+      zodiacSign: insertHoroscope.zodiacSign,
+      date: insertHoroscope.date,
+      title: insertHoroscope.title,
+      content: insertHoroscope.content,
+      wellness: insertHoroscope.wellness,
+      nutrition: insertHoroscope.nutrition || null,
+      fitness: insertHoroscope.fitness || null,
+      mindfulness: insertHoroscope.mindfulness || null,
+      isPremium: insertHoroscope.isPremium || false,
+      isAiGenerated: insertHoroscope.isAiGenerated || true,
+      createdAt
     };
     this.horoscopes.set(id, horoscope);
     return horoscope;
@@ -214,6 +240,76 @@ export class MemStorage implements IStorage {
   async getContentInteractions(contentType: string): Promise<any[]> {
     // Simulate content interactions
     return [];
+  }
+
+  // Ad operations
+  async getAd(id: number): Promise<Ad | undefined> {
+    return this.ads.get(id);
+  }
+
+  async createAd(insertAd: InsertAd): Promise<Ad> {
+    const id = this.adCurrentId++;
+    const createdAt = new Date();
+    const ad: Ad = {
+      id,
+      name: insertAd.name,
+      content: insertAd.content,
+      linkUrl: insertAd.linkUrl,
+      position: insertAd.position || 'bottom',
+      isActive: insertAd.isActive ?? true,
+      impressions: 0,
+      clicks: 0,
+      createdAt
+    };
+    this.ads.set(id, ad);
+    return ad;
+  }
+
+  async updateAd(id: number, updates: Partial<InsertAd>): Promise<Ad | undefined> {
+    const ad = await this.getAd(id);
+    if (!ad) return undefined;
+    
+    const updatedAd = { ...ad, ...updates };
+    this.ads.set(id, updatedAd);
+    return updatedAd;
+  }
+
+  async deleteAd(id: number): Promise<boolean> {
+    return this.ads.delete(id);
+  }
+
+  async getAllAds(): Promise<Ad[]> {
+    return Array.from(this.ads.values());
+  }
+
+  async getActiveAds(): Promise<Ad[]> {
+    return Array.from(this.ads.values()).filter(
+      (ad) => ad.isActive
+    );
+  }
+
+  async getAdsByPosition(position: string): Promise<Ad[]> {
+    return Array.from(this.ads.values()).filter(
+      (ad) => ad.position === position && ad.isActive
+    );
+  }
+
+  async incrementAdImpressions(id: number): Promise<void> {
+    const ad = await this.getAd(id);
+    if (ad) {
+      const impressions = ad.impressions ?? 0;
+      ad.impressions = impressions + 1;
+      this.ads.set(id, ad);
+    }
+  }
+
+  async incrementAdClicks(id: number): Promise<void> {
+    const ad = await this.getAd(id);
+    if (ad) {
+      const clicks = ad.clicks ?? 0;
+      ad.clicks = clicks + 1;
+      this.ads.set(id, ad);
+    }
   }
 }
 
@@ -562,7 +658,131 @@ export class DatabaseStorage implements IStorage {
       return [];
     }
   }
+
+  // Ad operations
+  async getAd(id: number): Promise<Ad | undefined> {
+    try {
+      const result = await db.select().from(ads).where(eq(ads.id, id));
+      return result.length > 0 ? result[0] : undefined;
+    } catch (error) {
+      console.error('Error getting ad by ID:', error);
+      return undefined;
+    }
+  }
+
+  async createAd(insertAd: InsertAd): Promise<Ad> {
+    try {
+      const result = await db.insert(ads).values({
+        ...insertAd,
+        impressions: 0,
+        clicks: 0
+      }).returning();
+      return result[0];
+    } catch (error) {
+      console.error('Error creating ad:', error);
+      throw error;
+    }
+  }
+
+  async updateAd(id: number, updates: Partial<InsertAd>): Promise<Ad | undefined> {
+    try {
+      const result = await db
+        .update(ads)
+        .set(updates)
+        .where(eq(ads.id, id))
+        .returning();
+      
+      return result.length > 0 ? result[0] : undefined;
+    } catch (error) {
+      console.error('Error updating ad:', error);
+      return undefined;
+    }
+  }
+
+  async deleteAd(id: number): Promise<boolean> {
+    try {
+      await db.delete(ads).where(eq(ads.id, id));
+      return true;
+    } catch (error) {
+      console.error('Error deleting ad:', error);
+      return false;
+    }
+  }
+
+  async getAllAds(): Promise<Ad[]> {
+    try {
+      const result = await db.select().from(ads);
+      return result;
+    } catch (error) {
+      console.error('Error getting all ads:', error);
+      return [];
+    }
+  }
+
+  async getActiveAds(): Promise<Ad[]> {
+    try {
+      const result = await db
+        .select()
+        .from(ads)
+        .where(eq(ads.isActive, true));
+      
+      return result;
+    } catch (error) {
+      console.error('Error getting active ads:', error);
+      return [];
+    }
+  }
+
+  async getAdsByPosition(position: string): Promise<Ad[]> {
+    try {
+      const result = await db
+        .select()
+        .from(ads)
+        .where(
+          and(
+            eq(ads.isActive, true),
+            eq(ads.position, position)
+          )
+        );
+      
+      return result;
+    } catch (error) {
+      console.error('Error getting ads by position:', error);
+      return [];
+    }
+  }
+
+  async incrementAdImpressions(id: number): Promise<void> {
+    try {
+      const ad = await this.getAd(id);
+      if (ad) {
+        const currentImpressions = ad.impressions || 0;
+        await db
+          .update(ads)
+          .set({ impressions: currentImpressions + 1 })
+          .where(eq(ads.id, id));
+      }
+    } catch (error) {
+      console.error('Error incrementing ad impressions:', error);
+    }
+  }
+
+  async incrementAdClicks(id: number): Promise<void> {
+    try {
+      const ad = await this.getAd(id);
+      if (ad) {
+        const currentClicks = ad.clicks || 0;
+        await db
+          .update(ads)
+          .set({ clicks: currentClicks + 1 })
+          .where(eq(ads.id, id));
+      }
+    } catch (error) {
+      console.error('Error incrementing ad clicks:', error);
+    }
+  }
 }
 
-// We're switching to use the database storage
-export const storage = new DatabaseStorage();
+// Temporarily using memory storage for ad testing
+// We'll switch back to database storage after migrations are properly set up
+export const storage = new MemStorage();

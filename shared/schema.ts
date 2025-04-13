@@ -40,8 +40,14 @@ export const horoscopes = pgTable("horoscopes", {
   id: serial("id").primaryKey(),
   zodiacSign: text("zodiac_sign").notNull(),
   date: text("date").notNull(),
-  content: json("content").notNull(),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  wellness: text("wellness").notNull(),
+  nutrition: text("nutrition"),
+  fitness: text("fitness"),
+  mindfulness: text("mindfulness"),
   isPremium: boolean("is_premium").default(false),
+  isAiGenerated: boolean("is_ai_generated").default(true),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -60,6 +66,18 @@ export const premiumReports = pgTable("premium_reports", {
   weekStartDate: text("week_start_date").notNull(),
   weekEndDate: text("week_end_date").notNull(),
   content: json("content").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const ads = pgTable("ads", {
+  id: serial("id").primaryKey(), 
+  name: text("name").notNull(),
+  content: text("content").notNull(),
+  linkUrl: text("link_url").notNull(),
+  position: text("position").notNull().default('bottom'), // 'top', 'middle', 'bottom'
+  isActive: boolean("is_active").default(true),
+  impressions: integer("impressions").default(0),
+  clicks: integer("clicks").default(0),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -83,6 +101,13 @@ export const insertPremiumReportSchema = createInsertSchema(premiumReports).omit
   createdAt: true,
 });
 
+export const insertAdSchema = createInsertSchema(ads).omit({
+  id: true,
+  createdAt: true,
+  impressions: true,
+  clicks: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
@@ -94,3 +119,6 @@ export type DeliveryLog = typeof deliveryLogs.$inferSelect;
 
 export type InsertPremiumReport = z.infer<typeof insertPremiumReportSchema>;
 export type PremiumReport = typeof premiumReports.$inferSelect;
+
+export type InsertAd = z.infer<typeof insertAdSchema>;
+export type Ad = typeof ads.$inferSelect;

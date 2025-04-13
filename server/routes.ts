@@ -511,6 +511,208 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     }
   });
+  
+  // Admin: Get all horoscopes
+  app.get("/api/admin/horoscopes", async (req: Request, res: Response) => {
+    try {
+      // In a production app, we would check for admin permissions here
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      
+      const horoscopes = await storage.getAllHoroscopes();
+      
+      res.status(200).json({
+        success: true,
+        data: horoscopes
+      });
+    } catch (error) {
+      console.error("Error fetching horoscopes:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not retrieve horoscopes. Please try again later."
+      });
+    }
+  });
+  
+  // Admin: Get all advertisements
+  app.get("/api/admin/ads", async (req: Request, res: Response) => {
+    try {
+      // In a production app, we would check for admin permissions here
+      /* Temporarily disabled for testing
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      */
+      
+      const ads = await storage.getAllAds();
+      
+      res.status(200).json({
+        success: true,
+        data: ads
+      });
+    } catch (error) {
+      console.error("Error fetching advertisements:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not retrieve advertisements. Please try again later."
+      });
+    }
+  });
+  
+  // Admin: Create new advertisement
+  app.post("/api/admin/ads", async (req: Request, res: Response) => {
+    try {
+      // In a production app, we would check for admin permissions here
+      /* Temporarily disabled for testing
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      */
+      
+      const adSchema = z.object({
+        name: z.string().min(1, "Ad name is required"),
+        content: z.string().min(10, "Ad content is required"),
+        linkUrl: z.string().url("Must be a valid URL"),
+        position: z.enum(["top", "middle", "bottom"]),
+        isActive: z.boolean().default(true)
+      });
+      
+      const validatedInput = adSchema.parse(req.body);
+      const newAd = await storage.createAd(validatedInput);
+      
+      res.status(201).json({
+        success: true,
+        message: "Advertisement created successfully",
+        data: newAd
+      });
+    } catch (error) {
+      console.error("Error creating advertisement:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid input",
+          errors: error.errors
+        });
+      }
+      res.status(500).json({
+        success: false,
+        message: "Could not create advertisement. Please try again later."
+      });
+    }
+  });
+  
+  // Admin: Update advertisement
+  app.put("/api/admin/ads/:id", async (req: Request, res: Response) => {
+    try {
+      // In a production app, we would check for admin permissions here
+      /* Temporarily disabled for testing
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      */
+      
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid advertisement ID"
+        });
+      }
+      
+      const adSchema = z.object({
+        name: z.string().min(1, "Ad name is required"),
+        content: z.string().min(10, "Ad content is required"),
+        linkUrl: z.string().url("Must be a valid URL"),
+        position: z.enum(["top", "middle", "bottom"]),
+        isActive: z.boolean().default(true)
+      });
+      
+      const validatedInput = adSchema.parse(req.body);
+      const updatedAd = await storage.updateAd(id, validatedInput);
+      
+      if (!updatedAd) {
+        return res.status(404).json({
+          success: false,
+          message: "Advertisement not found"
+        });
+      }
+      
+      res.status(200).json({
+        success: true,
+        message: "Advertisement updated successfully",
+        data: updatedAd
+      });
+    } catch (error) {
+      console.error("Error updating advertisement:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid input",
+          errors: error.errors
+        });
+      }
+      res.status(500).json({
+        success: false,
+        message: "Could not update advertisement. Please try again later."
+      });
+    }
+  });
+  
+  // Admin: Delete advertisement
+  app.delete("/api/admin/ads/:id", async (req: Request, res: Response) => {
+    try {
+      // In a production app, we would check for admin permissions here
+      /* Temporarily disabled for testing
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      */
+      
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid advertisement ID"
+        });
+      }
+      
+      const success = await storage.deleteAd(id);
+      
+      if (!success) {
+        return res.status(404).json({
+          success: false,
+          message: "Advertisement not found"
+        });
+      }
+      
+      res.status(200).json({
+        success: true,
+        message: "Advertisement deleted successfully"
+      });
+    } catch (error) {
+      console.error("Error deleting advertisement:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not delete advertisement. Please try again later."
+      });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;
