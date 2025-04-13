@@ -18,6 +18,7 @@ import {
   ListChecks,
   Calendar,
   Quote,
+  Activity,
   RefreshCw,
   Rocket,
   Lightbulb
@@ -146,50 +147,37 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
 
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="relative py-10 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-gradient-to-b from-primary/20 via-primary/10 to-background star-bg">
-        {/* Celestial Background Elements */}
+      {/* Hero Section - Modern health-oriented design */}
+      <section className="relative py-10 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-gradient-to-b from-[#f9fafb] via-[#f5f7f9] to-background dark:from-background dark:via-background/95">
+        {/* Minimalist, wellness-focused background */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-8 h-8 sm:w-12 sm:h-12 md:w-24 md:h-24 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float"></div>
-          <div className="absolute top-40 right-10 w-12 h-12 sm:w-20 sm:h-20 md:w-32 md:h-32 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-float-slow"></div>
-          <div className="absolute bottom-20 left-1/4 w-16 h-16 sm:w-24 sm:h-24 md:w-40 md:h-40 rounded-full bg-[#8B5CF6]/10 backdrop-blur-md animate-float-slower"></div>
-          <div className="absolute top-1/3 right-1/3 w-8 h-8 sm:w-10 sm:h-10 md:w-16 md:h-16 rounded-full bg-[#3B82F6]/10 backdrop-blur-md animate-pulse"></div>
+          {/* Clean geometric shapes with muted green/blue wellness palette */}
+          <div className="absolute top-1/4 left-1/5 w-48 h-48 rounded-full bg-gradient-to-r from-teal-50/20 to-cyan-50/10 dark:from-teal-900/5 dark:to-cyan-900/5 blur-xl"></div>
+          <div className="absolute bottom-1/3 right-1/5 w-64 h-64 rounded-full bg-gradient-to-l from-blue-50/10 to-slate-50/10 dark:from-blue-900/5 dark:to-slate-900/5 blur-xl"></div>
           
-          {/* Constellation-like elements */}
-          <div className="absolute inset-0 opacity-30 select-none pointer-events-none">
-            <div className="absolute top-1/4 left-1/5 h-1 w-1 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
-            <div className="absolute top-1/3 right-1/4 h-1.5 w-1.5 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
-            <div className="absolute bottom-1/3 left-1/3 h-1 w-1 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
-            <div className="absolute top-2/3 right-1/5 h-1.5 w-1.5 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
-            <div className="absolute top-1/2 left-1/2 h-1 w-1 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
-          </div>
-          
-          {/* Zodiac Symbols Background - more subtle and modern */}
+          {/* Subtle geometric patterns suggesting wellness rather than zodiac */}
           <div className="absolute inset-0 opacity-5 select-none pointer-events-none">
-            <div className="absolute top-1/4 left-1/5 text-3xl sm:text-4xl md:text-6xl transform rotate-12">♈</div>
-            <div className="absolute top-1/3 right-1/4 text-3xl sm:text-5xl md:text-7xl transform -rotate-6">♉</div>
-            <div className="absolute bottom-1/4 left-1/3 text-3xl sm:text-4xl md:text-5xl transform rotate-45">♌</div>
-            <div className="absolute top-2/3 right-1/5 text-3xl sm:text-5xl md:text-8xl transform -rotate-12">♓</div>
-            <div className="absolute top-1/2 left-1/2 text-3xl sm:text-4xl md:text-6xl transform rotate-90">♎</div>
+            <div className="absolute top-1/4 right-1/5 w-16 h-1 rounded-full bg-emerald-200/20 dark:bg-emerald-700/10 transform rotate-45"></div>
+            <div className="absolute bottom-1/3 left-1/4 w-16 h-1 rounded-full bg-blue-200/20 dark:bg-blue-700/10 transform -rotate-45"></div>
           </div>
         </div>
         
         <div className="container relative mx-auto px-4 z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-5 sm:gap-8 lg:gap-12">
             <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-background/40 text-primary px-2.5 sm:px-3 py-1.5 sm:py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium mb-4 sm:mb-6 md:mb-8 backdrop-blur-md border border-primary/20 shadow-sm animate-fade-in">
-                <Sparkles className="h-3 w-3 md:h-4 md:w-4" />
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-slate-50 dark:bg-slate-900/60 text-primary px-2.5 sm:px-3 py-1.5 sm:py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium mb-4 sm:mb-6 md:mb-8 border border-slate-100 dark:border-slate-800/80 shadow-sm">
+                <Activity className="h-3 w-3 md:h-4 md:w-4" />
                 <span>{t('hero.tagline')}</span>
               </div>
               
-              {/* Branded header with gradient */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#ff9cfe] to-[#aab2ff] mb-2 sm:mb-3 md:mb-4 animate-slide-up">
+              {/* Modern branded header with more subtle gradient */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-2 sm:mb-3 md:mb-4 text-slate-900 dark:text-white">
                 {t('hero.brand')}
               </h1>
               
-              <h1 className="magazine-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 md:mb-6 animate-slide-up">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 md:mb-6 text-slate-800 dark:text-slate-100 font-medium">
                 <span className="block">{t('hero.title1')}</span>
-                <span className="gradient-heading">{t('hero.title2')}</span>
+                <span className="text-primary">{t('hero.title2')}</span>
               </h1>
               
               <p className="magazine-lead text-sm md:text-base text-muted-foreground mb-4 sm:mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">
@@ -205,9 +193,9 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                         {t('signup.header')}
                       </h3>
                       
-                      {/* Main signup card with benefits inside */}
+                      {/* Main signup card with benefits inside - Modern wellness style */}
                       <div className="relative max-w-md mx-auto">
-                        <div className="bg-gradient-to-br from-[#9a00ff] to-[#5000cc] rounded-2xl p-8 mb-6 shadow-lg">
+                        <div className="bg-gradient-to-br from-teal-600 to-blue-700 rounded-2xl p-8 mb-6 shadow-lg">
                           {/* Email input with compelling benefits */}
                           <div className="space-y-6">
                             <div className="text-center space-y-2">
@@ -219,16 +207,16 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               </p>
                             </div>
 
-                            {/* Email input with glow effect */}
+                            {/* Clean, modern email input */}
                             <div className="relative">
-                              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#ff00ff]/40 to-[#00ffff]/40 rounded-full blur-sm opacity-70"></div>
+                              <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-400/30 to-cyan-400/30 rounded-full blur-sm opacity-60"></div>
                               <Input
                                 type="email"
                                 placeholder={t('signup.email.placeholder')}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="relative pl-10 h-14 bg-black/20 backdrop-blur-sm border-white/30 text-white placeholder:text-white/70 rounded-full focus:border-white/70 focus:ring-white/30 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+                                className="relative pl-10 h-14 bg-white/10 backdrop-blur-sm border-white/40 text-white placeholder:text-white/70 rounded-full focus:border-white/70 focus:ring-white/30 shadow-md"
                               />
                               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/90" />
                             </div>
@@ -262,33 +250,33 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                               )}
                             </div>
                             
-                            {/* Premium benefits */}
+                            {/* Premium benefits with modern wellness icons */}
                             <div className="grid grid-cols-2 gap-3 pt-2">
                               <div className="flex items-start space-x-2">
-                                <Sparkles className="h-5 w-5 text-[#ff9500] flex-shrink-0 mt-0.5" />
+                                <Brain className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
                                 <span className="text-white text-sm">{t('signup.benefits.insights')}</span>
                               </div>
                               <div className="flex items-start space-x-2">
-                                <Leaf className="h-5 w-5 text-[#4ade80] flex-shrink-0 mt-0.5" />
+                                <Leaf className="h-5 w-5 text-emerald-300 flex-shrink-0 mt-0.5" />
                                 <span className="text-white text-sm">{t('signup.benefits.wellness')}</span>
                               </div>
                               <div className="flex items-start space-x-2">
-                                <Star className="h-5 w-5 text-[#facc15] flex-shrink-0 mt-0.5" />
+                                <Activity className="h-5 w-5 text-blue-300 flex-shrink-0 mt-0.5" />
                                 <span className="text-white text-sm">{t('signup.benefits.forecasts')}</span>
                               </div>
                               <div className="flex items-start space-x-2">
-                                <HeartPulse className="h-5 w-5 text-[#fb7185] flex-shrink-0 mt-0.5" />
+                                <HeartPulse className="h-5 w-5 text-teal-300 flex-shrink-0 mt-0.5" />
                                 <span className="text-white text-sm">{t('signup.benefits.rituals')}</span>
                               </div>
                             </div>
 
-                            {/* CTA Button with glow */}
-                            <div className="relative mt-2 group">
-                              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#ff00ff] to-[#00ffff] rounded-full opacity-70 group-hover:opacity-100 blur-sm transition duration-300"></div>
+                            {/* Modern wellness-styled CTA Button */}
+                            <div className="relative mt-4 group">
+                              <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-400/60 to-blue-400/60 rounded-full opacity-70 group-hover:opacity-100 blur-sm transition duration-300"></div>
                               <Button 
                                 type="submit" 
                                 disabled={isSubmitting} 
-                                className="relative w-full h-12 sm:h-14 bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-bold text-base sm:text-lg rounded-full transition-all duration-300 border border-white/20 shadow-[0_0_20px_rgba(170,0,255,0.5)] group-hover:shadow-[0_0_25px_rgba(170,0,255,0.7)]"
+                                className="relative w-full h-12 sm:h-14 bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white font-bold text-base sm:text-lg rounded-full transition-all duration-300 border border-white/20 shadow-md group-hover:shadow-lg"
                                 aria-label={t('signup.button')}
                               >
                                 {isSubmitting ? (
@@ -343,16 +331,16 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             
             <div className="flex-1 flex justify-center lg:justify-end mt-8 lg:mt-0">
               <div className="relative w-full max-w-[320px] md:max-w-md">
-                {/* Decorative zodiac elements */}
-                <div className="absolute -inset-2 md:-inset-3 bg-gradient-to-r from-[#ff00ff]/20 via-[#c300ff]/10 to-[#3a00ff]/20 rounded-lg transform rotate-6 animate-pulse-slow"></div>
-                <div className="absolute -inset-4 md:-inset-6 border-2 border-[#ff00ff]/10 rounded-lg transform -rotate-3 animate-pulse-slower"></div>
-                <div className="absolute -inset-1 md:-inset-2 border border-[#c300ff]/20 rounded-full animate-spin-slow"></div>
+                {/* Modern wellness decorative elements */}
+                <div className="absolute -inset-2 md:-inset-3 bg-gradient-to-r from-teal-500/10 via-blue-500/10 to-cyan-500/10 rounded-lg transform rotate-3 animate-pulse-slow"></div>
+                <div className="absolute -inset-4 md:-inset-6 border-2 border-teal-500/10 rounded-lg transform -rotate-1 animate-pulse-slower"></div>
+                <div className="absolute -inset-1 md:-inset-2 border border-blue-500/10 rounded-full animate-spin-slow"></div>
                 
-                {/* Main card */}
-                <div className="relative backdrop-blur-md rounded-lg p-4 md:p-6 lg:p-8 shadow-xl animate-fade-in-up bg-gradient-to-br from-[#8400ff]/30 to-[#3a00ff]/30 border border-[#c300ff]/40">
+                {/* Main card - Wellness styled */}
+                <div className="relative backdrop-blur-md rounded-lg p-4 md:p-6 lg:p-8 shadow-xl animate-fade-in-up bg-gradient-to-br from-teal-500/20 to-blue-700/20 border border-cyan-500/30">
                   <div className="text-center mb-4 md:mb-6">
-                    <div className="p-2 md:p-3 bg-[#ff00ff]/20 rounded-full inline-flex justify-center items-center mb-3 md:mb-4">
-                      <Star className="h-6 w-6 md:h-8 md:w-8 text-[#ff00ff] animate-spin-slow" />
+                    <div className="p-2 md:p-3 bg-gradient-to-br from-teal-500/20 to-blue-500/20 rounded-full inline-flex justify-center items-center mb-3 md:mb-4">
+                      <Activity className="h-6 w-6 md:h-8 md:w-8 text-cyan-500 animate-pulse" />
                     </div>
                     <h2 className="text-xl md:text-2xl font-bold mb-1">{t('zodiac.profile.title')}</h2>
                     <p className="text-sm text-muted-foreground">{t('zodiac.profile.subtitle')}</p>
@@ -385,7 +373,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                         {zodiacSignNames.find(s => s.value === selectedSign)?.dates}
                       </p>
                       <Button 
-                        className="w-full shadow-md hover:shadow-lg transition-all text-sm bg-gradient-to-r from-[#c300ff] to-[#8400ff] hover:scale-[1.02]"
+                        className="w-full shadow-md hover:shadow-lg transition-all text-sm bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 hover:scale-[1.02]"
                         onClick={() => {
                           // Scroll to email input if email is not provided
                           if (!email) {
@@ -584,21 +572,21 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
             </div>
           </div>
           
-          {/* Premium membership promotion after showcasing value */}
+          {/* Premium membership promotion - Modern wellness style */}
           <div className="mt-16 max-w-4xl mx-auto">
-            <div className="bg-gradient-to-br from-[#9a00ff]/20 to-[#3a00ff]/20 backdrop-blur-md rounded-xl p-6 md:p-8 border border-[#c300ff]/30 shadow-lg relative overflow-hidden">
-              {/* Decorative background elements */}
+            <div className="bg-gradient-to-br from-teal-500/20 to-blue-700/20 backdrop-blur-md rounded-xl p-6 md:p-8 border border-cyan-500/30 shadow-lg relative overflow-hidden">
+              {/* Modern wellness background elements */}
               <div className="absolute top-0 left-0 w-full h-full">
-                <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-yellow-500/10 rounded-full blur-2xl"></div>
-                <div className="absolute bottom-1/3 left-1/3 w-40 h-40 bg-purple-500/10 rounded-full blur-2xl"></div>
+                <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
+                <div className="absolute bottom-1/3 left-1/3 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl"></div>
               </div>
               
               <div className="relative">
                 <div className="flex flex-col md:flex-row gap-8">
                   {/* Left side: Content */}
                   <div className="flex-1">
-                    <div className="inline-flex items-center gap-1.5 bg-yellow-500/20 text-yellow-500 px-3 py-1.5 rounded-full text-xs font-medium mb-4">
-                      <Sparkles className="h-3.5 w-3.5" />
+                    <div className="inline-flex items-center gap-1.5 bg-teal-500/20 text-teal-500 px-3 py-1.5 rounded-full text-xs font-medium mb-4">
+                      <HeartPulse className="h-3.5 w-3.5" />
                       <span>{t('premium.badge')}</span>
                     </div>
                     
@@ -610,15 +598,15 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                     
                     <div className="space-y-3 mb-6">
                       <div className="flex items-start gap-2">
-                        <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
                         <span>{t('premium.benefit1')}</span>
                       </div>
                       <div className="flex items-start gap-2">
-                        <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
                         <span>{t('premium.benefit2')}</span>
                       </div>
                       <div className="flex items-start gap-2">
-                        <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
                         <span>{t('premium.benefit3')}</span>
                       </div>
                     </div>
@@ -626,7 +614,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
                     <Button 
                       size="lg" 
                       asChild 
-                      className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white shadow-lg shadow-yellow-600/20 hover:shadow-xl hover:shadow-yellow-600/30 transition-all hover:scale-105"
+                      className="bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 transition-all hover:scale-105"
                       aria-label={t('premium.button')}
                     >
                       <Link href="/premium">
@@ -678,7 +666,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           </div>
           
           <div className="flex justify-center mt-12">
-            <Button variant="outline" size="lg" asChild className="border-[#c300ff]/30 text-[#c300ff] hover:bg-[#c300ff]/10 hover:text-[#c300ff]">
+            <Button variant="outline" size="lg" asChild className="border-teal-500/30 text-teal-600 dark:text-teal-400 hover:bg-teal-500/10 hover:text-teal-700 dark:hover:text-teal-300">
               <Link href="/science">
                 {t('methodology.button')}
                 <MoveRight className="ml-2 h-4 w-4" />
@@ -704,7 +692,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           </div>
           
           <div className="flex justify-center mb-6">
-            <Link href="/elements" className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#c300ff]/10 hover:bg-[#c300ff]/20 text-[#c300ff] transition-colors">
+            <Link href="/elements" className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 text-teal-600 dark:text-teal-400 transition-colors">
               <Info className="h-4 w-4" />
               <span>{t('elements.explore')}</span>
             </Link>
