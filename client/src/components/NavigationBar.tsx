@@ -98,6 +98,9 @@ export function NavigationBar({
           <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors">
             {t('nav.marketplace')}
           </Link>
+          <Link href={`/community/${userZodiacSign || 'aries'}`} className="text-sm font-medium hover:text-primary transition-colors">
+            Community
+          </Link>
           <Link href="/science" className="text-sm font-medium hover:text-primary transition-colors">
             {t('nav.science')}
           </Link>
@@ -301,6 +304,9 @@ export function NavigationBar({
                   </Link>
                   <Link href="/marketplace" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
                     <span className="text-sm font-medium">{t('nav.marketplace')}</span>
+                  </Link>
+                  <Link href={`/community/${userZodiacSign || 'aries'}`} className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                    <span className="text-sm font-medium">Community</span>
                   </Link>
                   <Link href="/science" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
                     <span className="text-sm font-medium">{t('nav.science')}</span>

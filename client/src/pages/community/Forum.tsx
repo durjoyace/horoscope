@@ -135,7 +135,8 @@ export default function Forum() {
   
   // Categories from topics
   const categories = topicsData?.data ? 
-    Array.from(new Set(topicsData.data.map((topic: ForumTopic) => topic.category))) : 
+    Array.from(new Set(topicsData.data.map((topic: ForumTopic) => topic.category)))
+      .filter((category): category is string => typeof category === 'string') : 
     [];
   
   const handleLikeTopic = async (topicId: number) => {

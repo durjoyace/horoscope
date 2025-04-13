@@ -26,6 +26,11 @@ import PremiumPage from "@/pages/PremiumPage";
 import AchievementsPage from "@/pages/AchievementsPage";
 import OnboardingPage from "@/pages/OnboardingPage";
 
+// Community pages
+import Forum from "@/pages/community/Forum";
+import NewTopic from "@/pages/community/NewTopic";
+import TopicDetail from "@/pages/community/TopicDetail";
+
 // Admin pages
 import AdminDashboard from "@/pages/admin";
 import AdminAnalytics from "@/pages/admin/analytics";
@@ -140,6 +145,17 @@ function AppContent() {
               <PremiumPage />
             </Route>
             <ProtectedRoute path="/achievements" component={AchievementsPage} />
+            
+            {/* Community Routes */}
+            <Route path="/community/:sign">
+              <Forum />
+            </Route>
+            <Route path="/community/:sign/new-topic">
+              <NewTopic />
+            </Route>
+            <Route path="/community/:sign/topics/:topicId">
+              <TopicDetail />
+            </Route>
             
             {/* Admin Routes */}
             <ProtectedRoute path="/admin" component={AdminDashboard} />
