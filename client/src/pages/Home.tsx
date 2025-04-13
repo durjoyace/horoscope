@@ -147,40 +147,51 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
 
   return (
     <div className="flex flex-col">
-      {/* Hero Section - Modern health-oriented design */}
-      <section className="relative py-10 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-gradient-to-b from-[#f9fafb] via-[#f5f7f9] to-background dark:from-background dark:via-background/95">
-        {/* Minimalist, wellness-focused background */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Clean geometric shapes with muted green/blue wellness palette */}
-          <div className="absolute top-1/4 left-1/5 w-48 h-48 rounded-full bg-gradient-to-r from-teal-50/20 to-cyan-50/10 dark:from-teal-900/5 dark:to-cyan-900/5 blur-xl"></div>
-          <div className="absolute bottom-1/3 right-1/5 w-64 h-64 rounded-full bg-gradient-to-l from-blue-50/10 to-slate-50/10 dark:from-blue-900/5 dark:to-slate-900/5 blur-xl"></div>
+      {/* Hero Section - Modern health-oriented design with pizzazz */}
+      <section className="relative py-10 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
+        {/* Dynamic background with energy */}
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 dark:from-teal-900/30 dark:via-cyan-900/20 dark:to-blue-900/30 overflow-hidden">
+          {/* Vibrant, energetic shapes with wellness palette */}
+          <div className="absolute top-0 left-0 w-full h-full opacity-40 dark:opacity-20 mix-blend-soft-light">
+            <div className="absolute top-1/4 left-1/5 w-72 h-72 rounded-full bg-gradient-to-r from-teal-400 to-cyan-400 dark:from-teal-600 dark:to-cyan-600 blur-2xl animate-pulse-slow"></div>
+            <div className="absolute bottom-1/3 right-1/5 w-96 h-96 rounded-full bg-gradient-to-l from-blue-400 to-emerald-400 dark:from-blue-600 dark:to-emerald-600 blur-2xl animate-pulse-slower"></div>
+            <div className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-gradient-to-tr from-indigo-400 to-teal-400 dark:from-indigo-600 dark:to-teal-600 blur-2xl animate-pulse"></div>
+          </div>
           
-          {/* Subtle geometric patterns suggesting wellness rather than zodiac */}
-          <div className="absolute inset-0 opacity-5 select-none pointer-events-none">
-            <div className="absolute top-1/4 right-1/5 w-16 h-1 rounded-full bg-emerald-200/20 dark:bg-emerald-700/10 transform rotate-45"></div>
-            <div className="absolute bottom-1/3 left-1/4 w-16 h-1 rounded-full bg-blue-200/20 dark:bg-blue-700/10 transform -rotate-45"></div>
+          {/* Modern geometric patterns with motion */}
+          <div className="absolute inset-0 select-none pointer-events-none">
+            <div className="absolute top-1/4 right-1/5 w-24 h-1 rounded-full bg-gradient-to-r from-emerald-300 to-teal-300 dark:from-emerald-500 dark:to-teal-500 opacity-60 dark:opacity-40 transform rotate-45 animate-pulse-slow"></div>
+            <div className="absolute bottom-1/3 left-1/4 w-24 h-1 rounded-full bg-gradient-to-r from-blue-300 to-cyan-300 dark:from-blue-500 dark:to-cyan-500 opacity-60 dark:opacity-40 transform -rotate-45 animate-pulse-slow"></div>
+            <div className="absolute top-1/2 left-2/3 w-32 h-1 rounded-full bg-gradient-to-r from-teal-300 to-blue-300 dark:from-teal-500 dark:to-blue-500 opacity-60 dark:opacity-40 transform rotate-12 animate-pulse-slow"></div>
+            
+            {/* Subtle wellness symbols */}
+            <div className="absolute top-1/3 right-1/3 text-teal-400 dark:text-teal-300 opacity-10 text-6xl transform rotate-12">❊</div>
+            <div className="absolute bottom-1/4 left-1/4 text-blue-400 dark:text-blue-300 opacity-10 text-6xl transform -rotate-12">✧</div>
           </div>
         </div>
         
         <div className="container relative mx-auto px-4 z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-5 sm:gap-8 lg:gap-12">
             <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-slate-50 dark:bg-slate-900/60 text-primary px-2.5 sm:px-3 py-1.5 sm:py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium mb-4 sm:mb-6 md:mb-8 border border-slate-100 dark:border-slate-800/80 shadow-sm">
-                <Activity className="h-3 w-3 md:h-4 md:w-4" />
-                <span>{t('hero.tagline')}</span>
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-teal-100 to-cyan-100 dark:from-teal-900/60 dark:to-cyan-900/60 text-teal-700 dark:text-teal-300 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs md:text-sm font-medium mb-6 sm:mb-8 md:mb-10 border border-teal-200/50 dark:border-teal-700/30 shadow-md animate-fade-in">
+                <Activity className="h-3.5 w-3.5 md:h-4 md:w-4 mr-1" />
+                <span className="tracking-wide">{t('hero.tagline')}</span>
               </div>
               
-              {/* Modern branded header with more subtle gradient */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-2 sm:mb-3 md:mb-4 text-slate-900 dark:text-white">
-                {t('hero.brand')}
+              {/* Dynamic branded header with gradient text */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-3 sm:mb-4 md:mb-5 animate-fade-in-delay relative">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600 dark:from-teal-400 dark:to-blue-400">
+                  {t('hero.brand')}
+                </span>
+                <div className="absolute -bottom-1.5 left-0 w-24 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-full"></div>
               </h1>
               
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 md:mb-6 text-slate-800 dark:text-slate-100 font-medium">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-4 sm:mb-5 md:mb-7 text-slate-800 dark:text-slate-100 font-medium animate-fade-in-delay-2">
                 <span className="block">{t('hero.title1')}</span>
-                <span className="text-primary">{t('hero.title2')}</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500 dark:from-emerald-400 dark:to-cyan-400">{t('hero.title2')}</span>
               </h1>
               
-              <p className="magazine-lead text-sm md:text-base text-muted-foreground mb-4 sm:mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay">
+              <p className="magazine-lead text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 mb-6 sm:mb-7 md:mb-9 max-w-xl mx-auto lg:mx-0 animate-fade-in-delay-3 leading-relaxed">
                 {t('hero.description')}
               </p>
               

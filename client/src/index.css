@@ -22,17 +22,16 @@
   h1, h2, h3 {
     @apply tracking-tight font-bold;
     letter-spacing: -0.025em;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
   
   h4, h5, h6 {
     @apply tracking-tight font-bold;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.03);
   }
   
   p, span, li {
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    color: rgba(255, 255, 255, 0.95);
+    text-shadow: none;
   }
   
   /* Custom scroll bar */
@@ -122,34 +121,33 @@
     -webkit-tap-highlight-color: transparent;
   }
   
-  /* Modern astrological elements */
+  /* Modern wellness elements */
   .magazine-heading {
     @apply font-bold text-4xl md:text-5xl lg:text-6xl leading-tight;
-    background: linear-gradient(to right, #ff00ff, #c300ff, #8400ff, #3a00ff);
+    background: linear-gradient(to right, #14b8a6, #0ea5e9, #0284c7);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    text-shadow: 0 2px 10px rgba(20, 184, 166, 0.3);
   }
   
   .magazine-subheading {
     @apply font-medium text-sm uppercase tracking-widest;
-    color: hsl(var(--primary)/0.9);
+    color: #0d9488;
   }
   
   .magazine-lead {
     @apply text-xl leading-relaxed max-w-prose;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-    color: rgba(255, 255, 255, 0.9);
+    color: #334155;
   }
   
   .magazine-card {
     @apply relative rounded-lg p-6 shadow-lg hover:shadow-xl transition-all duration-300;
-    background: linear-gradient(135deg, rgba(30, 15, 45, 0.85), rgba(15, 10, 30, 0.9));
+    background: linear-gradient(135deg, rgba(240, 253, 250, 0.95), rgba(236, 254, 255, 0.9));
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 4px 20px rgba(128, 0, 255, 0.15);
+    border: 1px solid rgba(20, 184, 166, 0.15);
+    box-shadow: 0 4px 20px rgba(14, 165, 233, 0.15);
   }
   
   .magazine-tag {
@@ -159,17 +157,17 @@
   }
   
   .gradient-heading {
-    background: linear-gradient(to right, #ff00ff, #c300ff, #8400ff, #3a00ff);
+    background: linear-gradient(to right, #14b8a6, #0ea5e9, #0284c7);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    text-shadow: 0 2px 10px rgba(20, 184, 166, 0.3);
   }
   
   .animated-border {
     @apply relative overflow-hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(20, 184, 166, 0.1);
   }
   
   .animated-border::after {
@@ -188,19 +186,19 @@
   
   .zodiac-card {
     @apply relative rounded-lg p-6 md:p-8 shadow-md hover:shadow-lg transition-all duration-300;
-    border: 1px solid hsl(var(--primary)/0.3);
-    background: linear-gradient(135deg, rgba(20, 10, 30, 0.85), rgba(10, 5, 20, 0.9));
+    border: 1px solid rgba(20, 184, 166, 0.3);
+    background: linear-gradient(135deg, rgba(240, 253, 250, 0.95), rgba(236, 254, 255, 0.9));
     backdrop-filter: blur(8px);
-    box-shadow: 0 4px 20px rgba(128, 0, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(14, 165, 233, 0.15);
   }
   
-  /* Add some zodiac elements and scientific styling */
-  .star-bg {
+  /* Wellness patterns and scientific styling */
+  .pattern-bg {
     position: relative;
     overflow: hidden;
   }
   
-  .star-bg::before {
+  .pattern-bg::before {
     content: '';
     position: absolute;
     top: 0;
@@ -208,37 +206,37 @@
     right: 0;
     bottom: 0;
     background-image: 
-      radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
-      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6) 2px, transparent 2px),
-      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
-      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
-      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.5) 2px, transparent 2px),
-      radial-gradient(circle at 60% 60%, rgba(255, 255, 255, 0.9) 1px, transparent 1px),
-      radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.7) 1px, transparent 1px),
-      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.8) 2px, transparent 2px),
-      radial-gradient(circle at 90% 90%, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+      radial-gradient(circle at 10% 10%, rgba(20, 184, 166, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.1) 2px, transparent 2px),
+      radial-gradient(circle at 30% 30%, rgba(20, 184, 166, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 40% 40%, rgba(14, 165, 233, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.1) 2px, transparent 2px),
+      radial-gradient(circle at 60% 60%, rgba(14, 165, 233, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 70% 70%, rgba(20, 184, 166, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, rgba(14, 165, 233, 0.1) 2px, transparent 2px),
+      radial-gradient(circle at 90% 90%, rgba(20, 184, 166, 0.1) 1px, transparent 1px);
     background-size: 300px 300px;
-    opacity: 0.5;
+    opacity: 0.7;
     z-index: -1;
-    animation: twinkle 8s ease-in-out infinite alternate;
+    animation: pulse-slow 8s ease-in-out infinite alternate;
   }
   
-  .zodiac-gradient {
+  .wellness-gradient {
     background: linear-gradient(135deg, 
-      rgba(75, 0, 130, 0.5) 0%,
-      rgba(25, 25, 112, 0.5) 50%,
-      rgba(0, 0, 50, 0.5) 100%);
+      rgba(20, 184, 166, 0.1) 0%,
+      rgba(14, 165, 233, 0.1) 50%,
+      rgba(2, 132, 199, 0.1) 100%);
     position: relative;
   }
   
-  .zodiac-gradient::after {
+  .wellness-gradient::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at center, rgba(128, 0, 255, 0.4) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(20, 184, 166, 0.2) 0%, transparent 70%);
     z-index: -1;
   }
   
