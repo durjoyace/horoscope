@@ -22,6 +22,7 @@ import {
   generatePremiumReport
 } from "./premium-reports";
 import { setupAuth } from "./auth";
+import { getAnalyticsDashboardData } from "./analytics-service";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Setup authentication
@@ -481,6 +482,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({
         success: false,
         message: "Could not retrieve premium weekly report. Please try again later."
+      });
+    }
+  });
+  
+  // Analytics Dashboard Endpoint
+  app.get("/api/admin/analytics", async (req: Request, res: Response) => {
+    try {
+      // In a production app, we would check for admin permissions here
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+      
+      const analyticsData = await getAnalyticsDashboardData();
+      
+      res.status(200).json({
+        success: true,
+        data: analyticsData
+      });
+    } catch (error) {
+      console.error("Error fetching analytics data:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not retrieve analytics data. Please try again later."
       });
     }
   });

@@ -31,15 +31,22 @@ export interface IStorage {
   getUsersByStripeCustomerId(stripeCustomerId: string): Promise<User[]>;
   createUser(user: InsertUser): Promise<User>;
   updateUser(id: number, user: Partial<InsertUser>): Promise<User | undefined>;
+  getAllUsers(): Promise<User[]>;
   
   // Horoscope operations
   getHoroscope(id: number): Promise<Horoscope | undefined>;
   getHoroscopeBySignAndDate(sign: string, date: string): Promise<Horoscope | undefined>;
   createHoroscope(horoscope: InsertHoroscope): Promise<Horoscope>;
+  getAllHoroscopes(): Promise<Horoscope[]>;
   
   // Delivery operations
   createDeliveryLog(log: InsertDeliveryLog): Promise<DeliveryLog>;
   getDeliveryLogsByUser(userId: number): Promise<DeliveryLog[]>;
+  getAllDeliveryLogs(): Promise<DeliveryLog[]>;
+  
+  // Analytics operations
+  getUserLoginHistory(userId: number): Promise<any[]>;
+  getContentInteractions(contentType: string): Promise<any[]>;
   
   // Additional query methods
   getUsersByZodiacSign(sign: ZodiacSign): Promise<User[]>;
@@ -183,6 +190,30 @@ export class MemStorage implements IStorage {
     return Array.from(this.users.values()).filter(
       (user) => user.subscriptionTier === 'premium' || user.subscriptionTier === 'pro'
     );
+  }
+  
+  // Analytics-specific methods
+  async getAllUsers(): Promise<User[]> {
+    return Array.from(this.users.values());
+  }
+  
+  async getAllHoroscopes(): Promise<Horoscope[]> {
+    return Array.from(this.horoscopes.values());
+  }
+  
+  async getAllDeliveryLogs(): Promise<DeliveryLog[]> {
+    return Array.from(this.deliveryLogs.values());
+  }
+  
+  // Mock methods for analytics
+  async getUserLoginHistory(userId: number): Promise<any[]> {
+    // Simulate login history
+    return [];
+  }
+  
+  async getContentInteractions(contentType: string): Promise<any[]> {
+    // Simulate content interactions
+    return [];
   }
 }
 
@@ -463,6 +494,71 @@ export class DatabaseStorage implements IStorage {
       */
     } catch (error) {
       console.error('Error getting premium users:', error);
+      return [];
+    }
+  }
+  
+  // Analytics-specific methods for database storage
+  async getAllUsers(): Promise<User[]> {
+    try {
+      const result = await db.select({
+        id: users.id,
+        email: users.email,
+        password: users.password,
+        firstName: users.firstName,
+        lastName: users.lastName,
+        zodiacSign: users.zodiacSign,
+        birthdate: users.birthdate,
+        phone: users.phone,
+        smsOptIn: users.smsOptIn,
+        newsletterOptIn: users.newsletterOptIn,
+        createdAt: users.createdAt
+      }).from(users);
+      
+      return result as User[];
+    } catch (error) {
+      console.error('Error getting all users:', error);
+      return [];
+    }
+  }
+  
+  async getAllHoroscopes(): Promise<Horoscope[]> {
+    try {
+      const result = await db.select().from(horoscopes);
+      return result;
+    } catch (error) {
+      console.error('Error getting all horoscopes:', error);
+      return [];
+    }
+  }
+  
+  async getAllDeliveryLogs(): Promise<DeliveryLog[]> {
+    try {
+      const result = await db.select().from(deliveryLogs);
+      return result;
+    } catch (error) {
+      console.error('Error getting all delivery logs:', error);
+      return [];
+    }
+  }
+  
+  // Mock methods for analytics
+  async getUserLoginHistory(userId: number): Promise<any[]> {
+    try {
+      // This would be implemented with actual database tables in a real app
+      return [];
+    } catch (error) {
+      console.error('Error getting user login history:', error);
+      return [];
+    }
+  }
+  
+  async getContentInteractions(contentType: string): Promise<any[]> {
+    try {
+      // This would be implemented with actual database tables in a real app
+      return [];
+    } catch (error) {
+      console.error('Error getting content interactions:', error);
       return [];
     }
   }
