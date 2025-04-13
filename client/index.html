@@ -6,28 +6,38 @@
     <title>Horoscope Health - Your Daily Health Horoscope</title>
     <meta name="description" content="The first daily health horoscope built to improve your real life. Get personalized wellness advice based on your zodiac sign." />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
       /* Custom font family classes */
-      .font-playfair {
-        font-family: 'Playfair Display', serif;
+      .font-heading {
+        font-family: 'Space Grotesk', sans-serif;
       }
-      .font-inter {
-        font-family: 'Inter', sans-serif;
+      .font-body {
+        font-family: 'IBM Plex Sans', sans-serif;
       }
-      .font-montserrat {
-        font-family: 'Montserrat', sans-serif;
-      }
-      
-      /* Star background pattern */
-      .star-bg {
-        background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
-        background-size: 20px 20px;
+      .font-mono {
+        font-family: 'Roboto Mono', monospace;
       }
       
-      /* Cosmic gradient */
-      .bg-cosmic-gradient {
-        background-image: linear-gradient(to right, #4B3F72, #2D2B52);
+      /* Constellation grid pattern */
+      .constellation-grid {
+        background-image: 
+          linear-gradient(to right, rgba(45, 104, 196, 0.05) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(45, 104, 196, 0.05) 1px, transparent 1px);
+        background-size: 24px 24px;
+      }
+      
+      /* Science data pattern */
+      .data-grid {
+        background-image: 
+          radial-gradient(circle at 20% 30%, rgba(45, 104, 196, 0.08) 1px, transparent 1px),
+          radial-gradient(circle at 60% 70%, rgba(76, 159, 112, 0.08) 1px, transparent 1px);
+        background-size: 120px 120px;
+      }
+      
+      /* Scientific color scheme */
+      .bg-science-gradient {
+        background-image: linear-gradient(to right, #F7F7F7, #E5E5E5);
       }
       
       /* Float animation */
