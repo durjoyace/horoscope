@@ -49,7 +49,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col text-black" style={{ color: '#333', backgroundColor: '#fff' }}>
       {/* Hero section with signup */}
       <CosmicHeroSection 
         onSignup={handleSignup} 
