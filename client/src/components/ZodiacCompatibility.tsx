@@ -396,17 +396,17 @@ export default function ZodiacCompatibility({
                 </div>
                 
                 <div>
-                  <h4 className="font-medium flex items-center mb-2">
-                    <Info className="h-4 w-4 mr-2" /> Advice
+                  <h4 className="font-medium flex items-center mb-2 text-white">
+                    <Info className="h-4 w-4 mr-2 text-blue-400" /> Advice
                   </h4>
-                  <p className="text-sm">{result.advice}</p>
+                  <p className="text-sm text-gray-300">{result.advice}</p>
                 </div>
               </div>
             )}
           </div>
         )}
       </CardContent>
-      <CardFooter className="text-xs text-muted-foreground">
+      <CardFooter className="text-xs text-gray-400 border-t border-purple-500/20">
         Note: This is a simplified compatibility analysis based on astrological principles. Real relationships are complex and influenced by many factors.
       </CardFooter>
     </Card>
