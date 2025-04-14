@@ -203,6 +203,27 @@ export default function AuthPage() {
                         "Log in"
                       )}
                     </Button>
+                    
+                    <div className="relative my-4">
+                      <div className="absolute inset-0 flex items-center">
+                        <Separator className="w-full" />
+                      </div>
+                      <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-background px-2 text-muted-foreground">
+                          Or continue with
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      className="w-full" 
+                      onClick={() => loginWithGoogle()}
+                    >
+                      <FcGoogle className="mr-2 h-5 w-5" />
+                      Sign in with Google
+                    </Button>
                   </form>
                 </Form>
               </CardContent>
@@ -343,6 +364,27 @@ export default function AuthPage() {
                       ) : (
                         "Create Account"
                       )}
+                    </Button>
+                    
+                    <div className="relative my-4">
+                      <div className="absolute inset-0 flex items-center">
+                        <Separator className="w-full" />
+                      </div>
+                      <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-background px-2 text-muted-foreground">
+                          Or continue with
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      className="w-full" 
+                      onClick={() => loginWithGoogle(registerForm.getValues().zodiacSign as ZodiacSign)}
+                    >
+                      <FcGoogle className="mr-2 h-5 w-5" />
+                      Sign up with Google
                     </Button>
                   </form>
                 </Form>

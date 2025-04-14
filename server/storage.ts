@@ -235,6 +235,11 @@ export class MemStorage implements IStorage {
       phone: insertUser.phone || null,
       smsOptIn: insertUser.smsOptIn ?? null,
       newsletterOptIn: insertUser.newsletterOptIn ?? null,
+      // Google auth fields
+      authProvider: insertUser.authProvider || null,
+      providerUserId: insertUser.providerUserId || null,
+      photoUrl: insertUser.photoUrl || null,
+      // Subscription fields
       stripeCustomerId: null,
       stripeSubscriptionId: null,
       subscriptionStatus: 'none',
