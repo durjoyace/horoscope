@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'wouter';
-import { Facebook, Twitter, Instagram, Mail, Heart } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Mail, Heart, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { zodiacSignNames } from '@/data/zodiacData';
+import { useLanguage } from '@/context/LanguageContext';
 
 // Group zodiac signs by element
 const groupByElement = () => {
@@ -19,31 +20,39 @@ const groupByElement = () => {
 };
 
 export function Footer() {
+  const { t } = useLanguage();
   const elementGroups = groupByElement();
   
   return (
-    <footer className="bg-primary/5 text-foreground border-t border-primary/10 pt-10 pb-4">
-      <div className="container mx-auto px-4">
+    <footer className="bg-black text-white border-t border-purple-900/40 pt-10 pb-6">
+      {/* Cosmic background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="h-full w-full bg-[url('/stars-bg.png')] bg-repeat opacity-30"></div>
+        <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-gradient-to-tl from-purple-900/20 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 left-1/4 w-1/5 h-1/5 bg-gradient-to-br from-indigo-900/20 to-transparent rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="container relative z-10 mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* About Column */}
           <div className="lg:col-span-2">
-            <h3 className="text-lg font-bold mb-4">Horoscope Health</h3>
-            <p className="text-muted-foreground mb-4">
+            <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Horoscope Health</h3>
+            <p className="text-gray-300 mb-4">
               Discover personalized wellness insights powered by the cosmos. 
               Our unique blend of astrological wisdom and modern health science 
               helps you align your wellness journey with the stars.
             </p>
             <div className="flex space-x-4">
-              <Button size="icon" variant="ghost" className="rounded-full">
+              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30">
                 <Facebook className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" className="rounded-full">
+              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30">
                 <Twitter className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" className="rounded-full">
+              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30">
                 <Instagram className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" className="rounded-full">
+              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30">
                 <Mail className="h-5 w-5" />
               </Button>
             </div>
@@ -51,41 +60,41 @@ export function Footer() {
           
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-bold mb-4 text-white">Quick Links</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/">
-                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">Home</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Home</span>
                 </Link>
               </li>
               <li>
                 <Link href="/zodiac-library">
-                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">Zodiac Library</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Zodiac Library</span>
                 </Link>
               </li>
               <li>
                 <Link href="/marketplace">
-                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">Wellness Marketplace</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Wellness Marketplace</span>
                 </Link>
               </li>
               <li>
                 <Link href="/about">
-                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">About Us</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">About Us</span>
                 </Link>
               </li>
               <li>
                 <Link href="/science">
-                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">Our Science</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Our Science</span>
                 </Link>
               </li>
               <li>
                 <Link href="/contact">
-                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">Contact</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Contact</span>
                 </Link>
               </li>
               <li>
                 <Link href="/premium">
-                  <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">Premium</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Premium</span>
                 </Link>
               </li>
             </ul>
@@ -93,12 +102,12 @@ export function Footer() {
           
           {/* Elements Column */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Elements</h3>
+            <h3 className="text-lg font-bold mb-4 text-white">{t('footer.category.elements')}</h3>
             <ul className="space-y-2">
               {Object.keys(elementGroups).map(element => (
                 <li key={element}>
                   <Link href="/elements">
-                    <span className="text-muted-foreground hover:text-primary transition-colors cursor-pointer">
+                    <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">
                       {element === 'Fire' && '🔥 Fire Signs'}
                       {element === 'Earth' && '🌿 Earth Signs'}
                       {element === 'Air' && '💨 Air Signs'}
@@ -112,12 +121,12 @@ export function Footer() {
           
           {/* Zodiac Signs */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Zodiac Signs</h3>
+            <h3 className="text-lg font-bold mb-4 text-white">{t('footer.category.zodiac')}</h3>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2">
               {zodiacSignNames.map((sign: any) => (
                 <div key={sign.value}>
                   <Link href="/zodiac-library">
-                    <span className="text-muted-foreground hover:text-primary transition-colors flex items-center cursor-pointer">
+                    <span className="text-gray-400 hover:text-purple-400 transition-colors flex items-center cursor-pointer">
                       <span className="mr-1">{sign.symbol}</span> {sign.label}
                     </span>
                   </Link>
@@ -128,14 +137,39 @@ export function Footer() {
         </div>
         
         {/* Bottom Credits */}
-        <div className="border-t border-primary/10 pt-4 mt-4 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Battle Green Consulting LLC. All rights reserved.</p>
-          <p className="mt-2">
-            For entertainment purposes only. The content provided does not constitute medical advice.
-          </p>
-          <p className="mt-2 flex justify-center items-center gap-1">
-            Made with <Heart className="h-3 w-3 text-red-500 animate-pulse" fill="currentColor" /> for wellbeing
-          </p>
+        <div className="border-t border-purple-900/40 pt-6 mt-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-sm text-gray-400 mb-3">{t('footer.disclaimer')}</p>
+            
+            <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-6 mb-4">
+              <Link href="/privacy">
+                <span className="text-xs text-gray-500 hover:text-purple-400 transition-colors cursor-pointer">Privacy Policy</span>
+              </Link>
+              <Link href="/terms">
+                <span className="text-xs text-gray-500 hover:text-purple-400 transition-colors cursor-pointer">Terms of Service</span>
+              </Link>
+              <Link href="/accessibility">
+                <span className="text-xs text-gray-500 hover:text-purple-400 transition-colors cursor-pointer">Accessibility</span>
+              </Link>
+              <Link href="/sitemap">
+                <span className="text-xs text-gray-500 hover:text-purple-400 transition-colors cursor-pointer">Sitemap</span>
+              </Link>
+            </div>
+            
+            <div className="flex justify-center items-center gap-2 mb-3">
+              <Star className="h-3 w-3 text-purple-400" fill="currentColor" />
+              <Star className="h-3 w-3 text-purple-400" fill="currentColor" />
+              <Star className="h-4 w-4 text-purple-300" fill="currentColor" />
+              <Star className="h-3 w-3 text-purple-400" fill="currentColor" />
+              <Star className="h-3 w-3 text-purple-400" fill="currentColor" />
+            </div>
+            
+            <p className="text-sm text-gray-400">© {new Date().getFullYear()} Battle Green Consulting LLC. All rights reserved.</p>
+            
+            <p className="mt-3 text-xs flex justify-center items-center gap-1 text-gray-500">
+              Made with <Heart className="h-3 w-3 text-red-500 animate-pulse" fill="currentColor" /> for cosmic wellbeing
+            </p>
+          </div>
         </div>
       </div>
     </footer>

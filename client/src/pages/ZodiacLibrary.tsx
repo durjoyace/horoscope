@@ -638,11 +638,6 @@ export default function ZodiacLibrary() {
         </div>
       )}
       
-      {/* Disclaimer and legal section */}
-      <div className="mt-16 text-center text-sm text-gray-400">
-        <p className="mb-2">For entertainment purposes only. Results should not replace professional health advice.</p>
-        <p>© {new Date().getFullYear()} Battle Green Consulting LLC. All rights reserved.</p>
-      </div>
     </div>
   );
 }

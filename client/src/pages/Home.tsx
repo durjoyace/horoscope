@@ -70,15 +70,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       {/* Final call to action and footer */}
       <FooterCTA />
       
-      {/* Disclaimer and copyright */}
-      <div className="py-4 bg-black text-center text-xs text-slate-600">
-        <div className="container mx-auto px-4">
-          <p>{t('footer.disclaimer')}</p>
-          <p className="mt-2">
-            {t('footer.copyright', { year: new Date().getFullYear().toString() })}
-          </p>
-        </div>
-      </div>
+
     </div>
   );
 }
