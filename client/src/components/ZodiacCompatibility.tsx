@@ -269,13 +269,13 @@ export default function ZodiacCompatibility({
               </SelectContent>
             </Select>
             {sign1 && (
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-gray-300">
                 {zodiacSignNames.find((s) => s.value === sign1)?.dates}
               </div>
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium">Second Zodiac Sign</label>
+            <label className="text-sm font-medium text-white">Second Zodiac Sign</label>
             <Select
               value={sign2}
               onValueChange={(value) => setSign2(value as ZodiacSign)}
@@ -292,7 +292,7 @@ export default function ZodiacCompatibility({
               </SelectContent>
             </Select>
             {sign2 && (
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-gray-300">
                 {zodiacSignNames.find((s) => s.value === sign2)?.dates}
               </div>
             )}
@@ -321,7 +321,7 @@ export default function ZodiacCompatibility({
         {result && (
           <div className="mt-8 space-y-6">
             <div className="text-center space-y-2">
-              <div className="text-2xl font-bold">{result.overall}% Compatible</div>
+              <div className="text-2xl font-bold text-white">{result.overall}% Compatible</div>
               <div className="flex justify-center flex-wrap gap-2">
                 {result.categories.map((category, index) => (
                   <Badge key={index} variant="secondary">
@@ -333,9 +333,9 @@ export default function ZodiacCompatibility({
             
             <div className="space-y-4">
               <div className="space-y-2">
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-sm text-white">
                   <div className="flex items-center">
-                    <Heart className="h-4 w-4 mr-2 text-red-500" /> Romance
+                    <Heart className="h-4 w-4 mr-2 text-pink-400" /> Romance
                   </div>
                   <div>{getCompatibilityLabel(result.romance)}</div>
                 </div>
@@ -343,9 +343,9 @@ export default function ZodiacCompatibility({
               </div>
               
               <div className="space-y-2">
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-sm text-white">
                   <div className="flex items-center">
-                    <Users className="h-4 w-4 mr-2 text-blue-500" /> Friendship
+                    <Users className="h-4 w-4 mr-2 text-blue-400" /> Friendship
                   </div>
                   <div>{getCompatibilityLabel(result.friendship)}</div>
                 </div>
@@ -353,9 +353,9 @@ export default function ZodiacCompatibility({
               </div>
               
               <div className="space-y-2">
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-sm text-white">
                   <div className="flex items-center">
-                    <MessageSquare className="h-4 w-4 mr-2 text-purple-500" /> Communication
+                    <MessageSquare className="h-4 w-4 mr-2 text-purple-400" /> Communication
                   </div>
                   <div>{getCompatibilityLabel(result.communication)}</div>
                 </div>
@@ -364,30 +364,30 @@ export default function ZodiacCompatibility({
             </div>
             
             {showExplanation && (
-              <div className="bg-muted p-4 rounded-lg space-y-4">
-                <p>{result.description}</p>
+              <div className="bg-gray-800 border border-purple-500/20 p-4 rounded-lg space-y-4">
+                <p className="text-gray-300">{result.description}</p>
                 
                 <div>
-                  <h4 className="font-medium flex items-center mb-2">
-                    <Activity className="h-4 w-4 mr-2" /> Relationship Dynamics
+                  <h4 className="font-medium flex items-center mb-2 text-white">
+                    <Activity className="h-4 w-4 mr-2 text-purple-400" /> Relationship Dynamics
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <h5 className="text-sm font-medium mb-1">Strengths</h5>
-                      <ul className="text-sm space-y-1">
+                      <h5 className="text-sm font-medium mb-1 text-white">Strengths</h5>
+                      <ul className="text-sm space-y-1 text-gray-300">
                         {result.strengths.map((strength, index) => (
                           <li key={index} className="flex items-start">
-                            <span className="text-green-500 mr-2">✓</span> {strength}
+                            <span className="text-green-400 mr-2">✓</span> {strength}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h5 className="text-sm font-medium mb-1">Challenges</h5>
-                      <ul className="text-sm space-y-1">
+                      <h5 className="text-sm font-medium mb-1 text-white">Challenges</h5>
+                      <ul className="text-sm space-y-1 text-gray-300">
                         {result.challenges.map((challenge, index) => (
                           <li key={index} className="flex items-start">
-                            <span className="text-amber-500 mr-2">!</span> {challenge}
+                            <span className="text-amber-400 mr-2">!</span> {challenge}
                           </li>
                         ))}
                       </ul>
