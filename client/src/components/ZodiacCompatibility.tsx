@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ZodiacSign } from '@shared/types';
 import { zodiacSignNames } from '@/data/zodiacData';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Card, 
   CardContent, 
@@ -25,8 +26,12 @@ import {
   MessageSquare, 
   Activity,
   RefreshCw,
-  Info
+  Info,
+  Sparkles,
+  ArrowRight
 } from 'lucide-react';
+import ZodiacCompatibilityQuiz from './ZodiacCompatibilityQuiz';
+import { getCompatibility } from '@/data/compatibilityData';
 
 interface ZodiacCompatibilityProps {
   initialSign1?: ZodiacSign;
@@ -34,174 +39,25 @@ interface ZodiacCompatibilityProps {
   showExplanation?: boolean;
 }
 
-// Simple compatibility algorithm
-const calculateCompatibility = (sign1: ZodiacSign, sign2: ZodiacSign): {
-  overall: number;
-  romance: number;
-  friendship: number;
-  communication: number;
-  categories: string[];
-  description: string;
-  advice: string;
-  challenges: string[];
-  strengths: string[];
-} => {
-  // Get sign info
-  const sign1Data = zodiacSignNames.find(s => s.value === sign1);
-  const sign2Data = zodiacSignNames.find(s => s.value === sign2);
+// Simple compatibility algorithm using our more sophisticated data
+const calculateCompatibility = (sign1: ZodiacSign, sign2: ZodiacSign) => {
+  const compatData = getCompatibility(sign1, sign2);
   
-  if (!sign1Data || !sign2Data) {
-    return {
-      overall: 0,
-      romance: 0,
-      friendship: 0,
-      communication: 0,
-      categories: [],
-      description: '',
-      advice: '',
-      challenges: [],
-      strengths: []
-    };
-  }
-  
-  // Element compatibility
-  const elementCompatibility = (): number => {
-    // Same element = high compatibility
-    if (sign1Data.element === sign2Data.element) return 85;
-    
-    // Complementary elements
-    const complementary: Record<string, string[]> = {
-      'Fire': ['Air'],
-      'Air': ['Fire'],
-      'Earth': ['Water'],
-      'Water': ['Earth']
-    };
-    
-    if (complementary[sign1Data.element]?.includes(sign2Data.element)) return 80;
-    
-    // Challenging elements
-    const challenging: Record<string, string[]> = {
-      'Fire': ['Water'],
-      'Water': ['Fire'],
-      'Earth': ['Air'],
-      'Air': ['Earth']
-    };
-    
-    if (challenging[sign1Data.element]?.includes(sign2Data.element)) return 55;
-    
-    // Neutral
-    return 70;
-  };
-  
-  // Modality compatibility (Cardinal, Fixed, Mutable)
-  const modalityCompatibility = (): number => {
-    // Same modality - can be competitive or understading
-    if (sign1Data.modality === sign2Data.modality) return 65;
-    
-    // Complementary (all 3 together work well)
-    return 75;
-  };
-
-  // Calculate scores
-  const elementScore = elementCompatibility();
-  const modalityScore = modalityCompatibility();
-  
-  // Get some randomness but weighted toward the calculated values
-  const getRandomizedScore = (baseScore: number): number => {
-    const variance = 10; // +/- 10%
-    return Math.min(100, Math.max(30, baseScore + (Math.random() * variance * 2 - variance)));
-  };
-  
-  const romance = getRandomizedScore(elementScore);
-  const friendship = getRandomizedScore((elementScore + modalityScore) / 2);
-  const communication = getRandomizedScore(modalityScore);
-  const overall = Math.round((romance + friendship + communication) / 3);
-  
-  // Categories based on the synergy
-  const categories = [];
-  if (overall >= 80) categories.push('Soulmates');
-  else if (overall >= 70) categories.push('Great Match');
-  else if (overall >= 60) categories.push('Compatible');
-  else if (overall >= 45) categories.push('Needs Work');
+  // Add categories based on scores
+  const categories: string[] = [];
+  if (compatData.score.overall >= 85) categories.push('Soulmates');
+  else if (compatData.score.overall >= 75) categories.push('Great Match');
+  else if (compatData.score.overall >= 65) categories.push('Compatible');
+  else if (compatData.score.overall >= 50) categories.push('Needs Work');
   else categories.push('Challenging');
   
-  if (elementScore > 70) categories.push('Elemental Harmony');
-  if (romance > 75) categories.push('Romantic Connection');
-  if (friendship > 75) categories.push('Strong Friendship');
-  if (communication > 75) categories.push('Great Communication');
-  
-  // Description
-  let description = '';
-  if (overall >= 80) {
-    description = `${sign1Data.label} and ${sign2Data.label} have exceptional compatibility! There's a natural flow of energy between these signs, creating a balanced and harmonious relationship.`;
-  } else if (overall >= 65) {
-    description = `${sign1Data.label} and ${sign2Data.label} have good compatibility with some complementary traits that can create a balanced relationship with effort.`;
-  } else if (overall >= 50) {
-    description = `${sign1Data.label} and ${sign2Data.label} have moderate compatibility. There are differences that may cause occasional friction, but also opportunities for growth.`;
-  } else {
-    description = `${sign1Data.label} and ${sign2Data.label} face compatibility challenges. This relationship will require understanding, patience, and compromise.`;
-  }
-  
-  // Advice
-  let advice = '';
-  if (overall >= 80) {
-    advice = "Celebrate your natural compatibility but don't take it for granted. Continue nurturing your strengths and be mindful of your few differences.";
-  } else if (overall >= 65) {
-    advice = "Focus on your complementary qualities and use them to strengthen your bond. Be patient with differences and see them as opportunities to learn.";
-  } else if (overall >= 50) {
-    advice = "Communication is essential in navigating your differences. Approach challenges with openness and a willingness to understand each other's perspectives.";
-  } else {
-    advice = "This relationship requires work but can be rewarding. Practice patience, open communication, and appreciate the growth that comes from navigating differences.";
-  }
-  
-  // Generate some challenges and strengths
-  const generateChallenges = (): string[] => {
-    const challenges = [];
-    if (sign1Data.element !== sign2Data.element) {
-      challenges.push(`Balancing ${sign1Data.element} and ${sign2Data.element} energies`);
-    }
-    if (sign1Data.modality !== sign2Data.modality) {
-      challenges.push('Different approaches to problem-solving');
-    }
-    if (communication < 70) {
-      challenges.push('Potential communication misunderstandings');
-    }
-    if (challenges.length === 0) {
-      challenges.push('Avoiding complacency in the relationship');
-    }
-    return challenges;
-  };
-  
-  const generateStrengths = (): string[] => {
-    const strengths = [];
-    if (sign1Data.element === sign2Data.element) {
-      strengths.push(`Shared ${sign1Data.element} element creates natural understanding`);
-    }
-    if (elementScore > 70) {
-      strengths.push('Complementary energies that support growth');
-    }
-    if (friendship > 70) {
-      strengths.push('Strong foundation of friendship');
-    }
-    if (communication > 70) {
-      strengths.push('Effective communication patterns');
-    }
-    if (strengths.length === 0) {
-      strengths.push('Opportunity for significant personal growth');
-    }
-    return strengths;
-  };
+  if (compatData.score.romance >= 80) categories.push('Romantic Connection');
+  if (compatData.score.friendship >= 80) categories.push('Strong Friendship');
+  if (compatData.score.communication >= 80) categories.push('Great Communication');
   
   return {
-    overall,
-    romance: Math.round(romance),
-    friendship: Math.round(friendship),
-    communication: Math.round(communication),
-    categories,
-    description,
-    advice,
-    challenges: generateChallenges(),
-    strengths: generateStrengths()
+    ...compatData,
+    categories
   };
 };
 
@@ -210,21 +66,26 @@ export default function ZodiacCompatibility({
   initialSign2,
   showExplanation = true
 }: ZodiacCompatibilityProps) {
+  const [activeTab, setActiveTab] = useState('calculator');
   const [sign1, setSign1] = useState<ZodiacSign | undefined>(initialSign1);
   const [sign2, setSign2] = useState<ZodiacSign | undefined>(initialSign2);
   const [result, setResult] = useState<ReturnType<typeof calculateCompatibility> | null>(null);
   
   const getCompatibilityLabel = (score: number): string => {
-    if (score >= 80) return 'Excellent';
-    if (score >= 65) return 'Good';
-    if (score >= 50) return 'Moderate';
+    if (score >= 85) return 'Exceptional';
+    if (score >= 75) return 'Excellent';
+    if (score >= 65) return 'Very Good';
+    if (score >= 55) return 'Good';
+    if (score >= 45) return 'Moderate';
     return 'Challenging';
   };
   
   const getCompatibilityColor = (score: number): string => {
-    if (score >= 80) return 'bg-green-500';
-    if (score >= 65) return 'bg-blue-500';
-    if (score >= 50) return 'bg-amber-500';
+    if (score >= 85) return 'bg-purple-500';
+    if (score >= 75) return 'bg-blue-500';
+    if (score >= 65) return 'bg-teal-500';
+    if (score >= 55) return 'bg-green-500';
+    if (score >= 45) return 'bg-amber-500';
     return 'bg-red-500';
   };
   
@@ -240,175 +101,222 @@ export default function ZodiacCompatibility({
   };
   
   return (
-    <Card className="w-full max-w-2xl mx-auto bg-gray-900 border border-purple-500/30">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-white">
-          <Heart className="h-5 w-5 text-pink-400" /> Zodiac Compatibility Calculator
-        </CardTitle>
-        <CardDescription className="text-gray-300">
-          Discover how well your signs align in romance, friendship, and communication
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-white">First Zodiac Sign</label>
-            <Select
-              value={sign1}
-              onValueChange={(value) => setSign1(value as ZodiacSign)}
+    <div className="w-full max-w-4xl mx-auto">
+      <Tabs defaultValue="calculator" value={activeTab} onValueChange={setActiveTab}>
+        <div className="flex justify-center mb-6">
+          <TabsList className="bg-gray-900 border border-purple-900/50">
+            <TabsTrigger 
+              value="calculator" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-indigo-700 data-[state=active]:text-white"
             >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a sign" />
-              </SelectTrigger>
-              <SelectContent>
-                {zodiacSignNames.map((sign) => (
-                  <SelectItem key={sign.value} value={sign.value}>
-                    {sign.symbol} {sign.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {sign1 && (
-              <div className="text-xs text-gray-300">
-                {zodiacSignNames.find((s) => s.value === sign1)?.dates}
-              </div>
-            )}
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-white">Second Zodiac Sign</label>
-            <Select
-              value={sign2}
-              onValueChange={(value) => setSign2(value as ZodiacSign)}
+              Quick Calculator
+            </TabsTrigger>
+            <TabsTrigger 
+              value="quiz" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-indigo-700 data-[state=active]:text-white"
             >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a sign" />
-              </SelectTrigger>
-              <SelectContent>
-                {zodiacSignNames.map((sign) => (
-                  <SelectItem key={sign.value} value={sign.value}>
-                    {sign.symbol} {sign.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {sign2 && (
-              <div className="text-xs text-gray-300">
-                {zodiacSignNames.find((s) => s.value === sign2)?.dates}
-              </div>
-            )}
-          </div>
+              <Sparkles className="h-4 w-4 mr-2" /> 
+              Interactive Quiz
+            </TabsTrigger>
+          </TabsList>
         </div>
         
-        <div className="flex justify-center gap-4">
-          <Button
-            onClick={handleCalculate}
-            disabled={!sign1 || !sign2}
-            className="w-full md:w-auto"
-          >
-            Calculate Compatibility
-          </Button>
-          {result && (
-            <Button
-              variant="outline"
-              onClick={handleReset}
-              className="w-full md:w-auto"
-            >
-              <RefreshCw className="h-4 w-4 mr-2" /> Reset
-            </Button>
-          )}
-        </div>
+        <TabsContent value="calculator">
+          <Card className="bg-gray-900 border border-purple-500/30">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Heart className="h-5 w-5 text-pink-400" /> Zodiac Compatibility Calculator
+              </CardTitle>
+              <CardDescription className="text-gray-300">
+                Discover how well your signs align in romance, friendship, and communication
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-white">First Zodiac Sign</label>
+                  <Select
+                    value={sign1}
+                    onValueChange={(value) => setSign1(value as ZodiacSign)}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a sign" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {zodiacSignNames.map((sign) => (
+                        <SelectItem key={sign.value} value={sign.value}>
+                          {sign.symbol} {sign.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {sign1 && (
+                    <div className="text-xs text-gray-300">
+                      {zodiacSignNames.find((s) => s.value === sign1)?.dates}
+                    </div>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-white">Second Zodiac Sign</label>
+                  <Select
+                    value={sign2}
+                    onValueChange={(value) => setSign2(value as ZodiacSign)}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a sign" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {zodiacSignNames.map((sign) => (
+                        <SelectItem key={sign.value} value={sign.value}>
+                          {sign.symbol} {sign.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {sign2 && (
+                    <div className="text-xs text-gray-300">
+                      {zodiacSignNames.find((s) => s.value === sign2)?.dates}
+                    </div>
+                  )}
+                </div>
+              </div>
+              
+              <div className="flex justify-center gap-4">
+                <Button
+                  onClick={handleCalculate}
+                  disabled={!sign1 || !sign2}
+                  className="w-full md:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
+                >
+                  Calculate Compatibility
+                </Button>
+                {result && (
+                  <Button
+                    variant="outline"
+                    onClick={handleReset}
+                    className="w-full md:w-auto border-purple-500/30 hover:border-purple-500/60 hover:bg-purple-900/20"
+                  >
+                    <RefreshCw className="h-4 w-4 mr-2" /> Reset
+                  </Button>
+                )}
+              </div>
+              
+              {!result && !sign1 && !sign2 && (
+                <div className="flex justify-center mt-4">
+                  <Button 
+                    variant="ghost" 
+                    onClick={() => setActiveTab('quiz')} 
+                    className="text-purple-400 hover:text-purple-300 hover:bg-purple-900/20"
+                  >
+                    <Sparkles className="h-4 w-4 mr-2" /> 
+                    Try our interactive compatibility quiz
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </div>
+              )}
+              
+              {result && (
+                <div className="mt-8 space-y-6">
+                  <div className="text-center space-y-2">
+                    <div className="text-2xl font-bold bg-gradient-to-r from-purple-300 to-indigo-300 text-transparent bg-clip-text">
+                      {result.score.overall}% Compatible
+                    </div>
+                    <div className="flex justify-center flex-wrap gap-2 mt-1">
+                      {result.categories.map((category, index) => (
+                        <Badge key={index} variant="secondary" className="bg-purple-900/40 hover:bg-purple-900/60">
+                          {category}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm text-white">
+                        <div className="flex items-center">
+                          <Heart className="h-4 w-4 mr-2 text-pink-400" /> Romance
+                        </div>
+                        <div>{getCompatibilityLabel(result.score.romance)}</div>
+                      </div>
+                      <Progress value={result.score.romance} className={getCompatibilityColor(result.score.romance)} />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm text-white">
+                        <div className="flex items-center">
+                          <Users className="h-4 w-4 mr-2 text-blue-400" /> Friendship
+                        </div>
+                        <div>{getCompatibilityLabel(result.score.friendship)}</div>
+                      </div>
+                      <Progress value={result.score.friendship} className={getCompatibilityColor(result.score.friendship)} />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm text-white">
+                        <div className="flex items-center">
+                          <MessageSquare className="h-4 w-4 mr-2 text-purple-400" /> Communication
+                        </div>
+                        <div>{getCompatibilityLabel(result.score.communication)}</div>
+                      </div>
+                      <Progress value={result.score.communication} className={getCompatibilityColor(result.score.communication)} />
+                    </div>
+                  </div>
+                  
+                  {showExplanation && (
+                    <div className="bg-gray-800 border border-purple-500/20 p-4 rounded-lg space-y-4">
+                      <p className="text-gray-300">{result.description}</p>
+                      
+                      <div>
+                        <h4 className="font-medium flex items-center mb-2 text-white">
+                          <Activity className="h-4 w-4 mr-2 text-purple-400" /> Relationship Dynamics
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <h5 className="text-sm font-medium mb-1 text-white">Strengths</h5>
+                            <ul className="text-sm space-y-1 text-gray-300">
+                              {result.strengths.map((strength, index) => (
+                                <li key={index} className="flex items-start">
+                                  <span className="text-green-400 mr-2">✓</span> {strength}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div>
+                            <h5 className="text-sm font-medium mb-1 text-white">Challenges</h5>
+                            <ul className="text-sm space-y-1 text-gray-300">
+                              {result.challenges.map((challenge, index) => (
+                                <li key={index} className="flex items-start">
+                                  <span className="text-amber-400 mr-2">!</span> {challenge}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-medium flex items-center mb-2 text-white">
+                          <Info className="h-4 w-4 mr-2 text-blue-400" /> Advice
+                        </h4>
+                        <p className="text-sm text-gray-300">{result.advice}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </CardContent>
+            <CardFooter className="text-xs text-gray-400 border-t border-purple-500/20">
+              Note: This is a compatibility analysis based on astrological principles. Real relationships are complex and influenced by many factors.
+            </CardFooter>
+          </Card>
+        </TabsContent>
         
-        {result && (
-          <div className="mt-8 space-y-6">
-            <div className="text-center space-y-2">
-              <div className="text-2xl font-bold text-white">{result.overall}% Compatible</div>
-              <div className="flex justify-center flex-wrap gap-2">
-                {result.categories.map((category, index) => (
-                  <Badge key={index} variant="secondary">
-                    {category}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm text-white">
-                  <div className="flex items-center">
-                    <Heart className="h-4 w-4 mr-2 text-pink-400" /> Romance
-                  </div>
-                  <div>{getCompatibilityLabel(result.romance)}</div>
-                </div>
-                <Progress value={result.romance} className={getCompatibilityColor(result.romance)} />
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm text-white">
-                  <div className="flex items-center">
-                    <Users className="h-4 w-4 mr-2 text-blue-400" /> Friendship
-                  </div>
-                  <div>{getCompatibilityLabel(result.friendship)}</div>
-                </div>
-                <Progress value={result.friendship} className={getCompatibilityColor(result.friendship)} />
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm text-white">
-                  <div className="flex items-center">
-                    <MessageSquare className="h-4 w-4 mr-2 text-purple-400" /> Communication
-                  </div>
-                  <div>{getCompatibilityLabel(result.communication)}</div>
-                </div>
-                <Progress value={result.communication} className={getCompatibilityColor(result.communication)} />
-              </div>
-            </div>
-            
-            {showExplanation && (
-              <div className="bg-gray-800 border border-purple-500/20 p-4 rounded-lg space-y-4">
-                <p className="text-gray-300">{result.description}</p>
-                
-                <div>
-                  <h4 className="font-medium flex items-center mb-2 text-white">
-                    <Activity className="h-4 w-4 mr-2 text-purple-400" /> Relationship Dynamics
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <h5 className="text-sm font-medium mb-1 text-white">Strengths</h5>
-                      <ul className="text-sm space-y-1 text-gray-300">
-                        {result.strengths.map((strength, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="text-green-400 mr-2">✓</span> {strength}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-sm font-medium mb-1 text-white">Challenges</h5>
-                      <ul className="text-sm space-y-1 text-gray-300">
-                        {result.challenges.map((challenge, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="text-amber-400 mr-2">!</span> {challenge}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium flex items-center mb-2 text-white">
-                    <Info className="h-4 w-4 mr-2 text-blue-400" /> Advice
-                  </h4>
-                  <p className="text-sm text-gray-300">{result.advice}</p>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </CardContent>
-      <CardFooter className="text-xs text-gray-400 border-t border-purple-500/20">
-        Note: This is a simplified compatibility analysis based on astrological principles. Real relationships are complex and influenced by many factors.
-      </CardFooter>
-    </Card>
+        <TabsContent value="quiz">
+          <ZodiacCompatibilityQuiz 
+            initialSign1={sign1} 
+            initialSign2={sign2} 
+          />
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }
