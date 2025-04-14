@@ -199,7 +199,7 @@ export default function ZodiacWheel({
                     Learn more about this zodiac sign's characteristics and health insights
                   </DialogDescription>
                 </DialogHeader>
-                {getSignInfo(sign.value)}
+                {getSignInfo(sign.value as ZodiacSign)}
               </DialogContent>
             )}
           </Dialog>

@@ -112,13 +112,13 @@ export default function ZodiacLibrary() {
         <>
           {/* Interactive Zodiac Wheel */}
           <div className="mb-10 md:mb-20">
-            <Card>
+            <Card className="bg-gray-900 border border-purple-500/30">
               <CardHeader className="text-center">
-                <CardTitle className="flex items-center justify-center gap-2 text-xl md:text-2xl">
-                  <Star className="h-5 w-5 md:h-6 md:w-6 text-primary" /> 
+                <CardTitle className="flex items-center justify-center gap-2 text-xl md:text-2xl text-white">
+                  <Star className="h-5 w-5 md:h-6 md:w-6 text-purple-400" /> 
                   Interactive Zodiac Wheel
                 </CardTitle>
-                <CardDescription className="text-sm md:text-base">
+                <CardDescription className="text-sm md:text-base text-gray-300">
                   Click on any sign to explore its detailed profile and wellness insights
                 </CardDescription>
               </CardHeader>
@@ -158,7 +158,7 @@ export default function ZodiacLibrary() {
           {/* Zodiac Sign Details */}
           {selectedSignData && (
             <div className="mb-10 md:mb-20">
-              <Card>
+              <Card className="bg-gray-900 border border-purple-500/30">
                 <CardHeader className="p-4 md:p-6">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div className="flex items-center gap-3">
@@ -166,8 +166,8 @@ export default function ZodiacLibrary() {
                         <span className="text-2xl md:text-3xl">{selectedSignData.symbol}</span>
                       </div>
                       <div>
-                        <CardTitle className="text-xl md:text-2xl lg:text-3xl">{selectedSignData.label}</CardTitle>
-                        <CardDescription className="flex items-center gap-2 text-xs md:text-sm">
+                        <CardTitle className="text-xl md:text-2xl lg:text-3xl text-white">{selectedSignData.label}</CardTitle>
+                        <CardDescription className="flex items-center gap-2 text-xs md:text-sm text-gray-300">
                           <Calendar className="h-3 w-3 md:h-4 md:w-4" /> 
                           {selectedSignData.dates}
                         </CardDescription>
@@ -202,15 +202,15 @@ export default function ZodiacLibrary() {
                     <TabsContent value="overview" className="space-y-6">
                       <div className="grid md:grid-cols-2 gap-8">
                         <div>
-                          <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
-                            <User className="h-5 w-5 text-primary" /> Personality & Traits
+                          <h3 className="text-lg font-medium mb-3 flex items-center gap-2 text-white">
+                            <User className="h-5 w-5 text-purple-400" /> Personality & Traits
                           </h3>
-                          <p className="mb-4 text-muted-foreground">
+                          <p className="mb-4 text-gray-300">
                             {selectedSignData.traits}
                           </p>
                           
-                          <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
-                            <BookOpen className="h-5 w-5 text-primary" /> Astrological Profile
+                          <h3 className="text-lg font-medium mb-3 flex items-center gap-2 text-white">
+                            <BookOpen className="h-5 w-5 text-purple-400" /> Astrological Profile
                           </h3>
                           <div className="space-y-3">
                             <div className="grid grid-cols-2 gap-2">
@@ -230,17 +230,17 @@ export default function ZodiacLibrary() {
                           </div>
                         </div>
                         <div>
-                          <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
-                            <Activity className="h-5 w-5 text-primary" /> Health & Wellness Focus
+                          <h3 className="text-lg font-medium mb-3 flex items-center gap-2 text-white">
+                            <Activity className="h-5 w-5 text-purple-400" /> Health & Wellness Focus
                           </h3>
-                          <p className="mb-4 text-muted-foreground">
+                          <p className="mb-4 text-gray-300">
                             {selectedSignData.healthFocus}
                           </p>
                           
-                          <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
-                            <Sparkles className="h-5 w-5 text-primary" /> Key Strengths
+                          <h3 className="text-lg font-medium mb-3 flex items-center gap-2 text-white">
+                            <Sparkles className="h-5 w-5 text-purple-400" /> Key Strengths
                           </h3>
-                          <ul className="space-y-1 text-muted-foreground">
+                          <ul className="space-y-1 text-gray-300">
                             <li className="flex items-start">
                               <span className="text-primary mr-2">✓</span> {selectedSignData.label} individuals are naturally gifted
                             </li>
@@ -256,10 +256,10 @@ export default function ZodiacLibrary() {
                             </li>
                           </ul>
                           
-                          <h3 className="text-lg font-medium mt-4 mb-3 flex items-center gap-2">
-                            <Puzzle className="h-5 w-5 text-primary" /> Challenges
+                          <h3 className="text-lg font-medium mt-4 mb-3 flex items-center gap-2 text-white">
+                            <Puzzle className="h-5 w-5 text-purple-400" /> Challenges
                           </h3>
-                          <ul className="space-y-1 text-muted-foreground">
+                          <ul className="space-y-1 text-gray-300">
                             <li className="flex items-start">
                               <span className="text-amber-500 mr-2">!</span> May struggle with consistency
                             </li>

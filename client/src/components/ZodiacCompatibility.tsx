@@ -240,19 +240,19 @@ export default function ZodiacCompatibility({
   };
   
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-2xl mx-auto bg-gray-900 border border-purple-500/30">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Heart className="h-5 w-5 text-red-500" /> Zodiac Compatibility Calculator
+        <CardTitle className="flex items-center gap-2 text-white">
+          <Heart className="h-5 w-5 text-pink-400" /> Zodiac Compatibility Calculator
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-gray-300">
           Discover how well your signs align in romance, friendship, and communication
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium">First Zodiac Sign</label>
+            <label className="text-sm font-medium text-white">First Zodiac Sign</label>
             <Select
               value={sign1}
               onValueChange={(value) => setSign1(value as ZodiacSign)}
