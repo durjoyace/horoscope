@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation, Redirect } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
 import { useEffect, useState } from "react";
 import { ZodiacSign, SubscriptionStatus, SubscriptionTier } from "@shared/types";
@@ -6,10 +6,10 @@ import { NavigationBar } from "@/components/NavigationBar";
 import { Footer } from "@/components/Footer";
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/lib/protected-route";
-import { QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { PageTransition } from "@/components/PageTransition";
-import { queryClient } from "./lib/queryClient";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 // Import all pages
 import Home from "@/pages/Home";
@@ -38,6 +38,61 @@ import TopicDetail from "@/pages/community/TopicDetail";
 import AdminDashboard from "@/pages/admin";
 import AdminAnalytics from "@/pages/admin/analytics";
 
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
+
+interface UserData {
+  email: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  zodiacSign: ZodiacSign;
+  subscriptionStatus?: SubscriptionStatus;
+  subscriptionTier?: SubscriptionTier;
+  subscriptionEndDate?: string;
+}
+
+// Custom wrapper component to pass props to route components
+function RouteWithProps({ component: Component, ...rest }: any) {
+  const [user, setUser] = useState<UserData | null>(null);
+  const [, navigate] = useLocation();
+
+  // Load user data from localStorage
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser);
+        setUser(userData);
+      } catch (error) {
+        console.error("Failed to parse user data:", error);
+      }
+    }
+  }, []);
+
+  const isLoggedIn = !!user?.email && !!user?.zodiacSign;
+  
+  const handleUserRegistered = (userData: UserData) => {
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+  };
+
+  return (
+    <Component 
+      user={user} 
+      isLoggedIn={isLoggedIn} 
+      onUserRegistered={handleUserRegistered} 
+      {...rest} 
+    />
+  );
+}
+
 function AppContent() {
   const { user, logoutMutation } = useAuth();
   
@@ -49,7 +104,7 @@ function AppContent() {
   };
   
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: "#f8f9fa", color: "#333333" }}>
+    <div className="flex flex-col min-h-screen">
       <NavigationBar 
         isLoggedIn={isLoggedIn}
         userEmail={user?.email || ""}

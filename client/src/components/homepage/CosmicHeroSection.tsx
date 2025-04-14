@@ -41,14 +41,14 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
   };
 
   return (
-    <section className="relative py-10 sm:py-16 md:py-20 lg:py-24 overflow-hidden text-black">
-      {/* Dynamic background with energy - using lighter, more visible tones */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-slate-100 to-slate-200 overflow-hidden">
+    <section className="relative py-10 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
+      {/* Dynamic background with energy - using black and purple tones */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-slate-950 to-slate-900 overflow-hidden">
         {/* Vibrant, energetic shapes with purple cosmic palette */}
         <div className="absolute top-0 left-0 w-full h-full opacity-30 mix-blend-soft-light">
-          <div className="absolute top-1/4 left-1/5 w-72 h-72 rounded-full bg-gradient-to-r from-purple-400 to-violet-400 blur-2xl animate-pulse-slow"></div>
-          <div className="absolute bottom-1/3 right-1/5 w-96 h-96 rounded-full bg-gradient-to-l from-indigo-400 to-purple-400 blur-2xl animate-pulse-slower"></div>
-          <div className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-gradient-to-tr from-fuchsia-400 to-purple-500 blur-2xl animate-pulse"></div>
+          <div className="absolute top-1/4 left-1/5 w-72 h-72 rounded-full bg-gradient-to-r from-purple-700 to-violet-700 blur-2xl animate-pulse-slow"></div>
+          <div className="absolute bottom-1/3 right-1/5 w-96 h-96 rounded-full bg-gradient-to-l from-indigo-700 to-purple-700 blur-2xl animate-pulse-slower"></div>
+          <div className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-gradient-to-tr from-fuchsia-700 to-purple-800 blur-2xl animate-pulse"></div>
         </div>
       </div>
 
@@ -60,14 +60,14 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
               <span className="mr-1 text-[10px] uppercase">{t('hero.tagline')}</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-4 md:mb-6 tracking-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 tracking-tight">
               <span className="block">{t('hero.title1')}</span>
-              <span className="block bg-gradient-to-r from-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
                 {t('hero.title2')}
               </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-slate-700 mb-8 max-w-xl mx-auto lg:mx-0">
+            <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-xl mx-auto lg:mx-0">
               {t('hero.description')}
             </p>
             
@@ -77,7 +77,7 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t('signup.email.placeholder')}
-                  className="bg-white border-slate-300 text-slate-900 h-12 focus:border-purple-500 focus:ring-purple-500 w-full max-w-xs mx-auto sm:mx-0"
+                  className="bg-white/10 border-white/20 text-white h-12 focus:border-purple-500 focus:ring-purple-500 w-full max-w-xs mx-auto sm:mx-0"
                 />
                 <Button 
                   onClick={handleSignupClick}
@@ -112,10 +112,10 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
           
           {/* Right column: Zodiac selection */}
           <div className="flex justify-center">
-            <div className="w-full max-w-md bg-white/90 backdrop-blur-lg border border-purple-300 rounded-2xl p-6 shadow-xl">
+            <div className="w-full max-w-md bg-black/50 backdrop-blur-lg border border-purple-900/50 rounded-2xl p-6 shadow-xl shadow-purple-900/20">
               <div className="text-center mb-4">
-                <h2 className="text-xl font-semibold text-slate-800">{t('signup.profile')}</h2>
-                <p className="text-sm text-slate-600">{t('signup.select')}</p>
+                <h2 className="text-xl font-semibold text-white">{t('signup.profile')}</h2>
+                <p className="text-sm text-slate-400">{t('signup.select')}</p>
               </div>
               
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-3 lg:grid-cols-4 gap-2 mb-4">
