@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { 
   getAuth, 
   GoogleAuthProvider, 
@@ -9,19 +9,18 @@ import {
   signOut
 } from "firebase/auth";
 
-// Firebase configuration from the provided screenshot
+// Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA8mLPuC2kK8bXysJlqMWBXxud-vpKGCTO",
-  authDomain: "horoscopehealth-web.firebaseapp.com", 
-  projectId: "horoscopehealth-web",
-  storageBucket: "horoscopehealth-web.firebasestorage.app",
-  messagingSenderId: "14982980321",
-  appId: "1:14982980321:web:ece6ee4cc98a00f26dc826",
-  measurementId: "G-QF5K6VY1RW"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: `${import.meta.env.VITE_FIREBASE_PROJECT_ID}.firebaseapp.com`,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: `${import.meta.env.VITE_FIREBASE_PROJECT_ID}.appspot.com`,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase only once
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 

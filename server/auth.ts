@@ -218,20 +218,27 @@ export function setupAuth(app: Express) {
         }
       }
 
+      if (!user) {
+        return res.status(500).json({
+          success: false,
+          message: "Failed to authenticate user"
+        });
+      }
+
       req.login(user, (err) => {
         if (err) return next(err);
         res.status(200).json({
           success: true,
           message: "Google authentication successful",
           user: {
-            id: user.id,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            zodiacSign: user.zodiacSign,
-            photoUrl: user.photoUrl,
-            isPremium: user.subscriptionTier === 'premium' || user.subscriptionTier === 'pro',
-            isAdmin: isAdmin(user.email)
+            id: user!.id,
+            email: user!.email,
+            firstName: user!.firstName,
+            lastName: user!.lastName,
+            zodiacSign: user!.zodiacSign,
+            photoUrl: user!.photoUrl,
+            isPremium: user!.subscriptionTier === 'premium' || user!.subscriptionTier === 'pro',
+            isAdmin: isAdmin(user!.email)
           }
         });
       });
