@@ -190,11 +190,6 @@ export class MemStorage implements IStorage {
       phone: null,
       smsOptIn: false,
       newsletterOptIn: true,
-      // Google auth fields
-      authProvider: null,
-      providerUserId: null,
-      photoUrl: null,
-      // Subscription fields
       stripeCustomerId: null,
       stripeSubscriptionId: null,
       subscriptionStatus: 'none',
@@ -240,11 +235,6 @@ export class MemStorage implements IStorage {
       phone: insertUser.phone || null,
       smsOptIn: insertUser.smsOptIn ?? null,
       newsletterOptIn: insertUser.newsletterOptIn ?? null,
-      // Google auth fields
-      authProvider: insertUser.authProvider || null,
-      providerUserId: insertUser.providerUserId || null,
-      photoUrl: insertUser.photoUrl || null,
-      // Subscription fields
       stripeCustomerId: null,
       stripeSubscriptionId: null,
       subscriptionStatus: 'none',
@@ -674,10 +664,6 @@ export class DatabaseStorage implements IStorage {
         phone: null,
         smsOptIn: false,
         newsletterOptIn: true,
-        // Google auth fields
-        authProvider: null,
-        providerUserId: null,
-        photoUrl: null,
         createdAt: now
       }).returning();
       
@@ -696,11 +682,6 @@ export class DatabaseStorage implements IStorage {
         phone: null,
         smsOptIn: false,
         newsletterOptIn: true,
-        // Google auth fields
-        authProvider: null,
-        providerUserId: null,
-        photoUrl: null,
-        // Subscription fields
         createdAt: new Date(),
         stripeCustomerId: null,
         stripeSubscriptionId: null,
@@ -726,11 +707,6 @@ export class DatabaseStorage implements IStorage {
         phone: users.phone,
         smsOptIn: users.smsOptIn,
         newsletterOptIn: users.newsletterOptIn,
-        // Google auth fields
-        authProvider: users.authProvider,
-        providerUserId: users.providerUserId,
-        photoUrl: users.photoUrl,
-        // Other fields
         createdAt: users.createdAt
       }).from(users).where(eq(users.id, id));
       
@@ -755,11 +731,6 @@ export class DatabaseStorage implements IStorage {
         phone: users.phone,
         smsOptIn: users.smsOptIn,
         newsletterOptIn: users.newsletterOptIn,
-        // Google auth fields
-        authProvider: users.authProvider,
-        providerUserId: users.providerUserId,
-        photoUrl: users.photoUrl,
-        // Other fields
         createdAt: users.createdAt
       }).from(users).where(eq(users.email, email));
       
@@ -803,11 +774,7 @@ export class DatabaseStorage implements IStorage {
         birthdate: insertUser.birthdate,
         phone: insertUser.phone,
         smsOptIn: insertUser.smsOptIn,
-        newsletterOptIn: insertUser.newsletterOptIn,
-        // Google auth fields
-        authProvider: insertUser.authProvider,
-        providerUserId: insertUser.providerUserId,
-        photoUrl: insertUser.photoUrl
+        newsletterOptIn: insertUser.newsletterOptIn
       };
       
       // Log the exact fields being inserted for debugging
@@ -835,10 +802,6 @@ export class DatabaseStorage implements IStorage {
       if ('phone' in updates) validFields.phone = updates.phone;
       if ('smsOptIn' in updates) validFields.smsOptIn = updates.smsOptIn;
       if ('newsletterOptIn' in updates) validFields.newsletterOptIn = updates.newsletterOptIn;
-      // Google auth fields
-      if ('authProvider' in updates) validFields.authProvider = updates.authProvider;
-      if ('providerUserId' in updates) validFields.providerUserId = updates.providerUserId;
-      if ('photoUrl' in updates) validFields.photoUrl = updates.photoUrl;
       
       // Debug the update operation
       console.log('Updating user with fields:', validFields);

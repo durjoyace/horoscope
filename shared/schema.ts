@@ -25,10 +25,6 @@ export const users = pgTable("users", {
   phone: text("phone"),
   smsOptIn: boolean("sms_opt_in").default(false),
   newsletterOptIn: boolean("newsletter_opt_in").default(true),
-  // Authentication provider fields
-  authProvider: text("auth_provider"), // 'google', 'facebook', etc.
-  providerUserId: text("provider_user_id"), // UID from provider 
-  photoUrl: text("photo_url"), // Profile photo URL
   // Premium subscription fields
   // Note: isPremium is not in the database, but we'll handle it in code
   // isPremium: boolean("is_premium").default(false),
