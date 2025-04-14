@@ -35,13 +35,7 @@ export const FooterCTA: React.FC = () => {
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
           
-          <div className="mt-8 text-sm text-slate-400">
-            {t('cta.disclaimer')}
-          </div>
-          
-          <div className="mt-6 text-xs text-slate-600">
-            {t('cta.copyright', { year: new Date().getFullYear().toString() })}
-          </div>
+
         </div>
       </div>
     </section>
