@@ -29,6 +29,9 @@ googleProvider.setCustomParameters({
   prompt: 'select_account'
 });
 
+// Log Firebase configuration for debugging (without exposing API key)
+console.log('Firebase initialized with project:', import.meta.env.VITE_FIREBASE_PROJECT_ID);
+
 // Google sign in using popup
 export const signInWithGoogle = async () => {
   try {

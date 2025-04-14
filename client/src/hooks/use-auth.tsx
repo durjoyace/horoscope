@@ -234,6 +234,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setZodiacSignForGoogle(zodiacSign);
       }
       
+      // Check if zodiac sign is provided for new users
+      if (!zodiacSign && !zodiacSignForGoogle) {
+        toast({
+          title: "Zodiac sign required",
+          description: "Please select your zodiac sign before signing in with Google",
+          variant: "destructive",
+        });
+        return;
+      }
+      
       // Sign in with Google via Firebase
       const googleUser = await signInWithGoogle();
       
@@ -250,11 +260,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         zodiacSign: zodiacSign || zodiacSignForGoogle,
       });
       
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error signing in with Google:", error);
+      
+      // Handle specific Firebase auth errors
+      let errorMessage = "An unexpected error occurred";
+      
+      if (error.code === 'auth/configuration-not-found') {
+        errorMessage = "Firebase authentication is not properly configured. Please contact support.";
+      } else if (error.code === 'auth/popup-blocked') {
+        errorMessage = "Popup was blocked by your browser. Please allow popups for this site.";
+      } else if (error.code === 'auth/popup-closed-by-user') {
+        errorMessage = "Authentication was cancelled. Please try again.";
+      } else if (error.code === 'auth/unauthorized-domain') {
+        errorMessage = "This domain is not authorized for Firebase authentication.";
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Google sign in failed",
-        description: error instanceof Error ? error.message : "An unexpected error occurred",
+        description: errorMessage,
         variant: "destructive",
       });
     }
