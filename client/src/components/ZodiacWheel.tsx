@@ -159,8 +159,8 @@ export default function ZodiacWheel({
       {/* Signs */}
       {zodiacSignNames.map((sign, index) => {
         const { x, y } = getSignPosition(index);
-        const isActive = activeSigns.includes(sign.value);
-        const isSelected = selectedSign === sign.value;
+        const isActive = activeSigns.includes(sign.value as ZodiacSign);
+        const isSelected = selectedSign === (sign.value as ZodiacSign);
         
         return (
           <Dialog key={sign.value} open={openDialog && selectedSign === sign.value} onOpenChange={setOpenDialog}>
@@ -179,7 +179,7 @@ export default function ZodiacWheel({
                   top: y - (size === 'sm' ? radius * 0.125 : radius * 0.15),
                   transform: isActive || isSelected ? 'scale(1.1)' : 'scale(1)',
                 }}
-                onClick={() => handleSignClick(sign.value)}
+                onClick={() => handleSignClick(sign.value as ZodiacSign)}
               >
                 <div className="text-center">
                   <div className={`${size === 'sm' ? 'text-lg' : 'text-2xl'} mb-0.5 md:mb-1`}>{sign.symbol}</div>

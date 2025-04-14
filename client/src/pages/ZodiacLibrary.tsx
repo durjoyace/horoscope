@@ -70,23 +70,23 @@ export default function ZodiacLibrary() {
     <div className="container mx-auto px-4 py-12">
       {/* Header */}
       <div className="text-center mb-8 md:mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight text-white">
           Zodiac Wellness Library
         </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
           Explore zodiac signs and discover personalized wellness insights aligned with your astrological profile
         </p>
       </div>
       
       {/* Navigation Tabs */}
       <div className="flex justify-center mb-10">
-        <div className="inline-flex bg-muted p-1 rounded-lg">
+        <div className="inline-flex bg-purple-900/50 p-1 rounded-lg border border-purple-600/30">
           <button 
             onClick={() => setView('wheel')} 
             className={`px-4 py-2.5 rounded-md flex items-center gap-2 text-sm md:text-base font-medium transition-colors ${
               view === 'wheel' 
-                ? 'bg-background text-foreground shadow-sm' 
-                : 'text-muted-foreground hover:text-foreground'
+                ? 'bg-purple-800 text-white shadow-sm' 
+                : 'text-gray-300 hover:text-white hover:bg-purple-800/50'
             }`}
           >
             <Star className="h-4 w-4" />
@@ -97,8 +97,8 @@ export default function ZodiacLibrary() {
             onClick={() => setView('compatibility')} 
             className={`px-4 py-2.5 rounded-md flex items-center gap-2 text-sm md:text-base font-medium transition-colors ${
               view === 'compatibility' 
-                ? 'bg-background text-foreground shadow-sm' 
-                : 'text-muted-foreground hover:text-foreground'
+                ? 'bg-purple-800 text-white shadow-sm' 
+                : 'text-gray-300 hover:text-white hover:bg-purple-800/50'
             }`}
           >
             <Heart className="h-4 w-4" />
@@ -639,7 +639,7 @@ export default function ZodiacLibrary() {
       )}
       
       {/* Disclaimer and legal section */}
-      <div className="mt-16 text-center text-sm text-muted-foreground">
+      <div className="mt-16 text-center text-sm text-gray-400">
         <p className="mb-2">For entertainment purposes only. Results should not replace professional health advice.</p>
         <p>© {new Date().getFullYear()} Battle Green Consulting LLC. All rights reserved.</p>
       </div>
