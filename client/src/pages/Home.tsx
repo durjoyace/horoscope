@@ -10,6 +10,7 @@ import { FeaturesSection } from '@/components/homepage/FeaturesSection';
 import { TestimonialsSection } from '@/components/homepage/TestimonialsSection';
 import { PremiumSection } from '@/components/homepage/PremiumSection';
 import { FooterCTA } from '@/components/homepage/FooterCTA';
+import { CompatibilityQuizSection } from '@/components/homepage/CompatibilityQuizSection';
 
 // Import the existing WhyItWorks component
 import { WhyItWorks } from '@/components/WhyItWorks';
@@ -61,6 +62,9 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       {/* Explanation of how it works */}
       <WhyItWorks />
       
+      {/* Interactive compatibility quiz section */}
+      <CompatibilityQuizSection />
+      
       {/* Testimonials carousel */}
       <TestimonialsSection />
       
@@ -69,8 +73,6 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
       
       {/* Final call to action and footer */}
       <FooterCTA />
-      
-
     </div>
   );
 }
