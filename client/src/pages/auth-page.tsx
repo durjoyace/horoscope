@@ -204,7 +204,8 @@ export default function AuthPage() {
                       )}
                     </Button>
                     
-                    <div className="relative my-4">
+                    {/* Google Auth temporarily disabled until Firebase is configured */}
+                    {/* <div className="relative my-4">
                       <div className="absolute inset-0 flex items-center">
                         <Separator className="w-full" />
                       </div>
@@ -220,10 +221,11 @@ export default function AuthPage() {
                       variant="outline" 
                       className="w-full" 
                       onClick={() => loginWithGoogle()}
+                      disabled
                     >
                       <FcGoogle className="mr-2 h-5 w-5" />
-                      Sign in with Google
-                    </Button>
+                      Sign in with Google (Coming Soon)
+                    </Button> */}
                   </form>
                 </Form>
               </CardContent>
@@ -366,7 +368,8 @@ export default function AuthPage() {
                       )}
                     </Button>
                     
-                    <div className="relative my-4">
+                    {/* Google Auth temporarily disabled until Firebase is configured */}
+                    {/* <div className="relative my-4">
                       <div className="absolute inset-0 flex items-center">
                         <Separator className="w-full" />
                       </div>
@@ -382,10 +385,11 @@ export default function AuthPage() {
                       variant="outline" 
                       className="w-full" 
                       onClick={() => loginWithGoogle(registerForm.getValues().zodiacSign as ZodiacSign)}
+                      disabled
                     >
                       <FcGoogle className="mr-2 h-5 w-5" />
-                      Sign up with Google
-                    </Button>
+                      Sign up with Google (Coming Soon)
+                    </Button> */}
                   </form>
                 </Form>
               </CardContent>
