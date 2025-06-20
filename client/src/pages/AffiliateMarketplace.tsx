@@ -93,6 +93,39 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
     }
   };
 
+  const getBrandName = (productName: string): string => {
+    const brandMappings: Record<string, string> = {
+      'Athletic Greens': 'AG1',
+      'Bloom Nutrition': 'BLOOM',
+      'Ritual Essential': 'RITUAL',
+      'Four Sigmatic': '4SIGMATIC',
+      'Thorne Health': 'THORNE',
+      'Seed Daily': 'SEED',
+      'Huel Complete': 'HUEL',
+      'Liquid IV': 'LIQUID IV',
+      'Goop Beauty': 'GOOP',
+      'Oura Ring': 'OURA',
+      'Nutrafol': 'NUTRAFOL',
+      'Theragun': 'THERABODY',
+      'Organifi': 'ORGANIFI',
+      'MUD\\WTR': 'MUDWTR',
+      'Whoop': 'WHOOP',
+      'Ancient Nutrition': 'ANCIENT',
+      'Peloton': 'PELOTON',
+      'Sakara Life': 'SAKARA',
+      'Headspace': 'HEADSPACE',
+      'Calm': 'CALM'
+    };
+
+    for (const [key, brand] of Object.entries(brandMappings)) {
+      if (productName.includes(key)) {
+        return brand;
+      }
+    }
+    
+    return productName.split(' ')[0].toUpperCase();
+  };
+
   const handleSaveProduct = (productId: string) => {
     toast({
       title: "Product saved",
@@ -350,23 +383,34 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                   </div>
                 )}
                 <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
-                  <img 
-                    src={product.imageUrl} 
-                    alt={product.name}
-                    className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
-                    style={{ backgroundColor: 'white' }}
-                    loading="lazy"
-                    onError={(e) => {
-                      console.log('Image failed to load:', product.imageUrl);
-                      // Fallback to icon if image fails to load
-                      e.currentTarget.style.display = 'none';
-                      const fallback = e.currentTarget.nextElementSibling as HTMLElement;
-                      if (fallback) fallback.classList.remove('hidden');
-                    }}
-                  />
-                  <div className="hidden w-full h-full flex items-center justify-center absolute inset-0">
-                    <div className="w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center">
-                      {getCategoryIcon(product.category)}
+                  <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-white group-hover:bg-gradient-to-br group-hover:from-purple-50 group-hover:to-pink-50 transition-all duration-300">
+                    <div className="w-20 h-20 mb-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <div className="text-white text-2xl">
+                        {getCategoryIcon(product.category)}
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xs font-bold text-purple-600 uppercase tracking-wider mb-2 bg-purple-100 px-2 py-1 rounded-full">
+                        {getBrandName(product.name)}
+                      </div>
+                      <div className="text-sm font-bold text-gray-800 leading-tight">
+                        Premium {product.category}
+                      </div>
+                      <div className="flex items-center justify-center mt-2">
+                        <div className="flex">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`h-3 w-3 ${
+                                i < Math.floor(product.rating)
+                                  ? 'text-yellow-500 fill-yellow-500'
+                                  : 'text-gray-300'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <span className="text-xs text-gray-600 ml-1">({product.rating})</span>
+                      </div>
                     </div>
                   </div>
                 </div>
