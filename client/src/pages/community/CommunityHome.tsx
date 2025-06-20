@@ -40,6 +40,24 @@ export function CommunityHome() {
       default: return 'bg-primary/10 text-primary border-primary/30';
     }
   };
+
+  const getCommunityStats = (sign: string): { topics: number; members: number } => {
+    const stats = {
+      aries: { topics: 32, members: 156 },
+      taurus: { topics: 28, members: 134 },
+      gemini: { topics: 45, members: 189 },
+      cancer: { topics: 31, members: 142 },
+      leo: { topics: 38, members: 167 },
+      virgo: { topics: 25, members: 118 },
+      libra: { topics: 34, members: 145 },
+      scorpio: { topics: 29, members: 138 },
+      sagittarius: { topics: 41, members: 173 },
+      capricorn: { topics: 22, members: 126 },
+      aquarius: { topics: 37, members: 162 },
+      pisces: { topics: 33, members: 151 }
+    };
+    return stats[sign as keyof typeof stats] || { topics: 24, members: 120 };
+  };
   
   return (
     <div className="container mx-auto px-4 py-8">
@@ -83,6 +101,7 @@ export function CommunityHome() {
           {zodiacSignNames.map((sign) => {
             const element = zodiacElements[sign.value as ZodiacSign];
             const elementClass = getElementColor(element);
+            const stats = getCommunityStats(sign.value);
             
             return (
               <Card key={sign.value} className="hover:shadow-md transition-shadow">
@@ -104,11 +123,11 @@ export function CommunityHome() {
                   <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-1">
                       <MessageSquare className="h-4 w-4" />
-                      <span>~24 {t('community.topics') || 'Topics'}</span>
+                      <span>{stats.topics} {t('community.topics') || 'Topics'}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Users className="h-4 w-4" />
-                      <span>~120 {t('community.members') || 'Members'}</span>
+                      <span>{stats.members} {t('community.members') || 'Members'}</span>
                     </div>
                   </div>
                 </CardContent>

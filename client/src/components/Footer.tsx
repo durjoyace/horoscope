@@ -43,16 +43,16 @@ export function Footer() {
               helps you align your wellness journey with the stars.
             </p>
             <div className="flex space-x-4">
-              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30">
+              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30" aria-label="Follow us on Facebook">
                 <Facebook className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30">
+              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30" aria-label="Follow us on Twitter">
                 <Twitter className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30">
+              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30" aria-label="Follow us on Instagram">
                 <Instagram className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30">
+              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30" aria-label="Contact us by email">
                 <Mail className="h-5 w-5" />
               </Button>
             </div>
@@ -140,7 +140,7 @@ export function Footer() {
               <Star className="h-3 w-3 text-purple-400" fill="currentColor" />
             </div>
             
-            <p className="text-sm text-gray-400">© {new Date().getFullYear()} Battle Green Consulting LLC. All rights reserved.</p>
+            <p className="text-sm text-gray-400">© {new Date().getFullYear()} Battle Green Consulting LLC DBA Horoscope Health. All rights reserved.</p>
             
             <p className="mt-3 text-xs flex justify-center items-center gap-1 text-gray-500">
               Made with <Heart className="h-3 w-3 text-red-500 animate-pulse" fill="currentColor" /> for cosmic wellbeing

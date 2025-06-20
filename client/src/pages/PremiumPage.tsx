@@ -180,7 +180,7 @@ export default function PremiumPage() {
                   <CardDescription>Best value for committed users</CardDescription>
                 </div>
                 <div className="flex items-start">
-                  <span className="text-3xl font-bold">$89.99</span>
+                  <span className="text-3xl font-bold">$89.91</span>
                   <span className="text-muted-foreground ml-1">/yr</span>
                 </div>
               </div>
