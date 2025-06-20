@@ -9,9 +9,9 @@ import { useQuery } from '@tanstack/react-query';
 import { CosmicHeroSection } from '@/components/homepage/CosmicHeroSection';
 import { FeaturesSection } from '@/components/homepage/FeaturesSection';
 import { TestimonialsSection } from '@/components/homepage/TestimonialsSection';
-import { UrgencyBanner } from '@/components/UrgencyBanner';
-import { RiskReversalSection } from '@/components/RiskReversalSection';
-import { CuriosityHookSection } from '@/components/CuriosityHookSection';
+import { PremiumSection } from '@/components/homepage/PremiumSection';
+import { FooterCTA } from '@/components/homepage/FooterCTA';
+import { CompatibilityQuizSection } from '@/components/homepage/CompatibilityQuizSection';
 
 // Import the existing WhyItWorks component
 import { WhyItWorks } from '@/components/WhyItWorks';
@@ -80,13 +80,8 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
         onSignup={handleSignup} 
         isLoggedIn={isLoggedIn} 
       />
-      <div className="container mx-auto px-6 py-4">
-        <UrgencyBanner />
-      </div>
       <FeaturesSection />
-      <CuriosityHookSection />
       <TestimonialsSection />
-      <RiskReversalSection onSignup={handleSignup} />
     </div>
   );
 }

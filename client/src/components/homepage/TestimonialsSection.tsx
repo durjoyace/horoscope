@@ -4,19 +4,19 @@ import { Star, Quote } from 'lucide-react';
 export const TestimonialsSection: React.FC = () => {
   const testimonials = [
     {
-      quote: "This app told me to work out at 2 PM instead of mornings. I've never felt stronger. Turns out Leo energy peaks in the afternoon - who knew?",
+      quote: "Getting my horoscope via SMS every morning has become part of my routine. The wellness tips are actually helpful and I love that I don't need to remember to open an app.",
       author: "Sarah M.",
       zodiacSign: "♌ Leo",
       rating: 5
     },
     {
-      quote: "My sleep improved 300% after following their Cancer-specific bedtime routine. The timing recommendations are scary accurate for my body clock.",
+      quote: "I was skeptical at first, but these daily messages genuinely help me start my day with intention. The health guidance feels personalized to my Cancer traits.",
       author: "Mike R.", 
       zodiacSign: "♋ Cancer",
       rating: 5
     },
     {
-      quote: "Lost 15 pounds just by eating when they said to eat. The Taurus meal timing advice matched exactly when I was actually hungry.",
+      quote: "Perfect for busy mornings! I get my horoscope right on my phone and the wellness advice actually makes sense for my lifestyle. Love the convenience.",
       author: "Jessica K.",
       zodiacSign: "♉ Taurus", 
       rating: 5
@@ -24,9 +24,9 @@ export const TestimonialsSection: React.FC = () => {
   ];
 
   const stats = [
-    { number: "50,000+", label: "People Discovering Their Timing" },
-    { number: "87%", label: "Report Better Energy" },
-    { number: "2.3x", label: "More Effective Workouts" }
+    { number: "10,000+", label: "Daily Messages Sent" },
+    { number: "4.8/5", label: "Average Rating" },
+    { number: "94%", label: "Users Read Daily" }
   ];
 
   return (
@@ -35,10 +35,10 @@ export const TestimonialsSection: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-12 max-w-2xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Real People, Real Results
+            Loved by Thousands
           </h2>
           <p className="text-slate-300 text-lg">
-            Discover what happens when you finally work with your body's natural timing instead of against it.
+            Join the community of people starting their day with personalized wellness guidance.
           </p>
         </div>
 
@@ -96,10 +96,10 @@ export const TestimonialsSection: React.FC = () => {
         {/* CTA */}
         <div className="text-center mt-12">
           <p className="text-slate-400 mb-4">
-            Your body already knows when it works best.
+            Ready to start your wellness journey?
           </p>
           <div className="text-purple-400 font-medium">
-            We just tell you when that is ↑
+            Join thousands who start their day with purpose ↑
           </div>
         </div>
       </div>

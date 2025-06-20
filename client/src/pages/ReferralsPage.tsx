@@ -53,10 +53,10 @@ export default function ReferralsPage() {
               <Gift className="h-8 w-8 text-purple-600" />
             </div>
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Share Wellness, Unlock Rewards
+              Share Wellness, Unlock Premium
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-              Join our community and help friends discover personalized wellness insights. Earn enhanced features as you share.
+              Join our community to start earning premium features by sharing personalized wellness insights with friends.
             </p>
             <Button 
               onClick={() => window.location.href = '/auth'}

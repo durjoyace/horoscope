@@ -62,20 +62,20 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-sm font-medium mb-8">
             <CheckCircle className="w-4 h-4" />
-            <span>Chronobiology Meets Astrology</span>
+            <span>Evidence-Based Wellness Platform</span>
           </div>
           
           {/* Main headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Your Body Has a Schedule
+            Science-Based Wellness
             <span className="block bg-gradient-to-r from-purple-400 to-violet-400 bg-clip-text text-transparent mt-2">
-              We Know When
+              Meets Astrological Wisdom
             </span>
           </h1>
           
           {/* Subtitle */}
           <p className="text-lg sm:text-xl text-slate-300 mb-12 max-w-xl mx-auto leading-relaxed">
-            Get daily wellness insights that tell you exactly when to exercise, eat, rest, and focus for maximum health impact. Your zodiac sign reveals your body's natural timing.
+            Daily wellness insights combining evidence-based health guidance with personalized astrological analysis, plus curated wellness products.
           </p>
           
           {!isLoggedIn && (
@@ -98,7 +98,7 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
                     onClick={handleSignupClick}
                     className="h-14 px-8 text-lg font-semibold bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 border-0 shadow-lg shadow-purple-500/25"
                   >
-                    Get Your Insights
+                    Start Free
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </div>
@@ -108,7 +108,7 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
               <div className="flex items-center justify-center gap-6 text-sm text-slate-400 mb-8">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400" />
-                  <span>Instant access</span>
+                  <span>Free to start</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400" />
@@ -116,7 +116,7 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400" />
-                  <span>Unsubscribe anytime</span>
+                  <span>Cancel anytime</span>
                 </div>
               </div>
               
