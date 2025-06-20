@@ -1,170 +1,70 @@
 import React from 'react';
-import { 
-  HeartPulse, 
-  Brain, 
-  Star, 
-  Lightbulb,
-  Activity,
-  RefreshCw,
-  Calendar
-} from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
-import { FeatureCard } from '@/components/FeatureCard';
+import { Smartphone, Clock, Shield, Zap, Heart, Star } from 'lucide-react';
 
 export const FeaturesSection: React.FC = () => {
-  const { t } = useLanguage();
-  
   const features = [
     {
-      icon: <HeartPulse className="h-6 w-6 text-purple-500" />,
-      title: t('features.personalized.title'),
-      description: t('features.personalized.desc'),
-      dialogContent: {
-        sections: [
-          {
-            title: t('features.personalized.detail.title1'),
-            content: t('features.personalized.detail.content1')
-          },
-          {
-            title: t('features.personalized.detail.title2'),
-            content: t('features.personalized.detail.content2')
-          }
-        ]
-      }
+      icon: <Smartphone className="w-8 h-8 text-purple-400" />,
+      title: "SMS Delivery",
+      description: "Get your horoscope directly on your phone every morning - no app downloads needed."
     },
     {
-      icon: <Brain className="h-6 w-6 text-purple-500" />,
-      title: t('features.mental.title'),
-      description: t('features.mental.desc'),
-      dialogContent: {
-        sections: [
-          {
-            title: t('features.mental.detail.title1'),
-            content: t('features.mental.detail.content1')
-          },
-          {
-            title: t('features.mental.detail.title2'),
-            content: t('features.mental.detail.content2')
-          }
-        ]
-      }
+      icon: <Clock className="w-8 h-8 text-purple-400" />,
+      title: "Daily Routine",
+      description: "Consistent morning wellness insights to help you start each day with purpose and clarity."
     },
     {
-      icon: <Star className="h-6 w-6 text-purple-500" />,
-      title: t('features.alignment.title'),
-      description: t('features.alignment.desc'),
-      dialogContent: {
-        sections: [
-          {
-            title: t('features.alignment.detail.title1'),
-            content: t('features.alignment.detail.content1')
-          },
-          {
-            title: t('features.alignment.detail.title2'),
-            content: t('features.alignment.detail.content2')
-          }
-        ]
-      }
+      icon: <Heart className="w-8 h-8 text-purple-400" />,
+      title: "Health Focused",
+      description: "Personalized wellness guidance combining astrological wisdom with practical health advice."
     },
     {
-      icon: <Activity className="h-6 w-6 text-purple-500" />,
-      title: t('features.physical.title'),
-      description: t('features.physical.desc'),
-      dialogContent: {
-        sections: [
-          {
-            title: t('features.physical.detail.title1'),
-            content: t('features.physical.detail.content1')
-          },
-          {
-            title: t('features.physical.detail.title2'),
-            content: t('features.physical.detail.content2')
-          }
-        ]
-      }
+      icon: <Zap className="w-8 h-8 text-purple-400" />,
+      title: "Instant Access",
+      description: "No login required, no apps to remember - your guidance arrives when you need it most."
     },
     {
-      icon: <RefreshCw className="h-6 w-6 text-purple-500" />,
-      title: t('features.holistic.title'),
-      description: t('features.holistic.desc'),
-      dialogContent: {
-        sections: [
-          {
-            title: t('features.holistic.detail.title1'),
-            content: t('features.holistic.detail.content1')
-          },
-          {
-            title: t('features.holistic.detail.title2'),
-            content: t('features.holistic.detail.content2')
-          }
-        ]
-      }
+      icon: <Shield className="w-8 h-8 text-purple-400" />,
+      title: "Privacy First",
+      description: "Your personal information stays secure. Unsubscribe anytime with a simple reply."
     },
     {
-      icon: <Calendar className="h-6 w-6 text-purple-500" />,
-      title: t('features.daily.title'),
-      description: t('features.daily.desc'),
-      dialogContent: {
-        sections: [
-          {
-            title: t('features.daily.detail.title1'),
-            content: t('features.daily.detail.content1')
-          },
-          {
-            title: t('features.daily.detail.title2'),
-            content: t('features.daily.detail.content2')
-          }
-        ]
-      }
-    },
-    {
-      icon: <Lightbulb className="h-6 w-6 text-purple-500" />,
-      title: t('features.insights.title'),
-      description: t('features.insights.desc'),
-      dialogContent: {
-        sections: [
-          {
-            title: t('features.insights.detail.title1'),
-            content: t('features.insights.detail.content1')
-          },
-          {
-            title: t('features.insights.detail.title2'),
-            content: t('features.insights.detail.content2')
-          }
-        ]
-      }
+      icon: <Star className="w-8 h-8 text-purple-400" />,
+      title: "Expert Insights",
+      description: "AI-powered astrological guidance tailored specifically to your zodiac sign and wellness goals."
     }
   ];
 
   return (
-    <section className="relative py-16 md:py-24 bg-black">
-      {/* Cosmic background effect */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-500 via-transparent to-transparent opacity-30"></div>
-          <div className="h-full w-full bg-[url('/stars-bg.png')] bg-repeat opacity-50"></div>
-        </div>
-      </div>
-      
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            {t('features.heading')}
+    <section className="py-16 bg-slate-900">
+      <div className="container mx-auto px-6">
+        {/* Header */}
+        <div className="text-center mb-12 max-w-2xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            Why Choose SMS Horoscopes?
           </h2>
-          <p className="text-lg text-purple-200/70 max-w-3xl mx-auto">
-            {t('features.subheading')}
+          <p className="text-slate-300 text-lg">
+            The most convenient way to receive personalized wellness guidance based on your zodiac sign.
           </p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {features.map((feature, index) => (
-            <FeatureCard
+            <div 
               key={index}
-              icon={feature.icon}
-              title={feature.title}
-              description={feature.description}
-              dialogContent={feature.dialogContent}
-            />
+              className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors"
+            >
+              <div className="mb-4">
+                {feature.icon}
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">
+                {feature.title}
+              </h3>
+              <p className="text-slate-300 leading-relaxed">
+                {feature.description}
+              </p>
+            </div>
           ))}
         </div>
       </div>

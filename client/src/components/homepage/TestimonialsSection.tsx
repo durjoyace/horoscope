@@ -1,100 +1,106 @@
 import React from 'react';
-import { useLanguage } from '@/context/LanguageContext';
-import { Quote } from 'lucide-react';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-
-interface Testimonial {
-  quote: string;
-  author: string;
-  zodiacSign: string;
-  imageSrc?: string;
-}
+import { Star, Quote } from 'lucide-react';
 
 export const TestimonialsSection: React.FC = () => {
-  const { t } = useLanguage();
-  
-  const testimonials: Testimonial[] = [
+  const testimonials = [
     {
-      quote: t('testimonials.quote1'),
-      author: t('testimonials.author1'),
-      zodiacSign: t('zodiac.leo'),
+      quote: "Getting my horoscope via SMS every morning has become part of my routine. The wellness tips are actually helpful and I love that I don't need to remember to open an app.",
+      author: "Sarah M.",
+      zodiacSign: "♌ Leo",
+      rating: 5
     },
     {
-      quote: t('testimonials.quote2'),
-      author: t('testimonials.author2'),
-      zodiacSign: t('zodiac.cancer'),
+      quote: "I was skeptical at first, but these daily messages genuinely help me start my day with intention. The health guidance feels personalized to my Cancer traits.",
+      author: "Mike R.", 
+      zodiacSign: "♋ Cancer",
+      rating: 5
     },
     {
-      quote: t('testimonials.quote3'),
-      author: t('testimonials.author3'),
-      zodiacSign: t('zodiac.taurus'),
-    },
-    {
-      quote: t('testimonials.quote4'),
-      author: t('testimonials.author4'),
-      zodiacSign: t('zodiac.gemini'),
-    },
-    {
-      quote: t('testimonials.quote5'),
-      author: t('testimonials.author5'),
-      zodiacSign: t('zodiac.pisces'),
+      quote: "Perfect for busy mornings! I get my horoscope right on my phone and the wellness advice actually makes sense for my lifestyle. Love the convenience.",
+      author: "Jessica K.",
+      zodiacSign: "♉ Taurus", 
+      rating: 5
     }
   ];
 
+  const stats = [
+    { number: "10,000+", label: "Daily Messages Sent" },
+    { number: "4.8/5", label: "Average Rating" },
+    { number: "94%", label: "Users Read Daily" }
+  ];
+
   return (
-    <section className="relative py-16 md:py-24 bg-gradient-to-b from-black to-purple-950/30">
-      {/* Cosmic background elements */}
-      <div className="absolute inset-0 overflow-hidden opacity-30">
-        <div className="absolute h-full w-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-purple-700/20 via-transparent to-transparent"></div>
-      </div>
-      
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            {t('testimonials.heading')}
+    <section className="py-16 bg-slate-950">
+      <div className="container mx-auto px-6">
+        {/* Header */}
+        <div className="text-center mb-12 max-w-2xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            Loved by Thousands
           </h2>
-          <p className="text-lg text-purple-200/70 max-w-3xl mx-auto">
-            {t('testimonials.subheading')}
+          <p className="text-slate-300 text-lg">
+            Join the community of people starting their day with personalized wellness guidance.
           </p>
         </div>
-        
-        <div className="max-w-5xl mx-auto">
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent>
-              {testimonials.map((testimonial, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
-                  <div className="bg-black/40 backdrop-blur-sm border border-purple-500/20 rounded-xl p-6 h-full flex flex-col">
-                    <div className="mb-4">
-                      <Quote className="h-8 w-8 text-purple-400 opacity-50" />
-                    </div>
-                    <p className="text-white/90 italic flex-grow mb-4">
-                      "{testimonial.quote}"
-                    </p>
-                    <div className="mt-auto">
-                      <p className="font-semibold text-white">{testimonial.author}</p>
-                      <p className="text-sm text-purple-300/70">{testimonial.zodiacSign}</p>
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="flex justify-center mt-8 gap-2">
-              <CarouselPrevious className="static transform-none bg-white/10 hover:bg-white/20 border-purple-500/30" />
-              <CarouselNext className="static transform-none bg-white/10 hover:bg-white/20 border-purple-500/30" />
+
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mb-16">
+          {stats.map((stat, index) => (
+            <div key={index} className="text-center">
+              <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-2">
+                {stat.number}
+              </div>
+              <div className="text-slate-400 text-sm sm:text-base">
+                {stat.label}
+              </div>
             </div>
-          </Carousel>
+          ))}
+        </div>
+
+        {/* Testimonials */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {testimonials.map((testimonial, index) => (
+            <div 
+              key={index}
+              className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6"
+            >
+              {/* Quote Icon */}
+              <Quote className="w-8 h-8 text-purple-400 mb-4" />
+              
+              {/* Stars */}
+              <div className="flex gap-1 mb-4">
+                {[...Array(testimonial.rating)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+
+              {/* Quote */}
+              <p className="text-slate-300 leading-relaxed mb-6">
+                "{testimonial.quote}"
+              </p>
+
+              {/* Author */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-white font-medium">
+                    {testimonial.author}
+                  </div>
+                  <div className="text-purple-300 text-sm">
+                    {testimonial.zodiacSign}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="text-center mt-12">
+          <p className="text-slate-400 mb-4">
+            Ready to start your wellness journey?
+          </p>
+          <div className="text-purple-400 font-medium">
+            Join thousands who start their day with purpose ↑
+          </div>
         </div>
       </div>
     </section>

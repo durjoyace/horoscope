@@ -48,9 +48,13 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
   };
 
   return (
-    <CosmicHeroSection 
-      onSignup={handleSignup} 
-      isLoggedIn={isLoggedIn} 
-    />
+    <div className="flex flex-col">
+      <CosmicHeroSection 
+        onSignup={handleSignup} 
+        isLoggedIn={isLoggedIn} 
+      />
+      <FeaturesSection />
+      <TestimonialsSection />
+    </div>
   );
 }
