@@ -34,6 +34,10 @@ export const users = pgTable("users", {
   subscriptionStatus: text("subscription_status").default('none'),
   subscriptionTier: text("subscription_tier").default('free'),
   subscriptionEndDate: timestamp("subscription_end_date"),
+  // Referral system fields
+  referralCode: text("referral_code").unique(),
+  referredBy: text("referred_by"), // referral code of the person who referred this user
+  referralRewards: integer("referral_rewards").default(0), // number of successful referrals
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -107,6 +111,18 @@ export const forumReplies = pgTable("forum_replies", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+export const referrals = pgTable("referrals", {
+  id: serial("id").primaryKey(),
+  referrerId: integer("referrer_id").notNull(),
+  referredUserId: integer("referred_user_id").notNull(),
+  referralCode: text("referral_code").notNull(),
+  status: text("status").default('pending'), // pending, completed, rewarded
+  rewardType: text("reward_type"), // free_month, premium_upgrade, etc.
+  rewardValue: text("reward_value"),
+  completedAt: timestamp("completed_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
@@ -149,6 +165,12 @@ export const insertForumReplySchema = createInsertSchema(forumReplies).omit({
   likeCount: true,
 });
 
+export const insertReferralSchema = createInsertSchema(referrals).omit({
+  id: true,
+  createdAt: true,
+  completedAt: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
@@ -169,3 +191,6 @@ export type ForumTopic = typeof forumTopics.$inferSelect;
 
 export type InsertForumReply = z.infer<typeof insertForumReplySchema>;
 export type ForumReply = typeof forumReplies.$inferSelect;
+
+export type InsertReferral = z.infer<typeof insertReferralSchema>;
+export type Referral = typeof referrals.$inferSelect;

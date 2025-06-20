@@ -5,6 +5,7 @@ import {
   ads,
   forumTopics,
   forumReplies,
+  referrals,
   type User, 
   type InsertUser, 
   type Horoscope, 
@@ -16,7 +17,9 @@ import {
   type ForumTopic,
   type InsertForumTopic,
   type ForumReply,
-  type InsertForumReply
+  type InsertForumReply,
+  type Referral,
+  type InsertReferral
 } from "@shared/schema";
 import { ZodiacSign } from "@shared/types";
 import session from "express-session";
@@ -83,6 +86,14 @@ export interface IStorage {
   updateForumReply(id: number, reply: Partial<InsertForumReply>): Promise<ForumReply | undefined>;
   deleteForumReply(id: number): Promise<boolean>;
   incrementReplyLikeCount(id: number): Promise<void>;
+  
+  // Referral operations
+  createReferral(referral: InsertReferral): Promise<Referral>;
+  getReferralsByReferrer(referrerId: number): Promise<Referral[]>;
+  getReferralByCode(referralCode: string): Promise<User | undefined>;
+  updateReferralStatus(id: number, status: string, completedAt?: Date): Promise<void>;
+  incrementUserReferralRewards(userId: number): Promise<void>;
+  generateUniqueReferralCode(): Promise<string>;
   
   // Session store for express-session
   sessionStore: session.Store;
