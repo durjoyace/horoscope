@@ -110,46 +110,101 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
       return product.horoscopeHealthReason;
     }
 
-    // Generate personalized recommendation based on zodiac sign
+    // Generate highly specific personalized recommendations based on zodiac sign
     const isRecommendedForUser = userSign && product.recommendedSigns.includes(userSign);
     
-    if (isRecommendedForUser) {
-      const element = getZodiacElement(userSign);
-      switch (product.category) {
-        case 'supplements':
-          return `Perfect for ${element} signs who value comprehensive wellness routines and prefer science-backed nutrition.`;
-        case 'nutrition':
-          return `Ideal for ${element} signs seeking balanced nutrition that supports their natural energy patterns.`;
-        case 'fitness':
-          return `Designed for ${element} signs who prioritize strength and endurance in their wellness journey.`;
-        case 'skincare':
-          return `Crafted for ${element} signs who appreciate natural beauty routines that enhance their radiant energy.`;
-        case 'meditation':
-          return `Perfect for ${element} signs seeking mindfulness practices that align with their spiritual nature.`;
-        case 'selfcare':
-          return `Ideal for ${element} signs who value self-care rituals that nurture their well-being.`;
-        default:
-          return `Recommended for ${element} signs who embrace holistic wellness approaches.`;
-      }
+    if (isRecommendedForUser && userSign) {
+      // Specific recommendations based on both sign and product
+      const signSpecificRecommendations: Record<ZodiacSign, Record<string, string>> = {
+        aries: {
+          'Athletic Greens AG1': 'Your Mars-ruled energy demands peak nutrition. AG1\'s 75 bioavailable nutrients fuel your competitive drive and support recovery from intense workouts.',
+          'supplements': 'Fast-acting formulas match your need for immediate results and sustained energy throughout your action-packed days.',
+          'fitness': 'High-intensity solutions designed for your naturally competitive spirit and need to push physical boundaries.',
+          'default': 'Bold, results-driven wellness that matches your pioneering spirit and dynamic lifestyle.'
+        },
+        taurus: {
+          'Bloom Nutrition Greens & Superfoods': 'Venus-ruled Taurus values quality ingredients. This organic blend supports your earth-sign need for digestive wellness and natural beauty from within.',
+          'skincare': 'Luxurious, natural formulations that align with your appreciation for sensual self-care and lasting beauty.',
+          'supplements': 'Premium, earth-based nutrition that supports your steady, methodical approach to long-term health.',
+          'default': 'Indulgent yet effective wellness products that honor your love of quality and comfort.'
+        },
+        gemini: {
+          'Ritual Essential for Women': 'Your Mercury-ruled mind craves transparency. Ritual\'s traceable ingredients and clear labeling satisfy your need to understand exactly what you\'re consuming.',
+          'supplements': 'Scientifically-backed formulas that support your active mind and adaptable lifestyle.',
+          'fitness': 'Versatile routines that prevent boredom and match your need for mental stimulation during exercise.',
+          'default': 'Innovative wellness solutions that keep pace with your curious, ever-changing interests.'
+        },
+        cancer: {
+          'Bloom Nutrition Greens & Superfoods': 'Your Moon-ruled intuition guides you toward gentle, nurturing nutrition. This digestive support honors your sensitive system and emotional well-being.',
+          'selfcare': 'Comforting rituals that create the safe, nurturing environment your water sign craves.',
+          'supplements': 'Gentle, gut-healing formulas that support your intuitive connection between emotional and physical health.',
+          'default': 'Nurturing wellness products that honor your deep connection to family, tradition, and emotional balance.'
+        },
+        leo: {
+          'Athletic Greens AG1': 'Your Sun-ruled vitality deserves premium nutrition. AG1\'s comprehensive formula supports your natural radiance and keeps you performing at your magnificent best.',
+          'skincare': 'Luxury formulations that enhance your natural glow and support your desire to look and feel radiant.',
+          'fitness': 'Premium performance products that help you shine in any physical challenge or social setting.',
+          'default': 'High-quality wellness products worthy of your regal standards and vibrant personality.'
+        },
+        virgo: {
+          'Ritual Essential for Women': 'Your Mercury-ruled perfectionism appreciates Ritual\'s meticulous sourcing and third-party testing. Every ingredient serves a specific, research-backed purpose.',
+          'supplements': 'Clean, precisely-dosed formulations that meet your exacting standards for purity and effectiveness.',
+          'nutrition': 'Thoughtfully crafted nutrition that supports your detailed approach to health optimization.',
+          'default': 'Meticulously researched wellness products that align with your analytical approach to health.'
+        },
+        libra: {
+          'skincare': 'Harmonious formulations that balance effectiveness with gentle care, supporting your Venus-ruled desire for beauty and equilibrium.',
+          'supplements': 'Balanced nutrition that supports your quest for internal harmony and external radiance.',
+          'meditation': 'Elegant mindfulness tools that create the peaceful, aesthetically pleasing environment you crave.',
+          'default': 'Beautifully crafted wellness products that bring balance and harmony to your daily routine.'
+        },
+        scorpio: {
+          'supplements': 'Transformative formulas that support your intense approach to health and your body\'s natural regenerative powers.',
+          'fitness': 'Deep-acting recovery products that match your all-or-nothing approach to physical transformation.',
+          'skincare': 'Powerful, results-driven formulations that support your desire for complete skin renewal.',
+          'default': 'Potent wellness products that support your journey of continuous transformation and regeneration.'
+        },
+        sagittarius: {
+          'Athletic Greens AG1': 'Your Jupiter-ruled wanderlust needs portable nutrition. AG1\'s travel-friendly format fuels your adventures while supporting optimal health on the go.',
+          'supplements': 'Adventure-ready nutrition that supports your active lifestyle and global wellness exploration.',
+          'fitness': 'Performance products that fuel your love of outdoor activities and physical challenges.',
+          'default': 'Versatile wellness solutions that support your adventurous spirit and love of exploration.'
+        },
+        capricorn: {
+          'Athletic Greens AG1': 'Your Saturn-ruled discipline appreciates AG1\'s long-term health investment. This comprehensive formula supports your methodical approach to peak performance.',
+          'supplements': 'Professional-grade nutrition that supports your ambitious goals and disciplined wellness routine.',
+          'fitness': 'Results-driven products that align with your systematic approach to achieving fitness milestones.',
+          'default': 'Premium wellness investments that support your long-term health goals and professional demands.'
+        },
+        aquarius: {
+          'Ritual Essential for Women': 'Your Uranus-ruled innovation resonates with Ritual\'s transparent, science-forward approach. This cutting-edge nutrition matches your progressive wellness values.',
+          'supplements': 'Innovative formulations that support your unique approach to health and humanitarian lifestyle.',
+          'fitness': 'Forward-thinking wellness products that align with your unconventional approach to fitness.',
+          'default': 'Revolutionary wellness products that support your visionary approach to health and social consciousness.'
+        },
+        pisces: {
+          'Bloom Nutrition Greens & Superfoods': 'Your Neptune-ruled intuition draws you to gentle, holistic nutrition. This organic blend supports your sensitive system and spiritual wellness practices.',
+          'meditation': 'Transcendent wellness tools that support your natural connection to higher consciousness.',
+          'skincare': 'Gentle, intuitive formulations that honor your sensitive skin and empathetic nature.',
+          'default': 'Compassionate wellness products that support your intuitive approach to holistic healing.'
+        }
+      };
+
+      const signRecs = signSpecificRecommendations[userSign];
+      return signRecs[product.name] || signRecs[product.category] || signRecs.default;
     }
 
-    // General recommendations for non-targeted users
-    switch (product.category) {
-      case 'supplements':
-        return "Scientifically formulated to support comprehensive daily wellness and nutritional needs.";
-      case 'nutrition':
-        return "Premium nutrition designed to fuel your body with clean, effective ingredients.";
-      case 'fitness':
-        return "Professional-grade fitness support for achieving your strength and performance goals.";
-      case 'skincare':
-        return "Clean beauty formulated with natural ingredients for healthy, glowing skin.";
-      case 'meditation':
-        return "Mindfulness tools to enhance your mental clarity and emotional balance.";
-      case 'selfcare':
-        return "Luxurious self-care essentials for nurturing your overall well-being.";
-      default:
-        return "Premium wellness product designed to support your health journey.";
-    }
+    // Premium general recommendations
+    const premiumRecommendations: Record<string, string> = {
+      'supplements': 'Clinically-studied formulations backed by rigorous third-party testing and transparent sourcing.',
+      'nutrition': 'Artisanally crafted nutrition featuring premium, bioavailable ingredients for optimal absorption.',
+      'fitness': 'Professional-grade performance products trusted by elite athletes and wellness professionals.',
+      'skincare': 'Clean beauty featuring ethically-sourced botanicals and scientifically-proven active ingredients.',
+      'meditation': 'Expertly-designed mindfulness tools created in collaboration with leading meditation teachers.',
+      'selfcare': 'Luxury wellness essentials crafted with the finest natural ingredients and sustainable practices.'
+    };
+
+    return premiumRecommendations[product.category] || 'Premium wellness products curated for discerning health enthusiasts.';
   };
 
   return (
@@ -278,42 +333,46 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
         </Tabs>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {filteredProducts.map((product) => (
-            <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 border border-gray-200 bg-white">
-              <CardHeader className="pb-4">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-2">
-                    {getCategoryIcon(product.category)}
-                    <Badge variant="secondary" className="text-xs">
-                      {product.category}
+            <Card key={product.id} className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white rounded-2xl overflow-hidden shadow-lg hover:scale-105 transform">
+              <div className="relative">
+                <div className="absolute top-4 left-4 z-10">
+                  <Badge className="bg-white/90 text-gray-700 border border-gray-200 backdrop-blur-sm text-xs px-3 py-1 rounded-full">
+                    {product.category.toUpperCase()}
+                  </Badge>
+                </div>
+                {user && product.recommendedSigns.includes(user.zodiacSign) && (
+                  <div className="absolute top-4 right-4 z-10">
+                    <Badge className="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs px-3 py-1 rounded-full shadow-lg">
+                      RECOMMENDED
                     </Badge>
                   </div>
-                  {user && product.recommendedSigns.includes(user.zodiacSign) && (
-                    <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs">
-                      For You
-                    </Badge>
-                  )}
+                )}
+                <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center relative overflow-hidden">
+                  <div className="w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    {getCategoryIcon(product.category)}
+                  </div>
                 </div>
-                
-                <div>
-                  <CardTitle className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
-                    {product.name}
-                  </CardTitle>
-                  <div className="flex items-center gap-2 mt-2">
-                    <div className="flex items-center">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-4 w-4 ${
-                            i < Math.floor(product.rating)
-                              ? 'text-yellow-500 fill-yellow-500'
-                              : 'text-gray-300'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <span className="text-sm text-gray-700 font-medium">({product.rating})</span>
+              </div>
+              
+              <CardHeader className="pb-3 pt-6">
+                <CardTitle className="text-xl font-bold text-gray-900 mb-3 leading-tight min-h-[3rem] flex items-start">
+                  {product.name}
+                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`h-4 w-4 ${
+                          i < Math.floor(product.rating)
+                            ? 'text-yellow-500 fill-yellow-500'
+                            : 'text-gray-300'
+                        }`}
+                      />
+                    ))}
+                    <span className="text-sm text-gray-600 ml-2">({product.rating})</span>
                   </div>
                 </div>
               </CardHeader>
@@ -324,52 +383,44 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                 </CardDescription>
 
                 {/* Horoscope Health Recommendation */}
-                <div className="mb-4 p-3 bg-purple-50 border border-purple-200 rounded-lg">
-                  <div className="flex items-start gap-2">
-                    <Star className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
+                <div className="mb-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-400 rounded-r-xl">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Star className="h-4 w-4 text-purple-600" />
+                    </div>
                     <div>
-                      <p className="text-xs font-semibold text-purple-700 mb-1">Why Horoscope Health Recommends This</p>
-                      <p className="text-xs text-purple-800 leading-relaxed">
+                      <p className="text-sm font-bold text-purple-700 mb-2">Our Cosmic Curation</p>
+                      <p className="text-sm text-purple-900 leading-relaxed font-medium">
                         {getHoroscopeHealthRecommendation(product, user?.zodiacSign)}
                       </p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between">
-                  <div className="text-2xl font-bold text-gray-900">
-                    ${product.price}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl font-bold text-gray-900">${product.price}</span>
+                    <span className="text-sm text-gray-500">per bottle</span>
                   </div>
-                  {Math.random() > 0.8 && (
-                    <Badge className="bg-red-500 text-white text-xs">
-                      {Math.floor(Math.random() * 20) + 10}% OFF
+                  {user && product.recommendedSigns.includes(user.zodiacSign) && (
+                    <Badge className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs px-3 py-1">
+                      ⭐ COSMIC MATCH
                     </Badge>
                   )}
                 </div>
               </CardContent>
 
-              <CardFooter className="pt-4 border-t border-gray-100">
-                <div className="flex gap-2 w-full">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleSaveProduct(product.id)}
-                    className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
-                  >
-                    <Heart className="h-4 w-4 mr-2" />
-                    Save
-                  </Button>
-                  <Button
-                    size="sm"
-                    asChild
-                    className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold"
-                  >
-                    <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Shop Now
-                    </a>
-                  </Button>
-                </div>
+              <CardFooter className="pt-6 border-t border-gray-100">
+                <Button
+                  size="lg"
+                  asChild
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                    Shop at {product.name.split(' ')[0]}
+                    <ExternalLink className="h-4 w-4 ml-2" />
+                  </a>
+                </Button>
               </CardFooter>
             </Card>
           ))}
