@@ -87,7 +87,20 @@ export default function SimpleSignupPage() {
       // Show cosmic loader for 4 seconds to demonstrate the animation
       await showLoader(4000);
       
-      const response = await apiRequest('POST', '/api/signup', data);
+      // Include referral code if available
+      const referralCode = localStorage.getItem('referralCode');
+      const signupData = {
+        ...data,
+        ...(referralCode && { referralCode })
+      };
+      
+      const response = await apiRequest('POST', '/api/signup', signupData);
+      
+      // Clear stored referral code after successful signup
+      if (referralCode) {
+        localStorage.removeItem('referralCode');
+      }
+      
       return response.json();
     },
     onSuccess: (data) => {

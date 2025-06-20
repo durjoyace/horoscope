@@ -15,6 +15,7 @@ import { Star, CalendarDays, Activity, Droplets, Gift, Lock, ChevronRight, Award
 import { AchievementBadgeContainer } from '@/components/AchievementBadgeContainer';
 import { AchievementBadgeProps } from '@/components/AchievementBadge';
 import SocialSharing from '@/components/SocialSharing';
+import { ReferralBanner } from '@/components/ReferralBanner';
 
 // Mock user data
 const mockUser = {
@@ -79,6 +80,9 @@ const Dashboard: React.FC = () => {
       <p className="text-muted-foreground mb-8">
         {t('dashboard.for')} <span className="font-medium text-foreground">{mockUser.name}</span>
       </p>
+      
+      {/* Referral Banner */}
+      <ReferralBanner />
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Main column - Horoscope and Tabs */}
