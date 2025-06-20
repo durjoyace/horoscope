@@ -22,9 +22,10 @@ export const users = pgTable("users", {
   lastName: text("last_name"),
   zodiacSign: text("zodiac_sign").notNull(),
   birthdate: text("birthdate"),
-  phone: text("phone"),
-  smsOptIn: boolean("sms_opt_in").default(false),
-  newsletterOptIn: boolean("newsletter_opt_in").default(true),
+  phone: text("phone").notNull(),
+  smsOptIn: boolean("sms_opt_in").default(true),
+  emailOptIn: boolean("email_opt_in").default(false),
+  preferredDelivery: text("preferred_delivery").default('sms'),
   // Premium subscription fields
   // Note: isPremium is not in the database, but we'll handle it in code
   // isPremium: boolean("is_premium").default(false),

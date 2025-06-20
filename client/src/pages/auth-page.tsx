@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { ZodiacSign } from "@shared/types";
 
 const loginSchema = z.object({
@@ -23,7 +24,11 @@ const registerSchema = z.object({
   confirmPassword: z.string(),
   firstName: z.string().optional(),
   lastName: z.string().optional(),
+  phone: z.string().min(10, { message: "Please enter a valid phone number" })
+    .regex(/^\+?[\d\s\-\(\)]+$/, { message: "Please enter a valid phone number" }),
   zodiacSign: z.string({ required_error: "Please select your zodiac sign" }),
+  smsOptIn: z.boolean().default(true),
+  emailOptIn: z.boolean().default(false),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -255,6 +260,26 @@ export default function AuthPage() {
                           <FormControl>
                             <Input placeholder="your.email@example.com" {...field} />
                           </FormControl>
+                          <FormDescription>
+                            For account management and CRM purposes
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={registerForm.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Phone Number</FormLabel>
+                          <FormControl>
+                            <Input placeholder="+1 (555) 123-4567" {...field} />
+                          </FormControl>
+                          <FormDescription>
+                            Your daily horoscopes will be sent via SMS
+                          </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -322,6 +347,56 @@ export default function AuthPage() {
                         </FormItem>
                       )}
                     />
+
+                    <div className="space-y-3 pt-4 border-t">
+                      <h4 className="text-sm font-medium">Communication Preferences</h4>
+                      
+                      <FormField
+                        control={registerForm.control}
+                        name="smsOptIn"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                              <FormLabel className="text-sm font-normal">
+                                Receive daily horoscopes via SMS (Recommended)
+                              </FormLabel>
+                              <FormDescription>
+                                Get your personalized horoscope delivered directly to your phone
+                              </FormDescription>
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={registerForm.control}
+                        name="emailOptIn"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                              <FormLabel className="text-sm font-normal">
+                                Receive wellness newsletters via email
+                              </FormLabel>
+                              <FormDescription>
+                                Optional weekly wellness tips and premium content updates
+                              </FormDescription>
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
 
                     <Button 
                       type="submit" 
