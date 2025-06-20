@@ -93,12 +93,12 @@ export function NavigationBar({
             Your Sign
           </Link>
           
-          <Link href="/community" className="text-sm font-medium hover:text-primary transition-colors">
-            Community
+          <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors">
+            Wellness Shop
           </Link>
           
-          <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors">
-            Shop
+          <Link href="/community" className="text-sm font-medium hover:text-primary transition-colors">
+            Community
           </Link>
           
           {!isPremium && (
@@ -278,6 +278,12 @@ export function NavigationBar({
                   <Link href="/zodiac-library" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
                     <span className="text-sm font-medium">Your Sign</span>
                   </Link>
+                  <Link href="/elements" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors ml-4">
+                    <span className="text-sm font-medium text-muted-foreground">Elements Guide</span>
+                  </Link>
+                  <Link href="/marketplace" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                    <span className="text-sm font-medium">Wellness Shop</span>
+                  </Link>
                   <Link href="/community" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
                     <span className="text-sm font-medium">Community</span>
                   </Link>
@@ -305,14 +311,6 @@ export function NavigationBar({
                 
                 {/* Secondary Navigation */}
                 <nav className="flex flex-col gap-1 mb-6">
-                  <Link href="/marketplace" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
-                    <ShoppingBag className="h-4 w-4 mr-3 text-muted-foreground" />
-                    <span className="text-sm font-medium">Wellness Shop</span>
-                  </Link>
-                  <Link href="/elements" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
-                    <Heart className="h-4 w-4 mr-3 text-muted-foreground" />
-                    <span className="text-sm font-medium">Elements Guide</span>
-                  </Link>
                   <Link href="/about" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
                     <Info className="h-4 w-4 mr-3 text-muted-foreground" />
                     <span className="text-sm font-medium">About</span>
