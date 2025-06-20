@@ -38,6 +38,8 @@ export interface IStorage {
   // Additional query methods
   getUsersByZodiacSign(sign: ZodiacSign): Promise<User[]>;
   getUsersForDailyDelivery(): Promise<User[]>;
+  getAllUsersForCRM(): Promise<User[]>;
+  getUsersForSMSBroadcast(): Promise<User[]>;
   
   // Session store for express-session
   sessionStore: session.Store;
@@ -149,7 +151,19 @@ export class MemStorage implements IStorage {
   }
   
   async getUsersForDailyDelivery(): Promise<User[]> {
+    return Array.from(this.users.values()).filter(user => 
+      user.smsOptIn || user.emailOptIn
+    );
+  }
+
+  async getAllUsersForCRM(): Promise<User[]> {
     return Array.from(this.users.values());
+  }
+
+  async getUsersForSMSBroadcast(): Promise<User[]> {
+    return Array.from(this.users.values()).filter(user => 
+      user.smsOptIn && user.phone
+    );
   }
 }
 

@@ -487,6 +487,113 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Analytics Dashboard Endpoint
+  // CRM endpoint to get all users for contact management
+  app.get("/api/admin/crm/users", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ success: false, message: "Not authenticated" });
+      }
+
+      // In production, add admin role check here
+      const users = await storage.getAllUsersForCRM();
+      
+      res.json(users);
+    } catch (error) {
+      console.error("CRM users fetch error:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Failed to fetch user data" 
+      });
+    }
+  });
+
+  // Test SMS functionality for specific user
+  app.post("/api/admin/test-sms/:userId", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ success: false, message: "Not authenticated" });
+    }
+
+    try {
+      const { sendWelcomeSMS } = await import('./sms-service');
+      const userId = parseInt(req.params.userId);
+      const user = await storage.getUser(userId);
+      
+      if (!user) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "User not found" 
+        });
+      }
+
+      if (!user.phone || !user.smsOptIn) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "User has no phone number or SMS opt-in disabled" 
+        });
+      }
+
+      const result = await sendWelcomeSMS(user);
+      
+      res.json({
+        success: result,
+        message: result ? "SMS sent successfully" : "Failed to send SMS",
+        phone: user.phone
+      });
+    } catch (error: any) {
+      console.error("SMS test error:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "SMS service error", 
+        error: error.message 
+      });
+    }
+  });
+
+  // Broadcast SMS to all opted-in users
+  app.post("/api/admin/broadcast-sms", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ success: false, message: "Not authenticated" });
+    }
+
+    try {
+      const { sendSMS } = await import('./sms-service');
+      const { message } = req.body;
+      
+      if (!message || message.trim().length === 0) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Message content is required" 
+        });
+      }
+
+      const users = await storage.getUsersForSMSBroadcast();
+      let sentCount = 0;
+
+      for (const user of users) {
+        try {
+          const result = await sendSMS(user.phone, message);
+          if (result) sentCount++;
+        } catch (error) {
+          console.error(`Failed to send SMS to ${user.phone}:`, error);
+        }
+      }
+      
+      res.json({
+        success: true,
+        message: `Broadcast completed`,
+        sentCount,
+        totalUsers: users.length
+      });
+    } catch (error: any) {
+      console.error("Broadcast SMS error:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Broadcast failed", 
+        error: error.message 
+      });
+    }
+  });
+
   app.get("/api/admin/analytics", async (req: Request, res: Response) => {
     try {
       // In a production app, we would check for admin permissions here
