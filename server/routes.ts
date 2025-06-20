@@ -42,11 +42,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const userInputSchema = z.object({
         email: z.string().email("Invalid email format"),
-        zodiacSign: z.string(),
-        firstName: z.string().optional(),
+        zodiacSign: z.string().min(1, "Zodiac sign is required"),
+        firstName: z.string().min(1, "Name is required"),
         lastName: z.string().optional(),
-        phone: z.string().optional(),
-        smsOptIn: z.boolean().default(false),
+        phone: z.string().min(1, "Phone number is required"),
+        smsOptIn: z.boolean().default(true),
+        emailOptIn: z.boolean().default(false),
         birthdate: z.string().optional(),
         password: z.string().optional(),
       });
@@ -80,11 +81,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         zodiacSign: validatedInput.zodiacSign,
         firstName: validatedInput.firstName,
         lastName: validatedInput.lastName,
-        phone: validatedInput.phone,
-        smsOptIn: validatedInput.smsOptIn,
+        phone: validatedInput.phone || "",
+        smsOptIn: validatedInput.smsOptIn || false,
         birthdate: validatedInput.birthdate,
         password: validatedInput.password || null,
-        newsletterOptIn: true,
+        emailOptIn: validatedInput.emailOptIn,
       });
       
       res.status(201).json({ 
@@ -166,36 +167,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Test endpoint to deliver horoscope to a specific user
+  // Endpoint to deliver horoscopes to all SMS opted-in users
   app.post("/api/admin/deliver-horoscope", async (req: Request, res: Response) => {
     try {
-      const { email, date } = req.body;
+      const { date } = req.body;
+      const targetDate = date || new Date().toISOString().split('T')[0];
       
-      if (!email) {
-        return res.status(400).json({ 
-          success: false, 
-          message: "Email is required" 
+      console.log(`Starting horoscope delivery for date: ${targetDate}`);
+      
+      // Get all users who opted in for SMS delivery
+      const users = await storage.getUsersForDailyDelivery();
+      const smsUsers = users.filter(user => user.smsOptIn && user.phone);
+      
+      if (smsUsers.length === 0) {
+        return res.status(200).json({ 
+          success: true, 
+          message: "No users found with SMS opt-in",
+          deliveredCount: 0
         });
       }
       
-      const targetDate = date || format(new Date(), 'yyyy-MM-dd');
-      const user = await storage.getUserByEmail(email);
+      let deliveredCount = 0;
+      let errorCount = 0;
       
-      if (!user) {
-        return res.status(404).json({ 
-          success: false, 
-          message: "User not found" 
-        });
+      // Process deliveries
+      for (const user of smsUsers) {
+        try {
+          await deliverHoroscopeToUser(user, targetDate);
+          deliveredCount++;
+          console.log(`Delivered horoscope to ${user.email} (${user.phone})`);
+        } catch (error) {
+          errorCount++;
+          console.error(`Failed to deliver horoscope to ${user.email}:`, error);
+        }
       }
       
-      // Start the delivery process (async)
-      deliverHoroscopeToUser(user, targetDate).catch(err => {
-        console.error(`Error delivering horoscope to ${email}:`, err);
-      });
-      
-      res.status(202).json({ 
+      res.status(200).json({ 
         success: true, 
-        message: `Horoscope delivery to ${email} for ${targetDate} started in the background` 
+        message: `Horoscope delivery completed for ${targetDate}`,
+        deliveredCount,
+        errorCount,
+        totalUsers: smsUsers.length
       });
     } catch (error) {
       console.error("Error starting horoscope delivery:", error);
