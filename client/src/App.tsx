@@ -13,6 +13,7 @@ import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { CosmicLoaderProvider, useCosmicLoader } from "@/hooks/useCosmicLoader";
 import { CosmicLoader } from "@/components/ui/CosmicLoader";
 import { CosmicLoaderWrapper } from "./components/CosmicLoaderWrapper";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 // Import all pages
 import Home from "@/pages/Home";
@@ -124,6 +125,7 @@ function AppContent() {
       />
       
       <main className="flex-grow">
+        <ScrollToTop />
         <PageTransition loading={logoutMutation.isPending}>
           <Switch>
             <Route path="/">
