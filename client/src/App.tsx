@@ -28,6 +28,7 @@ import ContactPage from "@/pages/ContactPage";
 import AuthPage from "@/pages/auth-page";
 import PremiumPage from "@/pages/PremiumPage";
 import AchievementsPage from "@/pages/AchievementsPage";
+import AchievementsDemoPage from "@/pages/AchievementsDemoPage";
 import OnboardingPage from "@/pages/OnboardingPage";
 import SavedTipsPage from "@/pages/SavedTipsPage";
 import GiftPage from "@/pages/GiftPage";
@@ -164,6 +165,9 @@ function AppContent() {
               <PremiumPage />
             </Route>
             <ProtectedRoute path="/achievements" component={AchievementsPage} />
+            <Route path="/achievements-demo">
+              <AchievementsDemoPage />
+            </Route>
             <Route path="/wellness-tips">
               <SavedTipsPage />
             </Route>
