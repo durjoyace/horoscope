@@ -184,6 +184,21 @@ const enTranslations: Record<string, string> = {
   'toast.phone.required.title': 'Phone Number Required',
   'toast.phone.required.description': 'Please enter a valid phone number to receive your daily horoscope via SMS.',
   
+  // Testimonials Section
+  'testimonials.heading': 'Loved by Thousands',
+  'testimonials.subheading': 'Join the community of people starting their day with personalized wellness guidance.',
+  'testimonials.1.quote': 'Getting my horoscope via SMS every morning has become part of my routine. The wellness tips are actually helpful and I love that I don\'t need to remember to open an app.',
+  'testimonials.1.author': 'Sarah M.',
+  'testimonials.2.quote': 'I was skeptical at first, but these daily messages genuinely help me start my day with intention. The health guidance feels personalized to my Cancer traits.',
+  'testimonials.2.author': 'Mike R.',
+  'testimonials.3.quote': 'Perfect for busy mornings! I get my horoscope right on my phone and the wellness advice actually makes sense for my lifestyle. Love the convenience.',
+  'testimonials.3.author': 'Jessica K.',
+  'testimonials.cta.ready': 'Ready to start your wellness journey?',
+  'testimonials.cta.join': 'Join thousands who start their day with purpose ↑',
+  'stats.messages': 'Daily Messages Sent',
+  'stats.rating': 'Average Rating',
+  'stats.readDaily': 'Users Read Daily',
+  
   // Footer
   'footer.company': 'Battle Green Consulting LLC',
   'footer.disclaimer': 'Legal Disclaimer: The astrological insights provided on this website are for informational and entertainment purposes only and should not replace professional medical advice.',
@@ -366,6 +381,21 @@ const esTranslations: Record<string, string> = {
   // Toast notifications
   'toast.phone.required.title': 'Número de Teléfono Requerido',
   'toast.phone.required.description': 'Por favor ingresa un número de teléfono válido para recibir tu horóscopo diario por SMS.',
+  
+  // Testimonials Section
+  'testimonials.heading': 'Amado por Miles',
+  'testimonials.subheading': 'Únete a la comunidad de personas que comienzan su día con orientación personalizada de bienestar.',
+  'testimonials.1.quote': 'Recibir mi horóscopo por SMS cada mañana se ha convertido en parte de mi rutina. Los consejos de bienestar son realmente útiles y me encanta que no necesito recordar abrir una aplicación.',
+  'testimonials.1.author': 'Sara M.',
+  'testimonials.2.quote': 'Era escéptico al principio, pero estos mensajes diarios realmente me ayudan a comenzar mi día con intención. La orientación de salud se siente personalizada para mis rasgos de Cáncer.',
+  'testimonials.2.author': 'Miguel R.',
+  'testimonials.3.quote': 'Perfecto para mañanas ocupadas! Recibo mi horóscopo directamente en mi teléfono y los consejos de bienestar realmente tienen sentido para mi estilo de vida. Me encanta la conveniencia.',
+  'testimonials.3.author': 'Jessica K.',
+  'testimonials.cta.ready': '¿Listo para comenzar tu viaje de bienestar?',
+  'testimonials.cta.join': 'Únete a miles que comienzan su día con propósito ↑',
+  'stats.messages': 'Mensajes Diarios Enviados',
+  'stats.rating': 'Calificación Promedio',
+  'stats.readDaily': 'Usuarios Leen Diariamente',
   
   // Footer
   'footer.company': 'Battle Green Consulting LLC',

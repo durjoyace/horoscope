@@ -1,32 +1,35 @@
 import React from 'react';
 import { Star, Quote } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const TestimonialsSection: React.FC = () => {
+  const { t } = useLanguage();
+  
   const testimonials = [
     {
-      quote: "Getting my horoscope via SMS every morning has become part of my routine. The wellness tips are actually helpful and I love that I don't need to remember to open an app.",
-      author: "Sarah M.",
+      quote: t('testimonials.1.quote'),
+      author: t('testimonials.1.author'),
       zodiacSign: "♌ Leo",
       rating: 5
     },
     {
-      quote: "I was skeptical at first, but these daily messages genuinely help me start my day with intention. The health guidance feels personalized to my Cancer traits.",
-      author: "Mike R.", 
+      quote: t('testimonials.2.quote'),
+      author: t('testimonials.2.author'), 
       zodiacSign: "♋ Cancer",
       rating: 5
     },
     {
-      quote: "Perfect for busy mornings! I get my horoscope right on my phone and the wellness advice actually makes sense for my lifestyle. Love the convenience.",
-      author: "Jessica K.",
+      quote: t('testimonials.3.quote'),
+      author: t('testimonials.3.author'),
       zodiacSign: "♉ Taurus", 
       rating: 5
     }
   ];
 
   const stats = [
-    { number: "10,000+", label: "Daily Messages Sent" },
-    { number: "4.8/5", label: "Average Rating" },
-    { number: "94%", label: "Users Read Daily" }
+    { number: "10,000+", label: t('stats.messages') },
+    { number: "4.8/5", label: t('stats.rating') },
+    { number: "94%", label: t('stats.readDaily') }
   ];
 
   return (
@@ -35,10 +38,10 @@ export const TestimonialsSection: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-12 max-w-2xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Loved by Thousands
+            {t('testimonials.heading')}
           </h2>
           <p className="text-slate-300 text-lg">
-            Join the community of people starting their day with personalized wellness guidance.
+            {t('testimonials.subheading')}
           </p>
         </div>
 
@@ -96,10 +99,10 @@ export const TestimonialsSection: React.FC = () => {
         {/* CTA */}
         <div className="text-center mt-12">
           <p className="text-slate-400 mb-4">
-            Ready to start your wellness journey?
+            {t('testimonials.cta.ready')}
           </p>
           <div className="text-purple-400 font-medium">
-            Join thousands who start their day with purpose ↑
+            {t('testimonials.cta.join')}
           </div>
         </div>
       </div>
