@@ -402,7 +402,7 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                     <span className="text-3xl font-bold text-gray-900">${product.price}</span>
                     <span className="text-sm text-gray-500">per bottle</span>
                   </div>
-                  {user && product.recommendedSigns.includes(user.zodiacSign) && (
+                  {user?.zodiacSign && product.recommendedSigns.includes(user.zodiacSign) && (
                     <Badge className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs px-3 py-1">
                       ⭐ COSMIC MATCH
                     </Badge>
@@ -410,15 +410,15 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                 </div>
               </CardContent>
 
-              <CardFooter className="pt-6 border-t border-gray-100">
+              <CardFooter className="pt-6 pb-6">
                 <Button
                   size="lg"
                   asChild
-                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 text-lg"
                 >
-                  <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer">
-                    Shop at {product.name.split(' ')[0]}
-                    <ExternalLink className="h-4 w-4 ml-2" />
+                  <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3">
+                    <span>Shop {product.name.split(' ')[0]}</span>
+                    <ExternalLink className="h-5 w-5" />
                   </a>
                 </Button>
               </CardFooter>
