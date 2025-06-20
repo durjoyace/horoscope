@@ -57,7 +57,7 @@ export const CompatibilityQuizSection: React.FC = () => {
     if (!sign1 || !sign2) return;
     
     setShowResults(true);
-    setTimeout(() => setAnimateResult(true), 600);
+    setTimeout(() => setAnimateResult(true), 300);
   };
   
   const handleReset = () => {
@@ -248,37 +248,95 @@ export const CompatibilityQuizSection: React.FC = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.5 }}
-                            className="space-y-3 mt-4"
+                            className="space-y-4 mt-6"
                           >
-                            <div className="space-y-2">
+                            <motion.div
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.7, duration: 0.5 }}
+                              className="space-y-2"
+                            >
                               <div className="flex justify-between text-sm text-white">
                                 <div className="flex items-center">
                                   <Heart className="h-4 w-4 mr-2 text-pink-400" /> Romance
                                 </div>
-                                <div>{getCompatibilityLabel(result.score.romance)}</div>
+                                <div className="font-medium">{getCompatibilityLabel(result.score.romance)} ({result.score.romance}%)</div>
                               </div>
-                              <Progress value={result.score.romance} className={getCompatibilityColor(result.score.romance)} />
-                            </div>
+                              <div className="bg-gray-700 rounded-full h-2 overflow-hidden">
+                                <motion.div
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${result.score.romance}%` }}
+                                  transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
+                                  className={`h-full bg-gradient-to-r from-pink-500 to-pink-400 rounded-full`}
+                                />
+                              </div>
+                            </motion.div>
                             
-                            <div className="space-y-2">
+                            <motion.div
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.9, duration: 0.5 }}
+                              className="space-y-2"
+                            >
                               <div className="flex justify-between text-sm text-white">
                                 <div className="flex items-center">
                                   <Users className="h-4 w-4 mr-2 text-blue-400" /> Friendship
                                 </div>
-                                <div>{getCompatibilityLabel(result.score.friendship)}</div>
+                                <div className="font-medium">{getCompatibilityLabel(result.score.friendship)} ({result.score.friendship}%)</div>
                               </div>
-                              <Progress value={result.score.friendship} className={getCompatibilityColor(result.score.friendship)} />
-                            </div>
+                              <div className="bg-gray-700 rounded-full h-2 overflow-hidden">
+                                <motion.div
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${result.score.friendship}%` }}
+                                  transition={{ delay: 1.0, duration: 1, ease: "easeOut" }}
+                                  className={`h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full`}
+                                />
+                              </div>
+                            </motion.div>
                             
-                            <div className="space-y-2">
+                            <motion.div
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 1.1, duration: 0.5 }}
+                              className="space-y-2"
+                            >
                               <div className="flex justify-between text-sm text-white">
                                 <div className="flex items-center">
                                   <MessageSquare className="h-4 w-4 mr-2 text-purple-400" /> Communication
                                 </div>
-                                <div>{getCompatibilityLabel(result.score.communication)}</div>
+                                <div className="font-medium">{getCompatibilityLabel(result.score.communication)} ({result.score.communication}%)</div>
                               </div>
-                              <Progress value={result.score.communication} className={getCompatibilityColor(result.score.communication)} />
-                            </div>
+                              <div className="bg-gray-700 rounded-full h-2 overflow-hidden">
+                                <motion.div
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${result.score.communication}%` }}
+                                  transition={{ delay: 1.2, duration: 1, ease: "easeOut" }}
+                                  className={`h-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full`}
+                                />
+                              </div>
+                            </motion.div>
+                            
+                            <motion.div
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 1.3, duration: 0.5 }}
+                              className="space-y-2"
+                            >
+                              <div className="flex justify-between text-sm text-white">
+                                <div className="flex items-center">
+                                  <ShieldCheck className="h-4 w-4 mr-2 text-green-400" /> Trust
+                                </div>
+                                <div className="font-medium">{getCompatibilityLabel(result.score.trust)} ({result.score.trust}%)</div>
+                              </div>
+                              <div className="bg-gray-700 rounded-full h-2 overflow-hidden">
+                                <motion.div
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${result.score.trust}%` }}
+                                  transition={{ delay: 1.4, duration: 1, ease: "easeOut" }}
+                                  className={`h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full`}
+                                />
+                              </div>
+                            </motion.div>
                           </motion.div>
                         </div>
                         
