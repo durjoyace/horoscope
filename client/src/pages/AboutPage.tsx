@@ -28,8 +28,11 @@ export default function AboutPage() {
           <p className="text-lg text-muted-foreground mb-4">
             We believe that true wellness encompasses not just physical health, but also the mind-body connection that has been recognized by ancient traditions for millennia. By studying how astrological patterns relate to human health tendencies, we've developed a unique approach to wellness that respects individuality.
           </p>
+          <p className="text-lg text-muted-foreground mb-4">
+            Our approach is grounded in chronobiology - the scientific study of biological rhythms and how they affect human health. We integrate research on circadian cycles, seasonal patterns, and biological timing with astrological insights to create recommendations that align with both your natural rhythms and cosmic influences.
+          </p>
           <p className="text-lg text-muted-foreground">
-            Our team of astrologers, health scientists, and wellness experts work together to deliver daily insights and recommendations tailored to your zodiac sign's unique constitution and tendencies.
+            Our team of astrologers, chronobiologists, and wellness experts work together to deliver daily insights and recommendations tailored to your zodiac sign's unique constitution and optimal timing patterns.
           </p>
         </div>
         <div className="bg-muted rounded-lg p-8 md:p-12">
@@ -91,6 +94,60 @@ export default function AboutPage() {
         </div>
       </div>
 
+      {/* Science & Chronobiology */}
+      <div className="mb-24">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="bg-muted rounded-lg p-8 md:p-12">
+            <div className="text-center mb-8">
+              <div className="inline-block p-3 bg-blue-500/20 rounded-full mb-4">
+                <Brain className="h-8 w-8 text-blue-600" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4">Chronobiology Foundation</h3>
+            </div>
+            
+            <div className="space-y-4 text-sm text-muted-foreground">
+              <p>
+                <strong className="text-foreground">Circadian Rhythms:</strong> Your body's internal clock affects hormone production, metabolism, and immune function throughout 24-hour cycles.
+              </p>
+              <p>
+                <strong className="text-foreground">Seasonal Patterns:</strong> Research shows how seasonal light changes influence mood, energy levels, and dietary needs.
+              </p>
+              <p>
+                <strong className="text-foreground">Optimal Timing:</strong> Studies in chronotherapy demonstrate that timing of activities, meals, and rest significantly impacts health outcomes.
+              </p>
+            </div>
+          </div>
+          
+          <div>
+            <h2 className="text-3xl font-bold tracking-tight mb-6">The Science Behind Timing</h2>
+            <p className="text-lg text-muted-foreground mb-4">
+              Chronobiology reveals that timing isn't just important—it's everything. Your body operates on precise biological rhythms that influence when you're most alert, when your metabolism peaks, and when your body repairs itself.
+            </p>
+            <p className="text-lg text-muted-foreground mb-4">
+              We combine peer-reviewed chronobiology research with astrological timing principles to optimize when you receive wellness recommendations. For example, cortisol naturally peaks in the morning, making it an ideal time for energizing activities that align with your zodiac sign's elemental nature.
+            </p>
+            <p className="text-lg text-muted-foreground mb-6">
+              This integration allows us to suggest not just what wellness practices suit your astrological profile, but precisely when to implement them for maximum biological benefit.
+            </p>
+            
+            <div className="flex flex-wrap gap-3">
+              <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 rounded-full">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span className="text-sm font-medium text-blue-700">Evidence-Based</span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-2 bg-green-50 rounded-full">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span className="text-sm font-medium text-green-700">Personalized Timing</span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-2 bg-purple-50 rounded-full">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <span className="text-sm font-medium text-purple-700">Holistic Integration</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Meet the Team */}
       <div className="mb-24">
         <div className="text-center mb-12">
@@ -108,9 +165,9 @@ export default function AboutPage() {
             </div>
             <div className="p-6">
               <h3 className="text-xl font-bold mb-1">Dr. Maya Stellaris</h3>
-              <p className="text-sm text-muted-foreground mb-4">Founder & Lead Astrological Researcher</p>
+              <p className="text-sm text-muted-foreground mb-4">Founder & Lead Chronobiology Researcher</p>
               <p className="text-sm">
-                With over 20 years of experience in astrological research and a PhD in Comparative Health Systems, Maya bridges traditional wisdom with evidence-based approaches.
+                With over 20 years of experience in chronobiology and astrological research, plus a PhD in Comparative Health Systems, Maya specializes in biological timing and circadian health optimization.
               </p>
             </div>
           </div>
