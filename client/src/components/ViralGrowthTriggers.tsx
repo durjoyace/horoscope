@@ -58,7 +58,7 @@ export function ViralGrowthTriggers({ userReferrals, onShareClick }: ViralTrigge
       bgColor: 'bg-red-50',
       borderColor: 'border-red-200',
       title: 'Double Rewards End Today',
-      description: `Only ${timeLeft} left to earn 2x premium months per referral`,
+      description: `Only ${timeLeft} left to earn 2x premium features per referral`,
       action: 'Share Now',
       urgent: true
     },
@@ -94,7 +94,7 @@ export function ViralGrowthTriggers({ userReferrals, onShareClick }: ViralTrigge
       bgColor: 'bg-purple-50',
       borderColor: 'border-purple-200',
       title: 'Wellness Hero Status',
-      description: `${Math.max(0, 10 - userReferrals)} more friends = Free premium forever`,
+      description: `${Math.max(0, 10 - userReferrals)} more friends = Lifetime premium access`,
       action: 'Unlock Status',
       urgent: false
     }

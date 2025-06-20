@@ -48,7 +48,7 @@ export function ReferralBanner({ onDismiss }: ReferralBannerProps) {
               </Badge>
               {totalReferrals < 10 && (
                 <Badge variant="outline" className="text-xs text-red-600 border-red-200 animate-pulse">
-                  {10 - totalReferrals} away from FREE FOREVER
+                  {10 - totalReferrals} away from LIFETIME PREMIUM
                 </Badge>
               )}
               <Badge variant="outline" className="text-xs text-purple-600 border-purple-200">

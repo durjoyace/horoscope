@@ -44,7 +44,7 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
           if (data.success) {
             toast({
               title: "Welcome from " + data.data.referrerName + "!",
-              description: "Sign up now to get your first month of premium features free.",
+              description: "Sign up now to unlock premium wellness features together.",
             });
           }
         })

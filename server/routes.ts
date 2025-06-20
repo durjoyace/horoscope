@@ -1488,16 +1488,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let shareText = '';
       switch (platform) {
         case 'sms':
-          shareText = `Found something that actually works! This app knows my body better than I do - gives me daily health tips based on my zodiac that hit different. Try it free: ${referralUrl}`;
+          shareText = `Found something that actually works! This app knows my body better than I do - gives me daily health tips based on my zodiac that hit different. Check it out: ${referralUrl}`;
           break;
         case 'email':
-          shareText = `You know how I'm always trying new wellness stuff? This one's different. HoroscopeHealth gives me personalized health insights based on my zodiac sign and honestly, it's scary accurate. The timing recommendations actually work. Get your first month free with my link: ${referralUrl}`;
+          shareText = `You know how I'm always trying new wellness stuff? This one's different. HoroscopeHealth gives me personalized health insights based on my zodiac sign and honestly, it's scary accurate. The timing recommendations actually work. You'll unlock premium features with my link: ${referralUrl}`;
           break;
         case 'social':
-          shareText = `OK this is weird but... an app that uses my zodiac sign for health advice is actually changing my life? The timing is everything - it told me exactly when to work out for max results. Who knew astrology could be this practical? Free month: ${referralUrl}`;
+          shareText = `OK this is weird but... an app that uses my zodiac sign for health advice is actually changing my life? The timing is everything - it told me exactly when to work out for max results. Who knew astrology could be this practical? Premium unlocks: ${referralUrl}`;
           break;
         default:
-          shareText = `This wellness app knows things about my body I didn't even know. Try it free: ${referralUrl}`;
+          shareText = `This wellness app knows things about my body I didn't even know. Try it: ${referralUrl}`;
       }
 
       res.status(200).json({

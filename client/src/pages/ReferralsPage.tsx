@@ -138,11 +138,11 @@ export default function ReferralsPage() {
           <Gift className="h-8 w-8 text-purple-600" />
         </div>
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-          Give Health, Get Rewarded
+          Share Wellness, Unlock Premium
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
-          Your friends deserve better health insights. Share your secret to personalized wellness 
-          and unlock premium features for life.
+          Help friends discover personalized health insights and unlock enhanced features 
+          like premium reports, priority support, and exclusive content.
         </p>
         
         {/* Social proof and urgency */}
@@ -197,45 +197,62 @@ export default function ReferralsPage() {
               </Button>
             </div>
             
-            <div className="pt-4 border-t">
-              <p className="text-sm text-muted-foreground mb-3">Share via:</p>
-              <div className="grid grid-cols-2 gap-2">
-                <Button
-                  onClick={() => generateShareLink('sms')}
-                  variant="outline"
-                  size="sm"
-                  disabled={shareReferralMutation.isPending}
-                >
-                  <MessageSquare className="h-4 w-4 mr-2" />
-                  SMS
-                </Button>
-                <Button
-                  onClick={() => generateShareLink('email')}
-                  variant="outline"
-                  size="sm"
-                  disabled={shareReferralMutation.isPending}
-                >
-                  <Mail className="h-4 w-4 mr-2" />
-                  Email
-                </Button>
-                <Button
-                  onClick={() => generateShareLink('social')}
-                  variant="outline"
-                  size="sm"
-                  disabled={shareReferralMutation.isPending}
-                >
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Social
-                </Button>
-                <Button
-                  onClick={() => generateShareLink('copy')}
-                  variant="outline"
-                  size="sm"
-                  disabled={shareReferralMutation.isPending}
-                >
-                  {copiedLink ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
-                  Copy Link
-                </Button>
+            <div className="pt-4 border-t space-y-4">
+              <div>
+                <p className="text-sm text-muted-foreground mb-2">Your referral link:</p>
+                <div className="flex items-center gap-2 p-2 bg-muted/50 rounded text-xs font-mono">
+                  <span className="flex-1 truncate">{referralUrl}</span>
+                  <Button
+                    onClick={() => copyToClipboard(referralUrl, 'link')}
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 w-6 p-0"
+                  >
+                    {copiedLink ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                  </Button>
+                </div>
+              </div>
+              
+              <div>
+                <p className="text-sm text-muted-foreground mb-3">Share via:</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    onClick={() => generateShareLink('sms')}
+                    variant="outline"
+                    size="sm"
+                    disabled={shareReferralMutation.isPending}
+                  >
+                    <MessageSquare className="h-4 w-4 mr-2" />
+                    SMS
+                  </Button>
+                  <Button
+                    onClick={() => generateShareLink('email')}
+                    variant="outline"
+                    size="sm"
+                    disabled={shareReferralMutation.isPending}
+                  >
+                    <Mail className="h-4 w-4 mr-2" />
+                    Email
+                  </Button>
+                  <Button
+                    onClick={() => generateShareLink('social')}
+                    variant="outline"
+                    size="sm"
+                    disabled={shareReferralMutation.isPending}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    Social
+                  </Button>
+                  <Button
+                    onClick={() => generateShareLink('copy')}
+                    variant="outline"
+                    size="sm"
+                    disabled={shareReferralMutation.isPending}
+                  >
+                    {copiedLink ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
+                    Copy Link
+                  </Button>
+                </div>
               </div>
             </div>
           </CardContent>
@@ -291,24 +308,24 @@ export default function ReferralsPage() {
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200">
                   <Sparkles className="h-5 w-5 text-yellow-600" />
                   <div>
-                    <p className="font-medium text-yellow-800">1 Friend = Premium Month</p>
-                    <p className="text-xs text-yellow-600">Instant unlock</p>
+                    <p className="font-medium text-yellow-800">1 Friend = Premium Reports</p>
+                    <p className="text-xs text-yellow-600">Weekly wellness insights</p>
                   </div>
                 </div>
                 
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200">
                   <Crown className="h-5 w-5 text-purple-600" />
                   <div>
-                    <p className="font-medium text-purple-800">5 Friends = Lifetime 50% Off</p>
-                    <p className="text-xs text-purple-600">VIP status unlocked</p>
+                    <p className="font-medium text-purple-800">5 Friends = VIP Features</p>
+                    <p className="text-xs text-purple-600">Priority support & exclusive content</p>
                   </div>
                 </div>
                 
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200">
                   <Star className="h-5 w-5 text-emerald-600" />
                   <div>
-                    <p className="font-medium text-emerald-800">10 Friends = Free Forever</p>
-                    <p className="text-xs text-emerald-600">Wellness hero status</p>
+                    <p className="font-medium text-emerald-800">10 Friends = Lifetime Premium</p>
+                    <p className="text-xs text-emerald-600">All premium features included</p>
                   </div>
                 </div>
               </div>
