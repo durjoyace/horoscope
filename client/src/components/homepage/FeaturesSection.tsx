@@ -4,34 +4,34 @@ import { Smartphone, Clock, Shield, Microscope, ShoppingBag, Brain } from 'lucid
 export const FeaturesSection: React.FC = () => {
   const features = [
     {
-      icon: <Microscope className="w-8 h-8 text-purple-400" />,
-      title: "Evidence-Based Approach",
-      description: "Each recommendation is backed by scientific research and validated wellness practices, not generic horoscopes."
+      icon: <Clock className="w-8 h-8 text-purple-400" />,
+      title: "Perfect Timing, Every Day",
+      description: "Discover the exact hours when your body is primed for exercise, optimal for eating, and ready for deep rest."
     },
     {
       icon: <Brain className="w-8 h-8 text-purple-400" />,
-      title: "AI-Powered Personalization",
-      description: "Advanced algorithms analyze your astrological profile alongside proven health data to create truly personalized guidance."
-    },
-    {
-      icon: <ShoppingBag className="w-8 h-8 text-purple-400" />,
-      title: "Curated Wellness Marketplace",
-      description: "Access hand-picked supplements, wellness products, and health tools specifically recommended for your profile."
+      title: "Your Body's Secret Schedule",
+      description: "Most people fight their natural rhythms. We reveal when your zodiac sign's biology works best."
     },
     {
       icon: <Smartphone className="w-8 h-8 text-purple-400" />,
-      title: "Convenient SMS Delivery",
-      description: "Receive your daily insights directly via text message - no apps to download or remember to check."
+      title: "Arrives When You Need It",
+      description: "Daily insights texted to your phone at the perfect moment. No apps, no notifications to ignore."
     },
     {
-      icon: <Clock className="w-8 h-8 text-purple-400" />,
-      title: "Research-Backed Timing",
-      description: "Recommendations are timed based on circadian science and astrological cycles for maximum effectiveness."
+      icon: <Microscope className="w-8 h-8 text-purple-400" />,
+      title: "Science + Ancient Wisdom",
+      description: "Chronobiology research proves your birth sign affects your circadian patterns. We just tell you how to use it."
+    },
+    {
+      icon: <ShoppingBag className="w-8 h-8 text-purple-400" />,
+      title: "Recommendations That Work",
+      description: "Skip the guesswork. Get specific product suggestions that align with your body's natural cycles."
     },
     {
       icon: <Shield className="w-8 h-8 text-purple-400" />,
-      title: "Medical Grade Privacy",
-      description: "Your health data is protected with the same standards used by medical institutions."
+      title: "Your Data Stays Private",
+      description: "Medical-grade security protects your personal information. We help you, not harvest your data."
     }
   ];
 
@@ -41,10 +41,10 @@ export const FeaturesSection: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-12 max-w-2xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Why Choose SMS Horoscopes?
+            Stop Guessing When Your Body Works Best
           </h2>
           <p className="text-slate-300 text-lg">
-            The most convenient way to receive personalized wellness guidance based on your zodiac sign.
+            Most wellness advice ignores your natural timing. We tell you exactly when to act for maximum results.
           </p>
         </div>
 
