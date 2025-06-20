@@ -6,6 +6,7 @@ import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
 import { User as UserType } from "@shared/schema";
+import { sendWelcomeSMS } from "./sms-service";
 
 declare global {
   namespace Express {
@@ -79,12 +80,12 @@ export function setupAuth(app: Express) {
 
   app.post("/api/register", async (req, res, next) => {
     try {
-      const { email, password, firstName, lastName, zodiacSign } = req.body;
+      const { email, password, firstName, lastName, zodiacSign, phone, smsOptIn, emailOptIn } = req.body;
       
-      if (!email || !password || !zodiacSign) {
+      if (!email || !password || !zodiacSign || !phone) {
         return res.status(400).json({
           success: false,
-          message: "Email, password and zodiac sign are required"
+          message: "Email, password, phone number, and zodiac sign are required"
         });
       }
       
@@ -104,9 +105,20 @@ export function setupAuth(app: Express) {
         firstName: firstName || null,
         lastName: lastName || null,
         zodiacSign,
-        newsletterOptIn: true,
-        smsOptIn: false,
+        phone,
+        smsOptIn: smsOptIn !== false, // Default to true
+        emailOptIn: emailOptIn === true, // Default to false
+        preferredDelivery: 'sms',
       });
+
+      // Send welcome SMS if user opted in
+      if (user.smsOptIn && user.phone) {
+        try {
+          await sendWelcomeSMS(user);
+        } catch (error) {
+          console.error('Failed to send welcome SMS:', error);
+        }
+      }
 
       req.login(user, (err) => {
         if (err) return next(err);
@@ -119,6 +131,9 @@ export function setupAuth(app: Express) {
             firstName: user.firstName,
             lastName: user.lastName,
             zodiacSign: user.zodiacSign,
+            phone: user.phone,
+            smsOptIn: user.smsOptIn,
+            emailOptIn: user.emailOptIn,
             isPremium: false
           }
         });

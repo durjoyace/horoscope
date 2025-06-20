@@ -103,18 +103,7 @@ export async function deliverHoroscopeToUser(user: User, date: string): Promise<
       throw new Error(`Horoscope not found for ${user.zodiacSign} on ${date}`);
     }
     
-    // Send email
-    const emailResult = await sendHoroscopeEmail(user, horoscopeContent, date);
-    
-    // Log email delivery
-    await storage.createDeliveryLog({
-      userId: user.id,
-      horoscopeId: horoscope.id,
-      deliveryType: 'email',
-      status: emailResult ? 'success' : 'failed'
-    });
-    
-    // Send SMS if user opted in
+    // Primary delivery via SMS (recommended method)
     if (user.smsOptIn && user.phone) {
       const smsResult = await sendHoroscopeSMS(user, horoscopeContent);
       
@@ -124,6 +113,23 @@ export async function deliverHoroscopeToUser(user: User, date: string): Promise<
         horoscopeId: horoscope.id,
         deliveryType: 'sms',
         status: smsResult ? 'success' : 'failed'
+      });
+      
+      if (smsResult) {
+        console.log(`SMS horoscope delivered to ${user.phone} (${user.zodiacSign})`);
+      }
+    }
+    
+    // Optional email delivery for CRM and newsletter users
+    if (user.emailOptIn) {
+      const emailResult = await sendHoroscopeEmail(user, horoscopeContent, date);
+      
+      // Log email delivery
+      await storage.createDeliveryLog({
+        userId: user.id,
+        horoscopeId: horoscope.id,
+        deliveryType: 'email', 
+        status: emailResult ? 'success' : 'failed'
       });
     }
     

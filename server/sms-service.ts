@@ -1,59 +1,104 @@
-import { User } from "@shared/schema";
-import { HoroscopeContent } from "@shared/types";
+import twilio from 'twilio';
+import { User } from '@shared/schema';
 
-// This is a mock SMS service for demonstration
-// In a real application, you would use a service like Twilio, Nexmo, etc.
+if (!process.env.TWILIO_ACCOUNT_SID || !process.env.TWILIO_AUTH_TOKEN || !process.env.TWILIO_PHONE_NUMBER) {
+  throw new Error("Missing required Twilio environment variables");
+}
+
+const client = twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
+
+import { HoroscopeContent } from '@shared/types';
+
 export async function sendSMS(to: string, message: string): Promise<boolean> {
   try {
-    console.log(`Sending SMS to ${to}`);
-    console.log(`Message: ${message}`);
-    
-    // In a real implementation, you'd connect to an SMS API
-    // For now, we'll simulate success
+    // Clean phone number format
+    const cleanedNumber = to.replace(/[^\d+]/g, '');
+    const formattedNumber = cleanedNumber.startsWith('+') ? cleanedNumber : `+1${cleanedNumber}`;
+
+    const result = await client.messages.create({
+      body: message,
+      from: process.env.TWILIO_PHONE_NUMBER!,
+      to: formattedNumber,
+    });
+
+    console.log(`SMS sent successfully to ${formattedNumber}: ${result.sid}`);
     return true;
   } catch (error) {
-    console.error("Error sending SMS:", error);
+    console.error('Failed to send SMS:', error);
     return false;
   }
 }
 
-// Create SMS content from horoscope data
 export function createHoroscopeSMSContent(
   user: User,
-  horoscope: HoroscopeContent
+  horoscope: HoroscopeContent,
 ): string {
-  const firstName = user.firstName || '';
-  const sign = user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1);
+  const greeting = user.firstName 
+    ? `Hi ${user.firstName}!` 
+    : `Hello ${user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1)}!`;
+
+  const signEmoji = getZodiacEmoji(user.zodiacSign);
   
-  // Create a short version of the horoscope for SMS
-  const greeting = firstName ? `Hi ${firstName}! ` : '';
-  const message = `${greeting}${sign} health horoscope: ${horoscope.healthTip} ${horoscope.elementAlignment}`;
-  
-  // Ensure the message is not too long (SMS typically has 160 char limit)
-  if (message.length <= 160) {
-    return message;
-  }
-  
-  // Truncate if necessary
-  return message.substring(0, 156) + '...';
+  return `${greeting} ${signEmoji}
+
+Your Daily ${user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1)} Horoscope:
+
+${horoscope.overview}
+
+💚 Health Focus: ${horoscope.healthTip}
+
+🍃 Nutrition: ${horoscope.nutritionFocus}
+
+Stay cosmic! ✨
+HoroscopeHealth.com`;
 }
 
-// Send daily horoscope SMS to a user
+function getZodiacEmoji(sign: string): string {
+  const emojiMap: Record<string, string> = {
+    'aries': '♈',
+    'taurus': '♉',
+    'gemini': '♊',
+    'cancer': '♋',
+    'leo': '♌',
+    'virgo': '♍',
+    'libra': '♎',
+    'scorpio': '♏',
+    'sagittarius': '♐',
+    'capricorn': '♑',
+    'aquarius': '♒',
+    'pisces': '♓'
+  };
+  return emojiMap[sign] || '✨';
+}
+
 export async function sendHoroscopeSMS(
   user: User,
-  horoscopeContent: HoroscopeContent
+  horoscopeContent: HoroscopeContent,
 ): Promise<boolean> {
+  if (!user.phone || !user.smsOptIn) {
+    console.log(`Skipping SMS for user ${user.id}: no phone or SMS opt-in disabled`);
+    return false;
+  }
+
+  const smsContent = createHoroscopeSMSContent(user, horoscopeContent);
+  return await sendSMS(user.phone, smsContent);
+}
+
+export async function sendWelcomeSMS(user: User): Promise<boolean> {
   if (!user.phone || !user.smsOptIn) {
     return false;
   }
-  
-  try {
-    const smsContent = createHoroscopeSMSContent(user, horoscopeContent);
-    const result = await sendSMS(user.phone, smsContent);
-    
-    return result;
-  } catch (error) {
-    console.error("Error sending horoscope SMS:", error);
-    return false;
-  }
+
+  const message = `Welcome to HoroscopeHealth, ${user.firstName || 'cosmic soul'}! ✨
+
+You'll receive your daily ${user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1)} horoscope every morning.
+
+Reply STOP to opt out anytime.
+
+Stay aligned! 🌟`;
+
+  return await sendSMS(user.phone, message);
 }
