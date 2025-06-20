@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CosmicBadge } from './CosmicBadge';
@@ -91,6 +91,12 @@ export const AchievementUnlockModal: React.FC<AchievementUnlockModalProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md mx-auto bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 border-0 text-white overflow-hidden">
+        <DialogHeader className="sr-only">
+          <DialogTitle>Achievement Unlocked</DialogTitle>
+          <DialogDescription>
+            You have unlocked a new achievement: {achievement.title}
+          </DialogDescription>
+        </DialogHeader>
         {/* Background Cosmic Pattern */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-[url('/api/placeholder/400/400')] bg-cover bg-center opacity-10" />

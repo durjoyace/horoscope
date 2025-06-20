@@ -93,6 +93,18 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
     }
   };
 
+  const getPriceUnit = (product: AffiliateProduct): string => {
+    const name = product.name.toLowerCase();
+    if (name.includes('ring') || name.includes('tracker') || name.includes('device')) return 'each';
+    if (name.includes('app') || name.includes('subscription') || name.includes('membership')) return 'monthly';
+    if (name.includes('powder') || name.includes('protein') || name.includes('greens')) return 'per container';
+    if (name.includes('coffee') || name.includes('tea') || name.includes('drink')) return 'per pack';
+    if (name.includes('vitamin') || name.includes('supplement') || name.includes('capsule')) return 'per bottle';
+    if (name.includes('cream') || name.includes('scrub') || name.includes('serum')) return 'per tube';
+    if (name.includes('meal') || name.includes('kit') || name.includes('box')) return 'per box';
+    return 'each';
+  };
+
   const getBrandName = (productName: string): string => {
     const brandMappings: Record<string, string> = {
       'Athletic Greens': 'AG1',
@@ -460,7 +472,7 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-baseline gap-2">
                     <span className="text-3xl font-bold text-gray-900">${product.price}</span>
-                    <span className="text-sm text-gray-500">per bottle</span>
+                    <span className="text-sm text-gray-500">{getPriceUnit(product)}</span>
                   </div>
                   {user?.zodiacSign && product.recommendedSigns.includes(user.zodiacSign) && (
                     <Badge className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs px-3 py-1">
