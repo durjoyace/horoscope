@@ -246,7 +246,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteAd(id: number): Promise<boolean> {
     const result = await db.delete(ads).where(eq(ads.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   async getAllAds(): Promise<Ad[]> {
@@ -314,7 +314,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteForumTopic(id: number): Promise<boolean> {
     const result = await db.delete(forumTopics).where(eq(forumTopics.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   async incrementTopicViewCount(id: number): Promise<void> {

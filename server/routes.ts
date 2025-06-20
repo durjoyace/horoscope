@@ -305,16 +305,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Create or get Stripe customer
-      const customerId = await createStripeCustomer(user);
-      
-      // Create checkout session
-      const session = await createCheckoutSession(
-        customerId,
-        priceId,
-        successUrl,
-        cancelUrl
-      );
+      // Create Stripe checkout session
+      const session = await stripe.checkout.sessions.create({
+        customer_email: user.email,
+        payment_method_types: ['card'],
+        line_items: [{
+          price: priceId,
+          quantity: 1,
+        }],
+        mode: 'subscription',
+        success_url: successUrl,
+        cancel_url: cancelUrl,
+      });
 
       res.status(200).json({
         success: true,
@@ -351,14 +353,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Create or get Stripe customer
-      const customerId = await createStripeCustomer(user);
-      
-      // Create payment intent (amount in cents)
-      const paymentIntent = await createPaymentIntent(
-        Math.round(parseFloat(amount.toString()) * 100),
-        customerId
-      );
+      // Create payment intent
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(parseFloat(amount.toString()) * 100),
+        currency: 'usd',
+        customer: user.stripeCustomerId || undefined,
+      });
 
       res.status(200).json({
         success: true,
@@ -402,15 +402,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Cancel the subscription in Stripe
-      await cancelSubscription(user.stripeSubscriptionId);
+      await stripe.subscriptions.cancel(user.stripeSubscriptionId);
       
       // Update user subscription status in our database
-      await updateUserSubscriptionStatus(
-        user.id,
-        'canceled',
-        'free',
-        undefined
-      );
+      await storage.updateUser(user.id, {
+        subscriptionStatus: 'canceled',
+        subscriptionTier: 'free',
+        subscriptionEndDate: null
+      });
 
       res.status(200).json({
         success: true,
