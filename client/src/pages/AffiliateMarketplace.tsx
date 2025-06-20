@@ -353,14 +353,18 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                   <img 
                     src={product.imageUrl} 
                     alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                    style={{ backgroundColor: 'white' }}
+                    loading="lazy"
                     onError={(e) => {
+                      console.log('Image failed to load:', product.imageUrl);
                       // Fallback to icon if image fails to load
                       e.currentTarget.style.display = 'none';
-                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                      const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+                      if (fallback) fallback.classList.remove('hidden');
                     }}
                   />
-                  <div className="hidden w-full h-full flex items-center justify-center">
+                  <div className="hidden w-full h-full flex items-center justify-center absolute inset-0">
                     <div className="w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center">
                       {getCategoryIcon(product.category)}
                     </div>
