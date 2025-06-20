@@ -68,16 +68,16 @@ export default function AuthPage() {
     },
   });
 
-  // Initialize the register form with default empty values first
+  // Initialize the register form with SMS-focused defaults
   const registerForm = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
-      password: "",
-      confirmPassword: "",
       firstName: "",
-      lastName: "",
       zodiacSign: "",
+      phone: "",
+      smsOptIn: true, // Default to SMS since it's the primary delivery method
+      emailOptIn: false,
     },
   });
   
@@ -220,37 +220,23 @@ export default function AuthPage() {
               </CardHeader>
               <CardContent>
                 <Form {...registerForm}>
-                  <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <FormField
-                        control={registerForm.control}
-                        name="firstName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>First Name</FormLabel>
-                            <FormControl>
-                              <Input placeholder="John" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                  <form onSubmit={registerForm.handleSubmit(onRegisterSubmit)} className="space-y-5">
+                    {/* Name field - single input */}
+                    <FormField
+                      control={registerForm.control}
+                      name="firstName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Name</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Your name" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                      <FormField
-                        control={registerForm.control}
-                        name="lastName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Last Name</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Doe" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
+                    {/* Email */}
                     <FormField
                       control={registerForm.control}
                       name="email"
@@ -258,16 +244,14 @@ export default function AuthPage() {
                         <FormItem>
                           <FormLabel>Email</FormLabel>
                           <FormControl>
-                            <Input placeholder="your.email@example.com" {...field} />
+                            <Input type="email" placeholder="your@email.com" {...field} />
                           </FormControl>
-                          <FormDescription>
-                            For account management and CRM purposes
-                          </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
 
+                    {/* Phone Number */}
                     <FormField
                       control={registerForm.control}
                       name="phone"
@@ -275,122 +259,73 @@ export default function AuthPage() {
                         <FormItem>
                           <FormLabel>Phone Number</FormLabel>
                           <FormControl>
-                            <Input placeholder="+1 (555) 123-4567" {...field} />
+                            <Input 
+                              placeholder="+1 555-123-4567" 
+                              {...field}
+                              className="text-base"
+                            />
                           </FormControl>
-                          <FormDescription>
-                            Your daily horoscopes will be sent via SMS
+                          <FormDescription className="text-xs text-gray-500">
+                            Receive daily horoscopes via SMS
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
 
+                    {/* Zodiac Sign with visual enhancement */}
                     <FormField
                       control={registerForm.control}
                       name="zodiacSign"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Zodiac Sign</FormLabel>
+                          <FormLabel>Your Zodiac Sign</FormLabel>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select your zodiac sign" />
+                              <SelectTrigger className="h-12 text-base">
+                                <SelectValue placeholder="Choose your sign" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="aries">Aries</SelectItem>
-                              <SelectItem value="taurus">Taurus</SelectItem>
-                              <SelectItem value="gemini">Gemini</SelectItem>
-                              <SelectItem value="cancer">Cancer</SelectItem>
-                              <SelectItem value="leo">Leo</SelectItem>
-                              <SelectItem value="virgo">Virgo</SelectItem>
-                              <SelectItem value="libra">Libra</SelectItem>
-                              <SelectItem value="scorpio">Scorpio</SelectItem>
-                              <SelectItem value="sagittarius">Sagittarius</SelectItem>
-                              <SelectItem value="capricorn">Capricorn</SelectItem>
-                              <SelectItem value="aquarius">Aquarius</SelectItem>
-                              <SelectItem value="pisces">Pisces</SelectItem>
+                              <SelectItem value="aries">♈ Aries (Mar 21 - Apr 19)</SelectItem>
+                              <SelectItem value="taurus">♉ Taurus (Apr 20 - May 20)</SelectItem>
+                              <SelectItem value="gemini">♊ Gemini (May 21 - Jun 20)</SelectItem>
+                              <SelectItem value="cancer">♋ Cancer (Jun 21 - Jul 22)</SelectItem>
+                              <SelectItem value="leo">♌ Leo (Jul 23 - Aug 22)</SelectItem>
+                              <SelectItem value="virgo">♍ Virgo (Aug 23 - Sep 22)</SelectItem>
+                              <SelectItem value="libra">♎ Libra (Sep 23 - Oct 22)</SelectItem>
+                              <SelectItem value="scorpio">♏ Scorpio (Oct 23 - Nov 21)</SelectItem>
+                              <SelectItem value="sagittarius">♐ Sagittarius (Nov 22 - Dec 21)</SelectItem>
+                              <SelectItem value="capricorn">♑ Capricorn (Dec 22 - Jan 19)</SelectItem>
+                              <SelectItem value="aquarius">♒ Aquarius (Jan 20 - Feb 18)</SelectItem>
+                              <SelectItem value="pisces">♓ Pisces (Feb 19 - Mar 20)</SelectItem>
                             </SelectContent>
                           </Select>
-                          <FormDescription>
-                            Your personalized horoscope will be based on your zodiac sign
-                          </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
 
-                    <FormField
-                      control={registerForm.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Password</FormLabel>
-                          <FormControl>
-                            <Input type="password" placeholder="Create a password" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={registerForm.control}
-                      name="confirmPassword"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Confirm Password</FormLabel>
-                          <FormControl>
-                            <Input type="password" placeholder="Confirm your password" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <div className="space-y-3 pt-4 border-t">
-                      <h4 className="text-sm font-medium">Communication Preferences</h4>
-                      
+                    {/* Simple opt-in with default checked */}
+                    <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
                       <FormField
                         control={registerForm.control}
                         name="smsOptIn"
                         render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                          <FormItem className="flex flex-row items-center space-x-3 space-y-0">
                             <FormControl>
                               <Checkbox
                                 checked={field.value}
                                 onCheckedChange={field.onChange}
+                                className="data-[state=checked]:bg-purple-600"
                               />
                             </FormControl>
                             <div className="space-y-1 leading-none">
-                              <FormLabel className="text-sm font-normal">
-                                Receive daily horoscopes via SMS (Recommended)
+                              <FormLabel className="text-sm font-medium text-purple-900 dark:text-purple-100">
+                                📱 Get daily horoscopes via SMS
                               </FormLabel>
-                              <FormDescription>
-                                Get your personalized horoscope delivered directly to your phone
-                              </FormDescription>
-                            </div>
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={registerForm.control}
-                        name="emailOptIn"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                              />
-                            </FormControl>
-                            <div className="space-y-1 leading-none">
-                              <FormLabel className="text-sm font-normal">
-                                Receive wellness newsletters via email
-                              </FormLabel>
-                              <FormDescription>
-                                Optional weekly wellness tips and premium content updates
+                              <FormDescription className="text-xs text-purple-700 dark:text-purple-300">
+                                Your personalized wellness insights delivered daily
                               </FormDescription>
                             </div>
                           </FormItem>
@@ -400,7 +335,7 @@ export default function AuthPage() {
 
                     <Button 
                       type="submit" 
-                      className="w-full" 
+                      className="w-full h-12 text-base font-medium bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700" 
                       disabled={registerMutation.isPending}
                     >
                       {registerMutation.isPending ? (
@@ -411,12 +346,16 @@ export default function AuthPage() {
                               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
                           </span>
-                          Creating Account...
+                          Setting up your horoscopes...
                         </>
                       ) : (
-                        "Create Account"
+                        "🌟 Start My Horoscope Journey"
                       )}
                     </Button>
+                    
+                    <p className="text-xs text-center text-gray-500 mt-3">
+                      By signing up, you agree to receive personalized horoscope messages. Unsubscribe anytime.
+                    </p>
                   </form>
                 </Form>
               </CardContent>
