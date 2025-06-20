@@ -364,7 +364,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteForumReply(id: number): Promise<boolean> {
     const result = await db.delete(forumReplies).where(eq(forumReplies.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   async incrementReplyLikeCount(id: number): Promise<void> {
