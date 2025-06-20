@@ -11,7 +11,8 @@ import {
   Mail, 
   ExternalLink,
   Sparkles,
-  Crown
+  Crown,
+  Star
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -19,6 +20,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
+import { ViralGrowthTriggers } from '@/components/ViralGrowthTriggers';
 
 interface ReferralData {
   referralCode: string;
@@ -131,19 +133,42 @@ export default function ReferralsPage() {
     <div className="container mx-auto px-4 py-8 md:py-16">
       {/* Header */}
       <div className="text-center mb-12">
-        <div className="inline-block p-3 bg-primary/10 rounded-full mb-4">
-          <Gift className="h-8 w-8 text-primary" />
+        <div className="inline-block p-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full mb-4">
+          <Gift className="h-8 w-8 text-purple-600" />
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-          Invite Friends & Earn Rewards
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          Give Health, Get Rewarded
         </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Share the gift of personalized wellness with friends and family. 
-          For every friend who joins, you both get premium features!
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
+          Your friends deserve better health insights. Share your secret to personalized wellness 
+          and unlock premium features for life.
         </p>
+        
+        {/* Social proof and urgency */}
+        <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span>2,847 friends joined this week</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-yellow-500" />
+            <span>Limited time: Double rewards</span>
+          </div>
+        </div>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8 mb-12">
+      {/* Viral Growth Triggers */}
+      <div className="mb-8">
+        <ViralGrowthTriggers 
+          userReferrals={referralData?.totalReferrals || 0}
+          onShareClick={() => {
+            // Scroll to sharing section
+            document.getElementById('sharing-section')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
+      </div>
+
+      <div id="sharing-section" className="grid lg:grid-cols-2 gap-8 mb-12">
         {/* Referral Code Card */}
         <Card>
           <CardHeader>
@@ -215,44 +240,75 @@ export default function ReferralsPage() {
           </CardContent>
         </Card>
 
-        {/* Rewards Card */}
-        <Card>
-          <CardHeader>
+        {/* Gamified Rewards Card */}
+        <Card className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5"></div>
+          <CardHeader className="relative">
             <CardTitle className="flex items-center gap-2">
-              <Crown className="h-5 w-5" />
-              Your Rewards
+              <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full">
+                <Crown className="h-5 w-5 text-white" />
+              </div>
+              Wellness Ambassador Level
             </CardTitle>
             <CardDescription>
-              Track your referral success and earned rewards
+              Unlock exclusive perks as you help friends discover better health
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative">
             <div className="text-center py-6">
-              <div className="inline-block p-4 bg-primary/10 rounded-full mb-4">
-                <Users className="h-8 w-8 text-primary" />
-              </div>
-              <div className="text-3xl font-bold text-primary mb-2">
+              <div className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
                 {referralData?.totalReferrals || 0}
               </div>
-              <p className="text-muted-foreground">Friends Referred</p>
-            </div>
-            
-            <div className="space-y-3 pt-4 border-t">
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Reward Progress</span>
-                <Badge variant="secondary">
-                  {Math.min((referralData?.totalReferrals || 0) * 10, 100)}% to next tier
-                </Badge>
+              <p className="text-muted-foreground mb-4">Lives Transformed</p>
+              
+              {/* Progress bar to next level */}
+              <div className="w-full bg-muted rounded-full h-3 mb-4">
+                <div 
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 h-3 rounded-full transition-all duration-500"
+                  style={{ width: `${Math.min(((referralData?.totalReferrals || 0) % 5) * 20, 100)}%` }}
+                ></div>
               </div>
               
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm">
-                  <Sparkles className="h-4 w-4 text-yellow-500" />
-                  <span>Each referral = 1 month free premium</span>
+              <Badge variant="outline" className="mb-4">
+                {Math.floor((referralData?.totalReferrals || 0) / 5) === 0 ? "Wellness Starter" :
+                 Math.floor((referralData?.totalReferrals || 0) / 5) === 1 ? "Health Advocate" :
+                 Math.floor((referralData?.totalReferrals || 0) / 5) === 2 ? "Wellness Mentor" :
+                 "Wellness Master"}
+              </Badge>
+            </div>
+            
+            {/* Tiered Rewards */}
+            <div className="space-y-3 pt-4 border-t">
+              <div className="flex items-center justify-between text-sm">
+                <span className="font-medium">Next milestone:</span>
+                <span className="text-muted-foreground">
+                  {5 - ((referralData?.totalReferrals || 0) % 5)} more friends
+                </span>
+              </div>
+              
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200">
+                  <Sparkles className="h-5 w-5 text-yellow-600" />
+                  <div>
+                    <p className="font-medium text-yellow-800">1 Friend = Premium Month</p>
+                    <p className="text-xs text-yellow-600">Instant unlock</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Crown className="h-4 w-4 text-purple-500" />
-                  <span>5 referrals = Lifetime 50% discount</span>
+                
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200">
+                  <Crown className="h-5 w-5 text-purple-600" />
+                  <div>
+                    <p className="font-medium text-purple-800">5 Friends = Lifetime 50% Off</p>
+                    <p className="text-xs text-purple-600">VIP status unlocked</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200">
+                  <Star className="h-5 w-5 text-emerald-600" />
+                  <div>
+                    <p className="font-medium text-emerald-800">10 Friends = Free Forever</p>
+                    <p className="text-xs text-emerald-600">Wellness hero status</p>
+                  </div>
                 </div>
               </div>
             </div>

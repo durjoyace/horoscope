@@ -1488,16 +1488,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let shareText = '';
       switch (platform) {
         case 'sms':
-          shareText = `Hey! I've been using HoroscopeHealth for personalized wellness insights based on my zodiac sign. Join me and get your first month free: ${referralUrl}`;
+          shareText = `Found something that actually works! This app knows my body better than I do - gives me daily health tips based on my zodiac that hit different. Try it free: ${referralUrl}`;
           break;
         case 'email':
-          shareText = `I thought you'd love HoroscopeHealth - it gives amazing personalized wellness tips based on your zodiac sign. Use my referral link to get your first month free: ${referralUrl}`;
+          shareText = `You know how I'm always trying new wellness stuff? This one's different. HoroscopeHealth gives me personalized health insights based on my zodiac sign and honestly, it's scary accurate. The timing recommendations actually work. Get your first month free with my link: ${referralUrl}`;
           break;
         case 'social':
-          shareText = `Just discovered HoroscopeHealth - personalized wellness insights that actually work! 🌟 Get your first month free with my link: ${referralUrl}`;
+          shareText = `OK this is weird but... an app that uses my zodiac sign for health advice is actually changing my life? The timing is everything - it told me exactly when to work out for max results. Who knew astrology could be this practical? Free month: ${referralUrl}`;
           break;
         default:
-          shareText = `Join me on HoroscopeHealth for personalized wellness insights: ${referralUrl}`;
+          shareText = `This wellness app knows things about my body I didn't even know. Try it free: ${referralUrl}`;
       }
 
       res.status(200).json({
