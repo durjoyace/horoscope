@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   ShoppingBag,
   Star,
   Filter,
   Search,
-  Tag,
-  ChevronDown,
-  Info,
+  ExternalLink,
   Heart,
   ShoppingCart,
   CheckCircle2
@@ -22,9 +20,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
@@ -32,10 +28,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
-import { zodiacSignNames, zodiacElementColors } from '@/data/zodiacData';
+import { zodiacSignNames } from '@/data/zodiacData';
 import { ZodiacSign } from '@shared/types';
 import { useToast } from '@/hooks/use-toast';
+import { affiliateProducts, ProductCategory } from '@/data/affiliateProducts';
 
 interface MarketplaceProps {
   user?: {
@@ -45,277 +41,58 @@ interface MarketplaceProps {
   } | null;
 }
 
-// Affiliate product types
-type ProductCategory = 'supplements' | 'teas' | 'books' | 'tools' | 'crystals' | 'all';
-
-// Wellness categories for filtering
-type WellnessCategory = 'nutrition' | 'sleep' | 'stress' | 'fitness' | 'mindfulness' | 'all';
-
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  description: string;
-  category: ProductCategory;
-  wellnessCategories: WellnessCategory[];
-  rating: number;
-  recommendedSigns: ZodiacSign[];
-  bestSeller?: boolean;
-  stockLevel: 'in_stock' | 'low_stock' | 'out_of_stock';
-  element?: 'Fire' | 'Earth' | 'Air' | 'Water' | 'All';
-  featured?: boolean;
-  discountPercentage?: number;
-  affiliateLink: string;
-}
-
-// Real affiliate product data with authentic links
-const products: Product[] = [
-  {
-    id: 'p1',
-    name: 'Traditional Medicinals Organic Chamomile Tea',
-    price: 24.99,
-    image: 'teas',
-    description: 'Organic chamomile tea known for its calming properties, perfect for water signs seeking relaxation and better sleep.',
-    category: 'teas',
-    wellnessCategories: ['sleep', 'stress'],
-    rating: 4.7,
-    recommendedSigns: ['cancer', 'scorpio', 'pisces'],
-    bestSeller: true,
-    stockLevel: 'in_stock',
-    element: 'Water',
-    featured: true,
-    affiliateLink: 'https://www.amazon.com/Traditional-Medicinals-Organic-Chamomile-Caffeine/dp/B0009F3SAK/'
-  },
-  {
-    id: 'p2',
-    name: 'Vital Proteins Collagen Peptides',
-    price: 26.99,
-    image: 'supplements',
-    description: 'Grass-fed, pasture-raised collagen peptides for hair, skin, nails, and joint health. Perfect for all signs looking to enhance their natural beauty.',
-    category: 'supplements',
-    wellnessCategories: ['nutrition'],
-    rating: 4.8,
-    recommendedSigns: ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'],
-    stockLevel: 'in_stock',
-    element: 'All',
-    discountPercentage: 15,
-    affiliateLink: 'https://www.amazon.com/Vital-Proteins-Collagen-Peptides-Supplement/dp/B00K6JUG4K/'
-  },
-  {
-    id: 'p3',
-    name: 'TOMS of Maine Natural Deodorant',
-    price: 12.99,
-    image: 'supplements',
-    description: 'Aluminum-free natural deodorant that provides 24-hour odor protection without artificial fragrances or preservatives.',
-    category: 'supplements',
-    wellnessCategories: ['mindfulness'],
-    rating: 4.2,
-    recommendedSigns: ['taurus', 'virgo', 'capricorn'],
-    stockLevel: 'in_stock',
-    element: 'Earth',
-    affiliateLink: 'https://www.amazon.com/Toms-Maine-Natural-Deodorant-Aluminum/dp/B01LJOYKJ6/'
-  },
-  {
-    id: 'p4',
-    name: 'Yoga With Adriene: Find What Feels Good Membership',
-    price: 9.99,
-    image: 'tools',
-    description: 'Monthly membership to premium yoga content from Yoga With Adriene, offering personalized practices for all experience levels.',
-    category: 'tools',
-    wellnessCategories: ['fitness', 'mindfulness', 'stress'],
-    rating: 4.9,
-    recommendedSigns: ['gemini', 'libra', 'aquarius'],
-    stockLevel: 'in_stock',
-    element: 'Air',
-    affiliateLink: 'https://fwfg.com/'
-  },
-  {
-    id: 'p5',
-    name: 'The Wild Unknown Tarot Deck',
-    price: 39.99,
-    image: 'books',
-    description: 'Beautiful, hand-drawn tarot deck with guidebook to help you connect with your intuition and inner wisdom.',
-    category: 'books',
-    wellnessCategories: ['mindfulness'],
-    rating: 4.7,
-    recommendedSigns: ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'],
-    bestSeller: true,
-    stockLevel: 'in_stock',
-    element: 'All',
-    affiliateLink: 'https://www.amazon.com/Wild-Unknown-Tarot-Deck-Guidebook/dp/0062466593/'
-  },
-  {
-    id: 'p6',
-    name: 'Headspace Meditation App Subscription',
-    price: 69.99,
-    image: 'tools',
-    description: 'Annual subscription to Headspace, offering guided meditations, sleep stories, and mindfulness exercises to reduce stress and improve focus.',
-    category: 'tools',
-    wellnessCategories: ['sleep', 'stress', 'mindfulness'],
-    rating: 4.8,
-    recommendedSigns: ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'],
-    stockLevel: 'in_stock',
-    element: 'All',
-    affiliateLink: 'https://www.headspace.com/'
-  },
-  {
-    id: 'p7',
-    name: 'Himalayan Salt Lamp',
-    price: 19.99,
-    image: 'tools',
-    description: 'Natural Himalayan salt lamp that purifies air and creates a calming amber glow, ideal for creating a peaceful environment.',
-    category: 'tools',
-    wellnessCategories: ['mindfulness', 'sleep'],
-    rating: 4.4,
-    recommendedSigns: ['aries', 'leo', 'sagittarius'],
-    stockLevel: 'in_stock',
-    element: 'Fire',
-    featured: true,
-    affiliateLink: 'https://www.amazon.com/Himalayan-Glow-Crystal-Dimmable-Control/dp/B07TBFZDZQ/'
-  },
-  {
-    id: 'p8',
-    name: 'Jade Roller & Gua Sha Set',
-    price: 16.99,
-    image: 'tools',
-    description: 'Natural jade facial roller and gua sha tools to reduce puffiness, improve circulation, and promote lymphatic drainage.',
-    category: 'tools',
-    wellnessCategories: ['mindfulness'],
-    rating: 4.6,
-    recommendedSigns: ['taurus', 'virgo', 'capricorn'],
-    stockLevel: 'in_stock',
-    element: 'Earth',
-    discountPercentage: 10,
-    affiliateLink: 'https://www.amazon.com/Roller-Facial-Massage-Natural-Treatment/dp/B07GX4B8V1/'
-  }
-];
-
-const getCategoryIcon = (category: ProductCategory) => {
-  switch (category) {
-    case 'supplements':
-      return (
-        <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-4 rounded-full flex items-center justify-center shadow-md">
-          <div className="bg-white rounded-full p-2">
-            <CheckCircle2 className="h-8 w-8 text-blue-600" strokeWidth={2} />
-          </div>
-        </div>
-      );
-    case 'teas':
-      return (
-        <div className="bg-gradient-to-br from-green-100 to-green-200 p-4 rounded-full flex items-center justify-center shadow-md">
-          <div className="bg-white rounded-full p-2">
-            <Heart className="h-8 w-8 text-green-600" strokeWidth={2} fill="rgba(34, 197, 94, 0.2)" />
-          </div>
-        </div>
-      );
-    case 'books':
-      return (
-        <div className="bg-gradient-to-br from-amber-100 to-amber-200 p-4 rounded-full flex items-center justify-center shadow-md">
-          <div className="bg-white rounded-full p-2">
-            <Info className="h-8 w-8 text-amber-600" strokeWidth={2} />
-          </div>
-        </div>
-      );
-    case 'tools':
-      return (
-        <div className="bg-gradient-to-br from-purple-100 to-purple-200 p-4 rounded-full flex items-center justify-center shadow-md">
-          <div className="bg-white rounded-full p-2">
-            <Star className="h-8 w-8 text-purple-600" strokeWidth={2} fill="rgba(147, 51, 234, 0.2)" />
-          </div>
-        </div>
-      );
-    case 'crystals':
-      return (
-        <div className="bg-gradient-to-br from-pink-100 to-pink-200 p-4 rounded-full flex items-center justify-center shadow-md">
-          <div className="bg-white rounded-full p-2">
-            <Star className="h-8 w-8 text-pink-600" strokeWidth={2} fill="rgba(219, 39, 119, 0.2)" />
-          </div>
-        </div>
-      );
-    default:
-      return (
-        <div className="bg-gradient-to-br from-gray-100 to-gray-200 p-4 rounded-full flex items-center justify-center shadow-md">
-          <div className="bg-white rounded-full p-2">
-            <ShoppingBag className="h-8 w-8 text-gray-600" strokeWidth={2} />
-          </div>
-        </div>
-      );
-  }
-};
-
 export default function AffiliateMarketplace({ user }: MarketplaceProps) {
-  const [activeCategory, setActiveCategory] = useState<ProductCategory>('all');
+  const [activeCategory, setActiveCategory] = useState<ProductCategory | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [priceRange, setPriceRange] = useState([0, 100]);
-  const [elementFilter, setElementFilter] = useState<string>('All');
-  const [wellnessFilter, setWellnessFilter] = useState<WellnessCategory>('all');
-  const [showFeaturedOnly, setShowFeaturedOnly] = useState(false);
-  const [showDiscounted, setShowDiscounted] = useState(false);
-  const [cartItems, setCartItems] = useState<string[]>([]);
-  const [showCartNotification, setShowCartNotification] = useState(false);
-  
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 200]);
   const { toast } = useToast();
 
-  const addToCart = (productId: string) => {
-    setCartItems([...cartItems, productId]);
-    setShowCartNotification(true);
-    
-    toast({
-      title: "Added to cart",
-      description: "Item has been added to your shopping cart",
-    });
-    
-    setTimeout(() => {
-      setShowCartNotification(false);
-    }, 3000);
-  };
-
-  const filteredProducts = products.filter(product => {
-    // Filter by category
-    if (activeCategory !== 'all' && product.category !== activeCategory) {
-      return false;
-    }
-    
-    // Filter by search query
-    if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase()) && 
+  // Filter products based on search, category, and price
+  const filteredProducts = affiliateProducts.filter(product => {
+    // Search filter
+    if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
         !product.description.toLowerCase().includes(searchQuery.toLowerCase())) {
       return false;
     }
     
-    // Filter by price range
+    // Category filter
+    if (activeCategory !== 'all' && product.category !== activeCategory) {
+      return false;
+    }
+    
+    // Price filter
     if (product.price < priceRange[0] || product.price > priceRange[1]) {
-      return false;
-    }
-    
-    // Filter by element
-    if (elementFilter !== 'All' && product.element !== elementFilter && product.element !== 'All') {
-      return false;
-    }
-    
-    // Filter by wellness category
-    if (wellnessFilter !== 'all' && !product.wellnessCategories.includes(wellnessFilter)) {
-      return false;
-    }
-    
-    // Filter by featured products
-    if (showFeaturedOnly && !product.featured) {
-      return false;
-    }
-    
-    // Filter by discounted products
-    if (showDiscounted && !product.discountPercentage) {
-      return false;
-    }
-    
-    // Filter by user's zodiac sign (if user is logged in)
-    if (user?.zodiacSign && !product.recommendedSigns.includes(user.zodiacSign) && 
-        product.recommendedSigns.length !== 12) { // 12 means recommended for all signs
       return false;
     }
     
     return true;
   });
+
+  const getCategoryIcon = (category: ProductCategory) => {
+    switch (category) {
+      case 'supplements':
+        return <CheckCircle2 className="h-5 w-5 text-blue-600" />;
+      case 'nutrition':
+        return <Heart className="h-5 w-5 text-green-600" />;
+      case 'fitness':
+        return <Star className="h-5 w-5 text-purple-600" />;
+      case 'skincare':
+        return <Star className="h-5 w-5 text-pink-600" />;
+      case 'meditation':
+        return <Star className="h-5 w-5 text-indigo-600" />;
+      case 'selfcare':
+        return <Heart className="h-5 w-5 text-rose-600" />;
+      default:
+        return <ShoppingBag className="h-5 w-5 text-gray-600" />;
+    }
+  };
+
+  const handleAddToCart = (productId: string) => {
+    toast({
+      title: "Added to cart",
+      description: "Item has been added to your shopping cart",
+    });
+  };
 
   const getZodiacElement = (sign: ZodiacSign): string => {
     const signData = zodiacSignNames.find(s => s.value === sign);
@@ -323,461 +100,239 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12 md:py-16">
-      {/* Hero Section */}
-      <div className="text-center mb-16">
-        <div className="flex justify-center mb-4">
-          <ShoppingBag className="h-12 w-12 text-primary" />
-        </div>
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-          Horoscope Health Marketplace
-        </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Curated products aligned with your astrological profile for optimal wellbeing
-        </p>
-      </div>
-
-      {/* Personalized Banner (if user is logged in) */}
-      {user && (
-        <div className="bg-primary/10 rounded-lg p-6 md:p-8 mb-12 text-center md:text-left">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div>
-              <h2 className="text-2xl font-bold mb-2">
-                Welcome{user.firstName ? ` ${user.firstName}` : ''} - {zodiacSignNames.find(s => s.value === user.zodiacSign)?.symbol} {user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1)}
-              </h2>
-              <p className="text-muted-foreground">
-                We've curated products specially matched to your {getZodiacElement(user.zodiacSign)} element and astrological profile.
-              </p>
-            </div>
-            <Button>View Your Recommendations</Button>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 py-8">
+      <div className="container mx-auto px-4 max-w-7xl">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <div className="flex justify-center mb-4">
+            <ShoppingBag className="h-12 w-12 text-purple-600" />
           </div>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            Premium Wellness Marketplace
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Curated products from top wellness brands, personalized for your astrological profile
+          </p>
         </div>
-      )}
 
-      {/* Filters and Products */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16">
-        {/* Filter Sidebar */}
-        <div className="lg:col-span-1 space-y-8">
-          <div>
-            <h2 className="text-lg font-medium mb-4 flex items-center gap-2">
-              <Filter className="h-5 w-5" /> Filters
-            </h2>
-            
-            <div className="space-y-6">
-              {/* Search */}
+        {/* Personalized Banner */}
+        {user && (
+          <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg p-6 md:p-8 mb-12 text-white">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
               <div>
-                <label className="text-sm font-medium mb-2 block">Search</label>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input 
-                    placeholder="Search products..." 
-                    className="pl-9"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
+                <h2 className="text-2xl font-bold mb-2">
+                  Welcome{user.firstName ? ` ${user.firstName}` : ''} - {zodiacSignNames.find(s => s.value === user.zodiacSign)?.symbol} {user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1)}
+                </h2>
+                <p className="text-purple-100">
+                  Discover products specially matched to your {getZodiacElement(user.zodiacSign)} element and wellness needs.
+                </p>
               </div>
-              
-              {/* Category Filter */}
-              <div>
-                <label className="text-sm font-medium mb-2 block">Category</label>
-                <div className="space-y-2">
-                  {[
-                    { value: 'all', label: 'All Products' },
-                    { value: 'supplements', label: 'Supplements' },
-                    { value: 'teas', label: 'Herbal Teas' },
-                    { value: 'books', label: 'Books & Guides' },
-                    { value: 'tools', label: 'Wellness Tools' },
-                    { value: 'crystals', label: 'Crystals & Stones' }
-                  ].map((category) => (
-                    <Button
-                      key={category.value}
-                      variant={activeCategory === category.value ? "default" : "ghost"}
-                      className="w-full justify-start text-left"
-                      onClick={() => setActiveCategory(category.value as ProductCategory)}
-                    >
-                      {category.label}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Price Range */}
-              <div>
-                <div className="flex justify-between mb-2">
-                  <label className="text-sm font-medium">Price Range</label>
-                  <span className="text-sm text-muted-foreground">
-                    ${priceRange[0]} - ${priceRange[1]}
-                  </span>
-                </div>
-                <Slider
-                  defaultValue={[0, 100]}
-                  min={0}
-                  max={100}
-                  step={5}
-                  value={priceRange}
-                  onValueChange={setPriceRange}
-                  className="my-4"
-                />
-              </div>
-              
-              {/* Element Filter */}
-              <div>
-                <label className="text-sm font-medium mb-2 block">Element</label>
-                <Select value={elementFilter} onValueChange={setElementFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Filter by element" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {['All', 'Fire', 'Earth', 'Air', 'Water'].map((element) => (
-                      <SelectItem key={element} value={element}>
-                        {element}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              {/* Wellness Category Filter */}
-              <div>
-                <label className="text-sm font-medium mb-2 block">Wellness Focus</label>
-                <Select value={wellnessFilter} onValueChange={(val) => setWellnessFilter(val as WellnessCategory)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Filter by wellness focus" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Wellness Areas</SelectItem>
-                    <SelectItem value="nutrition">Nutrition</SelectItem>
-                    <SelectItem value="sleep">Sleep & Rest</SelectItem>
-                    <SelectItem value="stress">Stress Management</SelectItem>
-                    <SelectItem value="fitness">Fitness & Energy</SelectItem>
-                    <SelectItem value="mindfulness">Mindfulness & Focus</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              {/* Special Filters */}
-              <div className="space-y-3">
-                <label className="text-sm font-medium mb-2 block">Special Filters</label>
-                <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="featured-only" 
-                    checked={showFeaturedOnly} 
-                    onCheckedChange={(checked) => 
-                      setShowFeaturedOnly(checked as boolean)
-                    }
-                  />
-                  <label
-                    htmlFor="featured-only"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Featured products only
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="discounted" 
-                    checked={showDiscounted} 
-                    onCheckedChange={(checked) => 
-                      setShowDiscounted(checked as boolean)
-                    }
-                  />
-                  <label
-                    htmlFor="discounted"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    On sale items
-                  </label>
-                </div>
-              </div>
+              <Badge className="bg-white text-purple-600 px-4 py-2">
+                {filteredProducts.filter(p => p.recommendedSigns.includes(user.zodiacSign)).length} Recommended for You
+              </Badge>
+            </div>
+          </div>
+        )}
+
+        {/* Filters */}
+        <div className="flex flex-col md:flex-row gap-6 mb-8">
+          <div className="flex-1">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input 
+                placeholder="Search premium wellness products..." 
+                className="pl-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
           </div>
           
-          {/* Recommended For You */}
-          {user && (
-            <div className="bg-muted p-4 rounded-lg">
-              <h3 className="font-medium mb-3">Recommended For You</h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                As a{' '}
-                <span className="font-medium text-foreground">
-                  {user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1)}
-                </span>
-                , these product categories align with your astrological profile:
-              </p>
-              <div className="space-y-2">
-                {['Supplements', 'Herbal Teas', 'Meditation Tools'].map((cat) => (
-                  <div key={cat} className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-green-500" />
-                    <span className="text-sm">{cat}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+          <Select value={activeCategory} onValueChange={(value) => setActiveCategory(value as ProductCategory | 'all')}>
+            <SelectTrigger className="w-full md:w-48">
+              <SelectValue placeholder="Category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Products</SelectItem>
+              <SelectItem value="supplements">Supplements</SelectItem>
+              <SelectItem value="nutrition">Nutrition</SelectItem>
+              <SelectItem value="fitness">Fitness</SelectItem>
+              <SelectItem value="skincare">Skincare</SelectItem>
+              <SelectItem value="meditation">Meditation</SelectItem>
+              <SelectItem value="selfcare">Self Care</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">Price: ${priceRange[0]} - ${priceRange[1]}</span>
+            <input
+              type="range"
+              min="0"
+              max="600"
+              value={priceRange[1]}
+              onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
+              className="w-24"
+            />
+          </div>
         </div>
-        
+
+        {/* Category Tabs */}
+        <Tabs value={activeCategory} onValueChange={(value) => setActiveCategory(value as ProductCategory | 'all')} className="mb-8">
+          <TabsList className="grid w-full grid-cols-7">
+            <TabsTrigger value="all" className="flex items-center gap-2">
+              <ShoppingBag className="h-4 w-4" />
+              All ({affiliateProducts.length})
+            </TabsTrigger>
+            <TabsTrigger value="supplements" className="flex items-center gap-2">
+              {getCategoryIcon('supplements')}
+              Supplements
+            </TabsTrigger>
+            <TabsTrigger value="nutrition" className="flex items-center gap-2">
+              {getCategoryIcon('nutrition')}
+              Nutrition
+            </TabsTrigger>
+            <TabsTrigger value="fitness" className="flex items-center gap-2">
+              {getCategoryIcon('fitness')}
+              Fitness
+            </TabsTrigger>
+            <TabsTrigger value="skincare" className="flex items-center gap-2">
+              {getCategoryIcon('skincare')}
+              Skincare
+            </TabsTrigger>
+            <TabsTrigger value="meditation" className="flex items-center gap-2">
+              {getCategoryIcon('meditation')}
+              Meditation
+            </TabsTrigger>
+            <TabsTrigger value="selfcare" className="flex items-center gap-2">
+              {getCategoryIcon('selfcare')}
+              Self Care
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+
         {/* Products Grid */}
-        <div className="lg:col-span-3">
-          {/* Sort Bar */}
-          <div className="flex justify-between items-center mb-6">
-            <p className="text-sm text-muted-foreground">
-              Showing {filteredProducts.length} products
-            </p>
-            <div className="flex items-center gap-2">
-              <label className="text-sm">Sort by:</label>
-              <Select defaultValue="recommended">
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Sort order" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="recommended">Recommended</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
-                  <SelectItem value="popular">Most Popular</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          
-          {/* Products */}
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map((product) => (
-                <Card key={product.id} className="flex flex-col h-full overflow-hidden hover:shadow-lg transition-shadow">
-                  <CardHeader className="pb-3 space-y-3">
-                    <div className="flex justify-between items-start mb-1">
-                      {getCategoryIcon(product.category)}
-                      <div className="flex gap-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`h-4 w-4 ${
-                              i < Math.floor(product.rating)
-                                ? 'text-yellow-400 fill-yellow-400'
-                                : 'text-gray-300'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-1">
-                      {product.featured && (
-                        <Badge variant="destructive" className="mb-1">Featured</Badge>
-                      )}
-                      <CardTitle className="text-lg">{product.name}</CardTitle>
-                    </div>
-                    
-                    {/* Element and categories in a simpler format */}
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline">
-                        {product.element} Element
-                      </Badge>
-                      {product.bestSeller && (
-                        <Badge variant="default">Best Seller</Badge>
-                      )}
-                    </div>
-                  </CardHeader>
-                  
-                  <CardContent className="flex-grow pb-2 space-y-3">
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {product.description}
-                    </p>
-                    
-                    {/* Only show wellness focus without the extra title to save space */}
-                    <div className="flex flex-wrap gap-1">
-                      {product.wellnessCategories.slice(0, 2).map(category => (
-                        <Badge key={category} variant="outline" className="text-xs">
-                          {category.charAt(0).toUpperCase() + category.slice(1)}
-                        </Badge>
-                      ))}
-                      {product.wellnessCategories.length > 2 && (
-                        <Badge variant="outline" className="text-xs">+{product.wellnessCategories.length - 2} more</Badge>
-                      )}
-                    </div>
-                    
-                    {/* Simplify recommended signs section */}
-                    <div className="flex flex-wrap gap-1 items-center text-xs text-muted-foreground">
-                      <span>For:</span>
-                      {product.recommendedSigns.length === 12 ? (
-                        <span className="font-medium">All Signs</span>
-                      ) : (
-                        <span className="font-medium">
-                          {product.recommendedSigns.slice(0, 3).map((sign, i) => {
-                            const signData = zodiacSignNames.find(s => s.value === sign);
-                            return (
-                              <span key={sign}>
-                                {i > 0 && ", "}
-                                {signData?.symbol} {sign.charAt(0).toUpperCase() + sign.slice(1)}
-                              </span>
-                            );
-                          })}
-                          {product.recommendedSigns.length > 3 && ` +${product.recommendedSigns.length - 3} more`}
-                        </span>
-                      )}
-                    </div>
-                  </CardContent>
-                  
-                  <CardFooter className="pt-0 flex justify-between items-center">
-                    <div>
-                      {product.discountPercentage ? (
-                        <div className="flex items-center gap-2">
-                          <span className="text-lg font-bold text-green-600">
-                            ${(product.price * (1 - product.discountPercentage / 100)).toFixed(2)}
-                          </span>
-                          <span className="text-sm text-muted-foreground line-through">
-                            ${product.price.toFixed(2)}
-                          </span>
-                        </div>
-                      ) : (
-                        <div className="text-lg font-bold">${product.price.toFixed(2)}</div>
-                      )}
-                    </div>
-                    
-                    <Button
-                      onClick={() => window.open(product.affiliateLink, '_blank')}
-                      variant="default"
-                      className="px-3 py-1 h-auto"
-                    >
-                      <ShoppingCart className="mr-2 h-4 w-4" />
-                      View Product
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12 bg-muted rounded-lg">
-              <ShoppingBag className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-medium mb-2">No products found</h3>
-              <p className="text-muted-foreground">
-                Try adjusting your filters or search query
-              </p>
-              <Button 
-                variant="outline" 
-                className="mt-4"
-                onClick={() => {
-                  setActiveCategory('all');
-                  setSearchQuery('');
-                  setPriceRange([0, 100]);
-                  setElementFilter('All');
-                  setWellnessFilter('all');
-                  setShowFeaturedOnly(false);
-                  setShowDiscounted(false);
-                }}
-              >
-                Reset Filters
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-      
-      {/* Product Categories */}
-      <div className="mb-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight mb-4">Shop by Category</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore our curated collection of astrologically-aligned wellness products
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-          {[
-            { name: 'Supplements', icon: <CheckCircle2 className="h-8 w-8" />, color: 'bg-blue-100 text-blue-600' },
-            { name: 'Herbal Teas', icon: <Heart className="h-8 w-8" />, color: 'bg-green-100 text-green-600' },
-            { name: 'Books & Guides', icon: <Info className="h-8 w-8" />, color: 'bg-amber-100 text-amber-600' },
-            { name: 'Wellness Tools', icon: <Star className="h-8 w-8" />, color: 'bg-purple-100 text-purple-600' },
-            { name: 'Crystals & Stones', icon: <Star className="h-8 w-8" />, color: 'bg-pink-100 text-pink-600' }
-          ].map((category) => (
-            <Button
-              key={category.name}
-              variant="outline"
-              className="h-auto py-8 flex flex-col gap-4 hover:bg-transparent hover:border-primary"
-              onClick={() => setActiveCategory(category.name.toLowerCase().split(' ')[0] as ProductCategory)}
-            >
-              <div className={`${category.color} p-4 rounded-full`}>
-                {category.icon}
-              </div>
-              <span>{category.name}</span>
-            </Button>
-          ))}
-        </div>
-      </div>
-
-      {/* Customer Testimonials */}
-      <div className="mb-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight mb-4">What Our Customers Say</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Real results from astrologically-aligned wellness products
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            {
-              name: 'Emily T.',
-              sign: 'Cancer',
-              text: 'The water element tea blend has been amazing for my emotional balance. As a Cancer, I\'ve always struggled with mood fluctuations, and this has become my daily ritual for centering.'
-            },
-            {
-              name: 'Michael R.',
-              sign: 'Leo',
-              text: 'I was skeptical about astrologically-aligned supplements, but the Fire Sign Energy formula has noticeably improved my workouts and overall vitality. It\'s like it was formulated specifically for my Leo constitution!'
-            },
-            {
-              name: 'Sarah K.',
-              sign: 'Virgo',
-              text: 'The Zodiac Wellness Journal has transformed my health tracking. The earth sign recommendations are perfectly aligned with my Virgo need for organization and analytical insights into my wellbeing.'
-            }
-          ].map((testimonial, i) => (
-            <Card key={i} className="text-center">
-              <CardContent className="pt-6">
-                <div className="mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-5 w-5 inline-block text-yellow-400 fill-yellow-400"
-                    />
-                  ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+          {filteredProducts.map((product) => (
+            <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm">
+              <CardHeader className="pb-4">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-2">
+                    {getCategoryIcon(product.category)}
+                    <Badge variant="secondary" className="text-xs">
+                      {product.category}
+                    </Badge>
+                  </div>
+                  {user && product.recommendedSigns.includes(user.zodiacSign) && (
+                    <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs">
+                      For You
+                    </Badge>
+                  )}
                 </div>
-                <p className="text-muted-foreground mb-6">"{testimonial.text}"</p>
-                <div className="font-medium">{testimonial.name}</div>
-                <div className="text-sm text-muted-foreground">{testimonial.sign}</div>
+                
+                <div>
+                  <CardTitle className="text-lg font-bold group-hover:text-purple-600 transition-colors">
+                    {product.name}
+                  </CardTitle>
+                  <div className="flex items-center gap-2 mt-2">
+                    <div className="flex items-center">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-4 w-4 ${
+                            i < Math.floor(product.rating)
+                              ? 'text-yellow-400 fill-yellow-400'
+                              : 'text-gray-300'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <span className="text-sm text-gray-600">({product.rating})</span>
+                  </div>
+                </div>
+              </CardHeader>
+
+              <CardContent className="pb-4">
+                <CardDescription className="text-sm text-gray-600 line-clamp-3 mb-4">
+                  {product.description}
+                </CardDescription>
+                
+                <div className="flex items-center justify-between">
+                  <div className="text-2xl font-bold text-purple-600">
+                    ${product.price}
+                  </div>
+                  {Math.random() > 0.8 && (
+                    <Badge variant="destructive" className="text-xs">
+                      {Math.floor(Math.random() * 20) + 10}% OFF
+                    </Badge>
+                  )}
+                </div>
               </CardContent>
+
+              <CardFooter className="pt-4 border-t border-gray-100">
+                <div className="flex gap-2 w-full">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleAddToCart(product.id)}
+                    className="flex-1"
+                  >
+                    <ShoppingCart className="h-4 w-4 mr-2" />
+                    Add to Cart
+                  </Button>
+                  <Button
+                    size="sm"
+                    asChild
+                    className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                  >
+                    <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Buy Now
+                    </a>
+                  </Button>
+                </div>
+              </CardFooter>
             </Card>
           ))}
         </div>
-      </div>
 
-      {/* Newsletter */}
-      <div className="bg-primary/5 rounded-xl p-8 md:p-12 text-center">
-        <h2 className="text-2xl font-bold tracking-tight mb-4">
-          Get Personalized Product Recommendations
-        </h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-          Join our newsletter to receive personalized wellness product recommendations based on your zodiac sign and current astrological cycles.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
-          <Input placeholder="Your email address" type="email" />
-          <Button>Subscribe</Button>
-        </div>
-      </div>
-
-      {/* Cart Notification */}
-      {showCartNotification && (
-        <div className="fixed bottom-6 right-6 bg-black text-white p-4 rounded-lg shadow-lg flex items-center gap-4 z-50">
-          <ShoppingCart className="h-5 w-5" />
-          <div>
-            <p className="font-medium">Item added to cart</p>
-            <p className="text-sm text-gray-300">You have {cartItems.length} items in your cart</p>
+        {/* Empty State */}
+        {filteredProducts.length === 0 && (
+          <div className="text-center py-12">
+            <ShoppingBag className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-600 mb-2">No products found</h3>
+            <p className="text-gray-500">Try adjusting your search or filter criteria</p>
+            <Button 
+              onClick={() => {
+                setSearchQuery('');
+                setActiveCategory('all');
+                setPriceRange([0, 200]);
+              }}
+              className="mt-4"
+            >
+              Clear Filters
+            </Button>
           </div>
-          <Button variant="outline" size="sm" className="text-white border-white">
-            View Cart
-          </Button>
+        )}
+
+        {/* Featured Brands Section */}
+        <div className="bg-white/60 backdrop-blur-sm rounded-lg p-8 mb-8">
+          <h2 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            Premium Wellness Brands
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 text-center">
+            {['Athletic Greens', 'Bloom Nutrition', 'Ritual', 'Four Sigmatic', 'Thorne Health', 'Oura Ring'].map((brand) => (
+              <div key={brand} className="p-4 rounded-lg bg-white/80 hover:bg-white transition-colors">
+                <div className="text-sm font-medium text-gray-700">{brand}</div>
+              </div>
+            ))}
+          </div>
         </div>
-      )}
+
+        {/* Results Summary */}
+        <div className="text-center text-gray-600">
+          <p>Showing {filteredProducts.length} of {affiliateProducts.length} premium wellness products</p>
+        </div>
+      </div>
     </div>
   );
 }
