@@ -7,15 +7,27 @@ import { getHoroscopeForSign, generateDailyHoroscopes } from "./horoscope-genera
 import { deliverHoroscopeToUser } from "./scheduler";
 import { format } from "date-fns";
 import { initializeScheduler } from "./scheduler";
-import { 
-  createStripeCustomer, 
-  createCheckoutSession, 
-  pricingPlans, 
-  updateUserSubscriptionStatus,
-  getSubscription,
-  cancelSubscription,
-  createPaymentIntent
-} from "./stripe-service";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2023-10-16",
+});
+
+// Stripe service functions consolidated inline
+const pricingPlans = {
+  basic: {
+    name: "Basic Plan",
+    price: 9.99,
+    stripePriceId: "price_basic",
+    features: ["Daily horoscopes", "Basic wellness tips"]
+  },
+  premium: {
+    name: "Premium Plan", 
+    price: 19.99,
+    stripePriceId: "price_premium",
+    features: ["Daily horoscopes", "Premium wellness reports", "SMS delivery"]
+  }
+};
 import {
   findPremiumReport,
   generateMockPremiumReport,
