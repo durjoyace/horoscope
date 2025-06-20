@@ -98,7 +98,7 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
                     onClick={handleSignupClick}
                     className="h-14 px-8 text-lg font-semibold bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 border-0 shadow-lg shadow-purple-500/25"
                   >
-                    Start Free
+                    Get Started
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </div>
@@ -108,7 +108,7 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
               <div className="flex items-center justify-center gap-6 text-sm text-slate-400 mb-8">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400" />
-                  <span>Free to start</span>
+                  <span>Instant access</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400" />
