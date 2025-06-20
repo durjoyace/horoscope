@@ -182,7 +182,9 @@ function AppContent() {
             <Route path="/horoscope/:sign">
               <HoroscopeDetailPage />
             </Route>
-            <ProtectedRoute path="/referrals" component={ReferralsPage} />
+            <Route path="/referrals">
+              <ReferralsPage />
+            </Route>
             
             {/* Community Routes */}
             <Route path="/community">

@@ -170,6 +170,12 @@ export function NavigationBar({
                       <span>Dashboard</span>
                     </Link>
                   </DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer" asChild>
+                    <Link href="/referrals" className="flex items-center gap-2 w-full text-purple-600">
+                      <Gift className="h-4 w-4" />
+                      <span>Share & Earn</span>
+                    </Link>
+                  </DropdownMenuItem>
                   {!isPremium && (
                     <DropdownMenuItem className="cursor-pointer" asChild>
                       <Link href="/premium" className="flex items-center gap-2 w-full text-amber-600">
@@ -287,6 +293,10 @@ export function NavigationBar({
                   </Link>
                   <Link href="/community" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
                     <span className="text-sm font-medium">Community</span>
+                  </Link>
+                  <Link href="/referrals" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors text-purple-600">
+                    <Gift className="h-4 w-4 mr-3" />
+                    <span className="text-sm font-medium">Share & Earn</span>
                   </Link>
                 </nav>
                 

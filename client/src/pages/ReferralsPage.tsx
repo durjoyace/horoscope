@@ -43,6 +43,34 @@ export default function ReferralsPage() {
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
 
+  // If user is not authenticated, show login prompt
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 py-12">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <div className="text-center">
+            <div className="inline-block p-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full mb-4">
+              <Gift className="h-8 w-8 text-purple-600" />
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Share Wellness, Unlock Premium
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+              Join our community to start earning premium features by sharing personalized wellness insights with friends.
+            </p>
+            <Button 
+              onClick={() => window.location.href = '/auth'}
+              size="lg"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+            >
+              Get Started
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const { data: referralData, isLoading } = useQuery<ReferralData>({
     queryKey: ['/api/referrals/my-referrals'],
     enabled: !!user,
