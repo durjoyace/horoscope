@@ -384,6 +384,61 @@ export class DatabaseStorage implements IStorage {
       .set({ likeCount: sql`${forumReplies.likeCount} + 1` })
       .where(eq(forumReplies.id, id));
   }
+
+  // Referral operations
+  async createReferral(insertReferral: InsertReferral): Promise<Referral> {
+    const [referral] = await db
+      .insert(referrals)
+      .values(insertReferral)
+      .returning();
+    return referral;
+  }
+
+  async getReferralsByReferrer(referrerId: number): Promise<Referral[]> {
+    return await db
+      .select()
+      .from(referrals)
+      .where(eq(referrals.referrerId, referrerId));
+  }
+
+  async getReferralByCode(referralCode: string): Promise<User | undefined> {
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.referralCode, referralCode));
+    return user || undefined;
+  }
+
+  async updateReferralStatus(id: number, status: string, completedAt?: Date): Promise<void> {
+    await db
+      .update(referrals)
+      .set({ 
+        status, 
+        completedAt: completedAt || new Date()
+      })
+      .where(eq(referrals.id, id));
+  }
+
+  async incrementUserReferralRewards(userId: number): Promise<void> {
+    await db
+      .update(users)
+      .set({ referralRewards: sql`${users.referralRewards} + 1` })
+      .where(eq(users.id, userId));
+  }
+
+  async generateUniqueReferralCode(): Promise<string> {
+    let code: string;
+    let exists = true;
+    
+    while (exists) {
+      // Generate a 6-character alphanumeric code
+      code = Math.random().toString(36).substring(2, 8).toUpperCase();
+      const existingUser = await this.getReferralByCode(code);
+      exists = !!existingUser;
+    }
+    
+    return code!;
+  }
 }
 
 export const storage = new DatabaseStorage();

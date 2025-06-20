@@ -62,6 +62,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         emailOptIn: z.boolean().default(false),
         birthdate: z.string().optional(),
         password: z.string().optional(),
+        referralCode: z.string().optional(), // referral code used to sign up
       });
 
       const validatedInput = userInputSchema.parse(req.body);
@@ -87,6 +88,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log('Server - Creating new user with zodiacSign:', validatedInput.zodiacSign);
       
+      // Generate unique referral code for new user
+      const userReferralCode = await storage.generateUniqueReferralCode();
+      
+      // Check if user was referred by someone
+      let referrerUser = null;
+      if (validatedInput.referralCode) {
+        referrerUser = await storage.getReferralByCode(validatedInput.referralCode);
+      }
+      
       // Create new user
       const newUser = await storage.createUser({
         email: validatedInput.email,
@@ -98,7 +108,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         birthdate: validatedInput.birthdate,
         password: validatedInput.password || null,
         emailOptIn: validatedInput.emailOptIn,
+        referralCode: userReferralCode,
+        referredBy: validatedInput.referralCode || null,
       });
+
+      // Create referral record if user was referred
+      if (referrerUser && validatedInput.referralCode) {
+        await storage.createReferral({
+          referrerId: referrerUser.id,
+          referredUserId: newUser.id,
+          referralCode: validatedInput.referralCode,
+          status: 'completed',
+          rewardType: 'free_month',
+          rewardValue: 'Premium access for 1 month'
+        });
+        
+        // Increment referrer's reward count
+        await storage.incrementUserReferralRewards(referrerUser.id);
+      }
       
       res.status(201).json({ 
         success: true, 
@@ -1376,6 +1403,116 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({
         success: false,
         message: "Could not like forum reply. Please try again later."
+      });
+    }
+  });
+
+  // Get user's referral information
+  app.get("/api/referrals/my-referrals", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+
+      const user = req.user;
+      const referrals = await storage.getReferralsByReferrer(user.id);
+
+      res.status(200).json({
+        success: true,
+        data: {
+          referralCode: user.referralCode,
+          totalReferrals: user.referralRewards || 0,
+          referrals: referrals
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching referrals:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not retrieve referral information"
+      });
+    }
+  });
+
+  // Validate a referral code
+  app.get("/api/referrals/validate/:code", async (req: Request, res: Response) => {
+    try {
+      const referralCode = req.params.code;
+      const referrer = await storage.getReferralByCode(referralCode);
+
+      if (!referrer) {
+        return res.status(404).json({
+          success: false,
+          message: "Invalid referral code"
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        data: {
+          referrerName: referrer.firstName,
+          valid: true
+        }
+      });
+    } catch (error) {
+      console.error("Error validating referral code:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not validate referral code"
+      });
+    }
+  });
+
+  // Generate shareable referral link
+  app.post("/api/referrals/share", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+
+      const user = req.user;
+      const { platform } = req.body; // 'sms', 'email', 'social', 'copy'
+
+      const baseUrl = process.env.REPLIT_DOMAIN 
+        ? `https://${process.env.REPLIT_DOMAIN}` 
+        : 'http://localhost:5000';
+      
+      const referralUrl = `${baseUrl}/?ref=${user.referralCode}`;
+      
+      let shareText = '';
+      switch (platform) {
+        case 'sms':
+          shareText = `Hey! I've been using HoroscopeHealth for personalized wellness insights based on my zodiac sign. Join me and get your first month free: ${referralUrl}`;
+          break;
+        case 'email':
+          shareText = `I thought you'd love HoroscopeHealth - it gives amazing personalized wellness tips based on your zodiac sign. Use my referral link to get your first month free: ${referralUrl}`;
+          break;
+        case 'social':
+          shareText = `Just discovered HoroscopeHealth - personalized wellness insights that actually work! 🌟 Get your first month free with my link: ${referralUrl}`;
+          break;
+        default:
+          shareText = `Join me on HoroscopeHealth for personalized wellness insights: ${referralUrl}`;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: {
+          referralUrl,
+          shareText,
+          referralCode: user.referralCode
+        }
+      });
+    } catch (error) {
+      console.error("Error generating share link:", error);
+      res.status(500).json({
+        success: false,
+        message: "Could not generate share link"
       });
     }
   });
