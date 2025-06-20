@@ -27,22 +27,21 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
   const { t } = useLanguage();
   const [, navigate] = useLocation();
   
-  // Handle signup from hero section - using registerMutation from useAuth instead of useUser
-  const handleSignup = async (email: string) => {
-    if (!email || !email.includes('@')) {
+  // Handle signup from hero section with phone number
+  const handleSignup = async (phone: string) => {
+    if (!phone || phone.length < 10) {
       toast({
-        title: t('toast.email.required.title'),
-        description: t('toast.email.required.description'),
+        title: "Phone Number Required",
+        description: "Please enter a valid phone number to receive your daily horoscope via SMS.",
         variant: "destructive",
       });
       return;
     }
     
-    // Store the email in localStorage for the auth page
-    localStorage.setItem('pendingSignupEmail', email);
-    navigate('/auth?signup=true');
+    // Store the phone number in localStorage for the signup page
+    localStorage.setItem('pendingSignupPhone', phone);
+    navigate('/signup');
     
-    // We'll handle the actual registration on the auth page
     if (onUserRegistered) {
       onUserRegistered();
     }

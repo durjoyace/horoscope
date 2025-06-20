@@ -43,6 +43,15 @@ export default function SimpleSignupPage() {
     },
   });
 
+  // Pre-populate phone number from homepage
+  useEffect(() => {
+    const pendingPhone = localStorage.getItem('pendingSignupPhone');
+    if (pendingPhone) {
+      form.setValue('phone', pendingPhone);
+      localStorage.removeItem('pendingSignupPhone');
+    }
+  }, [form]);
+
   const signupMutation = useMutation({
     mutationFn: async (data: SignupFormValues) => {
       const response = await apiRequest('POST', '/api/signup', data);

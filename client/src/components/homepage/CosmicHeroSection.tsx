@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'wouter';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Smartphone } from 'lucide-react';
 import { ZodiacSign } from '@shared/types';
 import { zodiacSignNames } from '@/data/zodiacData';
 import { useLanguage } from '@/context/LanguageContext';
@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 
 interface CosmicHeroSectionProps {
-  onSignup?: (email: string) => void;
+  onSignup?: (phone: string) => void;
   isLoggedIn?: boolean;
 }
 
@@ -17,26 +17,26 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
   onSignup, 
   isLoggedIn = false 
 }) => {
-  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [, navigate] = useLocation();
   const { t } = useLanguage();
   const { toast } = useToast();
 
   const handleSignupClick = () => {
-    if (!email || !email.includes('@')) {
+    if (!phone || phone.length < 10) {
       toast({
-        title: t('toast.email.required.title'),
-        description: t('toast.email.required.description'),
+        title: "Phone Number Required",
+        description: "Please enter a valid phone number to receive your daily horoscope via SMS.",
         variant: "destructive",
       });
       return;
     }
     
     if (onSignup) {
-      onSignup(email);
+      onSignup(phone);
     } else {
-      localStorage.setItem('pendingSignupEmail', email);
-      navigate('/auth?signup=true');
+      localStorage.setItem('pendingSignupPhone', phone);
+      navigate('/signup');
     }
   };
 
@@ -61,29 +61,40 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 tracking-tight">
-              <span className="block">{t('hero.title1')}</span>
+              <span className="block">Get Your Daily</span>
               <span className="block bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
-                {t('hero.title2')}
+                Health Horoscope
               </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-xl mx-auto lg:mx-0">
-              {t('hero.description')}
+            <p className="text-lg md:text-xl text-slate-300 mb-6 max-w-xl mx-auto lg:mx-0">
+              Personalized wellness guidance based on your zodiac sign, delivered directly to your phone via SMS.
             </p>
+            
+            <div className="flex items-center gap-2 mb-8 justify-center lg:justify-start">
+              <CheckCircle2 className="w-5 h-5 text-green-400" />
+              <span className="text-slate-300">Daily SMS delivery</span>
+              <CheckCircle2 className="w-5 h-5 text-green-400 ml-4" />
+              <span className="text-slate-300">Personalized wellness tips</span>
+            </div>
             
             {!isLoggedIn && (
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-                <Input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={t('signup.email.placeholder')}
-                  className="bg-white/10 border-white/20 text-white h-12 focus:border-purple-500 focus:ring-purple-500 w-full max-w-xs mx-auto sm:mx-0"
+                <div className="relative">
+                  <Smartphone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <Input
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Enter your phone number"
+                    type="tel"
+                    className="bg-white/10 border-white/20 text-white h-12 pl-12 focus:border-purple-500 focus:ring-purple-500 w-full max-w-xs mx-auto sm:mx-0"
                 />
+                </div>
                 <Button 
                   onClick={handleSignupClick}
                   className="h-12 px-8 rounded-md bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all"
                 >
-                  {t('signup.button')}
+                  Start SMS Horoscopes
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </div>
@@ -92,7 +103,7 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
             {!isLoggedIn && (
               <div className="mt-4 text-sm text-slate-400">
                 <p className="flex items-center justify-center lg:justify-start gap-1.5 mx-auto lg:mx-0">
-                  {t('signup.microcopy')}
+                  Free daily wellness guidance • No spam • Unsubscribe anytime
                 </p>
               </div>
             )}
