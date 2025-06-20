@@ -10,6 +10,7 @@ export interface AffiliateProduct {
   rating: number; // 1-5
   recommendedSigns: ZodiacSign[];
   affiliateUrl: string;
+  horoscopeHealthReason?: string;
 }
 
 export type ProductCategory = 
@@ -32,7 +33,8 @@ export const affiliateProducts: AffiliateProduct[] = [
     category: "supplements",
     rating: 4.8,
     recommendedSigns: ["aries", "leo", "sagittarius", "capricorn"],
-    affiliateUrl: "https://athleticgreens.com"
+    affiliateUrl: "https://athleticgreens.com",
+    horoscopeHealthReason: "Fire signs and ambitious Capricorns thrive with comprehensive nutrition that fuels their high-energy lifestyle and goal-oriented nature."
   },
   {
     id: "prod-002",
@@ -43,7 +45,8 @@ export const affiliateProducts: AffiliateProduct[] = [
     category: "supplements",
     rating: 4.7,
     recommendedSigns: ["virgo", "taurus", "cancer", "scorpio"],
-    affiliateUrl: "https://bloomnutrition.com"
+    affiliateUrl: "https://bloomnutrition.com",
+    horoscopeHealthReason: "Earth and water signs benefit from digestive support that aligns with their sensitive systems and focus on gut health and emotional balance."
   },
   {
     id: "prod-003",

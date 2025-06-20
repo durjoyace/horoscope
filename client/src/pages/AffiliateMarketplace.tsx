@@ -45,6 +45,7 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
   const [activeCategory, setActiveCategory] = useState<ProductCategory | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 200]);
+  const [selectedZodiacSign, setSelectedZodiacSign] = useState<ZodiacSign | 'all'>('all');
   const { toast } = useToast();
 
   // Filter products based on search, category, and price
