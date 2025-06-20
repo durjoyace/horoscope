@@ -91,21 +91,21 @@ export function NavigationBar({
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-6 lg:gap-8">
           <Link href="/zodiac-library" className="text-sm font-medium hover:text-primary transition-colors">
-            Your Sign
+            {t('nav.zodiac')}
           </Link>
           
           <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors">
-            Wellness Shop
+            {t('nav.marketplace')}
           </Link>
           
           <Link href="/community" className="text-sm font-medium hover:text-primary transition-colors">
-            Community
+            {t('community.title')}
           </Link>
           
           {!isPremium && (
             <Link href="/premium" className="text-sm font-medium text-purple-600 hover:text-purple-500 transition-colors flex items-center gap-1">
               <Star className="h-3 w-3" />
-              Premium
+              {t('nav.premium')}
             </Link>
           )}
         </nav>
@@ -167,7 +167,7 @@ export function NavigationBar({
                   <DropdownMenuItem className="cursor-pointer" asChild>
                     <Link href="/dashboard" className="flex items-center gap-2 w-full">
                       <BarChart className="h-4 w-4" />
-                      <span>Dashboard</span>
+                      <span>{t('nav.dashboard')}</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer" asChild>
