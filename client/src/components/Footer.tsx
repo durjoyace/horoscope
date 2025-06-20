@@ -38,9 +38,7 @@ export function Footer() {
           <div className="lg:col-span-2">
             <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Horoscope Health</h3>
             <p className="text-gray-300 mb-4">
-              Discover personalized wellness insights powered by the cosmos. 
-              Our unique blend of astrological wisdom and modern health science 
-              helps you align your wellness journey with the stars.
+              {t('footer.description')}
             </p>
             <div className="flex space-x-4">
               <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30" aria-label="Follow us on Facebook">
@@ -60,28 +58,28 @@ export function Footer() {
           
           {/* Core Features */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-white">Discover</h3>
+            <h3 className="text-lg font-bold mb-4 text-white">{t('footer.discover')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/zodiac-library">
-                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Your Sign</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">{t('footer.yourSign')}</span>
                 </Link>
               </li>
               <li>
                 <Link href="/wellness-tips">
-                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Wellness Tips</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">{t('footer.wellnessTips')}</span>
                 </Link>
               </li>
               <li>
                 <Link href="/community">
-                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Community</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">{t('footer.community')}</span>
                 </Link>
               </li>
               <li>
                 <Link href="/premium">
                   <span className="text-gray-400 hover:text-amber-400 transition-colors cursor-pointer flex items-center gap-1">
                     <Star className="h-3 w-3" />
-                    Premium
+                    {t('footer.premium')}
                   </span>
                 </Link>
               </li>
@@ -90,21 +88,21 @@ export function Footer() {
           
           {/* Support */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-white">Support</h3>
+            <h3 className="text-lg font-bold mb-4 text-white">{t('footer.support')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/faq">
-                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">FAQ</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">{t('footer.faq')}</span>
                 </Link>
               </li>
               <li>
                 <Link href="/about">
-                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">About</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">{t('footer.about')}</span>
                 </Link>
               </li>
               <li>
                 <Link href="/contact">
-                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Contact</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">{t('footer.contact')}</span>
                 </Link>
               </li>
             </ul>
@@ -119,16 +117,16 @@ export function Footer() {
             
             <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-6 mb-4">
               <Link href="/privacy">
-                <span className="text-xs text-gray-500 hover:text-purple-400 transition-colors cursor-pointer">Privacy Policy</span>
+                <span className="text-xs text-gray-500 hover:text-purple-400 transition-colors cursor-pointer">{t('footer.privacyPolicy')}</span>
               </Link>
               <Link href="/terms">
-                <span className="text-xs text-gray-500 hover:text-purple-400 transition-colors cursor-pointer">Terms of Service</span>
+                <span className="text-xs text-gray-500 hover:text-purple-400 transition-colors cursor-pointer">{t('footer.termsOfService')}</span>
               </Link>
               <Link href="/accessibility">
-                <span className="text-xs text-gray-500 hover:text-purple-400 transition-colors cursor-pointer">Accessibility</span>
+                <span className="text-xs text-gray-500 hover:text-purple-400 transition-colors cursor-pointer">{t('footer.accessibility')}</span>
               </Link>
               <Link href="/sitemap">
-                <span className="text-xs text-gray-500 hover:text-purple-400 transition-colors cursor-pointer">Sitemap</span>
+                <span className="text-xs text-gray-500 hover:text-purple-400 transition-colors cursor-pointer">{t('footer.sitemap')}</span>
               </Link>
             </div>
             
@@ -140,10 +138,10 @@ export function Footer() {
               <Star className="h-3 w-3 text-purple-400" fill="currentColor" />
             </div>
             
-            <p className="text-sm text-gray-400">© {new Date().getFullYear()} Battle Green Consulting LLC DBA Horoscope Health. All rights reserved.</p>
+            <p className="text-sm text-gray-400">{t('footer.copyright')}</p>
             
             <p className="mt-3 text-xs flex justify-center items-center gap-1 text-gray-500">
-              Made with <Heart className="h-3 w-3 text-red-500 animate-pulse" fill="currentColor" /> for cosmic wellbeing
+              {t('footer.madeWith')} <Heart className="h-3 w-3 text-red-500 animate-pulse" fill="currentColor" /> {t('footer.forCosmicWellbeing')}
             </p>
           </div>
         </div>

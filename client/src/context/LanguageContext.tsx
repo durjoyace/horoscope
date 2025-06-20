@@ -199,13 +199,26 @@ const enTranslations: Record<string, string> = {
   'stats.rating': 'Average Rating',
   'stats.readDaily': 'Users Read Daily',
   
-  // Footer
-  'footer.company': 'Battle Green Consulting LLC',
-  'footer.disclaimer': 'Legal Disclaimer: The astrological insights provided on this website are for informational and entertainment purposes only and should not replace professional medical advice.',
-  'footer.category.zodiac': 'Zodiac Signs',
-  'footer.category.elements': 'Elements',
-  'footer.category.resources': 'Resources',
-  'footer.category.company': 'Company',
+  // Footer Section
+  'footer.description': 'Discover personalized wellness insights powered by the cosmos. Our unique blend of astrological wisdom and modern health science helps you align your wellness journey with the stars.',
+  'footer.discover': 'Discover',
+  'footer.yourSign': 'Your Sign',
+  'footer.wellnessTips': 'Wellness Tips',
+  'footer.community': 'Community',
+  'footer.premium': 'Premium',
+  'footer.support': 'Support',
+  'footer.faq': 'FAQ',
+  'footer.about': 'About',
+  'footer.contact': 'Contact',
+  'footer.disclaimer': 'Astrology insights are for entertainment and general wellness guidance. Always consult healthcare professionals for medical advice.',
+  'footer.privacyPolicy': 'Privacy Policy',
+  'footer.termsOfService': 'Terms of Service',
+  'footer.accessibility': 'Accessibility',
+  'footer.sitemap': 'Sitemap',
+  'footer.copyright': '© 2024 Battle Green Consulting LLC DBA Horoscope Health. All rights reserved.',
+  'footer.madeWith': 'Made with',
+  'footer.forCosmicWellbeing': 'for cosmic wellbeing',
+
 };
 
 // Spanish translations
@@ -396,6 +409,26 @@ const esTranslations: Record<string, string> = {
   'stats.messages': 'Mensajes Diarios Enviados',
   'stats.rating': 'Calificación Promedio',
   'stats.readDaily': 'Usuarios Leen Diariamente',
+  
+  // Footer Section
+  'footer.description': 'Descubre información personalizada de bienestar impulsada por el cosmos. Nuestra mezcla única de sabiduría astrológica y ciencia de salud moderna te ayuda a alinear tu viaje de bienestar con las estrellas.',
+  'footer.discover': 'Descubrir',
+  'footer.yourSign': 'Tu Signo',
+  'footer.wellnessTips': 'Consejos de Bienestar',
+  'footer.community': 'Comunidad',
+  'footer.premium': 'Premium',
+  'footer.support': 'Soporte',
+  'footer.faq': 'Preguntas Frecuentes',
+  'footer.about': 'Acerca de',
+  'footer.contact': 'Contacto',
+  'footer.disclaimer': 'Las perspectivas astrológicas son para entretenimiento y orientación general de bienestar. Siempre consulta a profesionales de la salud para consejos médicos.',
+  'footer.privacyPolicy': 'Política de Privacidad',
+  'footer.termsOfService': 'Términos de Servicio',
+  'footer.accessibility': 'Accesibilidad',
+  'footer.sitemap': 'Mapa del Sitio',
+  'footer.copyright': '© 2024 Battle Green Consulting LLC DBA Horoscope Health. Todos los derechos reservados.',
+  'footer.madeWith': 'Hecho con',
+  'footer.forCosmicWellbeing': 'para el bienestar cósmico',
   
   // Footer
   'footer.company': 'Battle Green Consulting LLC',
