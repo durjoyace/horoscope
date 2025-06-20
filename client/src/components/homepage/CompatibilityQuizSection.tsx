@@ -8,6 +8,7 @@ import { getCompatibility } from '@/data/compatibilityData';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
+import { AnimatedProgress } from '@/components/ui/animated-progress';
 import { 
   ArrowRight, 
   Sparkles, 
@@ -327,35 +328,14 @@ export const CompatibilityQuizSection: React.FC = () => {
                                 </div>
                                 <div className="font-medium">{getCompatibilityLabel(result.score.romance)} ({result.score.romance}%)</div>
                               </div>
-                              <div className="bg-gray-700 rounded-full h-3 overflow-hidden relative">
-                                <motion.div
-                                  initial={{ width: 0, opacity: 0 }}
-                                  animate={{ width: `${result.score.romance}%`, opacity: 1 }}
-                                  transition={{ 
-                                    delay: 0.8, 
-                                    duration: 1.2, 
-                                    ease: "easeOut",
-                                    width: { type: "spring", damping: 20, stiffness: 100 }
-                                  }}
-                                  className="h-full bg-gradient-to-r from-pink-500 to-pink-400 rounded-full relative"
-                                  style={{ 
-                                    transformOrigin: "left",
-                                    willChange: "width, opacity"
-                                  }}
-                                >
-                                  <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: [0, 1, 0] }}
-                                    transition={{ 
-                                      delay: 1.0,
-                                      duration: 0.8, 
-                                      repeat: 2,
-                                      ease: "easeInOut"
-                                    }}
-                                    className="absolute inset-0 bg-white/20 rounded-full"
-                                  />
-                                </motion.div>
-                              </div>
+                              <AnimatedProgress
+                                value={result.score.romance}
+                                label="Romance"
+                                color="bg-gradient-to-r from-pink-500 to-pink-400"
+                                delay={800}
+                                isMobile={isMobile}
+                                shouldReduceMotion={shouldReduceMotion || false}
+                              />
                             </motion.div>
                             
                             <motion.div
@@ -370,35 +350,14 @@ export const CompatibilityQuizSection: React.FC = () => {
                                 </div>
                                 <div className="font-medium">{getCompatibilityLabel(result.score.friendship)} ({result.score.friendship}%)</div>
                               </div>
-                              <div className="bg-gray-700 rounded-full h-3 overflow-hidden relative">
-                                <motion.div
-                                  initial={{ width: 0, opacity: 0 }}
-                                  animate={{ width: `${result.score.friendship}%`, opacity: 1 }}
-                                  transition={{ 
-                                    delay: 1.0, 
-                                    duration: 1.2, 
-                                    ease: "easeOut",
-                                    width: { type: "spring", damping: 20, stiffness: 100 }
-                                  }}
-                                  className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full relative"
-                                  style={{ 
-                                    transformOrigin: "left",
-                                    willChange: "width, opacity"
-                                  }}
-                                >
-                                  <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: [0, 1, 0] }}
-                                    transition={{ 
-                                      delay: 1.2,
-                                      duration: 0.8, 
-                                      repeat: 2,
-                                      ease: "easeInOut"
-                                    }}
-                                    className="absolute inset-0 bg-white/20 rounded-full"
-                                  />
-                                </motion.div>
-                              </div>
+                              <AnimatedProgress
+                                value={result.score.friendship}
+                                label="Friendship"
+                                color="bg-gradient-to-r from-blue-500 to-blue-400"
+                                delay={1000}
+                                isMobile={isMobile}
+                                shouldReduceMotion={shouldReduceMotion || false}
+                              />
                             </motion.div>
                             
                             <motion.div

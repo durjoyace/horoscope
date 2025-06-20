@@ -19,36 +19,13 @@ export const AnimatedProgress: React.FC<AnimatedProgressProps> = ({
   shouldReduceMotion = false
 }) => {
   // Use CSS animations for reduced motion or performance concerns
-  if (shouldReduceMotion || (isMobile && value > 0)) {
+  if (shouldReduceMotion) {
     return (
-      <div className="bg-gray-700 rounded-full h-3 overflow-hidden relative">
+      <div className="bg-gray-700 rounded-full h-3 overflow-hidden">
         <div
-          className={`h-full rounded-full transition-all duration-1000 ease-out ${color}`}
-          style={{
-            width: `${value}%`,
-            animationDelay: `${delay}ms`,
-            animationName: 'progressFill',
-            animationDuration: '1200ms',
-            animationFillMode: 'both'
-          }}
-        >
-          <div 
-            className="absolute inset-0 bg-white/20 rounded-full animate-pulse"
-            style={{ animationDelay: `${delay + 200}ms` }}
-          />
-        </div>
-        <style jsx>{`
-          @keyframes progressFill {
-            from {
-              width: 0%;
-              opacity: 0;
-            }
-            to {
-              width: ${value}%;
-              opacity: 1;
-            }
-          }
-        `}</style>
+          className={`h-full rounded-full ${color}`}
+          style={{ width: `${value}%` }}
+        />
       </div>
     );
   }
