@@ -429,14 +429,6 @@ const esTranslations: Record<string, string> = {
   'footer.copyright': '© 2024 Battle Green Consulting LLC DBA Horoscope Health. Todos los derechos reservados.',
   'footer.madeWith': 'Hecho con',
   'footer.forCosmicWellbeing': 'para el bienestar cósmico',
-  
-  // Footer
-  'footer.company': 'Battle Green Consulting LLC',
-  'footer.disclaimer': 'Aviso legal: Los conocimientos astrológicos proporcionados en este sitio web son solo para fines informativos y de entretenimiento y no deben reemplazar el consejo médico profesional.',
-  'footer.category.zodiac': 'Signos Zodiacales',
-  'footer.category.elements': 'Elementos',
-  'footer.category.resources': 'Recursos',
-  'footer.category.company': 'Empresa',
 };
 
 // Combined translations
