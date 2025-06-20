@@ -87,10 +87,10 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
     }
   };
 
-  const handleAddToCart = (productId: string) => {
+  const handleSaveProduct = (productId: string) => {
     toast({
-      title: "Added to cart",
-      description: "Item has been added to your shopping cart",
+      title: "Product saved",
+      description: "Added to your wellness wishlist for later",
     });
   };
 
@@ -100,7 +100,7 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 py-8">
+    <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Hero Section */}
         <div className="text-center mb-12">
@@ -213,7 +213,7 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
           {filteredProducts.map((product) => (
-            <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm">
+            <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 border border-gray-200 bg-white">
               <CardHeader className="pb-4">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2">
@@ -230,7 +230,7 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                 </div>
                 
                 <div>
-                  <CardTitle className="text-lg font-bold group-hover:text-purple-600 transition-colors">
+                  <CardTitle className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
                     {product.name}
                   </CardTitle>
                   <div className="flex items-center gap-2 mt-2">
@@ -240,28 +240,28 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                           key={i}
                           className={`h-4 w-4 ${
                             i < Math.floor(product.rating)
-                              ? 'text-yellow-400 fill-yellow-400'
+                              ? 'text-yellow-500 fill-yellow-500'
                               : 'text-gray-300'
                           }`}
                         />
                       ))}
                     </div>
-                    <span className="text-sm text-gray-600">({product.rating})</span>
+                    <span className="text-sm text-gray-700 font-medium">({product.rating})</span>
                   </div>
                 </div>
               </CardHeader>
 
               <CardContent className="pb-4">
-                <CardDescription className="text-sm text-gray-600 line-clamp-3 mb-4">
+                <CardDescription className="text-sm text-gray-800 line-clamp-3 mb-4 leading-relaxed">
                   {product.description}
                 </CardDescription>
                 
                 <div className="flex items-center justify-between">
-                  <div className="text-2xl font-bold text-purple-600">
+                  <div className="text-2xl font-bold text-gray-900">
                     ${product.price}
                   </div>
                   {Math.random() > 0.8 && (
-                    <Badge variant="destructive" className="text-xs">
+                    <Badge className="bg-red-500 text-white text-xs">
                       {Math.floor(Math.random() * 20) + 10}% OFF
                     </Badge>
                   )}
@@ -273,20 +273,20 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => handleAddToCart(product.id)}
-                    className="flex-1"
+                    onClick={() => handleSaveProduct(product.id)}
+                    className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
                   >
-                    <ShoppingCart className="h-4 w-4 mr-2" />
-                    Add to Cart
+                    <Heart className="h-4 w-4 mr-2" />
+                    Save
                   </Button>
                   <Button
                     size="sm"
                     asChild
-                    className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                    className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold"
                   >
                     <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="h-4 w-4 mr-2" />
-                      Buy Now
+                      Shop Now
                     </a>
                   </Button>
                 </div>
@@ -315,14 +315,14 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
         )}
 
         {/* Featured Brands Section */}
-        <div className="bg-white/60 backdrop-blur-sm rounded-lg p-8 mb-8">
-          <h2 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Premium Wellness Brands
+        <div className="bg-white border border-gray-200 rounded-lg p-8 mb-8">
+          <h2 className="text-2xl font-bold text-center mb-6 text-gray-900">
+            Featured Premium Brands
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
             {['Athletic Greens', 'Bloom Nutrition', 'Ritual', 'Four Sigmatic', 'Thorne Health', 'Oura Ring'].map((brand) => (
-              <div key={brand} className="p-4 rounded-lg bg-white/80 hover:bg-white transition-colors">
-                <div className="text-sm font-medium text-gray-700">{brand}</div>
+              <div key={brand} className="p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-200">
+                <div className="text-sm font-semibold text-gray-800">{brand}</div>
               </div>
             ))}
           </div>
