@@ -43,6 +43,7 @@ import AdminDashboard from "@/pages/admin";
 import AdminAnalytics from "@/pages/admin/analytics";
 import CRMDashboard from "@/pages/admin/CRMDashboard";
 import TestSMSPage from "@/pages/TestSMSPage";
+import SimpleSignupPage from "@/pages/SimpleSignupPage";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -127,6 +128,9 @@ function AppContent() {
             </Route>
             <Route path="/auth">
               <AuthPage />
+            </Route>
+            <Route path="/signup">
+              <SimpleSignupPage />
             </Route>
             <Route path="/onboarding">
               <OnboardingPage />
