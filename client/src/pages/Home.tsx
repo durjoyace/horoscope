@@ -10,6 +10,8 @@ import { CosmicHeroSection } from '@/components/homepage/CosmicHeroSection';
 import { FeaturesSection } from '@/components/homepage/FeaturesSection';
 import { TestimonialsSection } from '@/components/homepage/TestimonialsSection';
 import { UrgencyBanner } from '@/components/UrgencyBanner';
+import { RiskReversalSection } from '@/components/RiskReversalSection';
+import { CuriosityHookSection } from '@/components/CuriosityHookSection';
 
 // Import the existing WhyItWorks component
 import { WhyItWorks } from '@/components/WhyItWorks';
@@ -82,7 +84,9 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
         <UrgencyBanner />
       </div>
       <FeaturesSection />
+      <CuriosityHookSection />
       <TestimonialsSection />
+      <RiskReversalSection onSignup={handleSignup} />
     </div>
   );
 }
