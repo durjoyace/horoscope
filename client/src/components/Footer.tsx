@@ -33,7 +33,7 @@ export function Footer() {
       </div>
       
       <div className="container relative z-10 mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* About Column */}
           <div className="lg:col-span-2">
             <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Horoscope Health</h3>
@@ -58,33 +58,48 @@ export function Footer() {
             </div>
           </div>
           
-          {/* Quick Links */}
+          {/* Core Features */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-white">Quick Links</h3>
+            <h3 className="text-lg font-bold mb-4 text-white">Discover</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/">
-                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Home</span>
-                </Link>
-              </li>
-              <li>
                 <Link href="/zodiac-library">
-                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Zodiac Library</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Your Sign</span>
                 </Link>
               </li>
               <li>
-                <Link href="/marketplace">
-                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Wellness Marketplace</span>
+                <Link href="/wellness-tips">
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Wellness Tips</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/community">
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Community</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/premium">
+                  <span className="text-gray-400 hover:text-amber-400 transition-colors cursor-pointer flex items-center gap-1">
+                    <Star className="h-3 w-3" />
+                    Premium
+                  </span>
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          {/* Support */}
+          <div>
+            <h3 className="text-lg font-bold mb-4 text-white">Support</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/faq">
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">FAQ</span>
                 </Link>
               </li>
               <li>
                 <Link href="/about">
-                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">About Us</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/science">
-                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Our Science</span>
+                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">About</span>
                 </Link>
               </li>
               <li>
@@ -92,48 +107,9 @@ export function Footer() {
                   <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Contact</span>
                 </Link>
               </li>
-              <li>
-                <Link href="/premium">
-                  <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">Premium</span>
-                </Link>
-              </li>
             </ul>
           </div>
-          
-          {/* Elements Column */}
-          <div>
-            <h3 className="text-lg font-bold mb-4 text-white">{t('footer.category.elements')}</h3>
-            <ul className="space-y-2">
-              {Object.keys(elementGroups).map(element => (
-                <li key={element}>
-                  <Link href="/elements">
-                    <span className="text-gray-400 hover:text-purple-400 transition-colors cursor-pointer">
-                      {element === 'Fire' && '🔥 Fire Signs'}
-                      {element === 'Earth' && '🌿 Earth Signs'}
-                      {element === 'Air' && '💨 Air Signs'}
-                      {element === 'Water' && '💧 Water Signs'}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          {/* Zodiac Signs */}
-          <div>
-            <h3 className="text-lg font-bold mb-4 text-white">{t('footer.category.zodiac')}</h3>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-              {zodiacSignNames.map((sign: any) => (
-                <div key={sign.value}>
-                  <Link href="/zodiac-library">
-                    <span className="text-gray-400 hover:text-purple-400 transition-colors flex items-center cursor-pointer">
-                      <span className="mr-1">{sign.symbol}</span> {sign.label}
-                    </span>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
+
         </div>
         
         {/* Bottom Credits */}

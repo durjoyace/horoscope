@@ -84,35 +84,29 @@ export function NavigationBar({
           </Link>
         </div>
         
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-3 lg:gap-6">
-          <Link href="/" className="text-sm font-medium hover:text-primary transition-colors">
-            {t('nav.home')}
-          </Link>
+        {/* Desktop Navigation - Core User Journey */}
+        <nav className="hidden md:flex gap-4 lg:gap-6">
+          {/* Primary Discovery */}
           <Link href="/zodiac-library" className="text-sm font-medium hover:text-primary transition-colors">
-            {t('nav.zodiac')}
+            Your Sign
           </Link>
-          <Link href="/elements" className="text-sm font-medium hover:text-primary transition-colors">
-            {t('nav.elements')}
+          
+          {/* Core Features */}
+          <Link href="/wellness-tips" className="text-sm font-medium hover:text-primary transition-colors">
+            Wellness
           </Link>
-          <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors">
-            {t('nav.marketplace')}
-          </Link>
+          
           <Link href="/community" className="text-sm font-medium hover:text-primary transition-colors">
             Community
           </Link>
-          <Link href="/wellness-tips" className="text-sm font-medium hover:text-primary transition-colors">
-            {t('nav.wellnessTips') || 'Wellness Tips'}
-          </Link>
-          <Link href="/science" className="text-sm font-medium hover:text-primary transition-colors">
-            {t('nav.science')}
-          </Link>
-          <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">
-            {t('nav.about')}
-          </Link>
-          <Link href="/contact" className="text-sm font-medium hover:text-primary transition-colors">
-            {t('nav.contact')}
-          </Link>
+          
+          {/* Premium Upgrade */}
+          {!isPremium && (
+            <Link href="/premium" className="text-sm font-medium text-amber-600 hover:text-amber-500 transition-colors flex items-center gap-1">
+              <Star className="h-3 w-3" />
+              Premium
+            </Link>
+          )}
         </nav>
         
         {/* User Menu and Mobile Nav */}
@@ -172,42 +166,23 @@ export function NavigationBar({
                   <DropdownMenuItem className="cursor-pointer" asChild>
                     <Link href="/dashboard" className="flex items-center gap-2 w-full">
                       <BarChart className="h-4 w-4" />
-                      <span>{t('user.dashboard')}</span>
+                      <span>Dashboard</span>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer" asChild>
-                    <Link href="/profile" className="flex items-center gap-2 w-full">
-                      <User className="h-4 w-4" />
-                      <span>{t('user.profile')}</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer" asChild>
-                    <Link href="/settings" className="flex items-center gap-2 w-full">
-                      <Settings className="h-4 w-4" />
-                      <span>{t('user.settings')}</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer" asChild>
-                    <Link href="/admin" className="flex items-center gap-2 w-full">
-                      <BarChart className="h-4 w-4 text-purple-500" />
-                      <span>Admin Dashboard</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  {isPremium ? (
+                  {!isPremium && (
                     <DropdownMenuItem className="cursor-pointer" asChild>
-                      <Link href="/premium" className="flex items-center gap-2 w-full">
-                        <Star className="h-4 w-4 text-amber-500" />
-                        <span>{t('premium.features')}</span>
-                      </Link>
-                    </DropdownMenuItem>
-                  ) : (
-                    <DropdownMenuItem className="cursor-pointer" asChild>
-                      <Link href="/premium" className="flex items-center gap-2 w-full">
-                        <Shield className="h-4 w-4" />
-                        <span>{t('premium.upgrade')}</span>
+                      <Link href="/premium" className="flex items-center gap-2 w-full text-amber-600">
+                        <Star className="h-4 w-4" />
+                        <span>Upgrade to Premium</span>
                       </Link>
                     </DropdownMenuItem>
                   )}
+                  <DropdownMenuItem className="cursor-pointer" asChild>
+                    <Link href="/admin" className="flex items-center gap-2 w-full">
+                      <Settings className="h-4 w-4 text-purple-500" />
+                      <span>Admin</span>
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem 
                     className="cursor-pointer flex items-center gap-2 text-red-600"
@@ -295,33 +270,44 @@ export function NavigationBar({
                   </div>
                 )}
               
-                <nav className="flex flex-col gap-2 mb-2">
-                  <Link href="/" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
-                    <span className="text-sm font-medium">{t('nav.home')}</span>
-                  </Link>
+                {/* Core Navigation - User Journey */}
+                <nav className="flex flex-col gap-2 mb-4">
+                  <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2.5 mb-2">
+                    Discover
+                  </div>
                   <Link href="/zodiac-library" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
-                    <span className="text-sm font-medium">{t('nav.zodiac')}</span>
+                    <span className="text-sm font-medium">Your Sign</span>
                   </Link>
-                  <Link href="/elements" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
-                    <span className="text-sm font-medium">{t('nav.elements')}</span>
-                  </Link>
-                  <Link href="/marketplace" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
-                    <span className="text-sm font-medium">{t('nav.marketplace')}</span>
+                  <Link href="/wellness-tips" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                    <span className="text-sm font-medium">Wellness Tips</span>
                   </Link>
                   <Link href="/community" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
                     <span className="text-sm font-medium">Community</span>
                   </Link>
-                  <Link href="/wellness-tips" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
-                    <span className="text-sm font-medium">{t('nav.wellnessTips') || 'Wellness Tips'}</span>
+                  
+                  {!isPremium && (
+                    <Link href="/premium" className="flex w-full items-center p-2.5 rounded-md bg-amber-50/30 hover:bg-amber-50/50 border border-amber-200/50 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <Star className="h-4 w-4 text-amber-600" />
+                        <span className="text-sm font-medium text-amber-700">Upgrade to Premium</span>
+                      </div>
+                    </Link>
+                  )}
+                </nav>
+                
+                {/* Secondary Navigation */}
+                <nav className="flex flex-col gap-2 mb-2">
+                  <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2.5 mb-2">
+                    Explore
+                  </div>
+                  <Link href="/elements" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                    <span className="text-sm font-medium">Elements Guide</span>
                   </Link>
-                  <Link href="/science" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
-                    <span className="text-sm font-medium">{t('nav.science')}</span>
+                  <Link href="/marketplace" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                    <span className="text-sm font-medium">Wellness Shop</span>
                   </Link>
                   <Link href="/about" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
-                    <span className="text-sm font-medium">{t('nav.about')}</span>
-                  </Link>
-                  <Link href="/contact" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
-                    <span className="text-sm font-medium">{t('nav.contact')}</span>
+                    <span className="text-sm font-medium">About</span>
                   </Link>
                 </nav>
                 
@@ -329,39 +315,21 @@ export function NavigationBar({
                   <>
                     <div className="h-px bg-border my-3"></div>
                     <nav className="flex flex-col gap-2.5">
+                      <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2.5 mb-2">
+                        Account
+                      </div>
                       <Link href="/dashboard" className="flex items-center gap-3 p-2.5 rounded-md bg-muted/70 hover:bg-muted transition-colors">
                         <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                           <BarChart className="h-4 w-4" />
                         </div>
-                        <span className="text-sm font-medium">{t('user.dashboard')}</span>
-                      </Link>
-                      <Link href="/profile" className="flex items-center gap-3 p-2.5 rounded-md bg-muted/70 hover:bg-muted transition-colors">
-                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                          <User className="h-4 w-4" />
-                        </div>
-                        <span className="text-sm font-medium">{t('user.profile')}</span>
+                        <span className="text-sm font-medium">Dashboard</span>
                       </Link>
                       <Link href="/admin" className="flex items-center gap-3 p-2.5 rounded-md bg-muted/70 hover:bg-muted transition-colors">
                         <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
-                          <BarChart className="h-4 w-4" />
+                          <Settings className="h-4 w-4" />
                         </div>
-                        <span className="text-sm font-medium">Admin Dashboard</span>
+                        <span className="text-sm font-medium">Admin</span>
                       </Link>
-                      {isPremium ? (
-                        <Link href="/premium" className="flex items-center gap-3 p-2.5 rounded-md bg-amber-50/40 hover:bg-amber-50/70 transition-colors">
-                          <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
-                            <Star className="h-4 w-4" />
-                          </div>
-                          <span className="text-sm font-medium text-amber-700">{t('premium.features')}</span>
-                        </Link>
-                      ) : (
-                        <Link href="/premium" className="flex items-center gap-3 p-2.5 rounded-md bg-gradient-to-r from-purple-50 to-fuchsia-50 hover:from-purple-100 hover:to-fuchsia-100 transition-colors">
-                          <div className="h-8 w-8 rounded-full bg-gradient-to-r from-purple-500 to-fuchsia-500 flex items-center justify-center text-white">
-                            <Shield className="h-4 w-4" />
-                          </div>
-                          <span className="text-sm font-medium text-primary">{t('premium.upgrade')}</span>
-                        </Link>
-                      )}
                     </nav>
                   </>
                 )}
