@@ -372,35 +372,14 @@ export const CompatibilityQuizSection: React.FC = () => {
                                 </div>
                                 <div className="font-medium">{getCompatibilityLabel(result.score.communication)} ({result.score.communication}%)</div>
                               </div>
-                              <div className="bg-gray-700 rounded-full h-3 overflow-hidden relative">
-                                <motion.div
-                                  initial={{ width: 0, opacity: 0 }}
-                                  animate={{ width: `${result.score.communication}%`, opacity: 1 }}
-                                  transition={{ 
-                                    delay: 1.2, 
-                                    duration: 1.2, 
-                                    ease: "easeOut",
-                                    width: { type: "spring", damping: 20, stiffness: 100 }
-                                  }}
-                                  className="h-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full relative"
-                                  style={{ 
-                                    transformOrigin: "left",
-                                    willChange: "width, opacity"
-                                  }}
-                                >
-                                  <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: [0, 1, 0] }}
-                                    transition={{ 
-                                      delay: 1.4,
-                                      duration: 0.8, 
-                                      repeat: 2,
-                                      ease: "easeInOut"
-                                    }}
-                                    className="absolute inset-0 bg-white/20 rounded-full"
-                                  />
-                                </motion.div>
-                              </div>
+                              <AnimatedProgress
+                                value={result.score.communication}
+                                label="Communication"
+                                color="bg-gradient-to-r from-purple-500 to-purple-400"
+                                delay={1200}
+                                isMobile={isMobile}
+                                shouldReduceMotion={shouldReduceMotion || false}
+                              />
                             </motion.div>
                             
                             <motion.div
@@ -415,35 +394,14 @@ export const CompatibilityQuizSection: React.FC = () => {
                                 </div>
                                 <div className="font-medium">{getCompatibilityLabel(result.score.trust)} ({result.score.trust}%)</div>
                               </div>
-                              <div className="bg-gray-700 rounded-full h-3 overflow-hidden relative">
-                                <motion.div
-                                  initial={{ width: 0, opacity: 0 }}
-                                  animate={{ width: `${result.score.trust}%`, opacity: 1 }}
-                                  transition={{ 
-                                    delay: 1.4, 
-                                    duration: 1.2, 
-                                    ease: "easeOut",
-                                    width: { type: "spring", damping: 20, stiffness: 100 }
-                                  }}
-                                  className="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full relative"
-                                  style={{ 
-                                    transformOrigin: "left",
-                                    willChange: "width, opacity"
-                                  }}
-                                >
-                                  <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: [0, 1, 0] }}
-                                    transition={{ 
-                                      delay: 1.6,
-                                      duration: 0.8, 
-                                      repeat: 2,
-                                      ease: "easeInOut"
-                                    }}
-                                    className="absolute inset-0 bg-white/20 rounded-full"
-                                  />
-                                </motion.div>
-                              </div>
+                              <AnimatedProgress
+                                value={result.score.trust}
+                                label="Trust"
+                                color="bg-gradient-to-r from-green-500 to-green-400"
+                                delay={1400}
+                                isMobile={isMobile}
+                                shouldReduceMotion={shouldReduceMotion || false}
+                              />
                             </motion.div>
                           </motion.div>
                         </div>
