@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/context/LanguageContext';
 import { useLocation } from 'wouter';
+import { useQuery } from '@tanstack/react-query';
 
 // Modular homepage components
 import { CosmicHeroSection } from '@/components/homepage/CosmicHeroSection';
@@ -26,6 +27,32 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
   const { toast } = useToast();
   const { t } = useLanguage();
   const [, navigate] = useLocation();
+
+  // Detect and store referral code from URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const referralCode = urlParams.get('ref');
+    
+    if (referralCode) {
+      // Store the referral code in localStorage for the signup process
+      localStorage.setItem('referralCode', referralCode);
+      
+      // Validate the referral code and show welcome message
+      fetch(`/api/referrals/validate/${referralCode}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            toast({
+              title: "Welcome from " + data.data.referrerName + "!",
+              description: "Sign up now to get your first month of premium features free.",
+            });
+          }
+        })
+        .catch(() => {
+          // Silent fail for invalid codes
+        });
+    }
+  }, [toast]);
   
   // Handle signup from hero section with phone number
   const handleSignup = async (phone: string) => {

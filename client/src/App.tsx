@@ -35,6 +35,7 @@ import FAQPage from "@/pages/FAQPage";
 import PrivacyPage from "@/pages/PrivacyPage";
 import TermsPage from "@/pages/TermsPage";
 import HoroscopeDetailPage from "@/pages/HoroscopeDetailPage";
+import ReferralsPage from "@/pages/ReferralsPage";
 
 // Community pages
 import CommunityHome from "@/pages/community/CommunityHome";
@@ -181,6 +182,7 @@ function AppContent() {
             <Route path="/horoscope/:sign">
               <HoroscopeDetailPage />
             </Route>
+            <ProtectedRoute path="/referrals" component={ReferralsPage} />
             
             {/* Community Routes */}
             <Route path="/community">

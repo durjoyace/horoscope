@@ -23,7 +23,8 @@ import {
   Star,
   ArrowRight,
   ShoppingBag,
-  Info
+  Info,
+  Gift
 } from 'lucide-react';
 import { ZodiacSign } from '@shared/types';
 import { zodiacSignNames, zodiacElements } from '@/data/zodiacData';
@@ -320,6 +321,10 @@ export function NavigationBar({
                 {isLoggedIn && (
                   <div className="mt-auto pt-6 border-t border-border">
                     <nav className="flex flex-col gap-2">
+                      <Link href="/referrals" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                        <Gift className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm font-medium">Invite Friends</span>
+                      </Link>
                       <Link href="/admin" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
                         <Settings className="h-4 w-4 text-muted-foreground" />
                         <span className="text-sm font-medium">Settings</span>
