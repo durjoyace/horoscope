@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useLocation } from 'wouter';
-import { ArrowRight, Smartphone, CheckCircle } from 'lucide-react';
+import { ArrowRight, Smartphone, CheckCircle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { useCosmicLoader } from '@/hooks/useCosmicLoader';
 
 interface CosmicHeroSectionProps {
   onSignup?: (phone: string) => void;
@@ -17,6 +18,7 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
   const [phone, setPhone] = useState('');
   const [, navigate] = useLocation();
   const { toast } = useToast();
+  const { showLoader, setLoadingMessage } = useCosmicLoader();
 
   const handleSignupClick = () => {
     if (!phone || phone.length < 10) {
@@ -40,6 +42,11 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
     if (e.key === 'Enter') {
       handleSignupClick();
     }
+  };
+
+  const testCosmicLoader = async () => {
+    setLoadingMessage("Demonstrating cosmic constellation transitions...");
+    await showLoader(5000);
   };
 
   return (
@@ -111,6 +118,18 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
                   <CheckCircle className="w-4 h-4 text-green-400" />
                   <span>Cancel anytime</span>
                 </div>
+              </div>
+              
+              {/* Demo button for cosmic loader */}
+              <div className="mt-8">
+                <Button
+                  onClick={testCosmicLoader}
+                  variant="outline"
+                  className="bg-transparent border-purple-500/30 text-purple-300 hover:bg-purple-500/10 hover:border-purple-400"
+                >
+                  <Sparkles className="mr-2 w-4 h-4" />
+                  Preview Cosmic Loading Animation
+                </Button>
               </div>
             </>
           )}

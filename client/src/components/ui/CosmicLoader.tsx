@@ -8,7 +8,8 @@ interface CosmicLoaderProps {
 
 export const CosmicLoader: React.FC<CosmicLoaderProps> = ({ 
   duration = 3000, 
-  onComplete 
+  onComplete,
+  message = "Aligning your cosmic energy..."
 }) => {
   const [currentConstellation, setCurrentConstellation] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
@@ -155,7 +156,7 @@ export const CosmicLoader: React.FC<CosmicLoaderProps> = ({
 
         {/* Loading text */}
         <div className="text-slate-300 text-lg mt-8 animate-pulse">
-          Aligning your cosmic energy...
+          {message}
         </div>
 
         {/* Progress indicator */}

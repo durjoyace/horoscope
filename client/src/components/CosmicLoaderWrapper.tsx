@@ -12,6 +12,7 @@ export function CosmicLoaderWrapper({ children }: { children: React.ReactNode })
         <CosmicLoader 
           duration={3000}
           onComplete={hideLoader}
+          message={loadingMessage}
         />
       )}
     </>
