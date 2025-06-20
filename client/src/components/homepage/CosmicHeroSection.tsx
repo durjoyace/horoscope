@@ -55,20 +55,20 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-sm font-medium mb-8">
             <CheckCircle className="w-4 h-4" />
-            <span>SMS Wellness Alerts</span>
+            <span>Evidence-Based Wellness Platform</span>
           </div>
           
           {/* Main headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Daily Health Horoscopes
+            Science-Based Wellness
             <span className="block bg-gradient-to-r from-purple-400 to-violet-400 bg-clip-text text-transparent mt-2">
-              Sent to Your Phone
+              Meets Astrological Wisdom
             </span>
           </h1>
           
           {/* Subtitle */}
           <p className="text-lg sm:text-xl text-slate-300 mb-12 max-w-xl mx-auto leading-relaxed">
-            Personalized wellness guidance based on your zodiac sign, delivered daily via SMS.
+            Daily wellness insights combining evidence-based health guidance with personalized astrological analysis, plus curated wellness products.
           </p>
           
           {!isLoggedIn && (

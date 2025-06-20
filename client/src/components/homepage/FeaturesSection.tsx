@@ -1,37 +1,37 @@
 import React from 'react';
-import { Smartphone, Clock, Shield, Zap, Heart, Star } from 'lucide-react';
+import { Smartphone, Clock, Shield, Microscope, ShoppingBag, Brain } from 'lucide-react';
 
 export const FeaturesSection: React.FC = () => {
   const features = [
     {
+      icon: <Microscope className="w-8 h-8 text-purple-400" />,
+      title: "Evidence-Based Approach",
+      description: "Each recommendation is backed by scientific research and validated wellness practices, not generic horoscopes."
+    },
+    {
+      icon: <Brain className="w-8 h-8 text-purple-400" />,
+      title: "AI-Powered Personalization",
+      description: "Advanced algorithms analyze your astrological profile alongside proven health data to create truly personalized guidance."
+    },
+    {
+      icon: <ShoppingBag className="w-8 h-8 text-purple-400" />,
+      title: "Curated Wellness Marketplace",
+      description: "Access hand-picked supplements, wellness products, and health tools specifically recommended for your profile."
+    },
+    {
       icon: <Smartphone className="w-8 h-8 text-purple-400" />,
-      title: "SMS Delivery",
-      description: "Get your horoscope directly on your phone every morning - no app downloads needed."
+      title: "Convenient SMS Delivery",
+      description: "Receive your daily insights directly via text message - no apps to download or remember to check."
     },
     {
       icon: <Clock className="w-8 h-8 text-purple-400" />,
-      title: "Daily Routine",
-      description: "Consistent morning wellness insights to help you start each day with purpose and clarity."
-    },
-    {
-      icon: <Heart className="w-8 h-8 text-purple-400" />,
-      title: "Health Focused",
-      description: "Personalized wellness guidance combining astrological wisdom with practical health advice."
-    },
-    {
-      icon: <Zap className="w-8 h-8 text-purple-400" />,
-      title: "Instant Access",
-      description: "No login required, no apps to remember - your guidance arrives when you need it most."
+      title: "Research-Backed Timing",
+      description: "Recommendations are timed based on circadian science and astrological cycles for maximum effectiveness."
     },
     {
       icon: <Shield className="w-8 h-8 text-purple-400" />,
-      title: "Privacy First",
-      description: "Your personal information stays secure. Unsubscribe anytime with a simple reply."
-    },
-    {
-      icon: <Star className="w-8 h-8 text-purple-400" />,
-      title: "Expert Insights",
-      description: "AI-powered astrological guidance tailored specifically to your zodiac sign and wellness goals."
+      title: "Medical Grade Privacy",
+      description: "Your health data is protected with the same standards used by medical institutions."
     }
   ];
 

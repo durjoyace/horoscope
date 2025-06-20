@@ -10,6 +10,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { PageTransition } from "@/components/PageTransition";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { CosmicLoaderProvider, useCosmicLoader } from "@/hooks/useCosmicLoader";
+import { CosmicLoader } from "@/components/ui/CosmicLoader";
 
 // Import all pages
 import Home from "@/pages/Home";
