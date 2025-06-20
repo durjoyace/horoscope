@@ -278,8 +278,8 @@ export function NavigationBar({
                   <Link href="/zodiac-library" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
                     <span className="text-sm font-medium">Your Sign</span>
                   </Link>
-                  <Link href="/elements" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors ml-4">
-                    <span className="text-sm font-medium text-muted-foreground">Elements Guide</span>
+                  <Link href="/elements" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                    <span className="text-sm font-medium">Elements Guide</span>
                   </Link>
                   <Link href="/marketplace" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
                     <span className="text-sm font-medium">Wellness Shop</span>
