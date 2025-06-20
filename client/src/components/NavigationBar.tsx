@@ -20,7 +20,10 @@ import {
   BarChart, 
   Shield, 
   Heart,
-  Star
+  Star,
+  ArrowRight,
+  ShoppingBag,
+  Info
 } from 'lucide-react';
 import { ZodiacSign } from '@shared/types';
 import { zodiacSignNames, zodiacElements } from '@/data/zodiacData';
@@ -84,25 +87,22 @@ export function NavigationBar({
           </Link>
         </div>
         
-        {/* Desktop Navigation - Core User Journey */}
-        <nav className="hidden md:flex gap-4 lg:gap-6">
-          {/* Primary Discovery */}
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex gap-6 lg:gap-8">
           <Link href="/zodiac-library" className="text-sm font-medium hover:text-primary transition-colors">
             Your Sign
-          </Link>
-          
-          {/* Core Features */}
-          <Link href="/wellness-tips" className="text-sm font-medium hover:text-primary transition-colors">
-            Wellness
           </Link>
           
           <Link href="/community" className="text-sm font-medium hover:text-primary transition-colors">
             Community
           </Link>
           
-          {/* Premium Upgrade */}
+          <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors">
+            Shop
+          </Link>
+          
           {!isPremium && (
-            <Link href="/premium" className="text-sm font-medium text-amber-600 hover:text-amber-500 transition-colors flex items-center gap-1">
+            <Link href="/premium" className="text-sm font-medium text-purple-600 hover:text-purple-500 transition-colors flex items-center gap-1">
               <Star className="h-3 w-3" />
               Premium
             </Link>
@@ -270,159 +270,89 @@ export function NavigationBar({
                   </div>
                 )}
               
-                {/* Core Navigation - User Journey */}
-                <nav className="flex flex-col gap-2 mb-4">
-                  <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2.5 mb-2">
-                    Discover
-                  </div>
-                  <Link href="/zodiac-library" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                {/* Primary Navigation */}
+                <nav className="flex flex-col gap-1 mb-6">
+                  <Link href="/dashboard" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                    <span className="text-sm font-medium">Today's Wellness</span>
+                  </Link>
+                  <Link href="/zodiac-library" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
                     <span className="text-sm font-medium">Your Sign</span>
                   </Link>
-                  <Link href="/wellness-tips" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
-                    <span className="text-sm font-medium">Wellness Tips</span>
-                  </Link>
-                  <Link href="/community" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                  <Link href="/community" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
                     <span className="text-sm font-medium">Community</span>
                   </Link>
-                  
-                  {!isPremium && (
-                    <Link href="/premium" className="flex w-full items-center p-2.5 rounded-md bg-amber-50/30 hover:bg-amber-50/50 border border-amber-200/50 transition-colors">
-                      <div className="flex items-center gap-2">
-                        <Star className="h-4 w-4 text-amber-600" />
-                        <span className="text-sm font-medium text-amber-700">Upgrade to Premium</span>
-                      </div>
-                    </Link>
-                  )}
                 </nav>
                 
-                {/* Secondary Navigation */}
-                <nav className="flex flex-col gap-2 mb-2">
-                  <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2.5 mb-2">
-                    Explore
+                {/* Premium Section */}
+                {!isPremium && (
+                  <div className="mb-6">
+                    <Link href="/premium" className="block w-full p-4 rounded-xl bg-gradient-to-r from-purple-500/10 to-violet-500/10 border border-purple-200/30 hover:border-purple-300/50 transition-all">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <Star className="h-4 w-4 text-purple-600" />
+                            <span className="text-sm font-semibold text-purple-700">Premium</span>
+                          </div>
+                          <p className="text-xs text-purple-600/80">Unlock personalized insights</p>
+                        </div>
+                        <div className="text-purple-600">
+                          <ArrowRight className="h-4 w-4" />
+                        </div>
+                      </div>
+                    </Link>
                   </div>
-                  <Link href="/elements" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
-                    <span className="text-sm font-medium">Elements Guide</span>
-                  </Link>
-                  <Link href="/marketplace" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                )}
+                
+                {/* Secondary Navigation */}
+                <nav className="flex flex-col gap-1 mb-6">
+                  <Link href="/marketplace" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                    <ShoppingBag className="h-4 w-4 mr-3 text-muted-foreground" />
                     <span className="text-sm font-medium">Wellness Shop</span>
                   </Link>
-                  <Link href="/about" className="flex w-full items-center p-2.5 rounded-md bg-background hover:bg-muted transition-colors">
+                  <Link href="/elements" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                    <Heart className="h-4 w-4 mr-3 text-muted-foreground" />
+                    <span className="text-sm font-medium">Elements Guide</span>
+                  </Link>
+                  <Link href="/about" className="flex w-full items-center p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                    <Info className="h-4 w-4 mr-3 text-muted-foreground" />
                     <span className="text-sm font-medium">About</span>
                   </Link>
                 </nav>
                 
                 {isLoggedIn && (
-                  <>
-                    <div className="h-px bg-border my-3"></div>
-                    <nav className="flex flex-col gap-2.5">
-                      <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide px-2.5 mb-2">
-                        Account
-                      </div>
-                      <Link href="/dashboard" className="flex items-center gap-3 p-2.5 rounded-md bg-muted/70 hover:bg-muted transition-colors">
-                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                          <BarChart className="h-4 w-4" />
-                        </div>
-                        <span className="text-sm font-medium">Dashboard</span>
+                  <div className="mt-auto pt-6 border-t border-border">
+                    <nav className="flex flex-col gap-2">
+                      <Link href="/admin" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                        <Settings className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm font-medium">Settings</span>
                       </Link>
-                      <Link href="/admin" className="flex items-center gap-3 p-2.5 rounded-md bg-muted/70 hover:bg-muted transition-colors">
-                        <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
-                          <Settings className="h-4 w-4" />
-                        </div>
-                        <span className="text-sm font-medium">Admin</span>
-                      </Link>
+                      <button 
+                        onClick={onLogout}
+                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors text-left w-full"
+                      >
+                        <LogOut className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm font-medium">Sign Out</span>
+                      </button>
                     </nav>
-                  </>
+                  </div>
                 )}
                 
                 {!isLoggedIn && (
-                  <>
-                    <div className="h-px bg-border my-3"></div>
-                    <div className="flex flex-col gap-2.5 mb-2">
-                      <p className="text-sm text-muted-foreground px-1">{t('nav.account')}</p>
-                      <Link href="/auth" className="flex items-center gap-3 p-2.5 rounded-md bg-muted/70 hover:bg-muted transition-colors">
-                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                          <User className="h-4 w-4" />
-                        </div>
-                        <span className="text-sm font-medium">{t('nav.login')}</span>
+                  <div className="mt-auto pt-6 border-t border-border">
+                    <nav className="flex flex-col gap-2">
+                      <Link href="/auth" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                        <User className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm font-medium">Login</span>
                       </Link>
-                      <Link href="/auth?signup=true" className="flex items-center gap-3 p-2.5 rounded-md bg-gradient-to-br from-purple-600/10 to-fuchsia-500/10 hover:from-purple-600/20 hover:to-fuchsia-500/20 transition-colors">
-                        <div className="h-8 w-8 rounded-full bg-gradient-to-r from-purple-500 to-fuchsia-500 flex items-center justify-center text-white">
-                          <Star className="h-4 w-4" />
-                        </div>
-                        <span className="text-sm font-medium">{t('nav.signup')}</span>
+                      <Link href="/signup" className="flex items-center gap-3 p-3 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-200/30 transition-colors">
+                        <Star className="h-4 w-4 text-purple-600" />
+                        <span className="text-sm font-medium text-purple-700">Sign Up</span>
                       </Link>
-                    </div>
-                  </>
+                    </nav>
+                  </div>
                 )}
                 
-                <div className="mt-auto pt-4">
-                  {/* Language selector on mobile */}
-                  <div className="mb-4 flex flex-col gap-2">
-                    <div className="flex items-center gap-2">
-                      <div className="h-1 w-1 rounded-full bg-primary"></div>
-                      <p className="text-sm font-medium text-muted-foreground">{t('nav.language')}</p>
-                    </div>
-                    <MobileLanguageSelector />
-                  </div>
-                  
-                  <div className="flex flex-col gap-3">
-                    <div className="flex items-center gap-2">
-                      <div className="h-1 w-1 rounded-full bg-primary"></div>
-                      <p className="text-sm font-medium text-muted-foreground">{t('theme.title')}</p>
-                    </div>
-                    
-                    <div className="flex gap-3">
-                      <Button 
-                        variant={theme === 'light' ? "outline" : "default"}
-                        size="lg"
-                        className={`
-                          flex-1 justify-center items-center gap-2 py-5 rounded-md
-                          ${theme !== 'light' ? 
-                            'bg-primary/90 hover:bg-primary text-white' : 
-                            'bg-muted/50 hover:bg-muted border-primary/10'
-                          }
-                          transition-all duration-200
-                        `}
-                        onClick={() => theme !== 'dark' && toggleTheme()}
-                        aria-label={t('theme.dark')}
-                      >
-                        <Moon className="h-5 w-5" />
-                        <span className="font-medium">{t('theme.dark')}</span>
-                      </Button>
-                      
-                      <Button 
-                        variant={theme === 'dark' ? "outline" : "default"}
-                        size="lg"
-                        className={`
-                          flex-1 justify-center items-center gap-2 py-5 rounded-md
-                          ${theme !== 'dark' ? 
-                            'bg-primary/90 hover:bg-primary text-white' : 
-                            'bg-muted/50 hover:bg-muted border-primary/10'
-                          }
-                          transition-all duration-200
-                        `}
-                        onClick={() => theme !== 'light' && toggleTheme()}
-                        aria-label={t('theme.light')}
-                      >
-                        <Sun className="h-5 w-5" />
-                        <span className="font-medium">{t('theme.light')}</span>
-                      </Button>
-                    </div>
-                    
-                    {isLoggedIn && (
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        className="mt-2 w-full justify-center items-center gap-2 py-4 text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300 transition-colors"
-                        onClick={onLogout}
-                        aria-label={t('nav.logout')}
-                      >
-                        <LogOut className="h-4 w-4" />
-                        <span className="font-medium">{t('nav.logout')}</span>
-                      </Button>
-                    )}
-                  </div>
-                </div>
+
               </div>
             </SheetContent>
           </Sheet>
