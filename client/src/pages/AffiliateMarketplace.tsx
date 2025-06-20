@@ -383,36 +383,33 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                   </div>
                 )}
                 <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
-                  <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-white group-hover:bg-gradient-to-br group-hover:from-purple-50 group-hover:to-pink-50 transition-all duration-300">
-                    <div className="w-20 h-20 mb-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                      <div className="text-white text-2xl">
-                        {getCategoryIcon(product.category)}
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-xs font-bold text-purple-600 uppercase tracking-wider mb-2 bg-purple-100 px-2 py-1 rounded-full">
-                        {getBrandName(product.name)}
-                      </div>
-                      <div className="text-sm font-bold text-gray-800 leading-tight">
-                        Premium {product.category}
-                      </div>
-                      <div className="flex items-center justify-center mt-2">
-                        <div className="flex">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`h-3 w-3 ${
-                                i < Math.floor(product.rating)
-                                  ? 'text-yellow-500 fill-yellow-500'
-                                  : 'text-gray-300'
-                              }`}
-                            />
-                          ))}
-                        </div>
-                        <span className="text-xs text-gray-600 ml-1">({product.rating})</span>
-                      </div>
-                    </div>
-                  </div>
+                  <img 
+                    src={product.imageUrl} 
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      // Fallback to brand card if image fails
+                      const target = e.currentTarget;
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `
+                          <div class="w-full h-full flex flex-col items-center justify-center p-6 bg-white">
+                            <div class="w-20 h-20 mb-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
+                              <div class="text-white text-2xl">${getCategoryIcon(product.category)}</div>
+                            </div>
+                            <div class="text-center">
+                              <div class="text-xs font-bold text-purple-600 uppercase tracking-wider mb-2 bg-purple-100 px-2 py-1 rounded-full">
+                                ${getBrandName(product.name)}
+                              </div>
+                              <div class="text-sm font-bold text-gray-800 leading-tight">
+                                Premium ${product.category}
+                              </div>
+                            </div>
+                          </div>
+                        `;
+                      }
+                    }}
+                  />
                 </div>
               </div>
               
