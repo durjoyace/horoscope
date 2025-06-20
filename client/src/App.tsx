@@ -158,6 +158,18 @@ function AppContent() {
             <Route path="/gift">
               <GiftPage />
             </Route>
+            <Route path="/faq">
+              <FAQPage />
+            </Route>
+            <Route path="/privacy">
+              <PrivacyPage />
+            </Route>
+            <Route path="/terms">
+              <TermsPage />
+            </Route>
+            <Route path="/horoscope/:sign">
+              <HoroscopeDetailPage />
+            </Route>
             
             {/* Community Routes */}
             <Route path="/community">

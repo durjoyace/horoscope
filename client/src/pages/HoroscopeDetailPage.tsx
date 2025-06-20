@@ -384,27 +384,13 @@ export default function HoroscopeDetailPage() {
                           </p>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
-                            <h4 className="font-semibold text-green-300 mb-2">Harmonious Signs Today</h4>
-                            <div className="flex flex-wrap gap-2">
-                              {elementData?.compatibleSigns?.map(compatibleSign => {
-                                const compatibleSignData = zodiacSignNames.find(s => s.value === compatibleSign);
-                                return (
-                                  <Badge key={compatibleSign} variant="outline" className="border-green-500/50 text-green-300">
-                                    {compatibleSignData?.symbol} {compatibleSignData?.label}
-                                  </Badge>
-                                );
-                              })}
-                            </div>
-                          </div>
-
-                          <div className="bg-amber-900/20 border border-amber-500/30 rounded-lg p-4">
-                            <h4 className="font-semibold text-amber-300 mb-2">Growth Opportunities</h4>
-                            <p className="text-amber-200 text-sm">
-                              Challenge yourself to connect with signs that think differently. 
-                              Their perspectives can offer valuable insights for your personal growth.
-                            </p>
+                        <div className="bg-gradient-to-br from-pink-900/20 to-purple-900/20 border border-pink-500/30 rounded-lg p-6">
+                          <h4 className="font-semibold text-pink-300 mb-4">Relationship Tips for {signData.label}</h4>
+                          <div className="space-y-3 text-pink-200">
+                            <p>• Express yourself authentically in relationships today</p>
+                            <p>• Listen with empathy and understanding</p>
+                            <p>• Your {elementData.name.toLowerCase()} energy brings unique gifts to connections</p>
+                            <p>• Trust your intuition when meeting new people</p>
                           </div>
                         </div>
                       </CardContent>
