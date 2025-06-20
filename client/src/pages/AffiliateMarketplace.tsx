@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   ShoppingBag,
   Star,
@@ -46,6 +46,8 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 200]);
   const [selectedZodiacSign, setSelectedZodiacSign] = useState<ZodiacSign | 'all'>('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
   const { toast } = useToast();
 
   // Filter products based on search, category, price, and zodiac sign
@@ -73,6 +75,17 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
     
     return true;
   });
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentProducts = filteredProducts.slice(startIndex, endIndex);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory, searchQuery, priceRange, selectedZodiacSign]);
 
   const getCategoryIcon = (category: ProductCategory) => {
     switch (category) {
@@ -379,7 +392,7 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {filteredProducts.map((product) => (
+          {currentProducts.map((product) => (
             <Card key={product.id} className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white rounded-2xl overflow-hidden shadow-lg hover:scale-105 transform">
               <div className="relative">
                 <div className="absolute top-4 left-4 z-10">
@@ -531,9 +544,47 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
           </div>
         </div>
 
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-4 mb-8">
+            <Button
+              variant="outline"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
+            >
+              Previous
+            </Button>
+            
+            <div className="flex items-center gap-2">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <Button
+                  key={page}
+                  variant={page === currentPage ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setCurrentPage(page)}
+                  className={page === currentPage ? "bg-purple-600 hover:bg-purple-700" : ""}
+                >
+                  {page}
+                </Button>
+              ))}
+            </div>
+            
+            <Button
+              variant="outline"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(currentPage + 1)}
+            >
+              Next
+            </Button>
+          </div>
+        )}
+
         {/* Results Summary */}
         <div className="text-center text-gray-600">
-          <p>Showing {filteredProducts.length} of {affiliateProducts.length} premium wellness products</p>
+          <p>
+            Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
+            {filteredProducts.length !== affiliateProducts.length && ` (filtered from ${affiliateProducts.length} total)`}
+          </p>
         </div>
       </div>
     </div>
