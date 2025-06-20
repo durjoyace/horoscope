@@ -102,12 +102,9 @@ export function NavigationBar({
             Community
           </Link>
           
-          {!isPremium && (
-            <Link href="/premium" className="text-sm font-medium text-purple-600 hover:text-purple-500 transition-colors flex items-center gap-1">
-              <Star className="h-3 w-3" />
-              Premium
-            </Link>
-          )}
+          <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">
+            About
+          </Link>
         </nav>
         
         {/* User Menu and Mobile Nav */}
@@ -176,14 +173,7 @@ export function NavigationBar({
                       <span>Share & Earn</span>
                     </Link>
                   </DropdownMenuItem>
-                  {!isPremium && (
-                    <DropdownMenuItem className="cursor-pointer" asChild>
-                      <Link href="/premium" className="flex items-center gap-2 w-full text-amber-600">
-                        <Star className="h-4 w-4" />
-                        <span>Upgrade to Premium</span>
-                      </Link>
-                    </DropdownMenuItem>
-                  )}
+
                   <DropdownMenuItem className="cursor-pointer" asChild>
                     <Link href="/admin" className="flex items-center gap-2 w-full">
                       <Settings className="h-4 w-4 text-purple-500" />
@@ -300,25 +290,23 @@ export function NavigationBar({
                   </Link>
                 </nav>
                 
-                {/* Premium Section */}
-                {!isPremium && (
-                  <div className="mb-6">
-                    <Link href="/premium" className="block w-full p-4 rounded-xl bg-gradient-to-r from-purple-500/10 to-violet-500/10 border border-purple-200/30 hover:border-purple-300/50 transition-all">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <Star className="h-4 w-4 text-purple-600" />
-                            <span className="text-sm font-semibold text-purple-700">Premium</span>
-                          </div>
-                          <p className="text-xs text-purple-600/80">Unlock personalized insights</p>
+                {/* Wellness Section */}
+                <div className="mb-6">
+                  <Link href="/marketplace" className="block w-full p-4 rounded-xl bg-gradient-to-r from-purple-500/10 to-violet-500/10 border border-purple-200/30 hover:border-purple-300/50 transition-all">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <ShoppingBag className="h-4 w-4 text-purple-600" />
+                          <span className="text-sm font-semibold text-purple-700">Wellness Shop</span>
                         </div>
-                        <div className="text-purple-600">
-                          <ArrowRight className="h-4 w-4" />
-                        </div>
+                        <p className="text-xs text-purple-600/80">Discover curated products</p>
                       </div>
-                    </Link>
-                  </div>
-                )}
+                      <div className="text-purple-600">
+                        <ArrowRight className="h-4 w-4" />
+                      </div>
+                    </div>
+                  </Link>
+                </div>
                 
                 {/* Secondary Navigation */}
                 <nav className="flex flex-col gap-1 mb-6">
