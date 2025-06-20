@@ -41,6 +41,7 @@ import TopicDetail from "@/pages/community/TopicDetail";
 // Admin pages
 import AdminDashboard from "@/pages/admin";
 import AdminAnalytics from "@/pages/admin/analytics";
+import CRMDashboard from "@/pages/admin/CRMDashboard";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -188,6 +189,7 @@ function AppContent() {
             {/* Admin Routes */}
             <ProtectedRoute path="/admin" component={AdminDashboard} />
             <ProtectedRoute path="/admin/analytics" component={AdminAnalytics} />
+            <ProtectedRoute path="/admin/crm" component={CRMDashboard} />
             
             <Route>
               <NotFound />

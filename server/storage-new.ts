@@ -11,7 +11,7 @@ import {
 } from "@shared/schema";
 import { ZodiacSign } from "@shared/types";
 import session from "express-session";
-import { eq } from "drizzle-orm";
+import { eq, or, and, isNotNull } from "drizzle-orm";
 import { db, pool } from "./db";
 import connectPg from "connect-pg-simple";
 import createMemoryStore from "memorystore";
@@ -241,8 +241,7 @@ export class DatabaseStorage implements IStorage {
       const [horoscope] = await db
         .select()
         .from(horoscopes)
-        .where(eq(horoscopes.zodiacSign, sign))
-        .where(eq(horoscopes.date, date));
+        .where(and(eq(horoscopes.zodiacSign, sign), eq(horoscopes.date, date)));
       
       return horoscope;
     } catch (error) {
@@ -299,11 +298,33 @@ export class DatabaseStorage implements IStorage {
   
   async getUsersForDailyDelivery(): Promise<User[]> {
     try {
-      // In a real application, you would apply additional filters here
-      // For example, only select users who have opted in for daily delivery
-      return await db.select().from(users);
+      return await db
+        .select()
+        .from(users)
+        .where(or(eq(users.smsOptIn, true), eq(users.emailOptIn, true)));
     } catch (error) {
       console.error('Error getting users for daily delivery:', error);
+      return [];
+    }
+  }
+
+  async getAllUsersForCRM(): Promise<User[]> {
+    try {
+      return await db.select().from(users);
+    } catch (error) {
+      console.error('Error getting all users for CRM:', error);
+      return [];
+    }
+  }
+
+  async getUsersForSMSBroadcast(): Promise<User[]> {
+    try {
+      return await db
+        .select()
+        .from(users)
+        .where(and(eq(users.smsOptIn, true), isNotNull(users.phone)));
+    } catch (error) {
+      console.error('Error getting users for SMS broadcast:', error);
       return [];
     }
   }
