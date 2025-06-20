@@ -164,6 +164,10 @@ const enTranslations: Record<string, string> = {
   'pagination.page': 'Page',
   'pagination.of': 'of',
   
+  // Toast notifications
+  'toast.phone.required.title': 'Phone Number Required',
+  'toast.phone.required.description': 'Please enter a valid phone number to receive your daily horoscope via SMS.',
+  
   // Footer
   'footer.company': 'Battle Green Consulting LLC',
   'footer.disclaimer': 'Legal Disclaimer: The astrological insights provided on this website are for informational and entertainment purposes only and should not replace professional medical advice.',
@@ -326,6 +330,10 @@ const esTranslations: Record<string, string> = {
   'pagination.next': 'Siguiente',
   'pagination.page': 'Página',
   'pagination.of': 'de',
+  
+  // Toast notifications
+  'toast.phone.required.title': 'Número de Teléfono Requerido',
+  'toast.phone.required.description': 'Por favor ingresa un número de teléfono válido para recibir tu horóscopo diario por SMS.',
   
   // Footer
   'footer.company': 'Battle Green Consulting LLC',

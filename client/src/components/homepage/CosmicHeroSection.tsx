@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useCosmicLoader } from '@/hooks/useCosmicLoader';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface CosmicHeroSectionProps {
   onSignup?: (phone: string) => void;
@@ -19,12 +20,13 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
   const [, navigate] = useLocation();
   const { toast } = useToast();
   const { showLoader, setLoadingMessage } = useCosmicLoader();
+  const { t } = useLanguage();
 
   const handleSignupClick = () => {
     if (!phone || phone.length < 10) {
       toast({
-        title: "Phone Number Required",
-        description: "Please enter a valid phone number to receive your daily horoscope via SMS.",
+        title: t('toast.phone.required.title') || "Phone Number Required",
+        description: t('toast.phone.required.description') || "Please enter a valid phone number to receive your daily horoscope via SMS.",
         variant: "destructive",
       });
       return;
@@ -62,20 +64,20 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-sm font-medium mb-8">
             <CheckCircle className="w-4 h-4" />
-            <span>Evidence-Based Wellness Platform</span>
+            <span>{t('hero.tagline')}</span>
           </div>
           
           {/* Main headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Science-Based Wellness
+            {t('hero.title1')}
             <span className="block bg-gradient-to-r from-purple-400 to-violet-400 bg-clip-text text-transparent mt-2">
-              Meets Astrological Wisdom
+              {t('hero.title2')}
             </span>
           </h1>
           
           {/* Subtitle */}
           <p className="text-lg sm:text-xl text-slate-300 mb-12 max-w-xl mx-auto leading-relaxed">
-            Daily wellness insights combining evidence-based health guidance with personalized astrological analysis, plus curated wellness products.
+            {t('hero.description')}
           </p>
           
           {!isLoggedIn && (
@@ -89,7 +91,7 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       onKeyPress={handleKeyPress}
-                      placeholder="Enter your phone number"
+                      placeholder={t('signup.email.placeholder')}
                       type="tel"
                       className="h-14 pl-12 text-lg bg-white/5 border-white/10 text-white placeholder:text-slate-400 focus:border-purple-500 focus:ring-purple-500/20"
                     />
@@ -98,7 +100,7 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
                     onClick={handleSignupClick}
                     className="h-14 px-8 text-lg font-semibold bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 border-0 shadow-lg shadow-purple-500/25"
                   >
-                    Get Started
+                    {t('signup.button')}
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </div>
