@@ -114,10 +114,6 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
                   <CheckCircle className="w-4 h-4 text-green-400" />
                   <span>No spam</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-400" />
-                  <span>Cancel anytime</span>
-                </div>
               </div>
               
               {/* Demo button for cosmic loader */}
