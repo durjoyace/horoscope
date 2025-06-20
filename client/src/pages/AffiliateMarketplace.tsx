@@ -31,7 +31,7 @@ import {
 import { zodiacSignNames } from '@/data/zodiacData';
 import { ZodiacSign } from '@shared/types';
 import { useToast } from '@/hooks/use-toast';
-import { affiliateProducts, ProductCategory } from '@/data/affiliateProducts';
+import { affiliateProducts, ProductCategory, AffiliateProduct } from '@/data/affiliateProducts';
 
 interface MarketplaceProps {
   user?: {
@@ -48,7 +48,7 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
   const [selectedZodiacSign, setSelectedZodiacSign] = useState<ZodiacSign | 'all'>('all');
   const { toast } = useToast();
 
-  // Filter products based on search, category, and price
+  // Filter products based on search, category, price, and zodiac sign
   const filteredProducts = affiliateProducts.filter(product => {
     // Search filter
     if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
@@ -63,6 +63,11 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
     
     // Price filter
     if (product.price < priceRange[0] || product.price > priceRange[1]) {
+      return false;
+    }
+    
+    // Zodiac sign filter
+    if (selectedZodiacSign !== 'all' && !product.recommendedSigns.includes(selectedZodiacSign)) {
       return false;
     }
     
@@ -98,6 +103,53 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
   const getZodiacElement = (sign: ZodiacSign): string => {
     const signData = zodiacSignNames.find(s => s.value === sign);
     return signData ? signData.element : '';
+  };
+
+  const getHoroscopeHealthRecommendation = (product: AffiliateProduct, userSign?: ZodiacSign): string => {
+    if (product.horoscopeHealthReason) {
+      return product.horoscopeHealthReason;
+    }
+
+    // Generate personalized recommendation based on zodiac sign
+    const isRecommendedForUser = userSign && product.recommendedSigns.includes(userSign);
+    
+    if (isRecommendedForUser) {
+      const element = getZodiacElement(userSign);
+      switch (product.category) {
+        case 'supplements':
+          return `Perfect for ${element} signs who value comprehensive wellness routines and prefer science-backed nutrition.`;
+        case 'nutrition':
+          return `Ideal for ${element} signs seeking balanced nutrition that supports their natural energy patterns.`;
+        case 'fitness':
+          return `Designed for ${element} signs who prioritize strength and endurance in their wellness journey.`;
+        case 'skincare':
+          return `Crafted for ${element} signs who appreciate natural beauty routines that enhance their radiant energy.`;
+        case 'meditation':
+          return `Perfect for ${element} signs seeking mindfulness practices that align with their spiritual nature.`;
+        case 'selfcare':
+          return `Ideal for ${element} signs who value self-care rituals that nurture their well-being.`;
+        default:
+          return `Recommended for ${element} signs who embrace holistic wellness approaches.`;
+      }
+    }
+
+    // General recommendations for non-targeted users
+    switch (product.category) {
+      case 'supplements':
+        return "Scientifically formulated to support comprehensive daily wellness and nutritional needs.";
+      case 'nutrition':
+        return "Premium nutrition designed to fuel your body with clean, effective ingredients.";
+      case 'fitness':
+        return "Professional-grade fitness support for achieving your strength and performance goals.";
+      case 'skincare':
+        return "Clean beauty formulated with natural ingredients for healthy, glowing skin.";
+      case 'meditation':
+        return "Mindfulness tools to enhance your mental clarity and emotional balance.";
+      case 'selfcare':
+        return "Luxurious self-care essentials for nurturing your overall well-being.";
+      default:
+        return "Premium wellness product designed to support your health journey.";
+    }
   };
 
   return (
@@ -161,6 +213,20 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
               <SelectItem value="skincare">Skincare</SelectItem>
               <SelectItem value="meditation">Meditation</SelectItem>
               <SelectItem value="selfcare">Self Care</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select value={selectedZodiacSign} onValueChange={(value) => setSelectedZodiacSign(value as ZodiacSign | 'all')}>
+            <SelectTrigger className="w-full md:w-48">
+              <SelectValue placeholder="Zodiac Sign" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Signs</SelectItem>
+              {zodiacSignNames.map((sign) => (
+                <SelectItem key={sign.value} value={sign.value}>
+                  {sign.symbol} {sign.label}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
 
@@ -256,6 +322,19 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                 <CardDescription className="text-sm text-gray-800 line-clamp-3 mb-4 leading-relaxed">
                   {product.description}
                 </CardDescription>
+
+                {/* Horoscope Health Recommendation */}
+                <div className="mb-4 p-3 bg-purple-50 border border-purple-200 rounded-lg">
+                  <div className="flex items-start gap-2">
+                    <Star className="h-4 w-4 text-purple-600 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-xs font-semibold text-purple-700 mb-1">Why Horoscope Health Recommends This</p>
+                      <p className="text-xs text-purple-800 leading-relaxed">
+                        {getHoroscopeHealthRecommendation(product, user?.zodiacSign)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
                 
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold text-gray-900">

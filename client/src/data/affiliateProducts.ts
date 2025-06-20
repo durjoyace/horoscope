@@ -57,7 +57,8 @@ export const affiliateProducts: AffiliateProduct[] = [
     category: "supplements",
     rating: 4.6,
     recommendedSigns: ["libra", "gemini", "aquarius", "pisces"],
-    affiliateUrl: "https://ritual.com"
+    affiliateUrl: "https://ritual.com",
+    horoscopeHealthReason: "Air signs and intuitive Pisces appreciate transparent ingredients and clean formulations that align with their values of balance and authenticity."
   },
   {
     id: "prod-004",
