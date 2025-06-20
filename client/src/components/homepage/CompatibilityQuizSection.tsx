@@ -210,16 +210,42 @@ export const CompatibilityQuizSection: React.FC = () => {
                               </span>
                             </div>
                             
-                            <div className="relative w-12 h-12 flex items-center justify-center">
+                            <div className="relative w-16 h-16 flex items-center justify-center">
                               <AnimatePresence>
                                 {animateResult && (
-                                  <motion.div
-                                    initial={{ scale: 0, rotate: -30 }}
-                                    animate={{ scale: 1, rotate: 0 }}
-                                    transition={{ type: "spring", bounce: 0.5, duration: 0.7 }}
-                                  >
-                                    <Heart className="h-8 w-8 text-pink-500" fill="rgba(236, 72, 153, 0.5)" />
-                                  </motion.div>
+                                  <>
+                                    <motion.div
+                                      initial={{ scale: 0, rotate: -180 }}
+                                      animate={{ scale: 1, rotate: 0 }}
+                                      transition={{ type: "spring", bounce: 0.6, duration: 0.8 }}
+                                      className="relative"
+                                    >
+                                      <Heart className="h-10 w-10 text-pink-500" fill="rgba(236, 72, 153, 0.8)" />
+                                    </motion.div>
+                                    
+                                    {/* Sparkle effects */}
+                                    {[...Array(6)].map((_, i) => (
+                                      <motion.div
+                                        key={i}
+                                        initial={{ scale: 0, opacity: 0 }}
+                                        animate={{ 
+                                          scale: [0, 1, 0],
+                                          opacity: [0, 1, 0],
+                                          x: Math.cos(i * 60 * Math.PI / 180) * 25,
+                                          y: Math.sin(i * 60 * Math.PI / 180) * 25
+                                        }}
+                                        transition={{ 
+                                          delay: 0.3 + i * 0.1, 
+                                          duration: 1.5,
+                                          repeat: Infinity,
+                                          repeatDelay: 2
+                                        }}
+                                        className="absolute"
+                                      >
+                                        <Sparkles className="h-3 w-3 text-yellow-400" />
+                                      </motion.div>
+                                    ))}
+                                  </>
                                 )}
                               </AnimatePresence>
                             </div>

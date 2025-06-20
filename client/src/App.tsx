@@ -27,6 +27,10 @@ import AchievementsPage from "@/pages/AchievementsPage";
 import OnboardingPage from "@/pages/OnboardingPage";
 import SavedTipsPage from "@/pages/SavedTipsPage";
 import GiftPage from "@/pages/GiftPage";
+import FAQPage from "@/pages/FAQPage";
+import PrivacyPage from "@/pages/PrivacyPage";
+import TermsPage from "@/pages/TermsPage";
+import HoroscopeDetailPage from "@/pages/HoroscopeDetailPage";
 
 // Community pages
 import CommunityHome from "@/pages/community/CommunityHome";
