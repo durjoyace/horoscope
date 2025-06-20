@@ -131,6 +131,22 @@ const enTranslations: Record<string, string> = {
   'features.physical.title': 'Physical Wellness',
   'features.physical.desc': 'Exercise and movement recommendations tailored to your zodiac strengths.',
   
+  // SMS Features Section
+  'features.sms.heading': 'Why Choose SMS Horoscopes?',
+  'features.sms.subheading': 'The most convenient way to receive personalized wellness guidance based on your zodiac sign.',
+  'features.evidence.title': 'Evidence-Based Approach',
+  'features.evidence.description': 'Each recommendation is backed by scientific research and validated wellness practices, not generic horoscopes.',
+  'features.ai.title': 'AI-Powered Personalization',
+  'features.ai.description': 'Advanced algorithms analyze your astrological profile alongside proven health data to create truly personalized guidance.',
+  'features.marketplace.title': 'Curated Wellness Marketplace',
+  'features.marketplace.description': 'Access hand-picked supplements, wellness products, and health tools specifically recommended for your profile.',
+  'features.sms.title': 'Convenient SMS Delivery',
+  'features.sms.description': 'Receive your daily insights directly via text message - no apps to download or remember to check.',
+  'features.timing.title': 'Research-Backed Timing',
+  'features.timing.description': 'Recommendations are timed based on circadian science and astrological cycles for maximum effectiveness.',
+  'features.privacy.title': 'Medical Grade Privacy',
+  'features.privacy.description': 'Your health data is protected with the same standards used by medical institutions.',
+  
   // Premium
   'premium.title': 'Premium Horoscope Health',
   'premium.subtitle': 'Unlock your complete cosmic wellness potential',
@@ -297,6 +313,22 @@ const esTranslations: Record<string, string> = {
   'features.alignment.desc': 'Sincroniza tus rutinas de bienestar con patrones astrológicos para obtener resultados óptimos.',
   'features.physical.title': 'Bienestar Físico',
   'features.physical.desc': 'Recomendaciones de ejercicio y movimiento adaptadas a tus fortalezas zodiacales.',
+  
+  // SMS Features Section
+  'features.sms.heading': '¿Por Qué Elegir Horóscopos por SMS?',
+  'features.sms.subheading': 'La forma más conveniente de recibir orientación de bienestar personalizada basada en tu signo zodiacal.',
+  'features.evidence.title': 'Enfoque Basado en Evidencia',
+  'features.evidence.description': 'Cada recomendación está respaldada por investigación científica y prácticas de bienestar validadas, no horóscopos genéricos.',
+  'features.ai.title': 'Personalización Impulsada por IA',
+  'features.ai.description': 'Algoritmos avanzados analizan tu perfil astrológico junto con datos de salud comprobados para crear orientación verdaderamente personalizada.',
+  'features.marketplace.title': 'Mercado de Bienestar Curado',
+  'features.marketplace.description': 'Accede a suplementos seleccionados, productos de bienestar y herramientas de salud específicamente recomendados para tu perfil.',
+  'features.sms.title': 'Entrega Conveniente por SMS',
+  'features.sms.description': 'Recibe tus conocimientos diarios directamente por mensaje de texto - no hay aplicaciones que descargar o recordar revisar.',
+  'features.timing.title': 'Programación Respaldada por Investigación',
+  'features.timing.description': 'Las recomendaciones se programan basándose en la ciencia circadiana y los ciclos astrológicos para máxima efectividad.',
+  'features.privacy.title': 'Privacidad de Grado Médico',
+  'features.privacy.description': 'Tus datos de salud están protegidos con los mismos estándares utilizados por instituciones médicas.',
   
   // Premium
   'premium.title': 'Premium Horóscopo Salud',

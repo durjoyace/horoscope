@@ -1,37 +1,40 @@
 import React from 'react';
 import { Smartphone, Clock, Shield, Microscope, ShoppingBag, Brain } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const FeaturesSection: React.FC = () => {
+  const { t } = useLanguage();
+  
   const features = [
     {
       icon: <Microscope className="w-8 h-8 text-purple-400" />,
-      title: "Evidence-Based Approach",
-      description: "Each recommendation is backed by scientific research and validated wellness practices, not generic horoscopes."
+      title: t('features.evidence.title'),
+      description: t('features.evidence.description')
     },
     {
       icon: <Brain className="w-8 h-8 text-purple-400" />,
-      title: "AI-Powered Personalization",
-      description: "Advanced algorithms analyze your astrological profile alongside proven health data to create truly personalized guidance."
+      title: t('features.ai.title'),
+      description: t('features.ai.description')
     },
     {
       icon: <ShoppingBag className="w-8 h-8 text-purple-400" />,
-      title: "Curated Wellness Marketplace",
-      description: "Access hand-picked supplements, wellness products, and health tools specifically recommended for your profile."
+      title: t('features.marketplace.title'),
+      description: t('features.marketplace.description')
     },
     {
       icon: <Smartphone className="w-8 h-8 text-purple-400" />,
-      title: "Convenient SMS Delivery",
-      description: "Receive your daily insights directly via text message - no apps to download or remember to check."
+      title: t('features.sms.title'),
+      description: t('features.sms.description')
     },
     {
       icon: <Clock className="w-8 h-8 text-purple-400" />,
-      title: "Research-Backed Timing",
-      description: "Recommendations are timed based on circadian science and astrological cycles for maximum effectiveness."
+      title: t('features.timing.title'),
+      description: t('features.timing.description')
     },
     {
       icon: <Shield className="w-8 h-8 text-purple-400" />,
-      title: "Medical Grade Privacy",
-      description: "Your health data is protected with the same standards used by medical institutions."
+      title: t('features.privacy.title'),
+      description: t('features.privacy.description')
     }
   ];
 
@@ -41,10 +44,10 @@ export const FeaturesSection: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-12 max-w-2xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Why Choose SMS Horoscopes?
+            {t('features.sms.heading')}
           </h2>
           <p className="text-slate-300 text-lg">
-            The most convenient way to receive personalized wellness guidance based on your zodiac sign.
+            {t('features.sms.subheading')}
           </p>
         </div>
 
