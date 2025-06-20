@@ -12,6 +12,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { useMutation } from "@tanstack/react-query";
 import { ZodiacSign } from "@shared/types";
 import { Phone, Mail, Stars, CheckCircle, ArrowRight } from "lucide-react";
+import { useCosmicLoader } from "@/hooks/useCosmicLoader";
 
 const signupSchema = z.object({
   firstName: z.string().min(1, "Name is required"),
@@ -42,6 +43,7 @@ export default function SimpleSignupPage() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [isSuccess, setIsSuccess] = useState(false);
+  const { showLoader, setLoadingMessage } = useCosmicLoader();
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
@@ -64,6 +66,27 @@ export default function SimpleSignupPage() {
 
   const signupMutation = useMutation({
     mutationFn: async (data: SignupFormValues) => {
+      // Set cosmic loading message based on zodiac sign
+      const zodiacMessages = {
+        aries: "Igniting your fiery energy...",
+        taurus: "Grounding your earthy wisdom...",
+        gemini: "Aligning your twin energies...",
+        cancer: "Channeling lunar intuition...",
+        leo: "Awakening your solar power...",
+        virgo: "Harmonizing your analytical mind...",
+        libra: "Balancing your cosmic scales...",
+        scorpio: "Unleashing your transformative power...",
+        sagittarius: "Expanding your cosmic horizons...",
+        capricorn: "Building your celestial foundation...",
+        aquarius: "Activating your universal connection...",
+        pisces: "Flowing with oceanic wisdom..."
+      };
+      
+      setLoadingMessage(zodiacMessages[data.zodiacSign as ZodiacSign] || "Aligning your cosmic energy...");
+      
+      // Show cosmic loader for 4 seconds to demonstrate the animation
+      await showLoader(4000);
+      
       const response = await apiRequest('POST', '/api/signup', data);
       return response.json();
     },

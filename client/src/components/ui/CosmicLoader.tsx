@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 interface CosmicLoaderProps {
   duration?: number;
   onComplete?: () => void;
+  message?: string;
 }
 
 export const CosmicLoader: React.FC<CosmicLoaderProps> = ({ 

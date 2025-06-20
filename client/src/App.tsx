@@ -12,6 +12,7 @@ import { PageTransition } from "@/components/PageTransition";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { CosmicLoaderProvider, useCosmicLoader } from "@/hooks/useCosmicLoader";
 import { CosmicLoader } from "@/components/ui/CosmicLoader";
+import { CosmicLoaderWrapper } from "./components/CosmicLoaderWrapper";
 
 // Import all pages
 import Home from "@/pages/Home";
@@ -219,7 +220,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <LanguageProvider>
-          <AppContent />
+          <CosmicLoaderProvider>
+            <CosmicLoaderWrapper>
+              <AppContent />
+            </CosmicLoaderWrapper>
+          </CosmicLoaderProvider>
         </LanguageProvider>
       </AuthProvider>
     </QueryClientProvider>
