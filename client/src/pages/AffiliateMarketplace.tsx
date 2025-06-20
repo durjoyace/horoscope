@@ -349,9 +349,21 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                     </Badge>
                   </div>
                 )}
-                <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center relative overflow-hidden">
-                  <div className="w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    {getCategoryIcon(product.category)}
+                <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
+                  <img 
+                    src={product.imageUrl} 
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      // Fallback to icon if image fails to load
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                    }}
+                  />
+                  <div className="hidden w-full h-full flex items-center justify-center">
+                    <div className="w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center">
+                      {getCategoryIcon(product.category)}
+                    </div>
                   </div>
                 </div>
               </div>
