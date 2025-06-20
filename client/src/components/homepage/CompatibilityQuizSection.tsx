@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { useLocation } from 'wouter';
 import { ZodiacSign } from '@shared/types';
@@ -33,6 +33,18 @@ export const CompatibilityQuizSection: React.FC = () => {
   const [sign2, setSign2] = useState<ZodiacSign | undefined>();
   const [showResults, setShowResults] = useState(false);
   const [animateResult, setAnimateResult] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   const calculateCompatibility = () => {
     if (!sign1 || !sign2) return null;
@@ -57,7 +69,9 @@ export const CompatibilityQuizSection: React.FC = () => {
     if (!sign1 || !sign2) return;
     
     setShowResults(true);
-    setTimeout(() => setAnimateResult(true), 300);
+    // Faster trigger for mobile, slower for desktop
+    const delay = isMobile ? 150 : 300;
+    setTimeout(() => setAnimateResult(true), delay);
   };
   
   const handleReset = () => {
@@ -217,34 +231,59 @@ export const CompatibilityQuizSection: React.FC = () => {
                                     <motion.div
                                       initial={{ scale: 0, rotate: -180 }}
                                       animate={{ scale: 1, rotate: 0 }}
-                                      transition={{ type: "spring", bounce: 0.6, duration: 0.8 }}
-                                      className="relative"
+                                      transition={{ 
+                                        type: "spring", 
+                                        bounce: 0.6, 
+                                        duration: 0.8,
+                                        ease: "easeOut"
+                                      }}
+                                      className="relative z-10"
+                                      style={{ willChange: "transform" }}
                                     >
-                                      <Heart className="h-10 w-10 text-pink-500" fill="rgba(236, 72, 153, 0.8)" />
+                                      <Heart className="h-10 w-10 text-pink-500 drop-shadow-lg" fill="rgba(236, 72, 153, 0.8)" />
                                     </motion.div>
                                     
-                                    {/* Sparkle effects */}
+                                    {/* Sparkle effects - optimized for mobile */}
                                     {[...Array(6)].map((_, i) => (
                                       <motion.div
                                         key={i}
                                         initial={{ scale: 0, opacity: 0 }}
                                         animate={{ 
-                                          scale: [0, 1, 0],
+                                          scale: [0, 1.2, 0],
                                           opacity: [0, 1, 0],
-                                          x: Math.cos(i * 60 * Math.PI / 180) * 25,
-                                          y: Math.sin(i * 60 * Math.PI / 180) * 25
+                                          x: Math.cos(i * 60 * Math.PI / 180) * 20,
+                                          y: Math.sin(i * 60 * Math.PI / 180) * 20
                                         }}
                                         transition={{ 
-                                          delay: 0.3 + i * 0.1, 
-                                          duration: 1.5,
+                                          delay: 0.4 + i * 0.15, 
+                                          duration: 1.8,
                                           repeat: Infinity,
-                                          repeatDelay: 2
+                                          repeatDelay: 3,
+                                          ease: "easeInOut"
                                         }}
-                                        className="absolute"
+                                        className="absolute pointer-events-none"
+                                        style={{ willChange: "transform, opacity" }}
                                       >
-                                        <Sparkles className="h-3 w-3 text-yellow-400" />
+                                        <Sparkles className="h-4 w-4 text-yellow-400 drop-shadow-sm" />
                                       </motion.div>
                                     ))}
+                                    
+                                    {/* Pulsing ring effect for better mobile visibility */}
+                                    <motion.div
+                                      initial={{ scale: 0.8, opacity: 0 }}
+                                      animate={{ 
+                                        scale: [0.8, 1.4, 0.8],
+                                        opacity: [0, 0.6, 0]
+                                      }}
+                                      transition={{
+                                        delay: 0.2,
+                                        duration: 2,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                      }}
+                                      className="absolute inset-0 border-2 border-pink-400 rounded-full"
+                                      style={{ willChange: "transform, opacity" }}
+                                    />
                                   </>
                                 )}
                               </AnimatePresence>
@@ -288,13 +327,34 @@ export const CompatibilityQuizSection: React.FC = () => {
                                 </div>
                                 <div className="font-medium">{getCompatibilityLabel(result.score.romance)} ({result.score.romance}%)</div>
                               </div>
-                              <div className="bg-gray-700 rounded-full h-2 overflow-hidden">
+                              <div className="bg-gray-700 rounded-full h-3 overflow-hidden relative">
                                 <motion.div
-                                  initial={{ width: 0 }}
-                                  animate={{ width: `${result.score.romance}%` }}
-                                  transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
-                                  className={`h-full bg-gradient-to-r from-pink-500 to-pink-400 rounded-full`}
-                                />
+                                  initial={{ width: 0, opacity: 0 }}
+                                  animate={{ width: `${result.score.romance}%`, opacity: 1 }}
+                                  transition={{ 
+                                    delay: 0.8, 
+                                    duration: 1.2, 
+                                    ease: "easeOut",
+                                    width: { type: "spring", damping: 20, stiffness: 100 }
+                                  }}
+                                  className="h-full bg-gradient-to-r from-pink-500 to-pink-400 rounded-full relative"
+                                  style={{ 
+                                    transformOrigin: "left",
+                                    willChange: "width, opacity"
+                                  }}
+                                >
+                                  <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: [0, 1, 0] }}
+                                    transition={{ 
+                                      delay: 1.0,
+                                      duration: 0.8, 
+                                      repeat: 2,
+                                      ease: "easeInOut"
+                                    }}
+                                    className="absolute inset-0 bg-white/20 rounded-full"
+                                  />
+                                </motion.div>
                               </div>
                             </motion.div>
                             
@@ -310,13 +370,34 @@ export const CompatibilityQuizSection: React.FC = () => {
                                 </div>
                                 <div className="font-medium">{getCompatibilityLabel(result.score.friendship)} ({result.score.friendship}%)</div>
                               </div>
-                              <div className="bg-gray-700 rounded-full h-2 overflow-hidden">
+                              <div className="bg-gray-700 rounded-full h-3 overflow-hidden relative">
                                 <motion.div
-                                  initial={{ width: 0 }}
-                                  animate={{ width: `${result.score.friendship}%` }}
-                                  transition={{ delay: 1.0, duration: 1, ease: "easeOut" }}
-                                  className={`h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full`}
-                                />
+                                  initial={{ width: 0, opacity: 0 }}
+                                  animate={{ width: `${result.score.friendship}%`, opacity: 1 }}
+                                  transition={{ 
+                                    delay: 1.0, 
+                                    duration: 1.2, 
+                                    ease: "easeOut",
+                                    width: { type: "spring", damping: 20, stiffness: 100 }
+                                  }}
+                                  className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full relative"
+                                  style={{ 
+                                    transformOrigin: "left",
+                                    willChange: "width, opacity"
+                                  }}
+                                >
+                                  <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: [0, 1, 0] }}
+                                    transition={{ 
+                                      delay: 1.2,
+                                      duration: 0.8, 
+                                      repeat: 2,
+                                      ease: "easeInOut"
+                                    }}
+                                    className="absolute inset-0 bg-white/20 rounded-full"
+                                  />
+                                </motion.div>
                               </div>
                             </motion.div>
                             
@@ -332,13 +413,34 @@ export const CompatibilityQuizSection: React.FC = () => {
                                 </div>
                                 <div className="font-medium">{getCompatibilityLabel(result.score.communication)} ({result.score.communication}%)</div>
                               </div>
-                              <div className="bg-gray-700 rounded-full h-2 overflow-hidden">
+                              <div className="bg-gray-700 rounded-full h-3 overflow-hidden relative">
                                 <motion.div
-                                  initial={{ width: 0 }}
-                                  animate={{ width: `${result.score.communication}%` }}
-                                  transition={{ delay: 1.2, duration: 1, ease: "easeOut" }}
-                                  className={`h-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full`}
-                                />
+                                  initial={{ width: 0, opacity: 0 }}
+                                  animate={{ width: `${result.score.communication}%`, opacity: 1 }}
+                                  transition={{ 
+                                    delay: 1.2, 
+                                    duration: 1.2, 
+                                    ease: "easeOut",
+                                    width: { type: "spring", damping: 20, stiffness: 100 }
+                                  }}
+                                  className="h-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full relative"
+                                  style={{ 
+                                    transformOrigin: "left",
+                                    willChange: "width, opacity"
+                                  }}
+                                >
+                                  <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: [0, 1, 0] }}
+                                    transition={{ 
+                                      delay: 1.4,
+                                      duration: 0.8, 
+                                      repeat: 2,
+                                      ease: "easeInOut"
+                                    }}
+                                    className="absolute inset-0 bg-white/20 rounded-full"
+                                  />
+                                </motion.div>
                               </div>
                             </motion.div>
                             
@@ -354,13 +456,34 @@ export const CompatibilityQuizSection: React.FC = () => {
                                 </div>
                                 <div className="font-medium">{getCompatibilityLabel(result.score.trust)} ({result.score.trust}%)</div>
                               </div>
-                              <div className="bg-gray-700 rounded-full h-2 overflow-hidden">
+                              <div className="bg-gray-700 rounded-full h-3 overflow-hidden relative">
                                 <motion.div
-                                  initial={{ width: 0 }}
-                                  animate={{ width: `${result.score.trust}%` }}
-                                  transition={{ delay: 1.4, duration: 1, ease: "easeOut" }}
-                                  className={`h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full`}
-                                />
+                                  initial={{ width: 0, opacity: 0 }}
+                                  animate={{ width: `${result.score.trust}%`, opacity: 1 }}
+                                  transition={{ 
+                                    delay: 1.4, 
+                                    duration: 1.2, 
+                                    ease: "easeOut",
+                                    width: { type: "spring", damping: 20, stiffness: 100 }
+                                  }}
+                                  className="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full relative"
+                                  style={{ 
+                                    transformOrigin: "left",
+                                    willChange: "width, opacity"
+                                  }}
+                                >
+                                  <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: [0, 1, 0] }}
+                                    transition={{ 
+                                      delay: 1.6,
+                                      duration: 0.8, 
+                                      repeat: 2,
+                                      ease: "easeInOut"
+                                    }}
+                                    className="absolute inset-0 bg-white/20 rounded-full"
+                                  />
+                                </motion.div>
                               </div>
                             </motion.div>
                           </motion.div>
