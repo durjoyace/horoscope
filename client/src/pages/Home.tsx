@@ -48,30 +48,9 @@ export default function Home({ onUserRegistered, isLoggedIn = false }: HomeProps
   };
 
   return (
-    <div className="flex flex-col">
-      {/* Hero section with signup */}
-      <CosmicHeroSection 
-        onSignup={handleSignup} 
-        isLoggedIn={isLoggedIn} 
-      />
-      
-      {/* Features section */}
-      <FeaturesSection />
-      
-      {/* Explanation of how it works */}
-      <WhyItWorks />
-      
-      {/* Interactive compatibility quiz section */}
-      <CompatibilityQuizSection />
-      
-      {/* Testimonials carousel */}
-      <TestimonialsSection />
-      
-      {/* Premium subscription section */}
-      <PremiumSection />
-      
-      {/* Final call to action and footer */}
-      <FooterCTA />
-    </div>
+    <CosmicHeroSection 
+      onSignup={handleSignup} 
+      isLoggedIn={isLoggedIn} 
+    />
   );
 }
