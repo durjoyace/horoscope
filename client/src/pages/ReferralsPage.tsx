@@ -21,6 +21,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import { ViralGrowthTriggers } from '@/components/ViralGrowthTriggers';
+import { ReferralLeaderboard } from '@/components/ReferralLeaderboard';
 
 interface ReferralData {
   referralCode: string;
@@ -359,38 +360,49 @@ export default function ReferralsPage() {
         </Card>
       )}
 
+      {/* Leaderboard */}
+      <div className="mb-8">
+        <ReferralLeaderboard 
+          userReferrals={referralData?.totalReferrals || 0}
+          onShareClick={() => {
+            document.getElementById('sharing-section')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
+      </div>
+
       {/* How It Works */}
       <Card className="mt-8">
         <CardHeader>
-          <CardTitle>How Referrals Work</CardTitle>
+          <CardTitle>The Viral Health Revolution</CardTitle>
+          <CardDescription>Join thousands spreading personalized wellness</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="text-center">
-              <div className="inline-block p-3 bg-blue-100 rounded-full mb-3">
+              <div className="inline-block p-3 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full mb-3">
                 <Share2 className="h-6 w-6 text-blue-600" />
               </div>
-              <h3 className="font-semibold mb-2">1. Share Your Code</h3>
+              <h3 className="font-semibold mb-2">1. Share Your Secret</h3>
               <p className="text-sm text-muted-foreground">
-                Send your unique referral code to friends via SMS, email, or social media
+                Tell friends about the wellness app that actually works for your body type
               </p>
             </div>
             <div className="text-center">
-              <div className="inline-block p-3 bg-green-100 rounded-full mb-3">
+              <div className="inline-block p-3 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-full mb-3">
                 <Users className="h-6 w-6 text-green-600" />
               </div>
-              <h3 className="font-semibold mb-2">2. Friend Signs Up</h3>
+              <h3 className="font-semibold mb-2">2. They Transform</h3>
               <p className="text-sm text-muted-foreground">
-                When they join using your code, they get their first month of premium free
+                Friends discover their unique health insights and see real results
               </p>
             </div>
             <div className="text-center">
-              <div className="inline-block p-3 bg-purple-100 rounded-full mb-3">
+              <div className="inline-block p-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full mb-3">
                 <Gift className="h-6 w-6 text-purple-600" />
               </div>
-              <h3 className="font-semibold mb-2">3. You Both Win</h3>
+              <h3 className="font-semibold mb-2">3. Everyone Wins</h3>
               <p className="text-sm text-muted-foreground">
-                You get premium rewards and they get personalized wellness insights
+                You unlock premium features while spreading better health to your community
               </p>
             </div>
           </div>

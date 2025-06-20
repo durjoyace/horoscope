@@ -37,17 +37,22 @@ export function ReferralBanner({ onDismiss }: ReferralBannerProps) {
             </h3>
             <p className="text-sm text-gray-600 mb-2">
               {totalReferrals > 0 
-                ? `You've referred ${totalReferrals} friend${totalReferrals > 1 ? 's' : ''}! Keep sharing to unlock more rewards.`
-                : "Share your referral code and give friends free premium access while earning rewards."
+                ? `${totalReferrals} lives transformed! You're helping friends discover better health.`
+                : "Your friends deserve the wellness breakthrough you've discovered."
               }
             </p>
             <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="text-xs">
+              <Badge variant="secondary" className="text-xs bg-green-100 text-green-700">
                 <Users className="h-3 w-3 mr-1" />
-                {totalReferrals} referrals
+                {totalReferrals} transformations
               </Badge>
+              {totalReferrals < 10 && (
+                <Badge variant="outline" className="text-xs text-red-600 border-red-200 animate-pulse">
+                  {10 - totalReferrals} away from FREE FOREVER
+                </Badge>
+              )}
               <Badge variant="outline" className="text-xs text-purple-600 border-purple-200">
-                Next reward at {Math.ceil((totalReferrals + 1) / 5) * 5} referrals
+                2x rewards ending today
               </Badge>
             </div>
           </div>

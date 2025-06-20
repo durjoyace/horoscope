@@ -11,7 +11,7 @@ import {
   Users,
   Crown,
   Zap,
-  Fire
+  Flame
 } from 'lucide-react';
 
 interface LeaderboardEntry {
@@ -136,7 +136,7 @@ export function ReferralLeaderboard({ userReferrals, onShareClick }: ReferralLea
                 </div>
               </div>
               <Button onClick={onShareClick} size="sm" className="bg-purple-600 hover:bg-purple-700">
-                <Fire className="h-4 w-4 mr-2" />
+                <Flame className="h-4 w-4 mr-2" />
                 Share Now
               </Button>
             </div>
