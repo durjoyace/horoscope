@@ -317,114 +317,130 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
           </div>
         </div>
 
-        {/* Personalized Banner */}
+        {/* Premium Personalized Banner */}
         {user && (
-          <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg p-6 md:p-8 mb-12 text-white">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-              <div>
-                <h2 className="text-2xl font-bold mb-2">
-                  Welcome{user.firstName ? ` ${user.firstName}` : ''} - {zodiacSignNames.find(s => s.value === user.zodiacSign)?.symbol} {user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1)}
-                </h2>
-                <p className="text-purple-100">
-                  Discover products specially matched to your {getZodiacElement(user.zodiacSign)} element and wellness needs.
-                </p>
+          <div className="relative group mb-12">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-violet-600/20 to-purple-600/20 rounded-xl blur-xl"></div>
+            <div className="relative bg-gradient-to-r from-purple-500/10 via-violet-500/10 to-purple-500/10 backdrop-blur-sm border border-purple-400/30 rounded-xl p-6 md:p-8 shadow-2xl">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="text-center md:text-left">
+                  <h2 className="text-2xl font-bold text-white mb-2 flex items-center gap-2 justify-center md:justify-start">
+                    <Star className="h-6 w-6 text-amber-400 animate-pulse" />
+                    Welcome{user.firstName ? ` ${user.firstName}` : ''} - {zodiacSignNames.find(s => s.value === user.zodiacSign)?.symbol} {user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1)}
+                  </h2>
+                  <p className="text-slate-300">
+                    Discover products specially matched to your {getZodiacElement(user.zodiacSign)} element and wellness needs.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10">
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                  <span className="text-sm text-emerald-300 font-medium">
+                    {filteredProducts.filter(p => p.recommendedSigns.includes(user.zodiacSign)).length} Recommended for You
+                  </span>
+                </div>
               </div>
-              <Badge className="bg-white text-purple-600 px-4 py-2">
-                {filteredProducts.filter(p => p.recommendedSigns.includes(user.zodiacSign)).length} Recommended for You
-              </Badge>
             </div>
           </div>
         )}
 
-        {/* Filters */}
-        <div className="flex flex-col md:flex-row gap-6 mb-8">
-          <div className="flex-1">
+        {/* Enhanced Mobile-First Filters */}
+        <div className="mb-8">
+          {/* Mobile Filter Toggle */}
+          <div className="md:hidden mb-4">
+            <Button
+              variant="outline"
+              className="w-full bg-white/5 border-white/20 text-white hover:bg-white/10"
+              onClick={() => setShowMobileFilters(!showMobileFilters)}
+            >
+              <Filter className="w-4 h-4 mr-2" />
+              Filters & Search
+              {filteredProducts.length !== affiliateProducts.length && (
+                <Badge className="ml-2 bg-purple-500">
+                  {filteredProducts.length}
+                </Badge>
+              )}
+            </Button>
+          </div>
+
+          {/* Desktop Filters Always Visible, Mobile Collapsible */}
+          <div className={`space-y-4 ${!showMobileFilters ? 'hidden md:block' : 'block'}`}>
+            {/* Search Bar */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
               <Input 
-                placeholder="Search premium wellness products..." 
-                className="pl-10"
+                placeholder="Search cosmic wellness products..." 
+                className="pl-12 h-12 bg-white/5 backdrop-blur-sm border-white/20 text-white placeholder:text-slate-400 focus:border-purple-400 focus:ring-purple-400/30"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-          </div>
-          
-          <Select value={activeCategory} onValueChange={(value) => setActiveCategory(value as ProductCategory | 'all')}>
-            <SelectTrigger className="w-full md:w-48">
-              <SelectValue placeholder="Category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Products</SelectItem>
-              <SelectItem value="supplements">Supplements</SelectItem>
-              <SelectItem value="nutrition">Nutrition</SelectItem>
-              <SelectItem value="fitness">Fitness</SelectItem>
-              <SelectItem value="skincare">Skincare</SelectItem>
-              <SelectItem value="meditation">Meditation</SelectItem>
-              <SelectItem value="selfcare">Self Care</SelectItem>
-            </SelectContent>
-          </Select>
+            
+            {/* Filter Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Select value={activeCategory} onValueChange={(value) => setActiveCategory(value as ProductCategory | 'all')}>
+                <SelectTrigger className="bg-white/5 border-white/20 text-white hover:bg-white/10">
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent className="bg-slate-900 border-slate-700">
+                  <SelectItem value="all">All Products</SelectItem>
+                  <SelectItem value="supplements">Supplements</SelectItem>
+                  <SelectItem value="nutrition">Nutrition</SelectItem>
+                  <SelectItem value="fitness">Fitness</SelectItem>
+                  <SelectItem value="skincare">Skincare</SelectItem>
+                  <SelectItem value="meditation">Meditation</SelectItem>
+                  <SelectItem value="selfcare">Self Care</SelectItem>
+                </SelectContent>
+              </Select>
 
-          <Select value={selectedZodiacSign} onValueChange={(value) => setSelectedZodiacSign(value as ZodiacSign | 'all')}>
-            <SelectTrigger className="w-full md:w-48">
-              <SelectValue placeholder="Zodiac Sign" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Signs</SelectItem>
-              {zodiacSignNames.map((sign) => (
-                <SelectItem key={sign.value} value={sign.value}>
-                  {sign.symbol} {sign.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+              <Select value={selectedZodiacSign} onValueChange={(value) => setSelectedZodiacSign(value as ZodiacSign | 'all')}>
+                <SelectTrigger className="bg-white/5 border-white/20 text-white hover:bg-white/10">
+                  <SelectValue placeholder="Zodiac Sign" />
+                </SelectTrigger>
+                <SelectContent className="bg-slate-900 border-slate-700">
+                  <SelectItem value="all">All Signs</SelectItem>
+                  {zodiacSignNames.map((sign) => (
+                    <SelectItem key={sign.value} value={sign.value}>
+                      {sign.symbol} {sign.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600">Price: ${priceRange[0]} - ${priceRange[1]}</span>
-            <input
-              type="range"
-              min="0"
-              max="600"
-              value={priceRange[1]}
-              onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
-              className="w-24"
-            />
+              <div className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/20 rounded-md">
+                <span className="text-sm text-slate-300 whitespace-nowrap">Price: ${priceRange[0]} - ${priceRange[1]}</span>
+                <input
+                  type="range"
+                  min="0"
+                  max="600"
+                  value={priceRange[1]}
+                  onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
+                  className="flex-1 h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer slider"
+                />
+              </div>
+
+              <div className="flex items-center justify-between text-slate-300 text-sm">
+                <span>{filteredProducts.length} products</span>
+                {(searchQuery || activeCategory !== 'all' || selectedZodiacSign !== 'all' || priceRange[1] !== 200) && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setSearchQuery('');
+                      setActiveCategory('all');
+                      setSelectedZodiacSign('all');
+                      setPriceRange([0, 200]);
+                    }}
+                    className="text-purple-400 hover:text-purple-300"
+                  >
+                    Clear all
+                  </Button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Category Tabs */}
-        <Tabs value={activeCategory} onValueChange={(value) => setActiveCategory(value as ProductCategory | 'all')} className="mb-8">
-          <TabsList className="grid w-full grid-cols-7">
-            <TabsTrigger value="all" className="flex items-center gap-2">
-              <ShoppingBag className="h-4 w-4" />
-              All ({affiliateProducts.length})
-            </TabsTrigger>
-            <TabsTrigger value="supplements" className="flex items-center gap-2">
-              {getCategoryIcon('supplements')}
-              Supplements
-            </TabsTrigger>
-            <TabsTrigger value="nutrition" className="flex items-center gap-2">
-              {getCategoryIcon('nutrition')}
-              Nutrition
-            </TabsTrigger>
-            <TabsTrigger value="fitness" className="flex items-center gap-2">
-              {getCategoryIcon('fitness')}
-              Fitness
-            </TabsTrigger>
-            <TabsTrigger value="skincare" className="flex items-center gap-2">
-              {getCategoryIcon('skincare')}
-              Skincare
-            </TabsTrigger>
-            <TabsTrigger value="meditation" className="flex items-center gap-2">
-              {getCategoryIcon('meditation')}
-              Meditation
-            </TabsTrigger>
-            <TabsTrigger value="selfcare" className="flex items-center gap-2">
-              {getCategoryIcon('selfcare')}
-              Self Care
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+
 
         {/* Premium Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
@@ -532,46 +548,53 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
           ))}
         </div>
 
-        {/* Empty State */}
+        {/* Premium Empty State */}
         {filteredProducts.length === 0 && (
-          <div className="text-center py-12">
-            <ShoppingBag className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-600 mb-2">No products found</h3>
-            <p className="text-gray-500">Try adjusting your search or filter criteria</p>
+          <div className="text-center py-16">
+            <div className="w-20 h-20 bg-gradient-to-br from-purple-500/20 to-violet-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-purple-400/30">
+              <ShoppingBag className="h-8 w-8 text-purple-300" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">No cosmic matches found</h3>
+            <p className="text-slate-300 mb-6">Try adjusting your search or filter criteria to discover more wellness products</p>
             <Button 
               onClick={() => {
                 setSearchQuery('');
                 setActiveCategory('all');
                 setPriceRange([0, 200]);
+                setSelectedZodiacSign('all');
               }}
-              className="mt-4"
+              className="bg-gradient-to-r from-purple-500 to-violet-500 hover:from-purple-600 hover:to-violet-600 text-white"
             >
-              Clear Filters
+              Clear All Filters
             </Button>
           </div>
         )}
 
-        {/* Featured Brands Section */}
-        <div className="bg-white border border-gray-200 rounded-lg p-8 mb-8">
-          <h2 className="text-2xl font-bold text-center mb-6 text-gray-900">
-            Featured Premium Brands
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
-            {['Athletic Greens', 'Bloom Nutrition', 'Ritual', 'Four Sigmatic', 'Thorne Health', 'Oura Ring'].map((brand) => (
-              <div key={brand} className="p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-200">
-                <div className="text-sm font-semibold text-gray-800">{brand}</div>
-              </div>
-            ))}
+        {/* Premium Featured Brands Section */}
+        <div className="relative mb-12">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-violet-600/10 to-purple-600/10 rounded-xl blur-xl"></div>
+          <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-8">
+            <h2 className="text-2xl font-bold text-center mb-8 text-white">
+              Featured Premium Brands
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+              {['Athletic Greens', 'Bloom Nutrition', 'Ritual', 'Four Sigmatic', 'Thorne Health', 'Oura Ring'].map((brand) => (
+                <div key={brand} className="group p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10 hover:border-purple-400/30 hover:shadow-lg hover:shadow-purple-500/10">
+                  <div className="text-sm font-semibold text-slate-300 group-hover:text-white transition-colors">{brand}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Pagination Controls */}
+        {/* Premium Pagination Controls */}
         {totalPages > 1 && (
           <div className="flex justify-center items-center gap-4 mb-8">
             <Button
               variant="outline"
               disabled={currentPage === 1}
               onClick={() => setCurrentPage(currentPage - 1)}
+              className="bg-white/5 border-white/20 text-white hover:bg-white/10 disabled:opacity-50"
             >
               Previous
             </Button>
@@ -583,7 +606,10 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                   variant={page === currentPage ? "default" : "outline"}
                   size="sm"
                   onClick={() => setCurrentPage(page)}
-                  className={page === currentPage ? "bg-purple-600 hover:bg-purple-700" : ""}
+                  className={page === currentPage 
+                    ? "bg-gradient-to-r from-purple-500 to-violet-500 hover:from-purple-600 hover:to-violet-600 text-white border-none" 
+                    : "bg-white/5 border-white/20 text-white hover:bg-white/10"
+                  }
                 >
                   {page}
                 </Button>
@@ -594,16 +620,17 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
               variant="outline"
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage(currentPage + 1)}
+              className="bg-white/5 border-white/20 text-white hover:bg-white/10 disabled:opacity-50"
             >
               Next
             </Button>
           </div>
         )}
 
-        {/* Results Summary */}
-        <div className="text-center text-gray-600">
+        {/* Premium Results Summary */}
+        <div className="text-center text-slate-400 text-sm">
           <p>
-            Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
+            Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} cosmic wellness products
             {filteredProducts.length !== affiliateProducts.length && ` (filtered from ${affiliateProducts.length} total)`}
           </p>
         </div>
