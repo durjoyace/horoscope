@@ -159,6 +159,49 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
     });
   };
 
+  const getWhyWeLikeIt = (product: AffiliateProduct): string => {
+    // Editorial recommendations based on product names and categories
+    const editorialRecommendations: Record<string, string> = {
+      'Athletic Greens AG1': 'Comprehensive nutrition in one scoop with 75 high-quality vitamins, minerals, and whole food sourced ingredients. Third-party tested for purity and potency.',
+      'Bloom Nutrition Greens & Superfoods': 'Clean, organic superfoods blend with digestive enzymes and probiotics. No artificial fillers, just pure plant-based nutrition.',
+      'Ritual Essential for Women': 'Traceable ingredients with delayed-release capsules for better absorption. Transparent sourcing and third-party testing for quality assurance.',
+      'Four Sigmatic Mushroom Coffee': 'Adaptagenic mushrooms combined with premium coffee for sustained energy without jitters. Supports cognitive function and stress resilience.',
+      'Thorne Health Vitamin D3': 'NSF Certified for Sport with optimal absorption formula. Supports immune function, bone health, and muscle strength.',
+      'Seed Daily Synbiotic': 'Clinically-studied probiotic strains with prebiotic fiber. Supports digestive health, skin clarity, and immune function.',
+      'Huel Complete Nutrition': 'Nutritionally complete meal replacement with balanced macronutrients and 27 essential vitamins and minerals.',
+      'Liquid IV Hydration Multiplier': 'Cellular Transport Technology delivers hydration faster than water alone. Non-GMO with natural flavors and no artificial preservatives.',
+      'Goop Beauty Vitamin C Serum': 'Stable vitamin C formula with hyaluronic acid and peptides. Clinically proven to brighten skin and reduce fine lines.',
+      'Oura Ring Generation 3': 'Advanced sleep and recovery tracking with 99% accuracy. Provides personalized insights for optimizing health and performance.',
+      'Nutrafol Hair Growth': 'Clinically proven hair growth supplement with natural ingredients. Targets root causes of hair thinning and supports scalp health.',
+      'Theragun Elite': 'Professional-grade percussive therapy device with customizable speed and attachments. Reduces muscle tension and improves recovery.',
+      'Organifi Green Juice': 'Organic superfood blend with ashwagandha and turmeric. Supports natural energy, stress management, and inflammation response.',
+      'MUD\\WTR Morning Blend': 'Coffee alternative with adaptogenic mushrooms, cacao, and spices. Provides sustained energy and mental clarity without caffeine crash.',
+      'Whoop 4.0 Fitness Tracker': 'Continuous health monitoring with personalized strain and recovery recommendations. Helps optimize training and prevent overexertion.',
+      'Ancient Nutrition Bone Broth': 'Grass-fed bone broth protein with collagen peptides. Supports joint health, gut lining, and muscle recovery.',
+      'Peloton Bike+': 'Interactive fitness platform with live and on-demand classes. Premium build quality with immersive training experience.',
+      'Sakara Life Metabolism Powder': 'Plant-based metabolism support with digestive enzymes and probiotics. Supports healthy weight management and energy levels.',
+      'Headspace Meditation App': 'Evidence-based mindfulness and meditation programs. Clinically proven to reduce stress and improve focus and sleep.',
+      'Calm Sleep Stories': 'Premium sleep content library with soothing narrations and soundscapes. Helps establish healthy sleep routines and reduce anxiety.'
+    };
+
+    // Return specific recommendation or generate category-based one
+    if (editorialRecommendations[product.name]) {
+      return editorialRecommendations[product.name];
+    }
+
+    // Category-based recommendations
+    const categoryRecommendations: Record<string, string> = {
+      'supplements': 'High-quality formulation with transparent labeling and third-party testing. Sourced from premium ingredients for optimal bioavailability.',
+      'nutrition': 'Clean ingredients with no artificial fillers or preservatives. Supports balanced nutrition and sustainable energy levels.',
+      'fitness': 'Professional-grade quality with durable construction. Designed to enhance performance and support recovery goals.',
+      'skincare': 'Clinically-tested ingredients with proven efficacy. Gentle formulation suitable for sensitive skin with visible results.',
+      'meditation': 'Evidence-based practices with expert guidance. Scientifically proven to reduce stress and improve mental well-being.',
+      'selfcare': 'Premium ingredients with therapeutic benefits. Supports relaxation, stress relief, and overall wellness routine.'
+    };
+
+    return categoryRecommendations[product.category] || 'Carefully curated for quality, efficacy, and customer satisfaction. Backed by positive reviews and trusted by wellness experts.';
+  };
+
   const getZodiacElement = (sign: ZodiacSign): string => {
     const signData = zodiacSignNames.find(s => s.value === sign);
     return signData ? signData.element : '';
@@ -503,14 +546,30 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
                   </div>
                 </div>
 
+                {/* Why We Like It Section */}
+                <div className="mb-4 p-3 bg-blue-500/10 border border-blue-400/20 rounded-lg">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-blue-300 text-xs font-medium mb-1">Why We Like It</p>
+                      <p className="text-blue-200 text-xs leading-relaxed">
+                        {getWhyWeLikeIt(product)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Personalized recommendation */}
                 {user && product.recommendedSigns.includes(user.zodiacSign) && (
                   <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-400/20 rounded-lg">
                     <div className="flex items-start gap-2">
                       <Star className="h-4 w-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                      <p className="text-emerald-300 text-xs leading-relaxed">
-                        {getHoroscopeHealthRecommendation(product, user.zodiacSign)}
-                      </p>
+                      <div>
+                        <p className="text-emerald-300 text-xs font-medium mb-1">Perfect for {user.zodiacSign}</p>
+                        <p className="text-emerald-200 text-xs leading-relaxed">
+                          {getHoroscopeHealthRecommendation(product, user.zodiacSign)}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 )}
