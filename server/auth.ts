@@ -1,5 +1,6 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Express } from "express";
 import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
@@ -66,6 +67,56 @@ export function setupAuth(app: Express) {
       }
     )
   );
+
+  // Google OAuth Strategy
+  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    passport.use(
+      new GoogleStrategy(
+        {
+          clientID: process.env.GOOGLE_CLIENT_ID,
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+          callbackURL: "/api/auth/google/callback"
+        },
+        async (accessToken, refreshToken, profile, done) => {
+          try {
+            const email = profile.emails?.[0]?.value;
+            if (!email) {
+              return done(new Error("No email found in Google profile"), false);
+            }
+
+            // Check if user already exists
+            let user = await storage.getUserByEmail(email);
+            
+            if (user) {
+              // Update Google ID if not set
+              if (!user.googleId) {
+                user = await storage.updateUserGoogleId(user.id, profile.id);
+              }
+              return done(null, user);
+            } else {
+              // Create new user with Google data
+              const newUser = await storage.createUser({
+                email,
+                firstName: profile.name?.givenName || null,
+                lastName: profile.name?.familyName || null,
+                googleId: profile.id,
+                zodiacSign: 'gemini', // Default - user will be prompted to update
+                phone: null,
+                password: null, // No password for OAuth users
+                smsOptIn: false,
+                emailOptIn: true,
+                preferredDelivery: 'email',
+              });
+              
+              return done(null, newUser);
+            }
+          } catch (err) {
+            return done(err);
+          }
+        }
+      )
+    );
+  }
 
   passport.serializeUser((user, done) => done(null, user.id));
   
@@ -212,5 +263,94 @@ export function setupAuth(app: Express) {
         isPremium: false
       }
     });
+  });
+
+  // Google OAuth routes
+  app.get("/api/auth/google", 
+    passport.authenticate("google", { scope: ["profile", "email"] })
+  );
+
+  app.get("/api/auth/google/callback",
+    passport.authenticate("google", { failureRedirect: "/auth?error=google_auth_failed" }),
+    (req, res) => {
+      // Check if user needs to complete profile (no zodiac sign or phone)
+      if (!req.user.zodiacSign || req.user.zodiacSign === 'gemini' || !req.user.phone) {
+        res.redirect("/auth?complete_profile=true");
+      } else {
+        res.redirect("/");
+      }
+    }
+  );
+
+  // Magic link authentication for passwordless login
+  app.post("/api/auth/magic-link", async (req, res) => {
+    try {
+      const { email } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({
+          success: false,
+          message: "Email is required"
+        });
+      }
+
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "No account found with this email"
+        });
+      }
+
+      // Generate magic link token
+      const token = randomBytes(32).toString('hex');
+      const expires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+      
+      await storage.createMagicLink(user.id, token, expires);
+      
+      // Send magic link via email (implement email service)
+      // For now, return the token for testing
+      res.json({
+        success: true,
+        message: "Magic link sent to your email",
+        // Remove token in production
+        ...(process.env.NODE_ENV === 'development' && { token })
+      });
+    } catch (error) {
+      console.error("Magic link error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to send magic link"
+      });
+    }
+  });
+
+  app.get("/api/auth/magic/:token", async (req, res) => {
+    try {
+      const { token } = req.params;
+      
+      const magicLink = await storage.getMagicLink(token);
+      if (!magicLink || magicLink.expires < new Date()) {
+        return res.redirect("/auth?error=invalid_token");
+      }
+
+      const user = await storage.getUser(magicLink.userId);
+      if (!user) {
+        return res.redirect("/auth?error=user_not_found");
+      }
+
+      // Delete used magic link
+      await storage.deleteMagicLink(token);
+
+      req.login(user, (err) => {
+        if (err) {
+          return res.redirect("/auth?error=login_failed");
+        }
+        res.redirect("/");
+      });
+    } catch (error) {
+      console.error("Magic link verification error:", error);
+      res.redirect("/auth?error=verification_failed");
+    }
   });
 }

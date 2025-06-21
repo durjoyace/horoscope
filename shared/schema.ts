@@ -22,10 +22,12 @@ export const users = pgTable("users", {
   lastName: text("last_name"),
   zodiacSign: text("zodiac_sign").notNull(),
   birthdate: text("birthdate"),
-  phone: text("phone").notNull(),
+  phone: text("phone"),
   smsOptIn: boolean("sms_opt_in").default(true),
   emailOptIn: boolean("email_opt_in").default(false),
   preferredDelivery: text("preferred_delivery").default('sms'),
+  // OAuth fields
+  googleId: text("google_id").unique(),
   // Premium subscription fields
   // Note: isPremium is not in the database, but we'll handle it in code
   // isPremium: boolean("is_premium").default(false),
@@ -38,6 +40,15 @@ export const users = pgTable("users", {
   referralCode: text("referral_code").unique(),
   referredBy: text("referred_by"), // referral code of the person who referred this user
   referralRewards: integer("referral_rewards").default(0), // number of successful referrals
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Magic links table for passwordless authentication
+export const magicLinks = pgTable("magic_links", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  token: text("token").notNull().unique(),
+  expires: timestamp("expires").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
