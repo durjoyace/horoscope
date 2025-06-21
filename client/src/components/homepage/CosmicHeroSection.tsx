@@ -17,25 +17,73 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
   isLoggedIn = false 
 }) => {
   const [phone, setPhone] = useState('');
+  const [phoneError, setPhoneError] = useState('');
   const [, navigate] = useLocation();
   const { toast } = useToast();
   const { showLoader, setLoadingMessage } = useCosmicLoader();
   const { t } = useLanguage();
 
+  // Format phone number as user types
+  const formatPhoneNumber = (value: string) => {
+    // Remove all non-numeric characters
+    const phoneNumber = value.replace(/[^\d]/g, '');
+    
+    // Format as (XXX) XXX-XXXX
+    if (phoneNumber.length < 4) return phoneNumber;
+    if (phoneNumber.length < 7) return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+    return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+  };
+
+  // Validate phone number
+  const validatePhone = (phoneValue: string) => {
+    const cleanPhone = phoneValue.replace(/[^\d]/g, '');
+    
+    if (cleanPhone.length === 0) {
+      return "Phone number is required";
+    }
+    if (cleanPhone.length < 10) {
+      return "Phone number must be at least 10 digits";
+    }
+    if (cleanPhone.length > 11) {
+      return "Phone number is too long";
+    }
+    if (cleanPhone.length === 11 && !cleanPhone.startsWith('1')) {
+      return "Invalid country code";
+    }
+    
+    return '';
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const formatted = formatPhoneNumber(value);
+    setPhone(formatted);
+    
+    // Clear error when user starts typing
+    if (phoneError) {
+      setPhoneError('');
+    }
+  };
+
   const handleSignupClick = () => {
-    if (!phone || phone.length < 10) {
+    const error = validatePhone(phone);
+    if (error) {
+      setPhoneError(error);
       toast({
-        title: t('toast.phone.required.title') || "Phone Number Required",
-        description: t('toast.phone.required.description') || "Please enter a valid phone number to receive your daily horoscope via SMS.",
+        title: "Invalid Phone Number",
+        description: error,
         variant: "destructive",
       });
       return;
     }
     
+    // Clean phone number for submission
+    const cleanPhone = phone.replace(/[^\d]/g, '');
+    
     if (onSignup) {
-      onSignup(phone);
+      onSignup(cleanPhone);
     } else {
-      localStorage.setItem('pendingSignupPhone', phone);
+      localStorage.setItem('pendingSignupPhone', cleanPhone);
       navigate('/signup');
     }
   };
@@ -133,20 +181,52 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
           
           {!isLoggedIn && (
             <>
-              {/* Premium phone input form */}
+              {/* Enhanced mobile number input form */}
               <div className="max-w-md mx-auto mb-8">
+                <div className="text-center mb-3">
+                  <p className="text-slate-300 text-sm">
+                    Enter your mobile number to receive daily horoscopes via SMS
+                  </p>
+                </div>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <div className="flex-1 relative group">
-                    <Smartphone className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-purple-400 transition-colors duration-300" />
+                    <Smartphone className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 transition-colors duration-300 ${
+                      phoneError ? 'text-red-400' : 'text-slate-400 group-focus-within:text-purple-400'
+                    }`} />
                     <Input
                       value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      onChange={handlePhoneChange}
                       onKeyPress={handleKeyPress}
-                      placeholder={t('signup.email.placeholder')}
+                      placeholder="(555) 123-4567"
                       type="tel"
-                      className="h-14 pl-12 text-lg bg-white/5 backdrop-blur-sm border-white/20 text-white placeholder:text-slate-400 focus:border-purple-400 focus:ring-purple-400/30 focus:bg-white/10 transition-all duration-300 shadow-lg shadow-black/10 hover:border-white/30"
+                      maxLength={14}
+                      className={`h-14 pl-12 text-lg backdrop-blur-sm text-white placeholder:text-slate-400 transition-all duration-300 shadow-lg shadow-black/10 ${
+                        phoneError 
+                          ? 'bg-red-500/10 border-red-400/50 focus:border-red-400 focus:ring-red-400/30' 
+                          : 'bg-white/5 border-white/20 focus:border-purple-400 focus:ring-purple-400/30 focus:bg-white/10 hover:border-white/30'
+                      }`}
                     />
-                    <div className="absolute inset-0 rounded-md bg-gradient-to-r from-purple-500/10 to-violet-500/10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                    <div className={`absolute inset-0 rounded-md transition-opacity duration-300 pointer-events-none ${
+                      phoneError 
+                        ? 'bg-gradient-to-r from-red-500/10 to-red-500/10 opacity-100' 
+                        : 'bg-gradient-to-r from-purple-500/10 to-violet-500/10 opacity-0 group-focus-within:opacity-100'
+                    }`}></div>
+                    
+                    {/* Validation message */}
+                    {phoneError && (
+                      <div className="absolute -bottom-6 left-0 text-red-400 text-sm font-medium animate-pulse">
+                        {phoneError}
+                      </div>
+                    )}
+                    
+                    {/* Success indicator */}
+                    {phone && !phoneError && phone.replace(/[^\d]/g, '').length >= 10 && (
+                      <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                        <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center">
+                          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <Button 
                     onClick={handleSignupClick}
@@ -159,15 +239,19 @@ export const CosmicHeroSection: React.FC<CosmicHeroSectionProps> = ({
                 </div>
               </div>
               
-              {/* Trust indicators */}
-              <div className="flex items-center justify-center gap-6 text-sm text-slate-400 mb-8">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-400" />
-                  <span>Instant access</span>
+              {/* Enhanced trust indicators */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-sm text-slate-300 mb-8">
+                <div className="flex items-center gap-2 group">
+                  <CheckCircle className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
+                  <span className="group-hover:text-white transition-colors duration-300">Instant SMS delivery</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-400" />
-                  <span>No spam</span>
+                <div className="flex items-center gap-2 group">
+                  <CheckCircle className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
+                  <span className="group-hover:text-white transition-colors duration-300">No spam ever</span>
+                </div>
+                <div className="flex items-center gap-2 group">
+                  <CheckCircle className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
+                  <span className="group-hover:text-white transition-colors duration-300">Cancel anytime</span>
                 </div>
               </div>
               
