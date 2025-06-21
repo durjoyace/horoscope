@@ -6,6 +6,7 @@ import {
   forumTopics,
   forumReplies,
   referrals,
+  magicLinks,
   type User, 
   type InsertUser, 
   type Horoscope, 
@@ -36,11 +37,17 @@ export interface IStorage {
   getUsersByStripeCustomerId(stripeCustomerId: string): Promise<User[]>;
   createUser(user: InsertUser): Promise<User>;
   updateUser(id: number, user: Partial<InsertUser>): Promise<User | undefined>;
+  updateUserGoogleId(id: number, googleId: string): Promise<User | undefined>;
   getAllUsers(): Promise<User[]>;
   getUsersByZodiacSign(sign: ZodiacSign): Promise<User[]>;
   getUsersForDailyDelivery(): Promise<User[]>;
   getAllUsersForCRM(): Promise<User[]>;
   getUsersForSMSBroadcast(): Promise<User[]>;
+  
+  // Magic link operations
+  createMagicLink(userId: number, token: string, expires: Date): Promise<void>;
+  getMagicLink(token: string): Promise<{ userId: number; expires: Date } | undefined>;
+  deleteMagicLink(token: string): Promise<void>;
   
   // Horoscope operations
   getHoroscope(id: number): Promise<Horoscope | undefined>;
@@ -135,6 +142,15 @@ export class DatabaseStorage implements IStorage {
     const [user] = await db
       .update(users)
       .set(updates)
+      .where(eq(users.id, id))
+      .returning();
+    return user || undefined;
+  }
+
+  async updateUserGoogleId(id: number, googleId: string): Promise<User | undefined> {
+    const [user] = await db
+      .update(users)
+      .set({ googleId })
       .where(eq(users.id, id))
       .returning();
     return user || undefined;
@@ -438,6 +454,28 @@ export class DatabaseStorage implements IStorage {
     }
     
     return code!;
+  }
+
+  // Magic link operations
+  async createMagicLink(userId: number, token: string, expires: Date): Promise<void> {
+    await db.insert(magicLinks).values({
+      userId,
+      token,
+      expires
+    });
+  }
+
+  async getMagicLink(token: string): Promise<{ userId: number; expires: Date } | undefined> {
+    const [link] = await db.select().from(magicLinks).where(eq(magicLinks.token, token));
+    if (!link) return undefined;
+    return {
+      userId: link.userId,
+      expires: link.expires
+    };
+  }
+
+  async deleteMagicLink(token: string): Promise<void> {
+    await db.delete(magicLinks).where(eq(magicLinks.token, token));
   }
 }
 

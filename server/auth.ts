@@ -274,7 +274,7 @@ export function setupAuth(app: Express) {
     passport.authenticate("google", { failureRedirect: "/auth?error=google_auth_failed" }),
     (req, res) => {
       // Check if user needs to complete profile (no zodiac sign or phone)
-      if (!req.user.zodiacSign || req.user.zodiacSign === 'gemini' || !req.user.phone) {
+      if (req.user && (!req.user.zodiacSign || req.user.zodiacSign === 'gemini' || !req.user.phone)) {
         res.redirect("/auth?complete_profile=true");
       } else {
         res.redirect("/");

@@ -20,7 +20,7 @@ export const users = pgTable("users", {
   password: text("password"),
   firstName: text("first_name"),
   lastName: text("last_name"),
-  zodiacSign: text("zodiac_sign").notNull(),
+  zodiacSign: text("zodiac_sign"),
   birthdate: text("birthdate"),
   phone: text("phone"),
   smsOptIn: boolean("sms_opt_in").default(true),
