@@ -47,6 +47,7 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 200]);
   const [selectedZodiacSign, setSelectedZodiacSign] = useState<ZodiacSign | 'all'>('all');
   const [currentPage, setCurrentPage] = useState(1);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
   const itemsPerPage = 12;
   const { toast } = useToast();
 
@@ -266,19 +267,54 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950/20 to-slate-900">
       <div className="container mx-auto px-4 max-w-7xl">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <div className="flex justify-center mb-4">
-            <ShoppingBag className="h-12 w-12 text-purple-600" />
+        {/* Premium Hero Section */}
+        <div className="relative overflow-hidden py-16 mb-12">
+          {/* Sophisticated background effects */}
+          <div className="absolute inset-0 opacity-30">
+            {[...Array(40)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute rounded-full animate-pulse"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  width: `${1 + Math.random() * 2}px`,
+                  height: `${1 + Math.random() * 2}px`,
+                  background: `radial-gradient(circle, ${['#ffffff88', '#a78bfa88', '#ec4899aa'][Math.floor(Math.random() * 3)]} 0%, transparent 70%)`,
+                  animationDelay: `${Math.random() * 4}s`,
+                  animationDuration: `${2 + Math.random() * 3}s`
+                }}
+              />
+            ))}
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Premium Wellness Marketplace
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Curated products from top wellness brands, personalized for your astrological profile
-          </p>
+          
+          <div className="relative text-center">
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-purple-500/10 via-violet-500/15 to-purple-500/10 border border-purple-400/30 text-purple-200 text-sm font-medium mb-8 backdrop-blur-sm shadow-lg shadow-purple-500/10">
+              <ShoppingBag className="w-5 h-5 text-purple-300" />
+              <span>Cosmic Wellness Collection</span>
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+              <span className="drop-shadow-2xl">Premium Wellness</span>
+              <span className="block bg-gradient-to-r from-purple-400 via-violet-400 to-purple-300 bg-clip-text text-transparent mt-2 animate-pulse" style={{animationDuration: '3s'}}>
+                Marketplace
+              </span>
+            </h1>
+            
+            <p className="text-lg sm:text-xl text-slate-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+              Curated premium wellness products aligned with your astrological profile. 
+              Every recommendation is personalized to enhance your cosmic well-being journey.
+            </p>
+            
+            {user && (
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-purple-200">
+                <Star className="w-4 h-4 text-amber-400" />
+                <span className="text-sm">Personalized for {user.zodiacSign}</span>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Personalized Banner */}
@@ -390,124 +426,109 @@ export default function AffiliateMarketplace({ user }: MarketplaceProps) {
           </TabsList>
         </Tabs>
 
-        {/* Products Grid */}
+        {/* Premium Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {currentProducts.map((product) => (
-            <Card key={product.id} className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white rounded-2xl overflow-hidden shadow-lg hover:scale-105 transform">
-              <div className="relative">
-                <div className="absolute top-4 left-4 z-10">
-                  <Badge className="bg-white/90 text-gray-700 border border-gray-200 backdrop-blur-sm text-xs px-3 py-1 rounded-full">
+          {currentProducts.map((product, index) => (
+            <div 
+              key={product.id} 
+              className="group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:bg-white/10 hover:border-purple-400/30 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-2"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              {/* Premium gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative p-6">
+                {/* Header with badges */}
+                <div className="flex items-start justify-between mb-4">
+                  <Badge className="bg-purple-500/20 text-purple-200 border border-purple-400/30 text-xs px-3 py-1 rounded-full backdrop-blur-sm">
                     {product.category.toUpperCase()}
                   </Badge>
-                </div>
-                {user && product.recommendedSigns.includes(user.zodiacSign) && (
-                  <div className="absolute top-4 right-4 z-10">
-                    <Badge className="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs px-3 py-1 rounded-full shadow-lg">
-                      RECOMMENDED
-                    </Badge>
-                  </div>
-                )}
-                <div className="h-48 bg-gradient-to-br from-white to-purple-50 relative overflow-hidden">
-                  <div className="w-full h-full flex flex-col items-center justify-center p-6">
-                    <div className="w-20 h-20 mb-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
-                      <div className="text-white text-2xl">
-                        {getCategoryIcon(product.category)}
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-xs font-bold text-purple-600 uppercase tracking-wider mb-2 bg-purple-100 px-3 py-1 rounded-full shadow-sm">
-                        {getBrandName(product.name)}
-                      </div>
-                      <div className="text-sm font-bold text-gray-800 leading-tight mb-2">
-                        Premium {product.category}
-                      </div>
-                      <div className="flex items-center justify-center">
-                        <div className="flex">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`h-3 w-3 ${
-                                i < Math.floor(product.rating)
-                                  ? 'text-yellow-500 fill-yellow-500'
-                                  : 'text-gray-300'
-                              }`}
-                            />
-                          ))}
-                        </div>
-                        <span className="text-xs text-gray-600 ml-1">({product.rating})</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <CardHeader className="pb-3 pt-6">
-                <CardTitle className="text-xl font-bold text-gray-900 mb-3 leading-tight min-h-[3rem] flex items-start">
-                  {product.name}
-                </CardTitle>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-4 w-4 ${
-                          i < Math.floor(product.rating)
-                            ? 'text-yellow-500 fill-yellow-500'
-                            : 'text-gray-300'
-                        }`}
-                      />
-                    ))}
-                    <span className="text-sm text-gray-600 ml-2">({product.rating})</span>
-                  </div>
-                </div>
-              </CardHeader>
-
-              <CardContent className="pb-4">
-                <CardDescription className="text-sm text-gray-800 line-clamp-3 mb-4 leading-relaxed">
-                  {product.description}
-                </CardDescription>
-
-                {/* Horoscope Health Recommendation */}
-                <div className="mb-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-400 rounded-r-xl">
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Star className="h-4 w-4 text-purple-600" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-purple-700 mb-2">Our Cosmic Curation</p>
-                      <p className="text-sm text-purple-900 leading-relaxed font-medium">
-                        {getHoroscopeHealthRecommendation(product, user?.zodiacSign)}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold text-gray-900">${product.price}</span>
-                    <span className="text-sm text-gray-500">{getPriceUnit(product)}</span>
-                  </div>
-                  {user?.zodiacSign && product.recommendedSigns.includes(user.zodiacSign) && (
-                    <Badge className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs px-3 py-1">
-                      ⭐ COSMIC MATCH
+                  {user && product.recommendedSigns.includes(user.zodiacSign) && (
+                    <Badge className="bg-gradient-to-r from-emerald-500/20 to-green-500/20 text-emerald-300 border border-emerald-400/30 text-xs px-3 py-1 rounded-full backdrop-blur-sm animate-pulse">
+                      ⭐ RECOMMENDED
                     </Badge>
                   )}
                 </div>
-              </CardContent>
 
-              <CardFooter className="pt-6 pb-6">
-                <Button
-                  size="lg"
-                  asChild
-                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 text-lg"
-                >
-                  <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3">
-                    <span>Shop {product.name.split(' ')[0]}</span>
-                    <ExternalLink className="h-5 w-5" />
-                  </a>
-                </Button>
-              </CardFooter>
-            </Card>
+                {/* Premium brand section */}
+                <div className="mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500/20 to-violet-500/20 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 border border-purple-400/20">
+                    {getCategoryIcon(product.category)}
+                  </div>
+                  <div className="text-xs font-bold text-purple-300 uppercase tracking-wider mb-2">
+                    {getBrandName(product.name)}
+                  </div>
+                </div>
+
+                {/* Product info */}
+                <div className="mb-4">
+                  <h3 className="text-lg font-bold text-white mb-2 leading-tight min-h-[3rem] flex items-start">
+                    {product.name}
+                  </h3>
+                  <p className="text-slate-300 text-sm mb-3 line-clamp-2">
+                    {product.description}
+                  </p>
+                  
+                  {/* Rating */}
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-4 w-4 ${
+                            i < Math.floor(product.rating)
+                              ? 'text-amber-400 fill-amber-400'
+                              : 'text-slate-600'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <span className="text-slate-400 text-sm">({product.rating})</span>
+                  </div>
+                </div>
+
+                {/* Personalized recommendation */}
+                {user && product.recommendedSigns.includes(user.zodiacSign) && (
+                  <div className="mb-4 p-3 bg-emerald-500/10 border border-emerald-400/20 rounded-lg">
+                    <div className="flex items-start gap-2">
+                      <Star className="h-4 w-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                      <p className="text-emerald-300 text-xs leading-relaxed">
+                        {getHoroscopeHealthRecommendation(product, user.zodiacSign)}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Price and CTA */}
+                <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                  <div>
+                    <div className="text-2xl font-bold text-white">
+                      ${product.price}
+                    </div>
+                    <div className="text-slate-400 text-xs">
+                      {getPriceUnit(product)}
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-slate-300 hover:text-white hover:bg-white/10"
+                      onClick={() => handleSaveProduct(product.id)}
+                    >
+                      <Heart className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      className="bg-gradient-to-r from-purple-500 to-violet-500 hover:from-purple-600 hover:to-violet-600 text-white font-medium px-4 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                      onClick={() => window.open(product.affiliateUrl, '_blank')}
+                    >
+                      <ShoppingCart className="h-4 w-4 mr-2" />
+                      Shop Now
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
 
