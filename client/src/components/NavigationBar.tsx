@@ -31,6 +31,7 @@ import { zodiacSignNames, zodiacElements } from '@/data/zodiacData';
 import { useLanguage } from '@/context/LanguageContext';
 import { LanguageSelector } from '@/components/LanguageSelector';
 import { MobileLanguageSelector } from '@/components/MobileLanguageSelector';
+import { FastLoginModal } from '@/components/FastLoginModal';
 
 interface NavBarProps {
   isLoggedIn: boolean;
@@ -51,6 +52,7 @@ export function NavigationBar({
 }: NavBarProps) {
   // This would normally come from a theme context
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [showFastLogin, setShowFastLogin] = useState(false);
   const { t, language, setLanguage } = useLanguage();
   
   const toggleTheme = () => {
@@ -357,14 +359,20 @@ export function NavigationBar({
                 {!isLoggedIn && (
                   <div className="mt-auto pt-6 border-t border-border">
                     <nav className="flex flex-col gap-2">
-                      <Link href="/auth" className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                      <button 
+                        onClick={() => setShowFastLogin(true)}
+                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors text-left w-full"
+                      >
                         <User className="h-4 w-4 text-muted-foreground" />
                         <span className="text-sm font-medium">Login</span>
-                      </Link>
-                      <Link href="/signup" className="flex items-center gap-3 p-3 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-200/30 transition-colors">
+                      </button>
+                      <button 
+                        onClick={() => setShowFastLogin(true)}
+                        className="flex items-center gap-3 p-3 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 border border-purple-200/30 transition-colors text-left w-full"
+                      >
                         <Star className="h-4 w-4 text-purple-600" />
                         <span className="text-sm font-medium text-purple-700">Sign Up</span>
-                      </Link>
+                      </button>
                     </nav>
                   </div>
                 )}
@@ -375,6 +383,11 @@ export function NavigationBar({
           </Sheet>
         </div>
       </div>
+      
+      <FastLoginModal 
+        isOpen={showFastLogin} 
+        onClose={() => setShowFastLogin(false)} 
+      />
     </header>
   );
 }
