@@ -76,7 +76,7 @@ export function NavigationBar({
   };
   
   return (
-    <header className="bg-background/80 backdrop-blur-md sticky top-0 z-50 w-full border-b">
+    <header className="bg-background/70 backdrop-blur-xl sticky top-0 z-50 w-full border-b border-white/10 shadow-lg shadow-black/5">
       <div className="container mx-auto px-3 sm:px-4 flex h-14 sm:h-16 items-center justify-between">
         {/* Logo and Brand */}
         <div className="flex items-center">
@@ -88,24 +88,28 @@ export function NavigationBar({
           </Link>
         </div>
         
-        {/* Desktop Navigation */}
+        {/* Enhanced Desktop Navigation */}
         <nav className="hidden md:flex gap-6 lg:gap-8">
-          <Link href="/zodiac-library" className="text-sm font-medium hover:text-primary transition-colors">
-            {t('nav.zodiac')}
+          <Link href="/zodiac-library" className="relative text-sm font-medium hover:text-primary transition-all duration-300 group">
+            <span className="relative z-10">{t('nav.zodiac')}</span>
+            <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-purple-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
           </Link>
           
-          <Link href="/marketplace" className="text-sm font-medium hover:text-primary transition-colors">
-            {t('nav.marketplace')}
+          <Link href="/marketplace" className="relative text-sm font-medium hover:text-primary transition-all duration-300 group">
+            <span className="relative z-10">{t('nav.marketplace')}</span>
+            <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-purple-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
           </Link>
           
-          <Link href="/community" className="text-sm font-medium hover:text-primary transition-colors">
-            {t('community.title')}
+          <Link href="/community" className="relative text-sm font-medium hover:text-primary transition-all duration-300 group">
+            <span className="relative z-10">{t('community.title')}</span>
+            <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-purple-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
           </Link>
           
           {!isPremium && (
-            <Link href="/premium" className="text-sm font-medium text-purple-600 hover:text-purple-500 transition-colors flex items-center gap-1">
-              <Star className="h-3 w-3" />
-              {t('nav.premium')}
+            <Link href="/premium" className="relative text-sm font-medium text-purple-600 hover:text-purple-500 transition-all duration-300 flex items-center gap-1 group">
+              <Star className="h-3 w-3 group-hover:rotate-12 transition-transform duration-300" />
+              <span className="relative z-10">{t('nav.premium')}</span>
+              <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-amber-400 to-yellow-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
             </Link>
           )}
         </nav>
