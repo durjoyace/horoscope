@@ -41,17 +41,17 @@ export function Footer() {
               {t('footer.description')}
             </p>
             <div className="flex space-x-4">
-              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30" aria-label="Follow us on Facebook">
-                <Facebook className="h-5 w-5" />
+              <Button size="icon" variant="ghost" className="group rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30 hover:border-purple-600/70 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300" aria-label="Follow us on Facebook">
+                <Facebook className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
               </Button>
-              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30" aria-label="Follow us on Twitter">
-                <Twitter className="h-5 w-5" />
+              <Button size="icon" variant="ghost" className="group rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30 hover:border-purple-600/70 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300" aria-label="Follow us on Twitter">
+                <Twitter className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
               </Button>
-              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30" aria-label="Follow us on Instagram">
-                <Instagram className="h-5 w-5" />
+              <Button size="icon" variant="ghost" className="group rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30 hover:border-purple-600/70 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300" aria-label="Follow us on Instagram">
+                <Instagram className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
               </Button>
-              <Button size="icon" variant="ghost" className="rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30" aria-label="Contact us by email">
-                <Mail className="h-5 w-5" />
+              <Button size="icon" variant="ghost" className="group rounded-full border border-purple-900/50 text-purple-400 hover:text-white hover:bg-purple-900/30 hover:border-purple-600/70 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300" aria-label="Contact us by email">
+                <Mail className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
               </Button>
             </div>
           </div>

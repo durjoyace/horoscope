@@ -59,35 +59,43 @@ export const TestimonialsSection: React.FC = () => {
           ))}
         </div>
 
-        {/* Testimonials */}
+        {/* Premium Testimonials */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}
-              className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6"
+              className="group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-2"
+              style={{ animationDelay: `${index * 150}ms` }}
             >
-              {/* Quote Icon */}
-              <Quote className="w-8 h-8 text-purple-400 mb-4" />
+              {/* Gradient border effect */}
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/20 via-violet-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm"></div>
               
-              {/* Stars */}
+              {/* Quote Icon with animation */}
+              <Quote className="w-8 h-8 text-purple-400 mb-4 group-hover:text-purple-300 group-hover:scale-110 transition-all duration-300" />
+              
+              {/* Animated Stars */}
               <div className="flex gap-1 mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <Star 
+                    key={i} 
+                    className="w-4 h-4 fill-yellow-400 text-yellow-400 group-hover:scale-110 transition-transform duration-300"
+                    style={{ transitionDelay: `${i * 50}ms` }}
+                  />
                 ))}
               </div>
 
-              {/* Quote */}
-              <p className="text-slate-300 leading-relaxed mb-6">
+              {/* Quote with subtle animation */}
+              <p className="text-slate-300 leading-relaxed mb-6 group-hover:text-slate-200 transition-colors duration-300">
                 "{testimonial.quote}"
               </p>
 
-              {/* Author */}
+              {/* Author with enhanced styling */}
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-white font-medium">
+                  <div className="text-white font-medium group-hover:text-purple-200 transition-colors duration-300">
                     {testimonial.author}
                   </div>
-                  <div className="text-purple-300 text-sm">
+                  <div className="text-purple-300 text-sm font-medium group-hover:text-purple-200 transition-colors duration-300">
                     {testimonial.zodiacSign}
                   </div>
                 </div>
