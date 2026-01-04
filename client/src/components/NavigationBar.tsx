@@ -209,23 +209,22 @@ export function NavigationBar({
             </>
           ) : (
             <div className="hidden md:flex items-center gap-2">
-              <Link href="/auth">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="border-primary/30 text-primary hover:bg-primary/10 hover:text-primary font-medium transition-colors"
-                >
-                  {t('nav.login')}
-                </Button>
-              </Link>
-              <Link href="/auth?signup=true">
-                <Button 
-                  size="sm" 
-                  className="bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-medium shadow-sm hover:shadow-md transition-all"
-                >
-                  {t('nav.signup')}
-                </Button>
-              </Link>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="border-primary/30 text-primary hover:bg-primary/10 hover:text-primary font-medium transition-colors"
+                onClick={() => setShowFastLogin(true)}
+              >
+                {t('nav.login')}
+              </Button>
+              <Button 
+                size="sm" 
+                className="bg-gradient-to-r from-[#8a00ff] to-[#5000ff] hover:from-[#9a00ff] hover:to-[#6000ff] text-white font-medium shadow-sm hover:shadow-md transition-all"
+                onClick={() => setShowFastLogin(true)}
+              >
+                <Star className="w-4 h-4 mr-1" />
+                {t('nav.signup')}
+              </Button>
             </div>
           )}
           
