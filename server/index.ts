@@ -100,8 +100,8 @@ app.get('/api/health/detailed', async (_req: Request, res: Response) => {
       serveStatic(app);
     }
 
-    // Start server on port 5000
-    const port = 5000;
+    // Start server on PORT (Railway provides this) or default to 5000
+    const port = parseInt(process.env.PORT || '5000', 10);
     server.listen({
       port,
       host: "0.0.0.0",
