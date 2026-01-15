@@ -1,29 +1,43 @@
-import twilio from 'twilio';
 import { User } from '@shared/schema';
 import { HoroscopeContent } from '@shared/types';
 
-// Twilio is optional - SMS features disabled if not configured
+// Twilio is optional - only load if configured
 const twilioEnabled = !!(
   process.env.TWILIO_ACCOUNT_SID &&
   process.env.TWILIO_AUTH_TOKEN &&
   process.env.TWILIO_PHONE_NUMBER
 );
 
-const client = twilioEnabled
-  ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
-  : null;
+// Lazy-load Twilio client only when needed
+let twilioClient: any = null;
+
+async function getTwilioClient() {
+  if (!twilioEnabled) return null;
+
+  if (!twilioClient) {
+    const twilio = await import('twilio');
+    twilioClient = twilio.default(
+      process.env.TWILIO_ACCOUNT_SID,
+      process.env.TWILIO_AUTH_TOKEN
+    );
+  }
+  return twilioClient;
+}
 
 if (!twilioEnabled) {
   console.log('Twilio not configured - SMS features disabled');
 }
 
 export async function sendSMS(to: string, message: string): Promise<boolean> {
-  if (!client || !twilioEnabled) {
+  if (!twilioEnabled) {
     console.log('SMS skipped - Twilio not configured');
     return false;
   }
 
   try {
+    const client = await getTwilioClient();
+    if (!client) return false;
+
     // Clean phone number format
     const cleanedNumber = to.replace(/[^\d+]/g, '');
     const formattedNumber = cleanedNumber.startsWith('+') ? cleanedNumber : `+1${cleanedNumber}`;
