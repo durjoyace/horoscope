@@ -1,7 +1,6 @@
 import { Server as HttpServer } from 'http';
 import { Server, Socket } from 'socket.io';
-import { createAdapter } from '@socket.io/redis-adapter';
-import { redisPub, redisSub, redis, setCache, getCache, deleteCache } from '../config/redis';
+import { setCache, getCache } from '../config/redis';
 import { wsLogger } from '../logger';
 
 // WebSocket event types
@@ -75,11 +74,9 @@ export function initializeWebSocket(httpServer: HttpServer): Server {
     pingInterval: 25000,
   });
 
-  // Use Redis adapter for horizontal scaling (if Redis is available)
-  if (process.env.REDIS_URL) {
-    io.adapter(createAdapter(redisPub, redisSub));
-    wsLogger.info('Socket.IO using Redis adapter');
-  }
+  // Note: Redis adapter disabled for simplicity
+  // For horizontal scaling, enable Redis adapter when Redis is properly configured
+  wsLogger.info('Socket.IO running without Redis adapter (single-instance mode)');
 
   // Authentication middleware
   io.use(async (socket: AuthenticatedSocket, next) => {
