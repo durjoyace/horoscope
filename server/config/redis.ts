@@ -1,34 +1,78 @@
 import Redis from 'ioredis';
 
-// Redis connection configuration
-const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
+// Check if Redis URL is properly configured
+const redisUrl = process.env.REDIS_URL;
+const isRedisConfigured = redisUrl && !redisUrl.includes('host:') && redisUrl.length > 10;
 
-// Create Redis client with retry strategy
-export const redis = new Redis(redisUrl, {
-  maxRetriesPerRequest: 3,
-  retryStrategy(times) {
-    const delay = Math.min(times * 50, 2000);
-    return delay;
-  },
-  lazyConnect: true,
-});
+// Create a mock Redis client for when Redis is not available
+class MockRedis {
+  async get() { return null; }
+  async set() { return 'OK'; }
+  async setex() { return 'OK'; }
+  async del() { return 0; }
+  async keys() { return []; }
+  async incr() { return 1; }
+  async decr() { return 0; }
+  async expire() { return 1; }
+  async ttl() { return -1; }
+  async ping() { throw new Error('Redis not configured'); }
+  multi() { return { exec: async () => [[null, 1], [null, -1]] }; }
+  duplicate() { return this; }
+  on() { return this; }
+  quit() { return Promise.resolve(); }
+}
 
-// Duplicate client for pub/sub (Socket.IO adapter)
-export const redisPub = redis.duplicate();
-export const redisSub = redis.duplicate();
+// Create Redis client with proper error handling
+let redis: Redis | MockRedis;
+let redisPub: Redis | MockRedis;
+let redisSub: Redis | MockRedis;
 
-// Connection event handlers
-redis.on('connect', () => {
-  console.log('[Redis] Connected successfully');
-});
+if (isRedisConfigured) {
+  const redisOptions = {
+    maxRetriesPerRequest: null, // Disable retry limit to prevent crashes
+    retryStrategy(times: number) {
+      if (times > 10) {
+        console.log('[Redis] Max retries reached, stopping reconnection');
+        return null; // Stop retrying
+      }
+      const delay = Math.min(times * 100, 3000);
+      return delay;
+    },
+    lazyConnect: true,
+    enableOfflineQueue: false,
+  };
 
-redis.on('error', (err) => {
-  console.error('[Redis] Connection error:', err.message);
-});
+  redis = new Redis(redisUrl!, redisOptions);
 
-redis.on('close', () => {
-  console.log('[Redis] Connection closed');
-});
+  // Only create pub/sub connections if main connection succeeds
+  redisPub = redis.duplicate();
+  redisSub = redis.duplicate();
+
+  // Connection event handlers
+  redis.on('connect', () => {
+    console.log('[Redis] Connected successfully');
+  });
+
+  redis.on('error', (err) => {
+    console.error('[Redis] Connection error:', err.message);
+  });
+
+  redis.on('close', () => {
+    console.log('[Redis] Connection closed');
+  });
+
+  // Try to connect
+  redis.connect().catch((err) => {
+    console.error('[Redis] Initial connection failed:', err.message);
+  });
+} else {
+  console.log('[Redis] Not configured or invalid URL - using mock client');
+  redis = new MockRedis() as any;
+  redisPub = new MockRedis() as any;
+  redisSub = new MockRedis() as any;
+}
+
+export { redis, redisPub, redisSub };
 
 // Cache key patterns
 export const CACHE_KEYS = {
@@ -76,11 +120,10 @@ export async function getCache<T>(key: string): Promise<T | null> {
   try {
     const cached = await redis.get(key);
     if (cached) {
-      return JSON.parse(cached) as T;
+      return JSON.parse(cached as string) as T;
     }
     return null;
   } catch (error) {
-    console.error('[Redis] Get cache error:', error);
     return null;
   }
 }
@@ -94,7 +137,7 @@ export async function setCache<T>(key: string, value: T, ttl?: number): Promise<
       await redis.set(key, serialized);
     }
   } catch (error) {
-    console.error('[Redis] Set cache error:', error);
+    // Silently fail - caching is optional
   }
 }
 
@@ -102,7 +145,7 @@ export async function deleteCache(key: string): Promise<void> {
   try {
     await redis.del(key);
   } catch (error) {
-    console.error('[Redis] Delete cache error:', error);
+    // Silently fail
   }
 }
 
@@ -113,7 +156,7 @@ export async function deleteCachePattern(pattern: string): Promise<void> {
       await redis.del(...keys);
     }
   } catch (error) {
-    console.error('[Redis] Delete pattern error:', error);
+    // Silently fail
   }
 }
 

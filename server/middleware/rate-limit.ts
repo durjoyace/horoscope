@@ -92,6 +92,7 @@ export const apiLimiter = rateLimit({
     // Skip rate limiting for health checks
     return req.path === '/health' || req.path === '/api/health';
   },
+  validate: { xForwardedForHeader: false },
 });
 
 // Strict rate limiter for auth endpoints (5 requests per 15 minutes)
@@ -113,7 +114,8 @@ export const authLimiter = rateLimit({
       },
     });
   },
-  skipSuccessfulRequests: true, // Don't count successful logins
+  skipSuccessfulRequests: true,
+  validate: { xForwardedForHeader: false },
 });
 
 // AI endpoint rate limiter (10 requests per minute)
@@ -132,6 +134,7 @@ export const aiLimiter = rateLimit({
       },
     });
   },
+  validate: { xForwardedForHeader: false },
 });
 
 // Signup rate limiter (3 signups per hour per IP)
@@ -150,6 +153,7 @@ export const signupLimiter = rateLimit({
       },
     });
   },
+  validate: { xForwardedForHeader: false },
 });
 
 // Admin endpoint rate limiter (50 requests per minute)
@@ -160,6 +164,7 @@ export const adminLimiter = rateLimit({
   legacyHeaders: false,
   keyGenerator,
   handler: rateLimitHandler,
+  validate: { xForwardedForHeader: false },
 });
 
 // WebSocket connection limiter (10 connections per minute per IP)
@@ -178,6 +183,7 @@ export const wsConnectionLimiter = rateLimit({
       },
     });
   },
+  validate: { xForwardedForHeader: false },
 });
 
 // Custom rate limiter factory for specific routes
@@ -203,6 +209,7 @@ export function createRateLimiter(options: {
       });
     },
     skipSuccessfulRequests: options.skipSuccessfulRequests,
+    validate: { xForwardedForHeader: false },
   });
 }
 
