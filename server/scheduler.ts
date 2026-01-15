@@ -95,7 +95,7 @@ export async function deliverHoroscopeToUser(user: User, date: string): Promise<
     
     // Get the horoscope ID for logging
     const horoscope = await storage.getHoroscopeBySignAndDate(
-      user.zodiacSign,
+      user.zodiacSign || 'aries',
       date
     );
     

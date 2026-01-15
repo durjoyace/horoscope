@@ -36,15 +36,16 @@ export function createHoroscopeSMSContent(
   user: User,
   horoscope: HoroscopeContent,
 ): string {
-  const greeting = user.firstName 
-    ? `Hi ${user.firstName}!` 
-    : `Hello ${user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1)}!`;
+  const zodiacSign = user.zodiacSign || 'aries';
+  const greeting = user.firstName
+    ? `Hi ${user.firstName}!`
+    : `Hello ${zodiacSign.charAt(0).toUpperCase() + zodiacSign.slice(1)}!`;
 
-  const signEmoji = getZodiacEmoji(user.zodiacSign);
-  
+  const signEmoji = getZodiacEmoji(zodiacSign);
+
   return `${greeting} ${signEmoji}
 
-Your Daily ${user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1)} Horoscope:
+Your Daily ${zodiacSign.charAt(0).toUpperCase() + zodiacSign.slice(1)} Horoscope:
 
 ${horoscope.overview}
 
@@ -92,9 +93,10 @@ export async function sendWelcomeSMS(user: User): Promise<boolean> {
     return false;
   }
 
+  const zodiacSign = user.zodiacSign || 'aries';
   const message = `Welcome to HoroscopeHealth, ${user.firstName || 'cosmic soul'}! ✨
 
-You'll receive your daily ${user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1)} horoscope every morning.
+You'll receive your daily ${zodiacSign.charAt(0).toUpperCase() + zodiacSign.slice(1)} horoscope every morning.
 
 Reply STOP to opt out anytime.
 

@@ -1,0 +1,242 @@
+/**
+ * Cosmic Dark Theme
+ * Deep space colors with purple/blue gradients and starfield effects
+ */
+
+:root[data-theme="cosmic-dark"] {
+  /* Primary Colors */
+  --cosmic-primary: #8B5CF6;
+  --cosmic-primary-light: #A78BFA;
+  --cosmic-primary-dark: #7C3AED;
+
+  /* Secondary Colors */
+  --cosmic-secondary: #EC4899;
+  --cosmic-secondary-light: #F472B6;
+  --cosmic-secondary-dark: #DB2777;
+
+  /* Accent Colors */
+  --cosmic-accent-cyan: #22D3EE;
+  --cosmic-accent-amber: #F59E0B;
+  --cosmic-accent-emerald: #10B981;
+
+  /* Background Colors */
+  --cosmic-bg-deep: #0A0A1A;
+  --cosmic-bg-primary: #0F0F23;
+  --cosmic-bg-secondary: #161632;
+  --cosmic-bg-tertiary: #1E1E3F;
+  --cosmic-bg-elevated: #252550;
+
+  /* Surface Colors (for cards, modals) */
+  --cosmic-surface: rgba(30, 30, 63, 0.8);
+  --cosmic-surface-light: rgba(37, 37, 80, 0.9);
+  --cosmic-surface-glass: rgba(139, 92, 246, 0.1);
+
+  /* Text Colors */
+  --cosmic-text-primary: #FFFFFF;
+  --cosmic-text-secondary: #A5A5C5;
+  --cosmic-text-tertiary: #6B6B8D;
+  --cosmic-text-muted: #4A4A6A;
+
+  /* Border Colors */
+  --cosmic-border: rgba(139, 92, 246, 0.2);
+  --cosmic-border-light: rgba(139, 92, 246, 0.3);
+  --cosmic-border-glow: rgba(139, 92, 246, 0.5);
+
+  /* Gradient Definitions */
+  --cosmic-gradient-primary: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+  --cosmic-gradient-secondary: linear-gradient(135deg, #22D3EE 0%, #8B5CF6 100%);
+  --cosmic-gradient-surface: linear-gradient(180deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.05) 100%);
+  --cosmic-gradient-radial: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+
+  /* Shadow Definitions */
+  --cosmic-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --cosmic-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --cosmic-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --cosmic-shadow-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+  --cosmic-shadow-glow-pink: 0 0 20px rgba(236, 72, 153, 0.3);
+
+  /* Blur Values */
+  --cosmic-blur-sm: blur(8px);
+  --cosmic-blur-md: blur(16px);
+  --cosmic-blur-lg: blur(32px);
+
+  /* Animation Timings */
+  --cosmic-transition-fast: 150ms ease;
+  --cosmic-transition-normal: 300ms ease;
+  --cosmic-transition-slow: 500ms ease;
+
+  /* Z-Index Scale */
+  --cosmic-z-background: -1;
+  --cosmic-z-base: 0;
+  --cosmic-z-elevated: 10;
+  --cosmic-z-overlay: 100;
+  --cosmic-z-modal: 200;
+  --cosmic-z-toast: 300;
+}
+
+/* Apply theme to body */
+[data-theme="cosmic-dark"] {
+  background: var(--cosmic-bg-deep);
+  color: var(--cosmic-text-primary);
+}
+
+/* Animated starfield background */
+[data-theme="cosmic-dark"]::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(2px 2px at 130px 80px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 160px 120px, rgba(255, 255, 255, 0.7), transparent);
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: cosmic-twinkle 8s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: var(--cosmic-z-background);
+  opacity: 0.5;
+}
+
+@keyframes cosmic-twinkle {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.4; }
+}
+
+/* Nebula overlay */
+[data-theme="cosmic-dark"]::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--cosmic-gradient-radial);
+  pointer-events: none;
+  z-index: var(--cosmic-z-background);
+}
+
+/* Glass morphism cards */
+.cosmic-glass {
+  background: var(--cosmic-surface-glass);
+  backdrop-filter: var(--cosmic-blur-md);
+  -webkit-backdrop-filter: var(--cosmic-blur-md);
+  border: 1px solid var(--cosmic-border);
+  border-radius: 16px;
+}
+
+.cosmic-glass-light {
+  background: var(--cosmic-surface-light);
+  backdrop-filter: var(--cosmic-blur-sm);
+  -webkit-backdrop-filter: var(--cosmic-blur-sm);
+  border: 1px solid var(--cosmic-border-light);
+  border-radius: 12px;
+}
+
+/* Glow effects */
+.cosmic-glow {
+  box-shadow: var(--cosmic-shadow-glow);
+}
+
+.cosmic-glow-pink {
+  box-shadow: var(--cosmic-shadow-glow-pink);
+}
+
+.cosmic-glow-text {
+  text-shadow: 0 0 20px currentColor;
+}
+
+/* Gradient text */
+.cosmic-gradient-text {
+  background: var(--cosmic-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Button styles */
+.cosmic-btn-primary {
+  background: var(--cosmic-gradient-primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: var(--cosmic-transition-normal);
+  box-shadow: var(--cosmic-shadow-md);
+}
+
+.cosmic-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--cosmic-shadow-lg), var(--cosmic-shadow-glow);
+}
+
+.cosmic-btn-secondary {
+  background: var(--cosmic-surface);
+  color: var(--cosmic-text-primary);
+  border: 1px solid var(--cosmic-border-light);
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: var(--cosmic-transition-normal);
+}
+
+.cosmic-btn-secondary:hover {
+  background: var(--cosmic-surface-light);
+  border-color: var(--cosmic-primary);
+}
+
+/* Input styles */
+.cosmic-input {
+  background: var(--cosmic-bg-secondary);
+  border: 1px solid var(--cosmic-border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: var(--cosmic-text-primary);
+  transition: var(--cosmic-transition-normal);
+}
+
+.cosmic-input:focus {
+  outline: none;
+  border-color: var(--cosmic-primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.cosmic-input::placeholder {
+  color: var(--cosmic-text-tertiary);
+}
+
+/* Card hover effect */
+.cosmic-card-hover {
+  transition: var(--cosmic-transition-normal);
+}
+
+.cosmic-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--cosmic-shadow-lg);
+  border-color: var(--cosmic-border-glow);
+}
+
+/* Scrollbar styling */
+[data-theme="cosmic-dark"] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+[data-theme="cosmic-dark"] ::-webkit-scrollbar-track {
+  background: var(--cosmic-bg-secondary);
+}
+
+[data-theme="cosmic-dark"] ::-webkit-scrollbar-thumb {
+  background: var(--cosmic-primary-dark);
+  border-radius: 4px;
+}
+
+[data-theme="cosmic-dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--cosmic-primary);
+}
+
+/* Selection styling */
+[data-theme="cosmic-dark"] ::selection {
+  background: rgba(139, 92, 246, 0.4);
+  color: white;
+}

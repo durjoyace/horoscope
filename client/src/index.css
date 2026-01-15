@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import cosmic themes and animations */
+@import './styles/themes/cosmic-dark.css';
+@import './styles/themes/cosmic-light.css';
+@import './styles/animations.css';
+
+/* Base cosmic variables (available in both themes) */
+:root {
+  /* Cosmic color palette */
+  --cosmic-purple: 139 92 246;
+  --cosmic-pink: 236 72 153;
+  --cosmic-cyan: 34 211 238;
+  --cosmic-amber: 245 158 11;
+  --cosmic-emerald: 16 185 129;
+
+  /* Default to dark theme */
+  --cosmic-primary: #8B5CF6;
+  --cosmic-secondary: #EC4899;
+}
+
 /* Cosmic Loader Animations */
 @keyframes twinkle {
   0%, 100% { opacity: 0.3; transform: scale(1); }

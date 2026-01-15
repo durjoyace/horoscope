@@ -2,69 +2,143 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
+// New infrastructure imports
+import { logger, httpLogger } from "./logger";
+import { setupSecurity, requestIdMiddleware, sanitizeMiddleware } from "./middleware/security";
+import { apiLimiter } from "./middleware/rate-limit";
+import { errorHandler, notFoundHandler } from "./middleware/error-handler";
+import { initializeWebSocket } from "./websocket/socket";
+import { initializeWorkers, shutdownWorkers } from "./jobs/queues";
+import { initializeScheduledJobs } from "./jobs/scheduler";
+import { testRedisConnection } from "./config/redis";
+
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
-app.use((req, res, next) => {
-  const start = Date.now();
-  const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
+// Trust proxy for rate limiting and IP detection
+app.set('trust proxy', 1);
 
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
-  };
+// Request ID for tracking
+app.use(requestIdMiddleware);
 
-  res.on("finish", () => {
-    const duration = Date.now() - start;
-    if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
+// Security middleware (Helmet, CORS)
+setupSecurity(app);
 
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
-      }
+// Body parsing
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: false, limit: '10mb' }));
 
-      log(logLine);
-    }
+// Sanitize request bodies
+app.use(sanitizeMiddleware);
+
+// HTTP request logging (using Pino)
+app.use(httpLogger);
+
+// Rate limiting for API routes
+app.use('/api', apiLimiter);
+
+// Health check endpoint (before auth)
+app.get('/health', async (_req: Request, res: Response) => {
+  const redisConnected = await testRedisConnection();
+
+  res.status(redisConnected ? 200 : 503).json({
+    status: redisConnected ? 'healthy' : 'degraded',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    services: {
+      redis: redisConnected ? 'connected' : 'disconnected',
+    },
   });
+});
 
-  next();
+// Detailed health check for admin
+app.get('/api/health/detailed', async (_req: Request, res: Response) => {
+  const redisConnected = await testRedisConnection();
+
+  res.json({
+    status: redisConnected ? 'healthy' : 'degraded',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
+    environment: process.env.NODE_ENV || 'development',
+    services: {
+      redis: redisConnected ? 'connected' : 'disconnected',
+    },
+  });
 });
 
 (async () => {
-  const server = await registerRoutes(app);
+  try {
+    // Test Redis connection
+    const redisConnected = await testRedisConnection();
+    if (redisConnected) {
+      logger.info('Redis connected successfully');
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+      // Initialize job workers and scheduler
+      initializeWorkers();
+      await initializeScheduledJobs();
+    } else {
+      logger.warn('Redis not available - running without caching and job queues');
+    }
 
-    res.status(status).json({ message });
-    throw err;
-  });
+    // Register all routes
+    const server = await registerRoutes(app);
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
+    // Initialize WebSocket server
+    const io = initializeWebSocket(server);
+    logger.info('WebSocket server initialized');
+
+    // 404 handler for API routes
+    app.use('/api/*', notFoundHandler);
+
+    // Global error handler
+    app.use(errorHandler);
+
+    // Setup Vite in development, serve static in production
+    if (app.get("env") === "development") {
+      await setupVite(app, server);
+    } else {
+      serveStatic(app);
+    }
+
+    // Start server on port 5000
+    const port = 5000;
+    server.listen({
+      port,
+      host: "0.0.0.0",
+      reusePort: true,
+    }, () => {
+      logger.info(`Server running on port ${port}`);
+      log(`serving on port ${port}`);
+    });
+
+    // Graceful shutdown handlers
+    const gracefulShutdown = async (signal: string) => {
+      logger.info(`Received ${signal}, shutting down gracefully...`);
+
+      // Close WebSocket connections
+      io.close();
+
+      // Shutdown workers
+      await shutdownWorkers();
+
+      // Close HTTP server
+      server.close(() => {
+        logger.info('HTTP server closed');
+        process.exit(0);
+      });
+
+      // Force exit after 30 seconds
+      setTimeout(() => {
+        logger.error('Forced shutdown after timeout');
+        process.exit(1);
+      }, 30000);
+    };
+
+    process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+    process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+
+  } catch (error) {
+    logger.error({ err: error }, 'Failed to start server');
+    process.exit(1);
   }
-
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });
 })();

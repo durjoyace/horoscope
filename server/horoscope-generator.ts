@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { storage } from './storage';
 import { generateHealthHoroscope } from './openai';
-import { ZodiacSign, HoroscopeContent } from '@shared/types';
+import { ZodiacSign, HoroscopeContent, WellnessCategory } from '@shared/types';
 
 // Generate horoscopes for all zodiac signs for a specific date
 export async function generateDailyHoroscopes(date?: string): Promise<void> {
@@ -25,12 +25,17 @@ export async function generateDailyHoroscopes(date?: string): Promise<void> {
       
       // Generate new horoscope
       const horoscopeContent = await generateHealthHoroscope(sign, targetDate);
-      
-      // Save to storage
+
+      // Save to storage with properly mapped fields
       await storage.createHoroscope({
         zodiacSign: sign,
         date: targetDate,
-        content: horoscopeContent as any
+        title: `Daily ${sign.charAt(0).toUpperCase() + sign.slice(1)} Horoscope`,
+        content: horoscopeContent.overview,
+        wellness: horoscopeContent.healthTip,
+        nutrition: horoscopeContent.nutritionFocus,
+        mindfulness: horoscopeContent.elementAlignment,
+        isAiGenerated: true,
       });
       
       console.log(`Generated horoscope for ${sign} on ${targetDate}`);
@@ -57,9 +62,21 @@ export async function getHoroscopeForSign(sign: ZodiacSign, date?: string): Prom
     horoscope = await storage.createHoroscope({
       zodiacSign: sign,
       date: targetDate,
-      content: content as any
+      title: `Daily ${sign.charAt(0).toUpperCase() + sign.slice(1)} Horoscope`,
+      content: content.overview,
+      wellness: content.healthTip,
+      nutrition: content.nutritionFocus,
+      mindfulness: content.elementAlignment,
+      isAiGenerated: true,
     });
   }
-  
-  return horoscope.content as unknown as HoroscopeContent;
+
+  // Reconstruct HoroscopeContent from database fields
+  return {
+    overview: horoscope.content,
+    wellnessCategories: ['nutrition', 'mindfulness'] as WellnessCategory[],
+    healthTip: horoscope.wellness,
+    nutritionFocus: horoscope.nutrition || '',
+    elementAlignment: horoscope.mindfulness || '',
+  };
 }

@@ -14,6 +14,9 @@ import { CosmicLoaderProvider, useCosmicLoader } from "@/hooks/useCosmicLoader";
 import { CosmicLoader } from "@/components/ui/CosmicLoader";
 import { CosmicLoaderWrapper } from "./components/CosmicLoaderWrapper";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { CosmicThemeProvider } from "@/hooks/useCosmicTheme";
+import { StarField } from "@/components/cosmic";
+import { OfflineIndicator, InstallPrompt, UpdatePrompt } from "@/components/pwa";
 
 // Import all pages
 import Home from "@/pages/Home";
@@ -50,6 +53,13 @@ import AdminAnalytics from "@/pages/admin/analytics";
 import CRMDashboard from "@/pages/admin/CRMDashboard";
 import TestSMSPage from "@/pages/TestSMSPage";
 import SimpleSignupPage from "@/pages/SimpleSignupPage";
+
+// New feature pages
+import { BirthChartPage } from "@/features/birth-chart";
+import { AICoachPage } from "@/features/ai-coach";
+import { TrackingPage } from "@/features/tracking";
+import { SocialPage } from "@/features/social";
+import { GamificationPage } from "@/features/gamification";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -117,16 +127,19 @@ function AppContent() {
   };
   
   return (
-    <div className="flex flex-col min-h-screen">
-      <NavigationBar 
+    <div className="flex flex-col min-h-screen relative">
+      {/* Cosmic starfield background */}
+      <StarField starCount={80} shootingStarInterval={8000} />
+
+      <NavigationBar
         isLoggedIn={isLoggedIn}
         userEmail={user?.email || ""}
         userZodiacSign={user?.zodiacSign}
         isPremium={isPremium}
         onLogout={handleLogout}
       />
-      
-      <main className="flex-grow">
+
+      <main className="flex-grow relative z-10">
         <ScrollToTop />
         <PageTransition loading={logoutMutation.isPending}>
           <Switch>
@@ -189,7 +202,22 @@ function AppContent() {
             <Route path="/referrals">
               <ReferralsPage />
             </Route>
-            
+
+            {/* Birth Chart Route */}
+            <ProtectedRoute path="/birth-chart" component={BirthChartPage} />
+
+            {/* AI Coach Route */}
+            <ProtectedRoute path="/coach" component={AICoachPage} />
+
+            {/* Tracking Route */}
+            <ProtectedRoute path="/tracking" component={TrackingPage} />
+
+            {/* Social Route */}
+            <ProtectedRoute path="/social" component={SocialPage} />
+
+            {/* Gamification Route */}
+            <ProtectedRoute path="/gamification" component={GamificationPage} />
+
             {/* Community Routes */}
             <Route path="/community">
               <CommunityHome />
@@ -221,6 +249,11 @@ function AppContent() {
       
       <Footer />
       <Toaster />
+
+      {/* PWA Components */}
+      <OfflineIndicator position="bottom" />
+      <InstallPrompt variant="banner" delay={60000} />
+      <UpdatePrompt variant="toast" />
     </div>
   );
 }
@@ -228,15 +261,17 @@ function AppContent() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <LanguageProvider>
-          <CosmicLoaderProvider>
-            <CosmicLoaderWrapper>
-              <AppContent />
-            </CosmicLoaderWrapper>
-          </CosmicLoaderProvider>
-        </LanguageProvider>
-      </AuthProvider>
+      <CosmicThemeProvider defaultTheme="cosmic-dark">
+        <AuthProvider>
+          <LanguageProvider>
+            <CosmicLoaderProvider>
+              <CosmicLoaderWrapper>
+                <AppContent />
+              </CosmicLoaderWrapper>
+            </CosmicLoaderProvider>
+          </LanguageProvider>
+        </AuthProvider>
+      </CosmicThemeProvider>
     </QueryClientProvider>
   );
 }

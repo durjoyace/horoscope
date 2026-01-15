@@ -10,7 +10,7 @@ import { initializeScheduler } from "./scheduler";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2023-10-16",
+  apiVersion: "2025-03-31.basil",
 });
 
 // Stripe service functions consolidated inline
@@ -35,13 +35,31 @@ import {
 } from "./premium-reports";
 import { setupAuth } from "./auth";
 import { getAnalyticsDashboardData } from "./analytics-service";
+import birthChartRoutes from "./routes/birth-chart.routes";
+import aiCoachRoutes from "./routes/ai-coach.routes";
+import trackingRoutes from "./routes/tracking.routes";
+import socialRoutes from "./routes/social.routes";
+import gamificationRoutes from "./routes/gamification.routes";
+import healthRoutes from "./routes/health.routes";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Setup authentication
   setupAuth(app);
-  
+
   // Initialize the scheduler for daily horoscope generation and delivery
   initializeScheduler();
+
+  // Health check routes (no rate limiting)
+  app.use('/api/health', healthRoutes);
+  app.use('/health', healthRoutes); // Also at root for load balancers
+
+  // Register v2 API routes
+  app.use('/api/v2/birth-charts', birthChartRoutes);
+  app.use('/api/v2', birthChartRoutes); // Also mount at root for ephemeris/lunar endpoints
+  app.use('/api/v2/ai', aiCoachRoutes); // AI coach routes
+  app.use('/api/v2/tracking', trackingRoutes); // Mood and habit tracking routes
+  app.use('/api/v2/social', socialRoutes); // Social features (friends, DMs)
+  app.use('/api/v2/gamification', gamificationRoutes); // Gamification (XP, achievements, leaderboards)
 
   // User signup endpoint
   app.post("/api/signup", async (req: Request, res: Response) => {
@@ -483,10 +501,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Determine which zodiac sign to use (user's sign or requested sign)
-      const zodiacSign = sign ? (sign as string).toLowerCase() : user.zodiacSign;
-      
+      const zodiacSign = sign ? (sign as string).toLowerCase() : (user.zodiacSign || 'aries');
+
       // Validate zodiac sign
-      if (!['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 
+      if (!['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
              'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'].includes(zodiacSign)) {
         return res.status(400).json({
           success: false,
@@ -505,17 +523,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const weekEndDate = format(endOfWeek, 'yyyy-MM-dd');
 
       // Find existing premium report or generate a new one
-      let premiumReport = await findPremiumReport(zodiacSign, weekStartDate, weekEndDate);
-      
+      let premiumReport = await findPremiumReport(zodiacSign as string, weekStartDate, weekEndDate);
+
       if (!premiumReport) {
         // In a real app, we would generate a new premium report here
         // For now, we'll create a mock report
-        const reportContent = generateMockPremiumReport(zodiacSign, startOfWeek, endOfWeek);
-        
+        const reportContent = generateMockPremiumReport(zodiacSign as string, startOfWeek, endOfWeek);
+
         // Create a response object that matches the expected format
         premiumReport = {
           id: 0,
-          zodiacSign,
+          zodiacSign: zodiacSign as string,
           weekStartDate,
           weekEndDate,
           content: reportContent,
@@ -621,8 +639,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       for (const user of users) {
         try {
-          const result = await sendSMS(user.phone, message);
-          if (result) sentCount++;
+          if (user.phone) {
+            const result = await sendSMS(user.phone, message);
+            if (result) sentCount++;
+          }
         } catch (error) {
           console.error(`Failed to send SMS to ${user.phone}:`, error);
         }

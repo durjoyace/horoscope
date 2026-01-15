@@ -33,7 +33,8 @@ export function createHoroscopeEmailContent(
   date: string
 ): string {
   const firstName = user.firstName || 'there';
-  const sign = user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1);
+  const zodiacSign = user.zodiacSign || 'aries';
+  const sign = zodiacSign.charAt(0).toUpperCase() + zodiacSign.slice(1);
   
   // Format wellness categories as badges
   const categories = horoscope.wellnessCategories
@@ -116,8 +117,9 @@ export async function sendHoroscopeEmail(
 ): Promise<boolean> {
   try {
     const emailHtml = createHoroscopeEmailContent(user, horoscopeContent, date);
-    const sign = user.zodiacSign.charAt(0).toUpperCase() + user.zodiacSign.slice(1);
-    
+    const zodiacSign = user.zodiacSign || 'aries';
+    const sign = zodiacSign.charAt(0).toUpperCase() + zodiacSign.slice(1);
+
     const result = await sendEmail({
       to: user.email,
       subject: `Your ${sign} Health Horoscope for ${date}`,

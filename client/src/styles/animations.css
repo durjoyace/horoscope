@@ -1,0 +1,482 @@
+/**
+ * Cosmic Animations
+ * Shared animation keyframes and utility classes
+ */
+
+/* ===== KEYFRAMES ===== */
+
+/* Floating animation */
+@keyframes cosmic-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Gentle float with rotation */
+@keyframes cosmic-float-rotate {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-2deg);
+  }
+}
+
+/* Pulse glow */
+@keyframes cosmic-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 20px currentColor;
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 40px currentColor;
+  }
+}
+
+/* Subtle pulse */
+@keyframes cosmic-pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+}
+
+/* Spinning */
+@keyframes cosmic-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Reverse spinning */
+@keyframes cosmic-spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* Orbiting */
+@keyframes cosmic-orbit {
+  from {
+    transform: rotate(0deg) translateX(50px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(50px) rotate(-360deg);
+  }
+}
+
+/* Shimmer effect */
+@keyframes cosmic-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Gradient shift */
+@keyframes cosmic-gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Star twinkle */
+@keyframes cosmic-twinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Shooting star */
+@keyframes cosmic-shoot {
+  0% {
+    transform: translateX(-100%) translateY(-100%);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200vw) translateY(200vh);
+    opacity: 0;
+  }
+}
+
+/* Fade in up */
+@keyframes cosmic-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in down */
+@keyframes cosmic-fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scale in */
+@keyframes cosmic-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scale out */
+@keyframes cosmic-scale-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+/* Bounce in */
+@keyframes cosmic-bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Shake */
+@keyframes cosmic-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+/* Confetti burst */
+@keyframes cosmic-confetti {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-500px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Number count up effect */
+@keyframes cosmic-count-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    color: var(--cosmic-primary);
+  }
+}
+
+/* Progress bar fill */
+@keyframes cosmic-progress-fill {
+  from {
+    width: 0%;
+  }
+}
+
+/* Ring expand */
+@keyframes cosmic-ring-expand {
+  from {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Glow pulse */
+@keyframes cosmic-glow-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px currentColor);
+  }
+  50% {
+    filter: drop-shadow(0 0 20px currentColor);
+  }
+}
+
+/* Streak fire */
+@keyframes cosmic-fire {
+  0%, 100% {
+    transform: scaleY(1) translateY(0);
+    filter: brightness(1);
+  }
+  25% {
+    transform: scaleY(1.1) translateY(-2px);
+    filter: brightness(1.2);
+  }
+  50% {
+    transform: scaleY(0.95) translateY(0);
+    filter: brightness(1.1);
+  }
+  75% {
+    transform: scaleY(1.05) translateY(-1px);
+    filter: brightness(1.15);
+  }
+}
+
+/* Level up burst */
+@keyframes cosmic-level-up {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Achievement unlock */
+@keyframes cosmic-achievement-unlock {
+  0% {
+    transform: scale(0) rotateY(-180deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1) rotateY(20deg);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(0.95) rotateY(-10deg);
+  }
+  100% {
+    transform: scale(1) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+/* XP gain pop */
+@keyframes cosmic-xp-pop {
+  0% {
+    transform: scale(0) translateY(0);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(1.2) translateY(-10px);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(1) translateY(-30px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8) translateY(-50px);
+    opacity: 0;
+  }
+}
+
+/* ===== UTILITY CLASSES ===== */
+
+/* Float animations */
+.animate-cosmic-float {
+  animation: cosmic-float 3s ease-in-out infinite;
+}
+
+.animate-cosmic-float-slow {
+  animation: cosmic-float 5s ease-in-out infinite;
+}
+
+.animate-cosmic-float-rotate {
+  animation: cosmic-float-rotate 4s ease-in-out infinite;
+}
+
+/* Pulse animations */
+.animate-cosmic-pulse {
+  animation: cosmic-pulse 2s ease-in-out infinite;
+}
+
+.animate-cosmic-pulse-subtle {
+  animation: cosmic-pulse-subtle 3s ease-in-out infinite;
+}
+
+/* Spin animations */
+.animate-cosmic-spin {
+  animation: cosmic-spin 20s linear infinite;
+}
+
+.animate-cosmic-spin-slow {
+  animation: cosmic-spin 40s linear infinite;
+}
+
+.animate-cosmic-spin-reverse {
+  animation: cosmic-spin-reverse 25s linear infinite;
+}
+
+/* Orbit animation */
+.animate-cosmic-orbit {
+  animation: cosmic-orbit 10s linear infinite;
+}
+
+/* Shimmer animation */
+.animate-cosmic-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: cosmic-shimmer 2s linear infinite;
+}
+
+/* Gradient animation */
+.animate-cosmic-gradient {
+  background-size: 200% 200%;
+  animation: cosmic-gradient-shift 5s ease infinite;
+}
+
+/* Twinkle animation */
+.animate-cosmic-twinkle {
+  animation: cosmic-twinkle 2s ease-in-out infinite;
+}
+
+/* Entrance animations */
+.animate-cosmic-fade-in-up {
+  animation: cosmic-fade-in-up 0.5s ease-out forwards;
+}
+
+.animate-cosmic-fade-in-down {
+  animation: cosmic-fade-in-down 0.5s ease-out forwards;
+}
+
+.animate-cosmic-scale-in {
+  animation: cosmic-scale-in 0.3s ease-out forwards;
+}
+
+.animate-cosmic-bounce-in {
+  animation: cosmic-bounce-in 0.6s ease-out forwards;
+}
+
+/* Feedback animations */
+.animate-cosmic-shake {
+  animation: cosmic-shake 0.5s ease-in-out;
+}
+
+/* Gamification animations */
+.animate-cosmic-fire {
+  animation: cosmic-fire 0.5s ease-in-out infinite;
+}
+
+.animate-cosmic-level-up {
+  animation: cosmic-level-up 0.8s ease-out forwards;
+}
+
+.animate-cosmic-achievement {
+  animation: cosmic-achievement-unlock 0.8s ease-out forwards;
+}
+
+.animate-cosmic-xp-pop {
+  animation: cosmic-xp-pop 1.5s ease-out forwards;
+}
+
+/* Glow animations */
+.animate-cosmic-glow {
+  animation: cosmic-glow-pulse 2s ease-in-out infinite;
+}
+
+/* ===== STAGGER DELAYS ===== */
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+.stagger-7 { animation-delay: 0.7s; }
+.stagger-8 { animation-delay: 0.8s; }
+.stagger-9 { animation-delay: 0.9s; }
+.stagger-10 { animation-delay: 1s; }
+
+/* ===== ANIMATION UTILITIES ===== */
+
+.animation-paused {
+  animation-play-state: paused;
+}
+
+.animation-running {
+  animation-play-state: running;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
