@@ -1,18 +1,28 @@
 import twilio from 'twilio';
 import { User } from '@shared/schema';
-
-if (!process.env.TWILIO_ACCOUNT_SID || !process.env.TWILIO_AUTH_TOKEN || !process.env.TWILIO_PHONE_NUMBER) {
-  throw new Error("Missing required Twilio environment variables");
-}
-
-const client = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
-
 import { HoroscopeContent } from '@shared/types';
 
+// Twilio is optional - SMS features disabled if not configured
+const twilioEnabled = !!(
+  process.env.TWILIO_ACCOUNT_SID &&
+  process.env.TWILIO_AUTH_TOKEN &&
+  process.env.TWILIO_PHONE_NUMBER
+);
+
+const client = twilioEnabled
+  ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
+  : null;
+
+if (!twilioEnabled) {
+  console.log('Twilio not configured - SMS features disabled');
+}
+
 export async function sendSMS(to: string, message: string): Promise<boolean> {
+  if (!client || !twilioEnabled) {
+    console.log('SMS skipped - Twilio not configured');
+    return false;
+  }
+
   try {
     // Clean phone number format
     const cleanedNumber = to.replace(/[^\d+]/g, '');
